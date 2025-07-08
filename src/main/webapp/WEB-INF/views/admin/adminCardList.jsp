@@ -33,6 +33,40 @@
 	.hi{
 		color:red;
 	}
+    /* 모달 스타일 */
+    #editModal {
+        display: none;
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        z-index: 1000;
+        width: 300px;
+    }
+
+    #modalOverlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    #editModal input {
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    #editModal button {
+        margin-right: 5px;
+    }
 </style>
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -42,6 +76,20 @@
 	<h1>Admin CardList 페이지</h1>
 	<hr>
 	<ul id="card-list"></ul>
+	
+	<!-- 모달 오버레이 -->
+	<div id="modalOverlay"></div>
+
+	<!-- 수정 모달창 -->
+	<div id="editModal">
+	    <h3>카드 수정</h3>
+	    <input type="text" id="editCardName" placeholder="카드 이름">
+	    <input type="number" id="editAnnualFee" placeholder="연회비">
+	    <input type="text" id="editCardBrand" placeholder="브랜드 (예: VISA)">
+	    <br>
+	    <button onclick="submitEdit()">저장</button>
+	    <button onclick="closeModal()">닫기</button>
+	</div>
 </div>
 
 
@@ -61,8 +109,8 @@
                     <p>연회비: \${card.annualFee}원</p>
                     <p>브랜드: \${card.cardBrand}</p>
                     <button>게시</button>
-                    <button>수정</button>
-                    <button>삭제</button>
+                    <button onclick='openEditModal(\${JSON.stringify(card)})'>수정</button>
+                    <button onclick='deleteCard(${card.cardNo})'>삭제</button>
                 `;
                 list.appendChild(li);
             });
@@ -71,6 +119,65 @@
             document.getElementById('card-list').innerText = '카드 정보를 불러오지 못했습니다.';
             console.error('에러:', err);
         });
+ // 수정 모달 열기
+    function openEditModal(card) {
+	 	console.log(card)
+        editingCardId = card.cardNo;
+        document.getElementById('editCardName').value = card.cardName;
+        document.getElementById('editAnnualFee').value = card.annualFee;
+        document.getElementById('editCardBrand').value = card.cardBrand;
+
+        document.getElementById('editModal').style.display = 'block';
+        document.getElementById('modalOverlay').style.display = 'block';
+    }
+
+    // 모달 닫기
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    // 수정 요청 보내기
+    function submitEdit() {
+        const updatedCard = {
+            cardName: document.getElementById('editCardName').value,
+            annualFee: document.getElementById('editAnnualFee').value,
+            cardBrand: document.getElementById('editCardBrand').value
+        };
+
+        fetch(`/admin/card/${editingCardId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedCard)
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('수정 실패');
+            alert('수정 완료');
+            location.reload(); // 새로고침으로 리스트 갱신
+        })
+        .catch(err => {
+            alert('수정 중 오류 발생');
+            console.error(err);
+        });
+    }
+
+    // 삭제 요청 (옵션)
+    function deleteCard(cardNo) {
+        if (!confirm('정말 삭제하시겠습니까?')) return;
+        fetch(`/admin/card/${cardNo}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            alert('삭제 완료');
+            location.reload();
+        })
+        .catch(err => {
+            alert('삭제 실패');
+            console.error(err);
+        });
+    }
 </script>
 </body>
 </html>
