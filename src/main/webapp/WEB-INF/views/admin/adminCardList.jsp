@@ -30,6 +30,9 @@
 	    border-radius: 6px;  /* 둥근 모서리 */
 	    object-fit: contain; /* 이미지 왜곡 없이 적절히 맞춤 */
 	}
+	.hi{
+		color:red;
+	}
 </style>
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -54,7 +57,7 @@
                 li.className = 'card';
                 li.innerHTML = `
                 	<img src=\${card.cardUrl}>
-                    <h3>\${card.cardName}</h3>
+                    <h3 class="hi">\${card.cardName}</h3>
                     <p>연회비: \${card.annualFee}원</p>
                     <p>브랜드: \${card.cardBrand}</p>
                 `;
