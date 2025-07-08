@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+public class AdminMainController {
+
 @RequestMapping("/admin")
-public class AdminController {
 
 	// 상품 목록 페이지
 	@GetMapping("/adminCardList")
