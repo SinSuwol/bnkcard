@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanbank.card.busancrawler.mapper.BusanBankCardMapper">
+
+    <insert id="insertCard" parameterType="com.busanbank.card.busancrawler.dto.CardDTO">
+        INSERT INTO CARD (
+            CARD_NO,
+            CARD_NAME,
+            CARD_TYPE,
+            CARD_BRAND,
+            VIEW_COUNT,
+            ANNUAL_FEE,
+            ISSUEDTO,
+            SERVICE,
+            S_SERVICE,
+            CARD_STATUS,
+            CARD_URL,
+            CARD_SLOGAN,
+            CARD_NOTICE,
+            REG_DATE,
+            EDIT_DATE
+        )
+        VALUES (
+            CARD_SEQ.NEXTVAL,
+            #{cardName},
+            #{cardType},
+            #{cardBrand},
+            #{viewCount},
+            #{annualFee},
+            #{issuedTo},
+            #{service},
+            #{sService},
+            #{cardStatus},
+            #{cardUrl},
+            #{cardSlogan},
+            #{cardNotice},
+            SYSDATE,
+            SYSDATE
+        )
+    </insert>
+
+</mapper>
