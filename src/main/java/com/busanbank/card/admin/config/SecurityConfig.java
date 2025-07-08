@@ -1,0 +1,32 @@
+package com.busanbank.card.admin.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+	@Bean //메소드의 반환자료가 Bean으로 등록됨
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((auth) -> auth
+				.requestMatchers("/").permitAll()
+				.requestMatchers("/admin").hasRole("ADMIN")
+				.anyRequest().authenticated()
+				);
+		//http.httpBasic(Customizer.withDefaults());
+		http.formLogin(auth -> auth
+				.loginPage("/login")
+				.loginProcessingUrl("loginProc")
+				.defaultSuccessUrl("/welcome")
+				.permitAll()
+				);
+		http.csrf(csrf -> csrf.disable());
+		
+		
+		return http.build();
+	}
+}
