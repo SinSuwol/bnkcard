@@ -21,6 +21,7 @@ public class AdminCardController {
 	@GetMapping("/getCardList")
     public List<CardDto> getAllCards() {
         List<CardDto> cards = iAdminCardDao.getCardList();
+        System.out.println(cards);
         return cards;
     }
 	
