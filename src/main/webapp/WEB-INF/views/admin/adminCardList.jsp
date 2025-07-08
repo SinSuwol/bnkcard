@@ -22,14 +22,24 @@
         text-align: center;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+    .card img {
+	    width: 100%;       /* 카드 너비에 맞춰 꽉 차게 */
+	    max-width: 150px;  /* 최대 가로 크기 제한 */
+	    height: auto;      /* 비율 유지 */
+	    margin-bottom: 12px; /* 제목과 간격 */
+	    border-radius: 6px;  /* 둥근 모서리 */
+	    object-fit: contain; /* 이미지 왜곡 없이 적절히 맞춤 */
+	}
 </style>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-
-<h1>Admin CardList 페이지</h1>
-<hr>
-<ul id="card-list"></ul>
+<div class="inner">
+	<h1>Admin CardList 페이지</h1>
+	<hr>
+	<ul id="card-list"></ul>
+</div>
 
 
 
@@ -39,12 +49,14 @@
         .then(cards => {
             const list = document.getElementById('card-list');
             cards.forEach(card => {
+                console.log(card);
                 const li = document.createElement('li');
                 li.className = 'card';
                 li.innerHTML = `
-                    <h3>${card.cardName}</h3>
-                    <p>연회비: ${card.annualFee}원</p>
-                    <p>브랜드: ${card.cardBrand}</p>
+                	<img src=\${card.cardUrl}>
+                    <h3>\${card.cardName}</h3>
+                    <p>연회비: \${card.annualFee}원</p>
+                    <p>브랜드: \${card.cardBrand}</p>
                 `;
                 list.appendChild(li);
             });
