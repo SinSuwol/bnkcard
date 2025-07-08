@@ -7,8 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>메인페이지</h1>
+<h1>Admin CardList 페이지</h1>
 <hr>
-<a href="/admin">관리자 페이지로</a>
 </body>
 </html>
