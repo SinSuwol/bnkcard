@@ -75,7 +75,7 @@
 
             // 2) AJAX 전송
             $.ajax({
-                url: "/cardRegist",
+                url: "/admin/cardRegist",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(data),
