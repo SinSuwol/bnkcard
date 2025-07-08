@@ -10,23 +10,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean //메소드의 반환자료가 Bean으로 등록됨
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((auth) -> auth
-				.requestMatchers("/").permitAll()
-				.requestMatchers("/admin").hasRole("ADMIN")
-				.anyRequest().authenticated()
-				);
-		//http.httpBasic(Customizer.withDefaults());
-		http.formLogin(auth -> auth
-				.loginPage("/login")
-				.loginProcessingUrl("loginProc")
-				.defaultSuccessUrl("/welcome")
-				.permitAll()
-				);
-		http.csrf(csrf -> csrf.disable());
-		
-		
-		return http.build();
-	}
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((auth) -> auth
+                .anyRequest().permitAll()   // 모든 요청 허용
+            )
+            .csrf().disable(); // CSRF 보호 비활성화 (필요시)
+
+        return http.build();
+    }
 }
