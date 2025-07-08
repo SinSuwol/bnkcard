@@ -9,8 +9,8 @@ import com.busanbank.card.card.dto.CardDto;
 
 import lombok.RequiredArgsConstructor;
 
-@Service                // 인터페이스 없이 Service 1개
-@RequiredArgsConstructor // 생성자 주입(Lombok)
+@Service               
+@RequiredArgsConstructor 
 public class CardService {
 
     private final CardDao cardDao;

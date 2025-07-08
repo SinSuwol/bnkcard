@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bnk.card.dao.CardDao">
-	<select id="selectAll" resultType="CardDto">
+<mapper namespace="com.busanbank.card.card.dao.CardDao">
+	<select id="selectAll" resultType="com.busanbank.card.card.dto.CardDto">
 		SELECT * FROM CARD ORDER BY CARD_NO
 	</select>
 
-	<select id="selectById" resultType="CardDto">
+	<select id="selectById" resultType="com.busanbank.card.card.dto.CardDto">
 		SELECT * FROM CARD WHERE CARD_NO = #{cardNo}
 	</select>
 
