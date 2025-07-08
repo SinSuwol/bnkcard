@@ -7,9 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.stereotype.Service;
-
 import java.time.Duration;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BnkCrawlerService {
@@ -18,16 +17,9 @@ public class BnkCrawlerService {
         System.setProperty("webdriver.chrome.driver", "D:\\chrome\\chromedriver-win64\\chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
-
-        // User-Agent 변경
         options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 + "AppleWebKit/537.36 (KHTML, like Gecko) "
                 + "Chrome/138.0.7204.97 Safari/537.36");
-
-        // Headless 제거
-        // options.addArguments("--headless=new");
-
-        // 자동화 탐지 방지 옵션
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         options.setExperimentalOption("useAutomationExtension", false);
 
@@ -36,17 +28,20 @@ public class BnkCrawlerService {
         try {
             driver.get("https://www.busanbank.co.kr/ib20/mnu/FPMCRD012001002");
 
-            System.out.println(driver.getCurrentUrl());
-            System.out.println(driver.getPageSource());
-
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.cssSelector("p.item-detail-tit")
+
+            WebElement cardType = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.cssSelector("h3.tit-type1")
             ));
 
-            System.out.println("카드명: " + el.getText());
+            WebElement cardName = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.cssSelector("div.item-detail-t > p.item-detail-tit")
+            ));
 
-            return "크롤링 성공! 카드명: " + el.getText();
+            String result = "카드 타입: " + cardType.getText()
+                    + "\n카드명: " + cardName.getText();
+
+            return result;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,3 +51,4 @@ public class BnkCrawlerService {
         }
     }
 }
+
