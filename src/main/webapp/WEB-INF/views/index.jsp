@@ -9,8 +9,8 @@
 <body>
 <h1>메인페이지</h1>
 <hr>
-<a href="/admin" id="load-admin">관리자 페이지로</a>
-
+<a href="/admin" id="load-admin">관리자 페이지로</a> <br>
+<a href="/admin/adminLoginForm" >관리자 로그인 페이지로</a>
 <script>
 
 </script>
