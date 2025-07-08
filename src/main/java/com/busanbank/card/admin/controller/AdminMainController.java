@@ -6,14 +6,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminMainController {
 
-@RequestMapping("/admin")
 
 	// 상품 목록 페이지
 	@GetMapping("/adminCardList")
 	public String adminCardList() {
 		return "admin/adminCardList";
+	}
+
+	// 상품 등록 페이지
+	@GetMapping("/adminCardRegistForm")
+	public String adminCardRegistForm() {
+		return "admin/adminCardRegistForm";
 	}
 
 	// 검색어 관리 페이지
@@ -27,6 +33,8 @@ public class AdminMainController {
 	public String adminMainpage() {
 		return "adminMainpage";
 	}
+	
+	
 	
 	
 	
