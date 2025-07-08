@@ -2,13 +2,11 @@ package com.busanbank.card.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminMainController {
-
 
 	// 상품 목록 페이지
 	@GetMapping("/CardList")
@@ -22,6 +20,12 @@ public class AdminMainController {
 		return "admin/adminCardRegistForm";
 	}
 
+	// 관리자 로그인 페이지
+	@GetMapping("/adminLoginForm")
+	public String adminLoginForm() {
+		return "admin/adminLoginForm";
+	}
+
 	// 검색어 관리 페이지
 	@GetMapping("/Search")
 	public String adminSearch() {
@@ -33,10 +37,5 @@ public class AdminMainController {
 	public String adminMainpage() {
 		return "adminMainpage";
 	}
-	
-	
-	
-	
-	
 
 }

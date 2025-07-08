@@ -5,11 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 등록</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>상품 등록</h1>
-    <form id="cardForm" onsubmit="return false;">
+    <form id="cardForm">
         <p>
             카드명: <input type="text" name="cardName">
         </p>
@@ -55,43 +54,52 @@
     </form>
 
     <script>
-        $("#cardForm").on("submit", function(e) {
-            // 1) 폼 데이터 수집
+        document.getElementById("cardForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+
+            // 데이터 수집
             const data = {
-                cardName: $("input[name='cardName']").val(),
-                cardType: $("input[name='cardType']").val(),
-                cardBrand: $("input[name='cardBrand']").val(),
-                annualFee: parseInt($("input[name='annualFee']").val() || "0", 10),
-                issuedTo: $("input[name='issuedTo']").val(),
-                service: $("input[name='service']").val(),
-                sService: $("input[name='sService']").val(),
-                cardStatus: $("input[name='cardStatus']").val(),
-                cardUrl: $("input[name='cardUrl']").val(),
-                cardIssueDate: $("input[name='cardIssueDate']").val(),
-                cardDueDate: $("input[name='cardDueDate']").val(),
-                cardSlogan: $("input[name='cardSlogan']").val(),
-                cardNotice: $("input[name='cardNotice']").val()
+                cardName: form.cardName.value,
+                cardType: form.cardType.value,
+                cardBrand: form.cardBrand.value,
+                annualFee: parseInt(form.annualFee.value || "0", 10),
+                issuedTo: form.issuedTo.value,
+                service: form.service.value,
+                sService: form.sService.value,
+                cardStatus: form.cardStatus.value,
+                cardUrl: form.cardUrl.value,
+                cardIssueDate: form.cardIssueDate.value,
+                cardDueDate: form.cardDueDate.value,
+                cardSlogan: form.cardSlogan.value,
+                cardNotice: form.cardNotice.value
             };
 
-            // 2) AJAX 전송
-            $.ajax({
-                url: "/admin/cardRegist",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response);
-                    // 등록 성공 시 다음 페이지로 이동
-                    if (response.success) {
-                    	window.location.href = "/admin/CardList";
-                    }
+            // fetch로 POST 전송
+            fetch("/admin/cardRegist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                
-                error: function(xhr) {
-                    alert("오류가 발생했습니다: " + xhr.responseText);
-                    console.error(xhr);
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
                 }
+                return response.json();
+            })
+            .then(result => {
+                alert(result.message);
+                console.log(result);
+                if (result.success) {
+                    window.location.href = "/admin/CardList";
+                }
+            })
+            .catch(error => {
+                alert("오류가 발생했습니다: " + error.message);
+                console.error(error);
             });
         });
     </script>
