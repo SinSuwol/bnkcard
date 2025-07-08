@@ -9,5 +9,17 @@
 <body>
 <h1>Admin CardList 페이지</h1>
 <hr>
+<script>
+        fetch('/api/products')
+            .then(res => res.json())
+            .then(products => {
+                const list = document.getElementById('product-list');
+                products.forEach(p => {
+                    const li = document.createElement('li');
+                    li.textContent = `${p.name} - ${p.price}원`;
+                    list.appendChild(li);
+                });
+            });
+    </script>
 </body>
 </html>
