@@ -60,6 +60,9 @@
                     <h3 class="hi">\${card.cardName}</h3>
                     <p>연회비: \${card.annualFee}원</p>
                     <p>브랜드: \${card.cardBrand}</p>
+                    <button>게시</button>
+                    <button>수정</button>
+                    <button>삭제</button>
                 `;
                 list.appendChild(li);
             });
