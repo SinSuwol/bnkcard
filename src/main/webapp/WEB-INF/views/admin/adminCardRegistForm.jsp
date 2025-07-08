@@ -82,7 +82,12 @@
                 success: function(response) {
                     alert(response.message);
                     console.log(response);
+                    // 등록 성공 시 다음 페이지로 이동
+                    if (response.success) {
+                    	window.location.href = "/admin/CardList";
+                    }
                 },
+                
                 error: function(xhr) {
                     alert("오류가 발생했습니다: " + xhr.responseText);
                     console.error(xhr);

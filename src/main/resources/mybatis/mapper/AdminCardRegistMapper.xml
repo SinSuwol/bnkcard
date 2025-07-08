@@ -28,11 +28,10 @@
     #{cardName},
     #{cardType},
     #{cardBrand},
- 
     #{annualFee},
     #{issuedTo},
     #{service},
-    #{sService},
+    #{sService, jdbcType=VARCHAR},
     #{cardStatus},
     #{cardUrl},
     #{cardIssueDate},
