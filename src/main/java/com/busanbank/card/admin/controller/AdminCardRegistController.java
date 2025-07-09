@@ -31,11 +31,11 @@ public class AdminCardRegistController {
 		Map<String, Object> response = new HashMap<>();
 
 		// 관리자 세션 정보 
-		if (!adminSession.isLoggedIn()) {
-			response.put("success", false);
-			response.put("message", "로그인이 필요합니다.");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-		}
+//		if (!adminSession.isLoggedIn()) {
+//			response.put("success", false);
+//			response.put("message", "로그인이 필요합니다.");
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+//		}
 		
 		boolean result = adminCardRegistService.registerCard(cardDto);
 		response.put("success", result);

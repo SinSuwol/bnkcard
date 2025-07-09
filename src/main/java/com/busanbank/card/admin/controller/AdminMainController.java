@@ -29,7 +29,7 @@ public class AdminMainController {
 	// 검색어 관리 페이지
 	@GetMapping("/Search")
 	public String adminSearch() {
-		return "adminSearch";
+		return "admin/adminSearch";
 	}
 
 	// 메인 페이지
