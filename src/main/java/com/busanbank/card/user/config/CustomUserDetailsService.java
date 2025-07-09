@@ -20,8 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		UserDto user = userDao.findByUsername(username);
         if (user != null) {
-            System.out.println("사용자 조회됨: " + user.getUsername());
-            System.out.println("암호화된 비밀번호: " + user.getPassword());
             return new CustomUserDetails(user);
         }
         System.out.println("사용자 없음: " + username);

@@ -14,5 +14,6 @@
 	<input type="password" name="password" placeholder="비밀번호를 입력하세요."><br>
 	<input type="submit" value="로그인">
 </form>
+<a href="/user/regist">회원가입</a>
 </body>
 </html>

@@ -23,7 +23,7 @@ public class UserSecurityConfig {
 		
 		http.securityMatcher("/user/**", "/loginProc")
 			.authorizeHttpRequests((auth) -> auth
-				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 				);
 		
 		http.formLogin((auth) -> auth
