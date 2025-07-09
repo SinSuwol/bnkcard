@@ -27,4 +27,9 @@ public class MainController {
     public String cardListPage() {
         return "cardList";      // 카드리스트
     }
+	
+	@GetMapping("/cards/detail")
+	public String cardDetailPage() {
+	    return "cardDetail";   // 카드디테일
+	}
 }
