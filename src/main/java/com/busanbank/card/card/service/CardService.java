@@ -31,7 +31,7 @@ public class CardService {
     }
     
     //카드리스트 검색기능 
-    public List<CardDto> search(String keyword, String type){
-        return cardDao.searchByKeyword(keyword, type);
+    public List<CardDto> search(String keyword, String type, List<String> tags) {
+        return cardDao.searchByKeyword(keyword, type, tags);
     }
 }
