@@ -35,8 +35,13 @@ public class CardController {
     /** 카드리스트 검색기능 */
     @GetMapping("/cards/search")
     public List<CardDto> searchCards(@RequestParam(value="q",    required=false) String q,
-                                     @RequestParam(value="type", required=false) String type){
-        return cardService.search(q, type);
+                                     @RequestParam(value="type", required=false) String type,
+                                     @RequestParam(value="tags", required=false) String tags) {
+        // "할인,교통" → List<String>
+        List<String> tagList = (tags == null || tags.isBlank())
+                               ? List.of()
+                               : List.of(tags.split(","));
+        return cardService.search(q, type, tagList);
     }
 	
 }
