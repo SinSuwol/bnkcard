@@ -10,7 +10,7 @@
 <body>
 <h1>회원가입</h1>
 <hr>
-<form id="signupForm" action="/user/regist" method="post">
+<form id="signupForm" action="/regist/regist" method="post">
 	<table>
 		<tr>
 			<th>성명(실명)</th>
@@ -76,7 +76,7 @@
 				idErrorMsg.style.color = "green";				
 			}
 		}
-		xhr.open("POST", "/user/check-username");
+		xhr.open("POST", "/regist/check-username");
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("username=" + username);
 	}

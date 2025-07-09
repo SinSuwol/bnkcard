@@ -16,30 +16,21 @@ import com.busanbank.card.user.dto.UserJoinDto;
 import com.busanbank.card.user.util.AESUtil;
 
 @Controller
-@RequestMapping("/user")
-public class LoginController {
+@RequestMapping("/regist")
+public class RegistController {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
 	@Autowired
 	private IUserDao userDao;
 	
-	@GetMapping("/login")
-	public String login(@RequestParam(name = "error", required = false) String error) {
-		return "user/userLogin";
-	}
-	
-	@GetMapping("/mypage")
-	public String mypage() {
-		return "user/mypage";
-	}
-	
-	@GetMapping("/registForm")
+	//회원유형선택
+	@GetMapping("/selectMemberType")
 	public String registForm() {
-		return "user/userRegist";
+		return "user/selectMemberType";
 	}
 	
+	//아이디 중복확인
 	@PostMapping("/check-username")
 	public @ResponseBody String checkUsername(@RequestParam("username")String username) {
 		UserDto user = userDao.findByUsername(username);
@@ -49,18 +40,19 @@ public class LoginController {
 		return "사용가능한 아이디입니다.";
 	}
 	
+	//유효성 검사 및 insert
 	@PostMapping("/regist")
 	public String regist(UserJoinDto joinUser, Model model) {
 		
 		if(!joinUser.getPassword().equals(joinUser.getPasswordCheck())) {
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			return "user/userRegist";
+			return "user/userRegistForm";
 		}
 		String encodedPassword = bCryptPasswordEncoder.encode(joinUser.getPassword());
 		
 		if(joinUser.getRrn_front() == null || joinUser.getRrn_front().length() != 6 || joinUser.getRrn_back() == null || joinUser.getRrn_back().length() != 7) {
 			model.addAttribute("msg", "주민번호를 확인해주세요.");
-			return "user/userRegist";
+			return "user/userRegistForm";
 		}
 		
 		String rrn_gender = joinUser.getRrn_back().substring(0, 1);
@@ -70,7 +62,7 @@ public class LoginController {
             encryptedRrnTail = AESUtil.encrypt(rrn_tail);
         } catch (Exception e) {
             model.addAttribute("msg", "주민번호 암호화에 실패했습니다.");
-            return "user/userRegist";
+            return "user/userRegistForm";
         }
 		
 		UserDto user = new UserDto();
