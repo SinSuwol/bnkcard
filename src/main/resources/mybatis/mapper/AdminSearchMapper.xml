@@ -2,42 +2,100 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.busanbank.card.admin.dao.IAdminSearchDao">
-    <!-- 추천어 목록 -->
-    <select id="getRecommendedWords" resultType="map">
-        SELECT RECOMMENDED_NO, KEYWORD, REG_DATE
-        FROM RECOMMENDED_WORD
-        ORDER BY REG_DATE DESC
-    </select>
+<mapper namespace="com.busanbank.card.admin.dao.IAdminSearchDao">
+	<!-- 추천어 목록 -->
+	<select id="getRecommendedWords" resultType="map">
+		SELECT
+		RECOMMENDED_NO, KEYWORD, REG_DATE
+		FROM RECOMMENDED_WORD
+		ORDER BY
+		REG_DATE DESC
+	</select>
 
-    <!-- 금칙어 목록 -->
-    <select id="getProhibitedWords" resultType="map">
-        SELECT PROHIBITED_NO, KEYWORD, REG_DATE
-        FROM PROHIBITED_WORD
-        ORDER BY REG_DATE DESC
-    </select>
+	<!-- 금칙어 목록 -->
+	<select id="getProhibitedWords" resultType="map">
+		SELECT PROHIBITED_NO,
+		KEYWORD, REG_DATE
+		FROM PROHIBITED_WORD
+		ORDER BY REG_DATE DESC
+	</select>
 
-    <!-- 검색 로그 목록 -->
-    <select id="getSearchLogs" resultType="map">
-        SELECT SEARCH_LOG_NO, MEMBER_NO, KEYWORD, IS_PROHIBITED, IS_RECOMMENDED, SEARCH_DATE
-        FROM SEARCH_LOG
-        ORDER BY SEARCH_DATE DESC
-    </select>
+	<!-- 인기 검색어 TOP 10 -->
+	<select id="getTopKeywords" resultType="map">
+		SELECT KEYWORD, COUNT(*)
+		AS CNT
+		FROM SEARCH_LOG
+		WHERE IS_PROHIBITED = 'N'
+		GROUP BY KEYWORD
+		ORDER BY
+		CNT DESC
+		FETCH FIRST 10 ROWS ONLY
+	</select>
 
-    <!-- 인기 검색어 TOP 10 -->
-    <select id="getTopKeywords" resultType="map">
-        SELECT KEYWORD, COUNT(*) AS CNT
-        FROM SEARCH_LOG
-        GROUP BY KEYWORD
-        ORDER BY CNT DESC
-        FETCH FIRST 10 ROWS ONLY
-    </select>
+	<!-- 최근 검색어 30건 -->
+	<select id="getRecentSearchLogs" resultType="map">
+		SELECT
+		SEARCH_LOG_NO, MEMBER_NO, KEYWORD, IS_PROHIBITED, IS_RECOMMENDED,
+		SEARCH_DATE
+		FROM SEARCH_LOG
+		ORDER BY SEARCH_DATE DESC
+		FETCH FIRST 30 ROWS
+		ONLY
+	</select>
 
-    <!-- 최근 검색어 30건 -->
-    <select id="getRecentSearchLogs" resultType="map">
-        SELECT SEARCH_LOG_NO, MEMBER_NO, KEYWORD, IS_PROHIBITED, IS_RECOMMENDED, SEARCH_DATE
-        FROM SEARCH_LOG
-        ORDER BY SEARCH_DATE DESC
-        FETCH FIRST 30 ROWS ONLY
-    </select>
-  </mapper>
+	<!-- 추천어 등록 -->
+	<insert id="insertRecommended">
+		INSERT INTO RECOMMENDED_WORD (
+		RECOMMENDED_NO,
+		KEYWORD,
+		REG_DATE
+		) VALUES (
+		RECOMMENDED_WORD_SEQ.NEXTVAL,
+		#{keyword},
+		SYSDATE
+		)
+	</insert>
+
+	<!-- 추천어 수정 -->
+	<update id="updateRecommended">
+		UPDATE RECOMMENDED_WORD
+		SET KEYWORD = #{keyword}
+		WHERE
+		RECOMMENDED_NO = #{id}
+	</update>
+
+	<!-- 추천어 삭제 -->
+	<delete id="deleteRecommended">
+		DELETE FROM RECOMMENDED_WORD
+		WHERE RECOMMENDED_NO =
+		#{id}
+	</delete>
+
+	<!-- 금칙어 등록 -->
+	<insert id="insertProhibited">
+		INSERT INTO PROHIBITED_WORD (
+		PROHIBITED_NO,
+		KEYWORD,
+		REG_DATE
+		) VALUES (
+		PROHIBITED_WORD_SEQ.NEXTVAL,
+		#{keyword},
+		SYSDATE
+		)
+	</insert>
+
+	<!-- 금칙어 수정 -->
+	<update id="updateProhibited">
+		UPDATE PROHIBITED_WORD
+		SET KEYWORD = #{keyword}
+		WHERE
+		PROHIBITED_NO = #{id}
+	</update>
+
+	<!-- 금칙어 삭제 -->
+	<delete id="deleteProhibited">
+		DELETE FROM PROHIBITED_WORD
+		WHERE PROHIBITED_NO =
+		#{id}
+	</delete>
+</mapper>
