@@ -5,22 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <h1>관리자페이지</h1>
 <hr>
 
-<a href="/admin/CardList">상품목록</a>
-<a href="/admin/adminCardRegistForm">상품등록</a>
-<a href="/admin/Impression">상품인가</a>
-<a href="/admin/Search">검색어관리</a>
-<a href="">스크래핑</a>
-<a href="">FAQ관리</a>
-<a href="/admin/Mainpage">메인페이지로</a>
-<button id="logoutBtn">로그아웃</button>
 
 
+<img class="img" src="https://i3.ruliweb.com/img/21/02/19/177b605e043265ad2.jpeg">
+
+
+<script src="/js/adminHeader.js"></script>
 <script>
+
+
+
 document.getElementById("logoutBtn").addEventListener("click", function() {
     if (!confirm("로그아웃 하시겠습니까?")) return;
 
