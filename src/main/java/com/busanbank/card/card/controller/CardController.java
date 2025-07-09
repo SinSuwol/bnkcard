@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.busanbank.card.card.dto.CardDto;
@@ -29,6 +30,13 @@ public class CardController {
     @GetMapping("/cards/{cardNo}")
     public CardDto findOne(@PathVariable("cardNo") Long cardNo) {   // ★ 이름 명시
         return cardService.getCard(cardNo);
+    }
+    
+    /** 카드리스트 검색기능 */
+    @GetMapping("/cards/search")
+    public List<CardDto> searchCards(@RequestParam(value="q",    required=false) String q,
+                                     @RequestParam(value="type", required=false) String type){
+        return cardService.search(q, type);
     }
 	
 }

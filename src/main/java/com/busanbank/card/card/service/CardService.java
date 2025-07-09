@@ -29,4 +29,9 @@ public class CardService {
     public void increaseViewCount(long cardNo) {
         cardDao.updateViewCount(cardNo);
     }
+    
+    //카드리스트 검색기능 
+    public List<CardDto> search(String keyword, String type){
+        return cardDao.searchByKeyword(keyword, type);
+    }
 }

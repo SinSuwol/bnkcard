@@ -27,5 +27,36 @@
 		WHERE
 		CARD_NO = #{cardNo}
 	</update>
+	
+	<!-- 카드리스트 검색기능 -->
+<select id="searchByKeyword" resultType="com.busanbank.card.card.dto.CardDto">
+  SELECT
+      CARD_NO      AS cardNo,
+      CARD_NAME    AS cardName,
+      CARD_URL     AS cardUrl,
+      CARD_SLOGAN  AS cardSlogan,
+      CARD_TYPE    AS cardType,
+      CARD_BRAND   AS cardBrand,
+      VIEW_COUNT   AS viewCount,
+      ANNUAL_FEE   AS annualFee,
+      SERVICE      AS service,
+      S_SERVICE    AS sService
+  FROM CARD
+  <where>
+        <!-- ① 키워드 -->
+        <if test="keyword != null and keyword != ''">
+            (  LOWER(CARD_NAME)      LIKE '%' || LOWER(#{keyword}) || '%'
+            OR LOWER(SERVICE)        LIKE '%' || LOWER(#{keyword}) || '%'
+            OR LOWER(S_SERVICE)      LIKE '%' || LOWER(#{keyword}) || '%')
+        </if>
+        <!-- ② 카드 타입 (신용/체크) -->
+        <if test="type != null and type != ''">
+            <if test="keyword != null and keyword != ''">AND</if>
+            CARD_TYPE = #{type}
+        </if>
+  </where>
+  ORDER BY CARD_NO
+</select>
+	
 </mapper>
 
