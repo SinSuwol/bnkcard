@@ -9,4 +9,6 @@ import com.busanbank.card.card.dto.CardDto;
 @Mapper
 public interface IAdminCardDao {
 	public List<CardDto> getCardList();
+	
+	public int editCard(CardDto cardDto);
 }

@@ -83,9 +83,19 @@
 	<!-- 수정 모달창 -->
 	<div id="editModal">
 	    <h3>카드 수정</h3>
-	    <input type="text" id="editCardName" placeholder="카드 이름">
-	    <input type="number" id="editAnnualFee" placeholder="연회비">
+	    <input type="text" id="editCardName" placeholder="카드명">
+	    <input type="text" id="editCardType" placeholder="카드 종류">
 	    <input type="text" id="editCardBrand" placeholder="브랜드 (예: VISA)">
+	    <input type="number" id="editAnnualFee" placeholder="연회비">
+	    <input type="text" id="editIssuedTo" placeholder="발급대상">
+	    <input type="text" id="editService" placeholder="주요 서비스">
+	    <input type="text" id="editSService" placeholder="부가 서비스">
+	    <input type="text" id="editCardStatus" placeholder="상태">
+	    <input type="text" id="editCardUrl" placeholder="카드 URL">
+	    <input type="date" id="editCardIssueDate" placeholder="카드 발급일">
+	    <input type="date" id="editCardDueDate" placeholder="카드 만료일">
+	    <input type="text" id="editCardSlogan" placeholder="카드 슬로건">
+	    <input type="text" id="editCardNotice" placeholder="카드 공지사항">
 	    <br>
 	    <button onclick="submitEdit()">저장</button>
 	    <button onclick="closeModal()">닫기</button>
@@ -124,8 +134,18 @@
 	 	console.log(card)
         editingCardId = card.cardNo;
         document.getElementById('editCardName').value = card.cardName;
-        document.getElementById('editAnnualFee').value = card.annualFee;
+        document.getElementById('editCardType').value = card.cardType;
         document.getElementById('editCardBrand').value = card.cardBrand;
+        document.getElementById('editAnnualFee').value = card.annualFee;
+        document.getElementById('editIssuedTo').value = card.issuedTo;
+        document.getElementById('editService').value = card.service;
+        document.getElementById('editSService').value = card.sservice;
+        document.getElementById('editCardStatus').value = card.cardStatus;
+        document.getElementById('editCardUrl').value = card.cardUrl;
+        document.getElementById('editCardIssueDate').value = card.cardIssueDate;
+        document.getElementById('editCardDueDate').value = card.cardDueDate;
+        document.getElementById('editCardSlogan').value = card.cardSlogan;
+        document.getElementById('editCardNotice').value = card.cardNotice;
 
         document.getElementById('editModal').style.display = 'block';
         document.getElementById('modalOverlay').style.display = 'block';
@@ -141,11 +161,21 @@
     function submitEdit() {
         const updatedCard = {
             cardName: document.getElementById('editCardName').value,
-            annualFee: document.getElementById('editAnnualFee').value,
-            cardBrand: document.getElementById('editCardBrand').value
+            cardType: document.getElementById('editCardType').value,
+            cardBrand: document.getElementById('editCardBrand').value,
+            annualFee: parseInt(document.getElementById('editAnnualFee').value, 10),
+            issuedTo: document.getElementById('editIssuedTo').value,
+            service: document.getElementById('editService').value,
+            sService: document.getElementById('editSService').value,
+            cardStatus: document.getElementById('editCardStatus').value,
+            cardUrl: document.getElementById('editCardUrl').value,
+            cardIssueDate: document.getElementById('editCardIssueDate').value,
+            cardDueDate: document.getElementById('editCardDueDate').value,
+            cardSlogan: document.getElementById('editCardSlogan').value,
+            cardNotice: document.getElementById('editCardNotice').value,
         };
-
-        fetch(`/admin/card/${editingCardId}`, {
+		console.log(updatedCard);
+        fetch(`/admin/card/editCard/\${editingCardId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

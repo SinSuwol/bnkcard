@@ -6,4 +6,25 @@
 	<select id="getCardList" resultType="com.busanbank.card.card.dto.CardDto">
 		SELECT * FROM CARD ORDER BY CARD_NO
 	</select>
+	
+	<update id="editCard" parameterType="com.busanbank.card.card.dto.CardDto">
+        UPDATE card
+        SET
+            card_name = #{cardName},
+            card_type = #{cardType},
+            card_brand = #{cardBrand},
+            annual_fee = #{annualFee},
+            issuedto = #{issuedTo},
+            service = #{service},
+            s_service = #{sService, jdbcType=VARCHAR},
+            card_status = #{cardStatus},
+            card_url = #{cardUrl},
+            card_issuedate = #{cardIssueDate},
+            card_duedate = #{cardDueDate},
+            card_slogan = #{cardSlogan},
+            card_notice = #{cardNotice},
+            edit_date = SYSDATE
+        WHERE
+            card_no = #{cardNo}
+    </update>
 </mapper>
