@@ -239,24 +239,40 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 
 /* 카드 출력 */
-function drawCards(){
-  const grid=document.getElementById('cardGrid');
-  const end=Math.min(currentIndex+9,fullCardList.length);
-  for(let i=currentIndex;i<end;i++){
-    const c=fullCardList[i];
-    const div=document.createElement('div');
-    div.className='item';
-    div.onclick=()=>goDetail(c.cardNo);     /* ← 카드 전체 클릭 이동 */
-    div.innerHTML=`
-      <img src="${c.cardUrl}" alt="${c.cardName}"><br>
-      <strong>${c.cardName}</strong><br>
+function drawCards() {
+  const grid = document.getElementById('cardGrid');
+  const end  = Math.min(currentIndex + 9, fullCardList.length);
+
+  for (let i = currentIndex; i < end; i++) {
+    const c   = fullCardList[i];
+    const div = document.createElement('div');
+    div.className = 'item';              // ← 부모 div는 클릭 이벤트 없음!
+
+    div.innerHTML = `
+      <img src="${c.cardUrl}" alt="${c.cardName}"
+           style="cursor:pointer"
+           onclick="goDetail(${c.cardNo})"><br>
+
+      <strong style="cursor:pointer"
+              onclick="goDetail(${c.cardNo})">${c.cardName}</strong><br>
+
       <span style="font-size:12px;">${c.cardSlogan || ''}</span><br>
-      <label><input type="checkbox" value="${c.cardNo}" onclick="event.stopPropagation(); toggleCompare(this)"> 비교함 담기</label><br>
-      <button style="margin-top:6px;" onclick="event.stopPropagation(); goDetail(${c.cardNo})">상세보기</button>`;
+
+      <label onclick="event.stopPropagation();">
+        <input type="checkbox"
+               value="${c.cardNo}"
+               onclick="event.stopPropagation(); toggleCompare(this)">
+        비교함 담기
+      </label><br>
+
+      <button style="margin-top:6px;"
+              onclick="goDetail(${c.cardNo})">상세보기</button>`;
     grid.appendChild(div);
   }
-  currentIndex=end;
-  if(currentIndex>=fullCardList.length)document.getElementById('loadMoreWrap').style.display='none';
+
+  currentIndex = end;
+  if (currentIndex >= fullCardList.length)
+    document.getElementById('loadMoreWrap').style.display = 'none';
 }
 function loadMore(){drawCards();}
 
