@@ -2,11 +2,13 @@ package com.busanbank.card.card.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.busanbank.card.card.dto.CardDto;
 import com.busanbank.card.card.service.CardService;
@@ -20,19 +22,22 @@ public class CardController {
 
     private final CardService cardService;
 
-    /** 전체 카드 목록 JSON  ── GET /api/cards */
+    // 전체 카드 목록
     @GetMapping("/cards")
     public List<CardDto> findAll() {
         return cardService.getCardList();
     }
 
-    /** 단건 조회          ── GET /api/cards/3 */
-    @GetMapping("/cards/{cardNo}")
-    public CardDto findOne(@PathVariable("cardNo") Long cardNo) {   // ★ 이름 명시
-        return cardService.getCard(cardNo);
+    //카드디테일(단건 조회)  
+    @GetMapping("/cards/{cardNo}")  // ← 메서드 경로
+    public CardDto findOne(@PathVariable("cardNo") Long cardNo) {
+        CardDto dto = cardService.getCard(cardNo);
+        if (dto == null)            // 없으면 404 던지기 (선택)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 카드");
+        return dto;
     }
     
-    /** 카드리스트 검색기능 */
+    //카드리스트 검색기능 
     @GetMapping("/cards/search")
     public List<CardDto> searchCards(@RequestParam(value="q",    required=false) String q,
                                      @RequestParam(value="type", required=false) String type,
@@ -43,5 +48,8 @@ public class CardController {
                                : List.of(tags.split(","));
         return cardService.search(q, type, tagList);
     }
+    
+    
+   
 	
 }
