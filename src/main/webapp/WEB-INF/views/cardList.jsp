@@ -12,6 +12,31 @@
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 /* ---------- 슬라이더 ---------- */
+.slick-prev, .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.slick-prev:hover, .slick-next:hover {
+  background: #000;
+  color: #fff;
+}
+.slick-prev {
+  left: 40px;
+}
+.slick-next {
+  right: 40px;
+}
+
 .slider-container {
   max-width: 1000px;
   margin: 20px auto 50px;
@@ -341,12 +366,13 @@ fetch('/api/cards')
     	  slidesToScroll: 1,
     	  autoplay: true,
     	  autoplaySpeed: 2000,
-    	  arrows: true,     
-    	  dots: false,      
+    	  arrows: true,
+    	  dots: false,
     	  infinite: true,
-    	  centerMode: false,
     	  draggable: false,
-    	  swipe: false
+    	  swipe: false,
+    	  prevArrow: '<button class="slick-prev">&#10094;</button>',
+    	  nextArrow: '<button class="slick-next">&#10095;</button>'
     	});
   });
 </script>
