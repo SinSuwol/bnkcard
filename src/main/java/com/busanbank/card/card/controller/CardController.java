@@ -44,17 +44,28 @@ public class CardController {
 	// 카드리스트 검색기능
 	@GetMapping("/cards/search")
 	public List<CardDto> searchCards(@RequestParam(value = "q", required = false) String q,
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "tags", required = false) String tags) {
-		// 금칙어 검사
-		if (q != null && adminSearchDao.isProhibitedKeyword(q) > 0) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 단어는 검색할 수 없습니다");
-		}
+	                                 @RequestParam(value = "type", required = false) String type,
+	                                 @RequestParam(value = "tags", required = false) String tags) {
 
-		// "할인,교통" → List<String>
-		List<String> tagList = (tags == null || tags.isBlank()) ? List.of() : List.of(tags.split(","));
-		return cardService.search(q, type, tagList);
+	    if (q != null && adminSearchDao.isProhibitedKeyword(q) > 0) {
+	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 단어는 검색할 수 없습니다");
+	    }
+
+	    // [조건 추가] 기존 type이 없을 때만 type 값을 q로 설정
+	    if (type == null || type.isBlank()) {
+	        if ("신용".equals(q)) {
+	            type = "신용";
+	            q = null;
+	        } else if ("체크".equals(q)) {
+	            type = "체크";
+	            q = null;
+	        }
+	    }
+
+	    List<String> tagList = (tags == null || tags.isBlank()) ? List.of() : List.of(tags.split(","));
+	    return cardService.search(q, type, tagList);
 	}
+
 
     
     

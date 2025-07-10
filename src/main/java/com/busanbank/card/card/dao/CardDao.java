@@ -15,7 +15,9 @@ public interface CardDao {
 
     int updateViewCount(@Param("cardNo") long cardNo);  // 조회수  (예시)
     
-    List<CardDto> searchByKeyword(@Param("keyword") String keyword,
-            @Param("type")    String type,
-            @Param("tags")    List<String> tags); //카드 리스트 정렬(?)
+    List<CardDto> searchByKeyword(
+    	    @Param("keyword") String keyword,
+    	    @Param("type") String type,
+    	    @Param("tags") List<String> tags
+    	); //카드 리스트 정렬(?)
 }

@@ -45,30 +45,29 @@
       S_SERVICE    AS sService
   FROM CARD
   <where>
-      <!-- ① 키워드 -->
-      <if test="keyword != null and keyword != ''">
-          ( LOWER(CARD_NAME) LIKE '%' || LOWER(#{keyword}) || '%'
-            OR LOWER(SERVICE)   LIKE '%' || LOWER(#{keyword}) || '%'
-            OR LOWER(S_SERVICE) LIKE '%' || LOWER(#{keyword}) || '%')
-      </if>
+  <if test="keyword != null and keyword != ''">
+  (
+    LOWER(CARD_NAME) LIKE '%' || LOWER(#{keyword}) || '%'
+    OR LOWER(SERVICE) LIKE '%' || LOWER(#{keyword}) || '%'
+    OR LOWER(S_SERVICE) LIKE '%' || LOWER(#{keyword}) || '%'
+    OR LOWER(CARD_TYPE) LIKE '%' || LOWER(#{keyword}) || '%' 
+  )
+</if>
 
-      <!-- ② 카드 타입 -->
-      <if test="type != null and type != ''">
-          <if test="keyword != null and keyword != ''"> AND </if>
-          CARD_TYPE = #{type}
-      </if>
+  <if test="type != null and type != ''">
+    AND CARD_TYPE = #{type}
+  </if>
 
-      <!-- ③ 태그 목록 -->
-      <if test="tags != null and tags.size() > 0">
-          <if test="keyword != null or (type != null and type != '')"> AND </if>
-          (
-            <foreach collection="tags" item="tg" separator=" OR ">
-              LOWER(SERVICE)   LIKE '%' || LOWER(#{tg}) || '%'
-              OR LOWER(S_SERVICE) LIKE '%' || LOWER(#{tg}) || '%'
-            </foreach>
-          )
-      </if>
-  </where>
+  <if test="tags != null and tags.size() > 0">
+    AND (
+      <foreach collection="tags" item="tg" separator=" OR ">
+        LOWER(SERVICE) LIKE '%' || LOWER(#{tg}) || '%'
+        OR LOWER(S_SERVICE) LIKE '%' || LOWER(#{tg}) || '%'
+      </foreach>
+    )
+  </if>
+</where>
+
   ORDER BY CARD_NO
 </select>
 
