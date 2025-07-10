@@ -3,6 +3,43 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.busanbank.card.admin.dao.IAdminSearchDao">
+
+	<!-- 검색어 로그 저장 -->
+	<insert id="insertSearchLog"
+		parameterType="com.busanbank.card.admin.dto.SearchLogDto">
+		INSERT INTO SEARCH_LOG (
+		SEARCH_LOG_NO,
+		MEMBER_NO,
+		KEYWORD,
+		IS_PROHIBITED,
+		IS_RECOMMENDED,
+		SEARCH_DATE
+		) VALUES (
+		SEARCH_LOG_SEQ.NEXTVAL,
+		#{memberNo, jdbcType=NUMERIC},
+		#{keyword},
+		#{isProhibited},
+		#{isRecommended},
+		SYSDATE
+		)
+	</insert>
+
+	<!-- 금칙어 여부 -->
+	<select id="isProhibitedKeyword" resultType="int">
+		SELECT COUNT(*)
+		FROM PROHIBITED_WORD
+		WHERE KEYWORD = #{keyword}
+	</select>
+
+	<!-- 추천어 여부 -->
+	<select id="isRecommendedKeyword" resultType="int">
+		SELECT COUNT(*)
+		FROM RECOMMENDED_WORD
+		WHERE KEYWORD = #{keyword}
+	</select>
+
+
+
 	<!-- 추천어 목록 -->
 	<select id="getRecommendedWords" resultType="map">
 		SELECT
@@ -98,4 +135,28 @@
 		WHERE PROHIBITED_NO =
 		#{id}
 	</delete>
+	
+	<!-- 기간별 검색 로그 조회 -->
+<select id="getSearchLogsByPeriod" resultType="map">
+  SELECT
+    SEARCH_LOG_NO,
+    MEMBER_NO,
+    KEYWORD,
+    IS_PROHIBITED,
+    IS_RECOMMENDED,
+    SEARCH_DATE
+  FROM
+    SEARCH_LOG
+  <where>
+    <if test="from != null and from != ''">
+      SEARCH_DATE &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
+    </if>
+    <if test="to != null and to != ''">
+      AND SEARCH_DATE &lt;= TO_DATE(#{to}, 'YYYY-MM-DD') + 1 - (1/86400)
+    </if>
+  </where>
+  ORDER BY
+    SEARCH_DATE DESC
+</select>
+	
 </mapper>
