@@ -28,10 +28,10 @@
       <p><strong>연회비:</strong> <span id="annualFee"></span></p>
       <p><strong>슬로건:</strong> <span id="cardSlogan"></span></p>
       <p><strong>발급대상:</strong> <span id="issuedTo"></span></p>
+      <p><strong>조회수:</strong> <span id="viewCount"></span></p> <!-- ← 조회수 표시 -->
     </div>
   </div>
 
- 
   <div class="section">
     <h3>기본 혜택</h3>
     <pre id="service"></pre>
@@ -49,30 +49,31 @@
 </div>
 
 <script>
-  /* ① URL에서 no 파라미터 추출 */
   const urlParams = new URLSearchParams(location.search);
-  const cardNo = urlParams.get("no");   // ← 단 한 번만 선언!
-
-  console.log("카드번호:", cardNo);     // 4 가 찍혀야 정상
+  const cardNo = urlParams.get("no");
 
   if (!cardNo) {
     alert("카드 번호가 없습니다.");
     throw new Error("카드 번호 누락");
   }
 
-  /* ② Ajax 호출 */
+  // ① 카드 상세 정보 호출 + ② 조회수 증가 요청
   fetch(`/api/cards/${cardNo}`)
-  .then(r => {
-    if (!r.ok) throw new Error('존재하지 않는 카드');
-    return r.json();
-  })
-  .then(renderCard)
-  .catch(err => {
-    alert('카드 정보를 불러올 수 없습니다.');
-    console.error(err);
-  });
+    .then(r => {
+      if (!r.ok) throw new Error('존재하지 않는 카드');
+      return r.json();
+    })
+    .then(data => {
+      renderCard(data);
+      // ③ 조회수 증가 요청
+      fetch(`/api/cards/${cardNo}/view`, { method: 'PUT' });
+    })
+    .catch(err => {
+      alert('카드 정보를 불러올 수 없습니다.');
+      console.error(err);
+    });
 
-  /* ③ 화면 렌더링 */
+  // 카드 상세 정보 렌더링
   function renderCard(c) {
     document.title = `${c.cardName} 상세`;
     document.getElementById('cardImg').src        = c.cardUrl;
@@ -82,12 +83,12 @@
     document.getElementById('annualFee').innerText   = (c.annualFee ?? 0).toLocaleString() + '원';
     document.getElementById('cardSlogan').innerText  = c.cardSlogan ?? '-';
     document.getElementById('issuedTo').innerText    = c.issuedTo ?? '-';
+    document.getElementById('viewCount').innerText   = c.viewCount ?? '0';
     document.getElementById('service').innerText     = c.service   ?? '';
     document.getElementById('sService').innerText    = c.sService  ?? '';
     document.getElementById('notice').innerText      = c.cardNotice?? '';
   }
 </script>
-
 
 </body>
 </html>

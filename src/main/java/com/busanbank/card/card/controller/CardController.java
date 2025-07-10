@@ -3,8 +3,10 @@ package com.busanbank.card.card.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +49,13 @@ public class CardController {
                                ? List.of()
                                : List.of(tags.split(","));
         return cardService.search(q, type, tagList);
+    }
+    
+    //카드디테일 페이지에서 view_count 상승시키기
+    @PutMapping("/cards/{cardNo}/view")
+    public ResponseEntity<Void> increaseViewCount(@PathVariable("cardNo") int cardNo) {
+        cardService.increaseViewCount(cardNo);
+        return ResponseEntity.ok().build();  // 200 OK 응답
     }
     
     
