@@ -114,10 +114,12 @@
                 const li = document.createElement('li');
                 li.className = 'card';
                 li.innerHTML = `
+                	<p style="color: green">\${card.cardStatus === '게시중' ? '게시중' : '&nbsp;'}</p>
                 	<img src=\${card.cardUrl}>
                     <h3 class="hi">\${card.cardName}</h3>
                     <p>연회비: \${card.annualFee}원</p>
                     <p>브랜드: \${card.cardBrand}</p>
+                    <p>조회수: \${card.viewCount}</p>
                     <button>게시</button>
                     <button onclick='openEditModal(\${JSON.stringify(card)})'>수정</button>
                     <button onclick='deleteCard(\${card.cardNo})'>삭제</button>
