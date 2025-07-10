@@ -47,7 +47,7 @@
 	  )
     </insert>
     
-    <insert id="insertPermission" parameterType="com.busanbank.card.card.dto.CardDto">
+    <insert id="insertPermission" parameterType="com.busanbank.card.admin.dto.PermissionParamDto">
         INSERT INTO PERMISSION (
         PER_NO,
         CARD_NO,
@@ -56,7 +56,8 @@
         ADMIN,
         S_ADMIN,
         REG_DATE,
-        PER_DATE
+        PER_DATE,
+        PER_CONTENT
 	  ) VALUES (
 	    PER_SEQ.NEXTVAL,
 	    #{cardNo},
@@ -65,7 +66,8 @@
 	    NULL,
 	    NULL,
 	    SYSDATE,
-	    NULL
+	    NULL,
+	    #{perContent}
 	  )
     </insert>
 </mapper>

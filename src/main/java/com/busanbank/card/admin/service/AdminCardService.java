@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.busanbank.card.admin.dao.IAdminCardDao;
+import com.busanbank.card.admin.dto.PermissionParamDto;
 import com.busanbank.card.card.dto.CardDto;
 
 @Service
@@ -14,9 +15,14 @@ public class AdminCardService {
 	IAdminCardDao adminCardDao;
 
 	@Transactional
-	public boolean insertCardTemp(CardDto cardDto) {
+	public boolean insertCardTemp(CardDto cardDto, String s) {
+		PermissionParamDto perDto = new PermissionParamDto();
+		perDto.setCardNo(cardDto.getCardNo());
+		perDto.setPerContent(s);
+		
+		
 		int updated1 = adminCardDao.insertCardTemp(cardDto);
-		int updated2 = adminCardDao.insertPermission(cardDto);
+		int updated2 = adminCardDao.insertPermission(perDto);
 		
 		return updated1 > 0 && updated2 > 0;
 	}
