@@ -1,5 +1,6 @@
 package com.busanbank.card.user.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,6 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Order(2)
 public class UserSecurityConfig {
 
+	@Autowired
+	private CustomLoginSuccessHandler customLoginSuccessHandler;
+	
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -29,7 +33,7 @@ public class UserSecurityConfig {
 		http.formLogin((auth) -> auth
 				.loginPage("/user/login")
 				.loginProcessingUrl("/loginProc")
-				.defaultSuccessUrl("/user/mypage")
+				.successHandler(customLoginSuccessHandler)
 				.failureUrl("/user/login?error=true")
 				.permitAll()
 				);
