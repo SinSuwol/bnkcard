@@ -9,6 +9,7 @@ public class UserJoinDto {
 	private String password;
 	private String passwordCheck;
 	private String name;
+	private String role;
 	
 	//주민등록번호
 	private String rrn_front;

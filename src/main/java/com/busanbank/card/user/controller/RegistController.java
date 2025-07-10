@@ -30,6 +30,20 @@ public class RegistController {
 		return "user/selectMemberType";
 	}
 	
+	//약관 동의
+	@GetMapping("/terms")
+	public String terms(@RequestParam("role")String role, Model model) {
+		model.addAttribute("role", role);
+		return "user/terms";
+	}
+	
+	//정보입력 폼 페이지
+	@GetMapping("/userRegistForm")
+	public String userRegistForm(@RequestParam("role")String role, Model model) {
+		model.addAttribute("role", role);
+		return "user/userRegistForm";
+	}
+	
 	//아이디 중복확인
 	@PostMapping("/check-username")
 	public @ResponseBody String checkUsername(@RequestParam("username")String username) {
@@ -78,7 +92,7 @@ public class RegistController {
 		user.setAddress1(joinUser.getAddress1());
 		user.setAddress2(joinUser.getAddress2());
 		
-		user.setRole("ROLE_PERSON");
+		user.setRole(joinUser.getRole());
 		
 		userDao.insertMember(user);
 		

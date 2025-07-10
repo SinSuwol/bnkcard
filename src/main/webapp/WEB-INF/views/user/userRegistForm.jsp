@@ -44,6 +44,7 @@
 			</td>
 		</tr>
 	</table>
+	<input type="hidden" name="role" value="${role}">
 	<button type="button" onclick="validateAndSubmit()">등록</button>
 	<button type="button" onclick="">취소</button>
 </form>
