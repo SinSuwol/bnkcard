@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>검색어 관리 대시보드</title>
+<link rel="stylesheet" href="/css/style.css">
 <style>
 body {
 	font-family: sans-serif;
@@ -26,7 +27,8 @@ th, td {
 </style>
 </head>
 <body>
-	<h1>검색어 관리 대시보드</h1>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
+  <h1>검색어 관리 대시보드</h1>
 
 	<a href="/admin/Statistics">통계</a>
 	<!-- 추천어 관리 -->
@@ -77,21 +79,22 @@ th, td {
 	<input type="date" id="toDate">
 	<button onclick="loadLogs()">조회</button>
 
-	<table id="logs-table">
-		<thead>
-			<tr>
-				<th>No</th>
-				<th>회원번호</th>
-				<th>키워드</th>
-				<th>추천어</th>
-				<th>금칙어</th>
-				<th>검색일자</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
-	<div id="log-pagination" style="margin-top: 10px;"></div>
-	<script>
+  <table id="logs-table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>회원번호</th>
+        <th>키워드</th>
+        <th>추천어</th>
+        <th>금칙어</th>
+        <th>검색일자</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  
+<script src="/js/adminHeader.js"></script>
+<script>
 /* 오늘 날짜 기본값 */
 window.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toISOString().substring(0, 10);

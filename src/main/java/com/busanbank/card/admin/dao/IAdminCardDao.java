@@ -10,5 +10,10 @@ import com.busanbank.card.card.dto.CardDto;
 public interface IAdminCardDao {
 	public List<CardDto> getCardList();
 	
-	public int editCard(CardDto cardDto);
+	public int insertCardTemp(CardDto cardDto);
+	
+	public int insertPermission(CardDto cardDto);
+	//카드번호, 담당관리자
+	
+	
 }

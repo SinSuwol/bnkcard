@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,11 +30,11 @@ public class AdminCardController {
         return cards;
     }
 	
-	@PutMapping("/editCard/{cardNo}")
+	@PostMapping("/editCard/{cardNo}")
     public String editCard(@PathVariable("cardNo") Long cardNo, @RequestBody CardDto cardDto) {
 		cardDto.setCardNo(cardNo); // 카드 번호 설정
 		System.out.println(cardDto);
-        boolean result = adminCardService.editCard(cardDto);
+        boolean result = adminCardService.insertCardTemp(cardDto);
         return result ? "success" : "fail";
     }
 }
