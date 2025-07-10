@@ -33,8 +33,7 @@ public class AdminCardController {
 	@PostMapping("/editCard/{cardNo}")
     public String editCard(@PathVariable("cardNo") Long cardNo, @RequestBody CardDto cardDto) {
 		cardDto.setCardNo(cardNo); // 카드 번호 설정
-		System.out.println(cardDto);
-        boolean result = adminCardService.insertCardTemp(cardDto);
+        boolean result = adminCardService.insertCardTemp(cardDto,"수정");
         return result ? "success" : "fail";
     }
 }
