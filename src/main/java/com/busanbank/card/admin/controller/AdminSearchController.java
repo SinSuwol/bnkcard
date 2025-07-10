@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.busanbank.card.admin.dao.IAdminSearchDao;
+import com.busanbank.card.admin.dto.SearchLogDto;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/admin/Search")
@@ -21,6 +26,45 @@ public class AdminSearchController {
 
 	@Autowired
 	private IAdminSearchDao adminSearchDao;
+
+	// cardList.jsp
+	// 검색어 로그 테이블 저장
+	@PostMapping("/searchlog")
+	public void insertSearchLog(
+	        @RequestBody SearchLogDto dto,
+	        HttpSession session) {
+
+	    // 세션에서 회원번호 꺼내기
+	    Long memberNo = (Long) session.getAttribute("loginMemberNo");
+	    dto.setMemberNo(memberNo);
+
+	    // 금칙어/추천어 여부 체크
+	    boolean isProhibited = adminSearchDao.isProhibitedKeyword(dto.getKeyword()) > 0;
+	    boolean isRecommended = adminSearchDao.isRecommendedKeyword(dto.getKeyword()) > 0;
+
+	    dto.setIsProhibited(isProhibited ? "Y" : "N");
+	    dto.setIsRecommended(isRecommended ? "Y" : "N");
+
+	    // 저장
+	    adminSearchDao.insertSearchLog(dto);
+	}
+	
+	// 기간별 검색 로그 조회
+	@GetMapping("/logs")
+	public List<Map<String, Object>> getSearchLogsByPeriod(
+	    @RequestParam(value = "from", required = false) String from,
+	    @RequestParam(value = "to", required = false) String to) {
+
+	    Map<String, Object> param = Map.of(
+	        "from", from,
+	        "to", to
+	    );
+	    return adminSearchDao.getSearchLogsByPeriod(param);
+	}
+
+
+
+
 
 	// 추천어 목록
 	@GetMapping("/recommended")
@@ -86,4 +130,5 @@ public class AdminSearchController {
 	public void deleteProhibited(@PathVariable("id") Long id) {
 		adminSearchDao.deleteProhibited(id);
 	}
+
 }

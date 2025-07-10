@@ -5,16 +5,17 @@
 <meta charset="UTF-8">
 <title>검색어 관리 대시보드</title>
 <style>
-  button {
-    margin: 0 2px;
-    padding: 4px 8px;
-  }
+body { font-family: sans-serif; }
+button { margin: 0 2px; padding: 4px 8px; }
+table { border-collapse: collapse; margin-top:10px; }
+th, td { border:1px solid #ccc; padding:4px 8px; }
 </style>
 </head>
 <body>
   <h1>검색어 관리 대시보드</h1>
 
-  <h2>추천어 목록</h2>
+  <!-- 추천어 관리 -->
+  <h2>추천어</h2>
   <button onclick="addRecommended()">[+] 추천어 등록</button>
   <table id="recommended-table">
     <thead>
@@ -28,7 +29,8 @@
     <tbody></tbody>
   </table>
 
-  <h2>금칙어 목록</h2>
+  <!-- 금칙어 관리 -->
+  <h2>금칙어</h2>
   <button onclick="addProhibited()">[+] 금칙어 등록</button>
   <table id="prohibited-table">
     <thead>
@@ -42,6 +44,7 @@
     <tbody></tbody>
   </table>
 
+  <!-- 인기 검색어 -->
   <h2>인기 검색어 TOP10</h2>
   <table id="top-table">
     <thead>
@@ -53,8 +56,14 @@
     <tbody></tbody>
   </table>
 
-  <h2>최근 검색어 (30건)</h2>
-  <table id="recent-table">
+  <!-- 기간별 로그 조회 -->
+  <h2>검색어 로그 조회</h2>
+  <input type="date" id="fromDate"> ~
+  <input type="date" id="toDate">
+  <button onclick="loadLogs()">조회</button>
+  <button onclick="exportExcel()">엑셀 다운로드</button>
+
+  <table id="logs-table">
     <thead>
       <tr>
         <th>No</th>
@@ -68,147 +77,113 @@
     <tbody></tbody>
   </table>
 
-  <script>
-    // 추천어
-    fetch('/admin/Search/recommended')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector('#recommended-table tbody');
-        data.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>\${item.RECOMMENDED_NO}</td>
-            <td>\${item.KEYWORD}</td>
-            <td>\${item.REG_DATE ? item.REG_DATE.substring(0,10) : ''}</td>
-            <td>
-              <button onclick="editRecommended(\${item.RECOMMENDED_NO}, '\${item.KEYWORD}')">수정</button>
-              <button onclick="deleteRecommended(\${item.RECOMMENDED_NO})">삭제</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
+<script>
+/* 공통 fetch 함수 */
+function fetchAndRender(url, tableSelector, rowTemplateFn) {
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const tbody = document.querySelector(tableSelector + ' tbody');
+      tbody.innerHTML = '';
+      data.forEach(item => tbody.appendChild(rowTemplateFn(item)));
+    });
+}
 
-    // 금칙어
-    fetch('/admin/Search/prohibited')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector('#prohibited-table tbody');
-        data.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>\${item.PROHIBITED_NO}</td>
-            <td>\${item.KEYWORD}</td>
-            <td>\${item.REG_DATE ? item.REG_DATE.substring(0,10) : ''}</td>
-            <td>
-              <button onclick="editProhibited(\${item.PROHIBITED_NO}, '\${item.KEYWORD}')">수정</button>
-              <button onclick="deleteProhibited(\${item.PROHIBITED_NO})">삭제</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
+/* 추천어 */
+fetchAndRender('/admin/Search/recommended', '#recommended-table', item => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>\${item.RECOMMENDED_NO}</td>
+    <td>\${item.KEYWORD}</td>
+    <td>\${item.REG_DATE ? item.REG_DATE.substring(0,10) : ''}</td>
+    <td>
+      <button onclick="editRecommended(\${item.RECOMMENDED_NO}, '\${item.KEYWORD}')">수정</button>
+      <button onclick="deleteRecommended(\${item.RECOMMENDED_NO})">삭제</button>
+    </td>
+  `;
+  return tr;
+});
 
-    // 인기 검색어 TOP10
-    fetch('/admin/Search/top')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector('#top-table tbody');
-        data.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>\${item.KEYWORD}</td>
-            <td>\${item.CNT}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
+/* 금칙어 */
+fetchAndRender('/admin/Search/prohibited', '#prohibited-table', item => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>\${item.PROHIBITED_NO}</td>
+    <td>\${item.KEYWORD}</td>
+    <td>\${item.REG_DATE ? item.REG_DATE.substring(0,10) : ''}</td>
+    <td>
+      <button onclick="editProhibited(\${item.PROHIBITED_NO}, '\${item.KEYWORD}')">수정</button>
+      <button onclick="deleteProhibited(\${item.PROHIBITED_NO})">삭제</button>
+    </td>
+  `;
+  return tr;
+});
 
-    // 최근 검색어
-    fetch('/admin/Search/recent')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector('#recent-table tbody');
-        data.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>\${item.SEARCH_LOG_NO}</td>
-            <td>\${item.MEMBER_NO}</td>
-            <td>\${item.KEYWORD}</td>
-            <td>\${item.IS_RECOMMENDED}</td>
-            <td>\${item.IS_PROHIBITED}</td>
-            <td>\${item.SEARCH_DATE ? item.SEARCH_DATE.substring(0,10) : ''}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
+/* 인기 검색어 */
+fetchAndRender('/admin/Search/top', '#top-table', item => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>\${item.KEYWORD}</td>
+    <td>\${item.CNT}</td>
+  `;
+  return tr;
+});
 
-    // 등록/수정/삭제 함수
-    // 추천어 등록
-    function addRecommended() {
-      const keyword = prompt("추천어 입력:");
-      if (keyword) {
-        fetch('/admin/Search/recommended', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ keyword: keyword })
-        }).then(() => location.reload());
-      }
-    }
+/* 로그 조회 */
+function loadLogs() {
+  const from = document.getElementById('fromDate').value;
+  const to = document.getElementById('toDate').value;
 
-    // 추천어 수정
-    function editRecommended(id, oldKeyword) {
-      const keyword = prompt("수정할 추천어:", oldKeyword);
-      if (keyword) {
-        fetch('/admin/Search/recommended/' + id, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ keyword: keyword })
-        }).then(() => location.reload());
-      }
-    }
+  let url = '/admin/Search/logs';
+  const params = [];
+  if(from) params.push('from=' + from);
+  if(to) params.push('to=' + to);
+  if(params.length) url += '?' + params.join('&');
 
-    // 추천어 삭제
-    function deleteRecommended(id) {
-      if (confirm("삭제하시겠습니까?")) {
-        fetch('/admin/Search/recommended/' + id, {
-          method: 'DELETE'
-        }).then(() => location.reload());
-      }
-    }
+  fetchAndRender(url, '#logs-table', item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>\${item.SEARCH_LOG_NO}</td>
+      <td>\${item.MEMBER_NO || '-'}</td>
+      <td>\${item.KEYWORD}</td>
+      <td>\${item.IS_RECOMMENDED}</td>
+      <td>\${item.IS_PROHIBITED}</td>
+      <td>\${item.SEARCH_DATE ? item.SEARCH_DATE.substring(0,10) : ''}</td>
+    `;
+    return tr;
+  });
+}
 
-    // 금칙어 등록
-    function addProhibited() {
-      const keyword = prompt("금칙어 입력:");
-      if (keyword) {
-        fetch('/admin/Search/prohibited', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ keyword: keyword })
-        }).then(() => location.reload());
-      }
-    }
+/* 엑셀 다운로드 */
+function exportExcel() {
+  alert('엑셀 다운로드는 서버 구현 필요!');
+}
 
-    // 금칙어 수정
-    function editProhibited(id, oldKeyword) {
-      const keyword = prompt("수정할 금칙어:", oldKeyword);
-      if (keyword) {
-        fetch('/admin/Search/prohibited/' + id, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ keyword: keyword })
-        }).then(() => location.reload());
-      }
-    }
-
-    // 금칙어 삭제
-    function deleteProhibited(id) {
-      if (confirm("삭제하시겠습니까?")) {
-        fetch('/admin/Search/prohibited/' + id, {
-          method: 'DELETE'
-        }).then(() => location.reload());
-      }
-    }
-  </script>
+/* 추천어/금칙어 CRUD */
+function addRecommended() {
+  const k = prompt("추천어 입력:"); if(!k) return;
+  fetch('/admin/Search/recommended', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({keyword:k})}).then(()=>location.reload());
+}
+function editRecommended(id, oldK) {
+  const k = prompt("수정할 추천어:", oldK); if(!k) return;
+  fetch('/admin/Search/recommended/'+id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({keyword:k})}).then(()=>location.reload());
+}
+function deleteRecommended(id) {
+  if(confirm("삭제하시겠습니까?"))
+    fetch('/admin/Search/recommended/'+id, {method:'DELETE'}).then(()=>location.reload());
+}
+function addProhibited() {
+  const k = prompt("금칙어 입력:"); if(!k) return;
+  fetch('/admin/Search/prohibited', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({keyword:k})}).then(()=>location.reload());
+}
+function editProhibited(id, oldK) {
+  const k = prompt("수정할 금칙어:", oldK); if(!k) return;
+  fetch('/admin/Search/prohibited/'+id, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({keyword:k})}).then(()=>location.reload());
+}
+function deleteProhibited(id) {
+  if(confirm("삭제하시겠습니까?"))
+    fetch('/admin/Search/prohibited/'+id, {method:'DELETE'}).then(()=>location.reload());
+}
+</script>
 </body>
 </html>
