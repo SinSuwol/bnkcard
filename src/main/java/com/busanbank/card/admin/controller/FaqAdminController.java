@@ -22,12 +22,35 @@ public class FaqAdminController {
     private FaqDao faqDao;
 
     @GetMapping("/list")
-    public String getAllFaqs(Model model) {
-        List<FaqDto> list = faqDao.getAllFaqs();
+    public String getAllFaqs(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            Model model) {
+
+        int pageSize = 20;
+        int startRow = (page - 1) * pageSize + 1;
+        int endRow = page * pageSize;
+
+        List<FaqDto> list;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            list = faqDao.searchFaqsWithPaging(keyword, startRow, endRow);
+        } else {
+            list = faqDao.searchFaqsWithPaging("", startRow, endRow);
+        }
+
+        int totalCount = faqDao.countFaqs(keyword != null ? keyword : "");
+        int totalPage = (int) Math.ceil(totalCount / (double) pageSize);
+
         model.addAttribute("faqList", list);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", totalPage);
+
         return "admin/faq/list";
     }
-
+    
+    
     @GetMapping("/insertForm")
     public String insertForm() {
         return "admin/faq/insertForm";
@@ -37,7 +60,7 @@ public class FaqAdminController {
     public String addFaq(FaqDto dto) {
         faqDao.insertFaq(dto);
         sendFaqsToFastApi(faqDao.getAllFaqs());
-        reloadFastApiModel();   // ✅ 리로드 추가
+        reloadFastApiModel();   
         return "redirect:/admin/faq/list";
     }
 

@@ -42,8 +42,9 @@
 }
 </style>
 <body>
-	<h1>회원유형선택</h1>
-	<hr>
+	<h1>회원가입</h1>
+	<h2>회원유형선택</h2>
+	<br>
 	<div class="member-type-container">
 		<a href="/regist/terms?role=ROLE_PERSON" class="member-type">
 			<div class="title">일반회원(개인)</div>
@@ -56,7 +57,5 @@
 			<div class="desc">영리 또는 비영리를 목적으로 사업체를 가지고 계신 고객</div>
 		</a>
 	</div>
-	
-	<button type="button" onclick="">취소</button>
 </body>
 </html>

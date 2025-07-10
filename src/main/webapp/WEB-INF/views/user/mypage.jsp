@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>마이페이지</title>
 </head>
 <body>
-<h1>마이페이지</h1>
+<h1>${name}님의 페이지</h1>
 <hr>
 
 </body>

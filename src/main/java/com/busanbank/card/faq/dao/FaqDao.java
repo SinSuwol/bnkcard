@@ -15,6 +15,50 @@ public class FaqDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public int countFaqs(String keyword) {
+        String sql = """
+            SELECT COUNT(*)
+              FROM FAQ
+             WHERE FAQ_QUESTION LIKE '%' || ? || '%'
+                OR FAQ_ANSWER LIKE '%' || ? || '%'
+        """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                keyword,
+                keyword
+        );
+    }
+    public List<FaqDto> searchFaqsWithPaging(String keyword, int startRow, int endRow) {
+        String sql = """
+            SELECT * FROM (
+                SELECT ROWNUM AS rnum, A.* 
+                  FROM (
+                        SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
+                               REG_DATE, WRITER, ADMIN, CATTEGORY
+                          FROM FAQ
+                         WHERE FAQ_QUESTION LIKE '%' || ? || '%'
+                            OR FAQ_ANSWER LIKE '%' || ? || '%'
+                         ORDER BY FAQ_NO
+                       ) A
+                 WHERE ROWNUM <= ?
+            )
+            WHERE rnum >= ?
+        """;
+
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> mapRow(rs),
+                keyword,
+                keyword,
+                endRow,
+                startRow
+        );
+    }
+
+    
+    
     /**
      * FAQ 전체 조회
      */
@@ -126,4 +170,22 @@ public class FaqDao {
         );
     }
 
+    
+    public List<FaqDto> searchFaqs(String keyword) {
+        String sql = """
+            SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
+                   REG_DATE, WRITER, ADMIN, CATTEGORY
+              FROM FAQ
+             WHERE FAQ_QUESTION LIKE '%' || ? || '%'
+                OR FAQ_ANSWER LIKE '%' || ? || '%'
+            ORDER BY FAQ_NO
+        """;
+
+        return jdbcTemplate.query(
+            sql,
+            (rs, rowNum) -> mapRow(rs),
+            keyword,
+            keyword
+        );
+    }
 }
