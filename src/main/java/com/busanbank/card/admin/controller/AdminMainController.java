@@ -31,18 +31,29 @@ public class AdminMainController {
 	public String adminSearch() {
 		return "admin/adminSearch";
 	}
-	
+
 	// 검색어 관리 통계 페이지
 	@GetMapping("/Statistics")
-	public String adminStatistics(){
+	public String adminStatistics() {
 		return "admin/adminStatistics";
 	}
-	
+
+	// 상품 인가 페이지
+	@GetMapping("/Impression")
+	public String adminImpression() {
+		return "admin/adminImpression";
+	}
+
+	// 관리자 스크래핑 페이지
+	@GetMapping("/Scraping")
+	public String adminScraping() {
+		return "admin/adminScraping";
+	}
 
 	// 메인 페이지
 	@GetMapping("/Mainpage")
 	public String adminMainpage() {
-		return "adminMainpage";
+		return "admin/adminMainpage";
 	}
 
 }
