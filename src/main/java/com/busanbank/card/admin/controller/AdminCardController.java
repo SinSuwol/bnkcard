@@ -36,4 +36,10 @@ public class AdminCardController {
         boolean result = adminCardService.insertCardTemp(cardDto,"수정");
         return result ? "success" : "fail";
     }
+	
+	@PostMapping("/deleteCard/{cardNo}")
+    public String deleteCard(@PathVariable("cardNo") Long cardNo) {
+        boolean result = adminCardService.insertCardTemp2(cardNo,"삭제");
+        return result ? "success" : "fail";
+    }
 }

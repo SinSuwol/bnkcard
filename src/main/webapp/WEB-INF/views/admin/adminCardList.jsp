@@ -120,7 +120,7 @@
                     <p>브랜드: \${card.cardBrand}</p>
                     <button>게시</button>
                     <button onclick='openEditModal(\${JSON.stringify(card)})'>수정</button>
-                    <button onclick='deleteCard(${card.cardNo})'>삭제</button>
+                    <button onclick='deleteCard(\${card.cardNo})'>삭제</button>
                 `;
                 list.appendChild(li);
             });
@@ -184,11 +184,11 @@
         })
         .then(res => {
             if (!res.ok) throw new Error('수정 실패');
-            alert('수정 완료');
+            alert('수정신청 완료');
             location.reload(); // 새로고침으로 리스트 갱신
         })
         .catch(err => {
-            alert('수정 중 오류 발생');
+            alert('수정신청 중 오류 발생');
             console.error(err);
         });
     }
@@ -196,15 +196,15 @@
     // 삭제 요청 (옵션)
     function deleteCard(cardNo) {
         if (!confirm('정말 삭제하시겠습니까?')) return;
-        fetch(`/admin/card/${cardNo}`, {
-            method: 'DELETE'
+        fetch(`/admin/card/deleteCard/\${cardNo}`, {
+            method: 'POST'
         })
         .then(() => {
-            alert('삭제 완료');
+            alert('삭제신청 완료');
             location.reload();
         })
         .catch(err => {
-            alert('삭제 실패');
+            alert('삭제신청 실패');
             console.error(err);
         });
     }

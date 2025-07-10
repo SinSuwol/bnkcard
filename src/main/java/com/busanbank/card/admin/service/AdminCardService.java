@@ -14,6 +14,7 @@ public class AdminCardService {
 	@Autowired
 	IAdminCardDao adminCardDao;
 
+	//수정,등록 용
 	@Transactional
 	public boolean insertCardTemp(CardDto cardDto, String s) {
 		PermissionParamDto perDto = new PermissionParamDto();
@@ -25,6 +26,19 @@ public class AdminCardService {
 		int updated2 = adminCardDao.insertPermission(perDto);
 		
 		return updated1 > 0 && updated2 > 0;
+	}
+	
+	//삭제용
+	public boolean insertCardTemp2(Long i, String s) {
+		PermissionParamDto perDto = new PermissionParamDto();
+		perDto.setCardNo(i);
+		perDto.setPerContent(s);
+	
+		System.out.println(i + s);
+		
+		int updated2 = adminCardDao.insertPermission(perDto);
+		
+		return updated2 > 0;
 	}
 
 
