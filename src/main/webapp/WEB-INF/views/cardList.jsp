@@ -283,7 +283,7 @@ function toggleCompare(cb){
   const cardUrl=item.querySelector('img').src;
   let box=JSON.parse(sessionStorage.getItem('compareCards')||'[]');
   if(cb.checked){
-    if(box.length>=3){alert('최대 3개까지만 비교');cb.checked=false;return;}
+    if(box.length>=2){alert('최대 2개까지만 비교');cb.checked=false;return;}
     box.push({cardNo,cardName,cardUrl});
   }else box=box.filter(c=>c.cardNo!==cardNo);
   sessionStorage.setItem('compareCards',JSON.stringify(box));

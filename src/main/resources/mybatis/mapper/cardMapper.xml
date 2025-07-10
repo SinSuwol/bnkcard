@@ -22,6 +22,8 @@
 		SELECT * FROM CARD WHERE CARD_NO = #{cardNo}
 	</select>
 
+
+	<!-- 뷰카운트 -->
 	<update id="updateViewCount">
 		UPDATE CARD SET VIEW_COUNT = VIEW_COUNT + 1
 		WHERE
@@ -69,6 +71,8 @@
   </where>
   ORDER BY CARD_NO
 </select>
+
+
 
 	
 </mapper>
