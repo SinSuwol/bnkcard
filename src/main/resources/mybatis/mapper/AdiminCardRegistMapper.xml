@@ -45,25 +45,29 @@
     
     <insert id="insertPermission2" parameterType="com.busanbank.card.admin.dto.PermissionParamDto">
         INSERT INTO PERMISSION (
-        PER_NO,
-        CARD_NO,
-        STATUS,
-        REASON,
-        ADMIN,
-        S_ADMIN,
-        REG_DATE,
-        PER_DATE,
-        PER_CONTENT
-	  ) VALUES (
-	    PER_SEQ.NEXTVAL,
-	    CARD_SEQ.NEXTVAL,
-	    '대기중',
-	    NULL,
-	    NULL,
-	    NULL,
-	    SYSDATE,
-	    NULL,
-	    #{perContent}
-	  )
+    PER_NO,
+    CARD_NO,
+    STATUS,
+    REASON,
+    ADMIN,
+    S_ADMIN,
+    REG_DATE,
+    PER_DATE,
+    PER_CONTENT
+) VALUES (
+    PER_SEQ.NEXTVAL,
+      #{cardNo, jdbcType=NUMERIC},
+    '대기중',
+    NULL,
+    #{admin},
+    NULL,
+    SYSDATE,
+    NULL,
+    #{perContent}
+)
     </insert>
+    
+    <select id="getNextCardSeq" resultType="long">
+SELECT CARD_SEQ.NEXTVAL FROM DUAL
+</select>
 </mapper>

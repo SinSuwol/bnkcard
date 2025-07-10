@@ -8,5 +8,5 @@ import lombok.Setter;
 public class PermissionParamDto {
 	private Long cardNo;
     private String perContent;
-
+    private String admin;
 }

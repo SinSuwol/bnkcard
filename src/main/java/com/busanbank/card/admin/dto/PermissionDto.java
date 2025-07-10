@@ -10,8 +10,8 @@ public class PermissionDto {
     private Long cardNo;
     private String status;
     private String reason;
-    private Long admin;
-    private Long sAdmin;
+    private String admin;
+    private String sAdmin;
     private Date regDate;
     private Date perDate;
     private String perContent;

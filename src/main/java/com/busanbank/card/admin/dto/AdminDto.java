@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AdminDto {
 
-	private int admin_no;
+	private Long admin_no;
 	private String username;
 	private String password;
 	private String name;

@@ -11,19 +11,24 @@ import com.busanbank.card.card.dto.CardDto;
 @Service
 public class AdminCardRegistService {
 
-	@Autowired
-	IAdminCardRegistDao adminCardRegistDao;
-	
-	@Transactional
-	public boolean insertCardTemp(CardDto cardDto, String s) {
-		PermissionParamDto perDto = new PermissionParamDto();
-		perDto.setCardNo(cardDto.getCardNo());
-		perDto.setPerContent(s);
-		
-		
-		int updated1 = adminCardRegistDao.insertCardTemp2(cardDto);
-		int updated2 = adminCardRegistDao.insertPermission2(perDto);
-		
-		return updated1 > 0 && updated2 > 0;
-	}
+    @Autowired
+    IAdminCardRegistDao adminCardRegistDao;
+
+    @Transactional
+    public boolean insertCardTemp(CardDto cardDto, String perContent, String adminId) {
+        Long cardNo = adminCardRegistDao.getNextCardSeq();
+        cardDto.setCardNo(cardNo);
+
+        PermissionParamDto perDto = new PermissionParamDto();
+        perDto.setCardNo(cardNo);
+        perDto.setPerContent(perContent);
+        perDto.setAdmin(adminId);
+
+        int updated1 = adminCardRegistDao.insertCardTemp2(cardDto);
+        int updated2 = adminCardRegistDao.insertPermission2(perDto);
+
+        return updated1 > 0 && updated2 > 0;
+    }
+
 }
+
