@@ -55,7 +55,7 @@ public class CardController {
     @PutMapping("/cards/{cardNo}/view")
     public ResponseEntity<Void> increaseViewCount(@PathVariable("cardNo") int cardNo) {
         cardService.increaseViewCount(cardNo);
-        return ResponseEntity.ok().build();  // 200 OK 응답
+        return ResponseEntity.ok().build();  
     }
     
     
