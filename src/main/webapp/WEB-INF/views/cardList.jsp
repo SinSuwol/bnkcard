@@ -4,7 +4,50 @@
 <head>
 <meta charset="UTF-8">
 <title>카드 리스트</title>
+<!-- ✅ jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- ✅ Slick Slider CSS + JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
+/* ---------- 슬라이더 ---------- */
+.slider-container {
+  max-width: 1000px;
+  margin: 20px auto 50px;
+  overflow: hidden;
+  position: relative;
+}
+.popular-slider .slick-slide {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.popular-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+}
+.popular-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.popular-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 5px 0;
+}
+.popular-sub {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
 /* ---------- 카드 그리드 ---------- */
 #cardGrid {
 	display: grid;
@@ -209,7 +252,16 @@
 </head>
 <body>
 
-	<h2 style="text-align: center;">카드 목록</h2>
+	<h2 style="text-align: center;">인기 카드</h2>
+	
+	<!-- 🔥 인기 카드 슬라이더 -->
+<div class="slider-container">
+  <div class="popular-slider autoplay">
+    <!-- 인기 카드가 JS로 자동 채워짐 -->
+  </div>
+</div>
+	
+	<h2 style="text-align: center;">전체 카드 항목</h2>
 
 	<!-- 카드 타입 필터 -->
 	<div style="text-align: center; margin-bottom: 15px;">
@@ -267,6 +319,37 @@
 				style="width: 100%; padding: 10px 0; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
 		</div>
 	</div>
+	
+	<script>
+// 🔥 인기 카드 슬라이더 데이터 불러오기
+fetch('/api/cards')
+  .then(r => r.json())
+  .then(cards => {
+    const sorted = [...cards].sort((a, b) => b.viewCount - a.viewCount).slice(0, 6);
+    const slider = document.querySelector('.popular-slider');
+    slider.innerHTML = sorted.map(c => `
+      <div>
+        <div class="popular-card" onclick="goDetail(${c.cardNo})">
+          <img src="${c.cardUrl}" alt="${c.cardName}">
+          <div class="popular-sub">인기 카드</div>
+          <div class="popular-title">${c.cardName}</div>
+          <div style="font-size:13px;color:#888;">조회수 ${c.viewCount}</div>
+        </div>
+      </div>`).join('');
+    $('.popular-slider').slick({
+    	  slidesToShow: 3,
+    	  slidesToScroll: 1,
+    	  autoplay: true,
+    	  autoplaySpeed: 2000,
+    	  arrows: true,     
+    	  dots: false,      
+    	  infinite: true,
+    	  centerMode: false,
+    	  draggable: false,
+    	  swipe: false
+    	});
+  });
+</script>
 
 	<script>
 let fullCardList=[],currentIndex=0,currentType='',currentKeyword='',selectedTags=[];
@@ -322,14 +405,6 @@ document.querySelectorAll('#hotArea .hot').forEach(h=>{
 /* 상세 검색 실행 */
 document.getElementById('advSearchBtn').addEventListener('click',()=>{
   currentKeyword=document.getElementById('advKeyword').value.trim();
-	// 🔵 1) 로그 먼저 저장
-  fetch('/admin/Search/searchlog', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
-	  keyword: currentKeyword
-	})
-}).catch(err => console.error('검색 로그 저장 실패', err));
   performSearch(currentKeyword);closeAdv();
 });
 document.getElementById('advKeyword').addEventListener('keydown',e=>{
@@ -339,7 +414,14 @@ document.getElementById('advKeyword').addEventListener('keydown',e=>{
 /* 검색 */
 function performSearch(keyword=''){
 	
-
+	// 🔵 1) 로그 먼저 저장
+	  fetch('/admin/Search/searchlog', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    keyword: keyword
+  })
+}).catch(err => console.error('검색 로그 저장 실패', err));
 	
 	
   const params=new URLSearchParams();
