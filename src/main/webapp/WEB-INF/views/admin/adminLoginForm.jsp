@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <div class="login-container">
     <h2>관리자 로그인</h2>
     <form id="loginForm">
@@ -15,7 +17,7 @@
         <button type="submit">로그인</button>
     </form>
 </div>
-
+<script src="/js/adminHeader.js"></script>
 <script>
 document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();

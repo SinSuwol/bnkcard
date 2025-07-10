@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 등록</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+	<jsp:include page="../fragments/header.jsp"></jsp:include>
     <h1>상품 등록</h1>
     <form id="cardForm">
         <p>
@@ -52,7 +54,7 @@
             <button type="submit">등록하기</button>
         </p>
     </form>
-
+	<script src="/js/adminHeader.js"></script>
     <script>
         document.getElementById("cardForm").addEventListener("submit", function(e) {
             e.preventDefault();

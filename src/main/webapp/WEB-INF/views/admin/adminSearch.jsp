@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>검색어 관리 대시보드</title>
+<link rel="stylesheet" href="/css/style.css">
 <style>
 body { font-family: sans-serif; }
 button { margin: 0 2px; padding: 4px 8px; }
@@ -12,6 +13,7 @@ th, td { border:1px solid #ccc; padding:4px 8px; }
 </style>
 </head>
 <body>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
   <h1>검색어 관리 대시보드</h1>
 
   <!-- 추천어 관리 -->
@@ -76,7 +78,8 @@ th, td { border:1px solid #ccc; padding:4px 8px; }
     </thead>
     <tbody></tbody>
   </table>
-
+  
+<script src="/js/adminHeader.js"></script>
 <script>
 /* 오늘 날짜 기본값 */
 window.addEventListener('DOMContentLoaded', () => {

@@ -71,7 +71,7 @@
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <div class="inner">
 	<h1>Admin CardList 페이지</h1>
 	<hr>
@@ -103,7 +103,7 @@
 </div>
 
 
-
+<script src="/js/adminHeader.js"></script>
 <script>
     fetch('/admin/card/getCardList') // ← 실제 REST API 경로
         .then(res => res.json())
@@ -176,7 +176,7 @@
         };
 		console.log(updatedCard);
         fetch(`/admin/card/editCard/\${editingCardId}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
