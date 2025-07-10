@@ -18,6 +18,8 @@ public interface IAdminSearchDao {
 	// 추천어 여부
 	int isRecommendedKeyword(String keyword);
 
+	List<Map<String, Object>> getSearchLogsByPeriod(Map<String, Object> param);
+	int getSearchLogsCount(Map<String, Object> param);
 
 	// 조회
     List<Map<String, Object>> getRecommendedWords();	// 추천어 조회
@@ -35,7 +37,6 @@ public interface IAdminSearchDao {
     void updateProhibited(Map<String, Object> param);	// 금칙어 수정
     void deleteProhibited(Long id);						// 금칙어 삭제
     
-    List<Map<String, Object>> getSearchLogsByPeriod(Map<String, Object> param);
 
 	
 }

@@ -1,5 +1,6 @@
 package com.busanbank.card.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,16 +55,38 @@ public class AdminSearchController {
 	
 	// 기간별 검색 로그 조회
 	@GetMapping("/logs")
-	public List<Map<String, Object>> getSearchLogsByPeriod(
+	public Map<String, Object> getSearchLogsByPeriod(
 	    @RequestParam(value = "from", required = false) String from,
-	    @RequestParam(value = "to", required = false) String to) {
+	    @RequestParam(value = "to", required = false) String to,
+	    @RequestParam(value = "page", defaultValue = "1") int page,
+	    @RequestParam(value = "size", defaultValue = "20") int size)
+ {
 
-	    Map<String, Object> param = Map.of(
-	        "from", from,
-	        "to", to
-	    );
-	    return adminSearchDao.getSearchLogsByPeriod(param);
+	    // 계산
+	    int offset = (page - 1) * size;
+
+	    // 파라미터 맵
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("from", from);
+	    param.put("to", to);
+	    param.put("offset", offset);
+	    param.put("limit", size);
+
+	    // 데이터 조회
+	    List<Map<String, Object>> data = adminSearchDao.getSearchLogsByPeriod(param);
+
+	    // 총 개수 조회
+	    int totalCount = adminSearchDao.getSearchLogsCount(param);
+
+	    // 결과 맵
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("page", page);
+	    result.put("totalPages", (int) Math.ceil((double) totalCount / size));
+	    result.put("data", data);
+
+	    return result;
 	}
+
 
 
 
@@ -87,11 +110,7 @@ public class AdminSearchController {
 		return adminSearchDao.getTopKeywords();
 	}
 
-	// 최근 검색어 30건
-	@GetMapping("/recent")
-	public List<Map<String, Object>> getRecentSearchLogs() {
-		return adminSearchDao.getRecentSearchLogs();
-	}
+
 
 	// ========== 추천어 CRUD ==========
 	// 추천어 등록

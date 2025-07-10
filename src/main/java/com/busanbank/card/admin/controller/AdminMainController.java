@@ -31,6 +31,13 @@ public class AdminMainController {
 	public String adminSearch() {
 		return "admin/adminSearch";
 	}
+	
+	// 검색어 관리 통계 페이지
+	@GetMapping("/Statistics")
+	public String adminStatistics(){
+		return "admin/adminStatistics";
+	}
+	
 
 	// 메인 페이지
 	@GetMapping("/Mainpage")

@@ -5,79 +5,93 @@
 <meta charset="UTF-8">
 <title>검색어 관리 대시보드</title>
 <style>
-body { font-family: sans-serif; }
-button { margin: 0 2px; padding: 4px 8px; }
-table { border-collapse: collapse; margin-top:10px; }
-th, td { border:1px solid #ccc; padding:4px 8px; }
+body {
+	font-family: sans-serif;
+}
+
+button {
+	margin: 0 2px;
+	padding: 4px 8px;
+}
+
+table {
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+th, td {
+	border: 1px solid #ccc;
+	padding: 4px 8px;
+}
 </style>
 </head>
 <body>
-  <h1>검색어 관리 대시보드</h1>
+	<h1>검색어 관리 대시보드</h1>
 
-  <!-- 추천어 관리 -->
-  <h2>추천어</h2>
-  <button onclick="addRecommended()">[+] 추천어 등록</button>
-  <table id="recommended-table">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>키워드</th>
-        <th>등록일</th>
-        <th>관리</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+	<a href="/admin/Statistics">통계</a>
+	<!-- 추천어 관리 -->
+	<h2>추천어</h2>
+	<button onclick="addRecommended()">[+] 추천어 등록</button>
+	<table id="recommended-table">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>키워드</th>
+				<th>등록일</th>
+				<th>관리</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 
-  <!-- 금칙어 관리 -->
-  <h2>금칙어</h2>
-  <button onclick="addProhibited()">[+] 금칙어 등록</button>
-  <table id="prohibited-table">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>키워드</th>
-        <th>등록일</th>
-        <th>관리</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+	<!-- 금칙어 관리 -->
+	<h2>금칙어</h2>
+	<button onclick="addProhibited()">[+] 금칙어 등록</button>
+	<table id="prohibited-table">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>키워드</th>
+				<th>등록일</th>
+				<th>관리</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 
-  <!-- 인기 검색어 -->
-  <h2>인기 검색어 TOP10</h2>
-  <table id="top-table">
-    <thead>
-      <tr>
-        <th>키워드</th>
-        <th>검색횟수</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+	<!-- 인기 검색어 -->
+	<h2>인기 검색어 TOP10</h2>
+	<table id="top-table">
+		<thead>
+			<tr>
+				<th>키워드</th>
+				<th>검색횟수</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 
-  <!-- 기간별 로그 조회 -->
-  <h2>검색어 로그 조회</h2>
-  <input type="date" id="fromDate"> ~
-  <input type="date" id="toDate">
-  <button onclick="loadLogs()">조회</button>
-  <button onclick="exportExcel()">엑셀 다운로드</button>
+	<!-- 기간별 로그 조회 -->
+	<h2>검색어 로그 조회</h2>
+	<input type="date" id="fromDate"> ~
+	<input type="date" id="toDate">
+	<button onclick="loadLogs()">조회</button>
 
-  <table id="logs-table">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>회원번호</th>
-        <th>키워드</th>
-        <th>추천어</th>
-        <th>금칙어</th>
-        <th>검색일자</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-<script>
+	<table id="logs-table">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>회원번호</th>
+				<th>키워드</th>
+				<th>추천어</th>
+				<th>금칙어</th>
+				<th>검색일자</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div id="log-pagination" style="margin-top: 10px;"></div>
+	<script>
 /* 오늘 날짜 기본값 */
 window.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toISOString().substring(0, 10);
@@ -137,7 +151,7 @@ fetchAndRender('/admin/Search/top', '#top-table', item => {
 });
 
 /* 로그 조회 */
-function loadLogs() {
+function loadLogs(page = 1) {
   const from = document.getElementById('fromDate').value;
   const to = document.getElementById('toDate').value;
 
@@ -145,27 +159,47 @@ function loadLogs() {
   const params = [];
   if(from) params.push('from=' + from);
   if(to) params.push('to=' + to);
+  params.push('page=' + page);
+  params.push('size=20'); // 페이지당 20건
   if(params.length) url += '?' + params.join('&');
 
-  fetchAndRender(url, '#logs-table', item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>\${item.SEARCH_LOG_NO}</td>
-      <td>\${item.MEMBER_NO || '-'}</td>
-      <td>\${item.KEYWORD}</td>
-      <td>\${item.IS_RECOMMENDED}</td>
-      <td>\${item.IS_PROHIBITED}</td>
-      <td>\${item.SEARCH_DATE ? item.SEARCH_DATE.substring(0,10) : ''}</td>
-    `;
-    return tr;
-  });
+  fetch(url)
+    .then(res => res.json())
+    .then(result => {
+    	 console.log("🚀 서버 응답 확인", result);
+      const tbody = document.querySelector('#logs-table tbody');
+      tbody.innerHTML = '';
+      result.data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>\${item.SEARCH_LOG_NO}</td>
+          <td>\${item.MEMBER_NO || '-'}</td>
+          <td>\${item.KEYWORD}</td>
+          <td>\${item.IS_RECOMMENDED}</td>
+          <td>\${item.IS_PROHIBITED}</td>
+          <td>\${item.SEARCH_DATE ? item.SEARCH_DATE.substring(0,10) : ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // 페이지네이션 UI
+      const pagination = document.getElementById('log-pagination');
+pagination.innerHTML = '';
+for(let i=1; i<=result.totalPages; i++) {
+  const btn = document.createElement('button');
+  btn.textContent = i;
+  btn.onclick = () => loadLogs(i);
+  if(i === result.page) {
+    btn.style.fontWeight = 'bold';
+  }
+  pagination.appendChild(btn);
+}
+    });
 }
 
 
-/* 엑셀 다운로드 */
-function exportExcel() {
-  alert('엑셀 다운로드는 서버 구현 필요!');
-}
+
+
 
 /* 추천어/금칙어 CRUD */
 function addRecommended() {

@@ -27,7 +27,8 @@
 	<!-- 금칙어 여부 -->
 	<select id="isProhibitedKeyword" resultType="int">
 		SELECT COUNT(*)
-		FROM PROHIBITED_WORD
+		FROM
+		PROHIBITED_WORD
 		WHERE KEYWORD = #{keyword}
 	</select>
 
@@ -69,16 +70,7 @@
 		FETCH FIRST 10 ROWS ONLY
 	</select>
 
-	<!-- 최근 검색어 30건 -->
-	<select id="getRecentSearchLogs" resultType="map">
-		SELECT
-		SEARCH_LOG_NO, MEMBER_NO, KEYWORD, IS_PROHIBITED, IS_RECOMMENDED,
-		SEARCH_DATE
-		FROM SEARCH_LOG
-		ORDER BY SEARCH_DATE DESC
-		FETCH FIRST 30 ROWS
-		ONLY
-	</select>
+
 
 	<!-- 추천어 등록 -->
 	<insert id="insertRecommended">
@@ -135,28 +127,45 @@
 		WHERE PROHIBITED_NO =
 		#{id}
 	</delete>
-	
+
 	<!-- 기간별 검색 로그 조회 -->
-<select id="getSearchLogsByPeriod" resultType="map">
-  SELECT
-    SEARCH_LOG_NO,
-    MEMBER_NO,
-    KEYWORD,
-    IS_PROHIBITED,
-    IS_RECOMMENDED,
-    SEARCH_DATE
-  FROM
-    SEARCH_LOG
-  <where>
-    <if test="from != null and from != ''">
-      SEARCH_DATE &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
-    </if>
-    <if test="to != null and to != ''">
-      AND SEARCH_DATE &lt;= TO_DATE(#{to}, 'YYYY-MM-DD') + 1 - (1/86400)
-    </if>
-  </where>
-  ORDER BY
-    SEARCH_DATE DESC
-</select>
-	
+	<select id="getSearchLogsByPeriod" resultType="map">
+		SELECT
+		SEARCH_LOG_NO,
+		MEMBER_NO,
+		KEYWORD,
+		IS_PROHIBITED,
+		IS_RECOMMENDED,
+		SEARCH_DATE
+		FROM
+		SEARCH_LOG
+		<where>
+			<if test="from != null and from != ''">
+				SEARCH_DATE &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
+			</if>
+			<if test="to != null and to != ''">
+				AND SEARCH_DATE &lt;= TO_DATE(#{to}, 'YYYY-MM-DD') + 1 - (1/86400)
+			</if>
+		</where>
+		ORDER BY
+		SEARCH_DATE DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
+
+	<!-- 총 개수 조회 -->
+	<select id="getSearchLogsCount" resultType="int">
+		SELECT COUNT(*)
+		FROM SEARCH_LOG
+		<where>
+			<if test="from != null and from != ''">
+				SEARCH_DATE &gt;= TO_DATE(#{from}, 'YYYY-MM-DD')
+			</if>
+			<if test="to != null and to != ''">
+				AND SEARCH_DATE &lt;= TO_DATE(#{to}, 'YYYY-MM-DD') + 1 - (1/86400)
+			</if>
+		</where>
+	</select>
+
+
+
 </mapper>
