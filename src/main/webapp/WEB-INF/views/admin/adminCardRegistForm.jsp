@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<jsp:include page="../fragments/header.jsp"></jsp:include>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
     <h1>상품 등록</h1>
     <form id="cardForm">
         <p>

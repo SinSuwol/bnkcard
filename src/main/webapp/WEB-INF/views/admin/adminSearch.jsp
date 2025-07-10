@@ -93,6 +93,9 @@ th, td {
     <tbody></tbody>
   </table>
   
+  
+<div id="log-pagination" style="margin-top:10px;"></div>
+  
 <script src="/js/adminHeader.js"></script>
 <script>
 /* 오늘 날짜 기본값 */
