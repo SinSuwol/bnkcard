@@ -78,6 +78,13 @@ th, td { border:1px solid #ccc; padding:4px 8px; }
   </table>
 
 <script>
+/* 오늘 날짜 기본값 */
+window.addEventListener('DOMContentLoaded', () => {
+  const today = new Date().toISOString().substring(0, 10);
+  document.getElementById('fromDate').value = today;
+  document.getElementById('toDate').value = today;
+});
+
 /* 공통 fetch 함수 */
 function fetchAndRender(url, tableSelector, rowTemplateFn) {
   fetch(url)
@@ -153,6 +160,7 @@ function loadLogs() {
     return tr;
   });
 }
+
 
 /* 엑셀 다운로드 */
 function exportExcel() {

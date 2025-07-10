@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +32,11 @@ public class AdminSearchController {
 	public void insertSearchLog(
 	        @RequestBody SearchLogDto dto,
 	        HttpSession session) {
-
+		if (dto.getKeyword() == null || dto.getKeyword().trim().isEmpty()) {
+	        // 그냥 아무 동작도 안함 (또는 로그만 찍기)
+	        return;
+	    }
+		
 	    // 세션에서 회원번호 꺼내기
 	    Long memberNo = (Long) session.getAttribute("loginMemberNo");
 	    dto.setMemberNo(memberNo);

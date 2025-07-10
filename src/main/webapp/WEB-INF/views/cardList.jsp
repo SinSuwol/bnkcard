@@ -322,6 +322,14 @@ document.querySelectorAll('#hotArea .hot').forEach(h=>{
 /* 상세 검색 실행 */
 document.getElementById('advSearchBtn').addEventListener('click',()=>{
   currentKeyword=document.getElementById('advKeyword').value.trim();
+	// 🔵 1) 로그 먼저 저장
+  fetch('/admin/Search/searchlog', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+	  keyword: currentKeyword
+	})
+}).catch(err => console.error('검색 로그 저장 실패', err));
   performSearch(currentKeyword);closeAdv();
 });
 document.getElementById('advKeyword').addEventListener('keydown',e=>{
@@ -331,14 +339,7 @@ document.getElementById('advKeyword').addEventListener('keydown',e=>{
 /* 검색 */
 function performSearch(keyword=''){
 	
-	// 🔵 1) 로그 먼저 저장
-	  fetch('/admin/Search/searchlog', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    keyword: keyword
-  })
-}).catch(err => console.error('검색 로그 저장 실패', err));
+
 	
 	
   const params=new URLSearchParams();
