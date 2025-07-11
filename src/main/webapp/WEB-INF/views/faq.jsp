@@ -5,13 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
-<jsp:include page="../fragments/header.jsp"></jsp:include>
+<h1>고객센터(faq페이지)</h1>
+<hr>
 
-	<h1>관리자 스크래핑</h1>
-	
-<script src="/js/adminHeader.js"></script>
 </body>
 </html>

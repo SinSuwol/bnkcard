@@ -32,4 +32,14 @@ public class MainController {
 	public String cardDetailPage() {
 	    return "cardDetail";   // 카드디테일
 	}
+	
+	@GetMapping("/faq")
+	public String faqPage() {
+	    return "faq";   // faq
+	}
+	
+	@GetMapping("/introduce")
+	public String introducePage() {
+	    return "introduce";   // 은행소개
+	}
 }

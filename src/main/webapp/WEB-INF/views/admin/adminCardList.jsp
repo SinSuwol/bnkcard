@@ -68,7 +68,7 @@
         margin-right: 5px;
     }
 </style>
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
 <jsp:include page="../fragments/header.jsp"></jsp:include>

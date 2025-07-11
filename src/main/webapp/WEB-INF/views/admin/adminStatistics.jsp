@@ -25,8 +25,10 @@ th, td {
 	margin-top: 20px;
 }
 </style>
+<link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 	<h1>회원/비회원 검색 통계</h1>
 
 	<!-- 비율 차트 -->
@@ -82,7 +84,7 @@ th, td {
 		<canvas id="hourChart"></canvas>
 	</div>
 
-
+	<script src="/js/adminHeader.js"></script>
 	<script>
   // 1) 비율 데이터 로드
   fetch('/admin/Search/stats/userType')

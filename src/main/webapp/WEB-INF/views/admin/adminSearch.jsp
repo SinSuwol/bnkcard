@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>검색어 관리 대시보드</title>
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/adminstyle.css">
 <style>
 body {
 	font-family: sans-serif;
