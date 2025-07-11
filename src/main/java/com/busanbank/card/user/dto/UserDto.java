@@ -11,12 +11,12 @@ public class UserDto {
 	private String role;
 	
 	//주민등록번호
-	private String rrn_front;
-	private String rrn_gender;
-	private String rrn_tail_enc;
+	private String rrnFront;
+	private String rrnGender;
+	private String rrnTailEnc;
 	
 	//주소
-	private String zip_code;
+	private String zipCode;
 	private String address1;
 	private String address2;
 	

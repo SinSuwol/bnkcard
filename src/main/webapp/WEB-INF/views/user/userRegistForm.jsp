@@ -38,11 +38,11 @@
 		</tr>
 		<tr>
 			<th>주민번호</th>
-			<td><input type="text" name="rrn_front" id="rrn_front"> - <input type="password" name="rrn_back" id="rrn_back"></td>
+			<td><input type="text" name="rrnFront" id="rrnFront"> - <input type="password" name="rrnBack" id="rrnBack"></td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" name="zip_code" id="zip_code"><br>
+			<td><input type="text" name="zipCode" id="zipCode"><br>
 				<input type="text" name="address1" id="address1"><br>
 				<input type="text" name="address2" id="address2">
 			</td>
@@ -177,16 +177,16 @@
 		}
 			
 		//주민등록번호 검사
-		if(!document.getElementById("rrn_front").value.trim() || !document.getElementById("rrn_back").value.trim()) {
+		if(!document.getElementById("rrnFront").value.trim() || !document.getElementById("rrnBack").value.trim()) {
 			alert("주민등록번호를 입력해주세요.");
-			document.getElementById("rrn_front").focus();
+			document.getElementById("rrnFront").focus();
 			return;
 		}
 		
 		//주소 검사
-		if(!document.getElementById("zip_code").value.trim() || !document.getElementById("address1").value.trim() || !document.getElementById("address2").value.trim()) {
+		if(!document.getElementById("zipCode").value.trim() || !document.getElementById("address1").value.trim() || !document.getElementById("address2").value.trim()) {
 			alert("주소를 입력해주세요.");
-			document.getElementById("zip_code").focus();
+			document.getElementById("zipCode").focus();
 			return;
 		}
 		

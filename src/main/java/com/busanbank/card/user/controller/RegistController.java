@@ -97,13 +97,13 @@ public class RegistController {
 		}
 		
 		//주민등록번호 검사
-		if(joinUser.getRrn_front() == null || joinUser.getRrn_front().length() != 6 || joinUser.getRrn_back() == null || joinUser.getRrn_back().length() != 7) {
+		if(joinUser.getRrnFront() == null || joinUser.getRrnFront().length() != 6 || joinUser.getRrnBack() == null || joinUser.getRrnBack().length() != 7) {
 			model.addAttribute("msg", "주민번호를 확인해주세요.");
 			return "user/userRegistForm";
 		}
 		
 		//주소 검사
-		if(joinUser.getZip_code() == null || joinUser.getAddress1() == null || joinUser.getAddress2() == null) {
+		if(joinUser.getZipCode() == null || joinUser.getAddress1() == null || joinUser.getAddress2() == null) {
 			model.addAttribute("msg", "주소를 입력해주세요.");
 			return "user/userRegistForm";
 		}
@@ -115,8 +115,8 @@ public class RegistController {
 		String encodedPassword = bCryptPasswordEncoder.encode(joinUser.getPassword());
 		user.setPassword(encodedPassword);
 		
-		String rrn_gender = joinUser.getRrn_back().substring(0, 1);
-		String rrn_tail = joinUser.getRrn_back().substring(1);
+		String rrn_gender = joinUser.getRrnBack().substring(0, 1);
+		String rrn_tail = joinUser.getRrnBack().substring(1);
 		String encryptedRrnTail;
 		try {
 			encryptedRrnTail = AESUtil.encrypt(rrn_tail);
@@ -124,11 +124,11 @@ public class RegistController {
 			model.addAttribute("msg", "주민번호 암호화에 실패했습니다.");
 			return "user/userRegistForm";
 		}
-		user.setRrn_front(joinUser.getRrn_front());
-		user.setRrn_gender(rrn_gender);
-		user.setRrn_tail_enc(encryptedRrnTail);
+		user.setRrnFront(joinUser.getRrnFront());
+		user.setRrnGender(rrn_gender);
+		user.setRrnTailEnc(encryptedRrnTail);
 		
-		user.setZip_code(joinUser.getZip_code());
+		user.setZipCode(joinUser.getZipCode());
 		user.setAddress1(joinUser.getAddress1());
 		user.setAddress2(joinUser.getAddress2());
 		

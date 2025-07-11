@@ -12,11 +12,11 @@ public class UserJoinDto {
 	private String role;
 	
 	//주민등록번호
-	private String rrn_front;
-	private String rrn_back;
+	private String rrnFront;
+	private String rrnBack;
 	
 	//주소
-	private String zip_code;
+	private String zipCode;
 	private String address1;
 	private String address2;
 }

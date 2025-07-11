@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class TermDto {
 
-	private int term_no;
-	private String term_type;
-	private char is_required;
+	private int termNo;
+	private String termType;
+	private char isRequired;
 	private String content;
-	private String created_at;
-	private String updated_at;
+	private String createdAt;
+	private String updatedAt;
 }
