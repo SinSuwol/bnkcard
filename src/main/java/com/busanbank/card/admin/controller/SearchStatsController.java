@@ -97,14 +97,14 @@ public class SearchStatsController {
 	@GetMapping("/byDate")
 	public List<Map<String, Object>> getStatsByDate() {
 		String sql = """
-			SELECT
-			  TO_CHAR(SEARCH_DATE, 'YYYY-MM-DD') AS search_day,
-			  COUNT(*) AS cnt
-			FROM SEARCH_LOG
-			WHERE SEARCH_DATE >= TRUNC(SYSDATE - 30)
-			GROUP BY TO_CHAR(SEARCH_DATE, 'YYYY-MM-DD')
-			ORDER BY search_day ASC
-		""";
+					SELECT
+					  TO_CHAR(SEARCH_DATE, 'YYYY-MM-DD') AS search_day,
+					  COUNT(*) AS cnt
+					FROM SEARCH_LOG
+					WHERE SEARCH_DATE >= TRUNC(SYSDATE - 30)
+					GROUP BY TO_CHAR(SEARCH_DATE, 'YYYY-MM-DD')
+					ORDER BY search_day ASC
+				""";
 
 		return jdbcTemplate.query(sql, (rs, i) -> {
 			Map<String, Object> map = new HashMap<>();
@@ -114,18 +114,18 @@ public class SearchStatsController {
 		});
 	}
 
-
-	// 5) 시간대별 검색량
+	// 5) 오늘의 시간대별 검색량
 	@GetMapping("/byHour")
 	public List<Map<String, Object>> getStatsByHour() {
 		String sql = """
-				    SELECT
-				      TO_CHAR(SEARCH_DATE, 'HH24') AS hour,
-				      COUNT(*) AS cnt
-				    FROM SEARCH_LOG
-				    GROUP BY TO_CHAR(SEARCH_DATE, 'HH24')
-				    ORDER BY hour ASC
-				""";
+								    SELECT
+				  TO_CHAR(SEARCH_DATE, 'HH24') AS hour,
+				  COUNT(*) AS cnt
+				FROM SEARCH_LOG
+				WHERE TRUNC(SEARCH_DATE) = TRUNC(SYSDATE)
+				GROUP BY TO_CHAR(SEARCH_DATE, 'HH24')
+				ORDER BY hour ASC
+								""";
 
 		return jdbcTemplate.query(sql, (rs, i) -> {
 			Map<String, Object> map = new HashMap<>();
@@ -134,4 +134,51 @@ public class SearchStatsController {
 			return map;
 		});
 	}
+
+	// 7) 최근 7일 시간대별 검색량
+	@GetMapping("/byHour7Days")
+	public List<Map<String, Object>> getStatsByHour7Days() {
+	    String sql = """
+	        SELECT
+	          TO_CHAR(SEARCH_DATE, 'HH24') AS hour,
+	          COUNT(*) AS cnt
+	        FROM SEARCH_LOG
+	        WHERE SEARCH_DATE >= TRUNC(SYSDATE) - 6
+	        GROUP BY TO_CHAR(SEARCH_DATE, 'HH24')
+	        ORDER BY hour ASC
+	    """;
+
+	    return jdbcTemplate.query(sql, (rs, i) -> {
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("hour", rs.getString("hour"));
+	        map.put("count", rs.getInt("cnt"));
+	        return map;
+	    });
+	}
+
+	  @GetMapping("/recommendedConversionRate")
+	    public Map<String, Object> getRecommendedConversionRate() {
+	        String sql = """
+	            SELECT
+	              (SELECT COUNT(*) FROM SEARCH_LOG
+	               WHERE SEARCH_DATE >= TRUNC(SYSDATE) - 30) AS total_searches,
+	              (SELECT COUNT(*) FROM SEARCH_LOG
+	               WHERE SEARCH_DATE >= TRUNC(SYSDATE) - 30
+	                 AND IS_RECOMMENDED = 'Y') AS recommended_searches
+	            FROM DUAL
+	        """;
+
+	        return jdbcTemplate.queryForObject(sql, (rs, i) -> {
+	            long total = rs.getLong("total_searches");
+	            long recommended = rs.getLong("recommended_searches");
+	            double rate = total == 0 ? 0 : (double) recommended / total * 100;
+
+	            Map<String, Object> result = new HashMap<>();
+	            result.put("total", total);
+	            result.put("recommended", recommended);
+	            result.put("conversionRate", Math.round(rate * 100) / 100.0); // 소수점 2자리
+	            return result;
+	        });
+	    }
+
 }
