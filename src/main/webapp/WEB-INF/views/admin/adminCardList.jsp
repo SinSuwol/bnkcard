@@ -75,6 +75,7 @@
 <div class="inner">
 	<h1>Admin CardList 페이지</h1>
 	<hr>
+	<a href="/admin/adminCardRegistForm">등록</a>
 	<ul id="card-list"></ul>
 	
 	<!-- 모달 오버레이 -->

@@ -72,15 +72,40 @@ th, td {
 	</table>
 
 
-	<h2>기간별 검색량 추이</h2>
+	<h2>최근 1개월 기간별 검색량 추이</h2>
 	<div class="chart-container" style="width: 80%;">
 		<canvas id="dateChart"></canvas>
 	</div>
 
-	<h2>시간대별 검색량</h2>
+	<h2>오늘 시간대별 검색량</h2>
 	<div class="chart-container" style="width: 80%;">
 		<canvas id="hourChart"></canvas>
 	</div>
+
+	<h2>최근 7일 누적 시간대별 검색량</h2>
+	<div class="chart-container" style="width: 80%;">
+		<canvas id="last7daysHourChart"></canvas>
+	</div>
+
+	<h2>추천어 검색 전환율</h2>
+	<div id="conversionStats"></div>
+
+	<script>
+// 추천어 전환율 가져오기
+fetch('/admin/Search/stats/recommendedConversionRate')
+  .then(res => res.json())
+  .then(data => {
+    const div = document.getElementById('conversionStats');
+    div.innerHTML = `
+      <p><strong>총 검색 건수:</strong> \${data.total.toLocaleString()}</p>
+      <p><strong>추천어 검색 건수:</strong> \${data.recommended.toLocaleString()}</p>
+      <p><strong>추천어 검색 전환율:</strong> \${data.conversionRate}%</p>
+    `;
+  })
+  .catch(err => {
+    console.error('추천어 전환율 로드 실패:', err);
+  });
+</script>
 
 
 	<script>
@@ -218,6 +243,65 @@ th, td {
           }
         }
       });
+    });
+
+//7) 최근 7일 시간대별 검색량
+  fetch('/admin/Search/stats/byHour7Days')
+    .then(res => res.json())
+    .then(data => {
+      // 시간 순서대로 정렬 (혹시 빠진 시간대 채워주려면 로직 추가 가능)
+      const labels = data.map(d => d.hour + '시');
+      const counts = data.map(d => d.count);
+
+      const ctx = document.getElementById('last7daysHourChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              type: 'line',
+              label: '검색 수 (꺾은선)',
+              data: counts,
+              borderColor: '#2196F3',
+              backgroundColor: 'transparent',
+              tension: 0.2,
+              pointRadius: 4,
+              pointBackgroundColor: '#2196F3',
+              order: 0
+            },
+            {
+              type: 'bar',
+              label: '검색 수 (막대)',
+              data: counts,
+              backgroundColor: '#673AB7',
+              order: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: '최근 7일 시간대별 검색량'
+            },
+            legend: { position: 'top' }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: '시간대' }
+            },
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: '검색 수' }
+            }
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error('시간대별 데이터 로딩 오류:', error);
     });
 
   </script>
