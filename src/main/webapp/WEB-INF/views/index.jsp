@@ -26,15 +26,29 @@
 	</div>
 </header>
 <div class="video-wrapper">
-	<video autoplay muted loop playsinline class="banner-video">
-	       <source src="/video/BCcard.mp4" type="video/mp4">
-	       브라우저가 비디오 태그를 지원하지 않습니다.
-	</video>
+	<div class="video-container">
+	    <!-- 흐릿한 배경용 영상 -->
+	    <video autoplay muted loop playsinline class="back-video">
+	        <source src="/video/bannerVideo.mp4" type="video/mp4">
+	    </video>
+	
+	    <!-- 선명한 전경 영상 -->
+	    <video autoplay muted loop playsinline class="banner-video">
+	        <source src="/video/bannerVideo.mp4" type="video/mp4">
+	    </video>
+	
+	    <!-- 텍스트나 버튼 등 추가 가능 -->
+	    <div class="overlay-text">
+	        <h1 class="red">플러스, &nbsp</h1>
+	        <h1> 그 이상의 혜택</h1>
+	    </div>
+	</div>
 </div>
-<div class="inner main-wrap">
-	<h1>메인페이지</h1>
-	<hr>
-	<div style="height: 800px;"></div>
+<div class="inner main-wrap flex">
+	<h1>동백PLUS 체크카드</h1>
+	<h3>매일 쓰는 소비에, 매달 받는 보상</h2>
+	<img style="width:200px;" src="/image/card1.png">
+	<div style="height:800px;"></div>
 </div>
 <script>
 	window.addEventListener('scroll', function() {
