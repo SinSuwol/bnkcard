@@ -7,7 +7,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -26,7 +25,7 @@ public class UserSecurityConfig {
 	@Bean(name = "userFilterChain")
 	SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
 		
-		http.securityMatcher("/user/**", "/loginProc")
+		http.securityMatcher("/user/**", "/loginProc", "/logout")
 			.authorizeHttpRequests((auth) -> auth
 				.anyRequest().permitAll()
 				);
@@ -37,6 +36,12 @@ public class UserSecurityConfig {
 				.successHandler(customLoginSuccessHandler)
 				.failureUrl("/user/login?error=true")
 				.permitAll()
+				);
+		
+		http.logout(logout -> logout
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/user/login?logout=true")
+				.invalidateHttpSession(true)
 				);
 		
 		http.csrf(csrf -> csrf.disable());

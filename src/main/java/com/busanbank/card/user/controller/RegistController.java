@@ -1,5 +1,7 @@
 package com.busanbank.card.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.busanbank.card.user.dao.IUserDao;
 import com.busanbank.card.user.dto.TermDto;
+import com.busanbank.card.user.dto.TermsAgreementDto;
 import com.busanbank.card.user.dto.UserDto;
 import com.busanbank.card.user.dto.UserJoinDto;
 import com.busanbank.card.user.util.AESUtil;
@@ -35,11 +38,8 @@ public class RegistController {
 	@GetMapping("/terms")
 	public String terms(@RequestParam("role")String role, Model model) {
 		
-		TermDto term1 = userDao.findByTermType("회원약관");
-		TermDto term2 = userDao.findByTermType("개인정보처리취급방침");
-		
-		model.addAttribute("term1", term1.getContent());
-		model.addAttribute("term2", term2.getContent());
+		List<TermDto> terms = userDao.findAllTerms();
+		model.addAttribute("terms", terms);
 		
 		model.addAttribute("role", role);
 		return "user/terms";
@@ -135,6 +135,21 @@ public class RegistController {
 		user.setRole(joinUser.getRole());
 		
 		userDao.insertMember(user);
+		
+		System.out.println(userDao.findByUsername(user.getUsername()));
+		UserDto registUser = userDao.findByUsername(user.getUsername());
+		
+		TermsAgreementDto term1Agree = new TermsAgreementDto();
+		term1Agree.setMemberNo(registUser.getMemberNo());
+		term1Agree.setTermNo(1);
+		
+		userDao.insertTermsAgreement(term1Agree);
+
+		TermsAgreementDto term2Agree = new TermsAgreementDto();
+		term2Agree.setMemberNo(registUser.getMemberNo());
+		term2Agree.setTermNo(2);
+		
+		userDao.insertTermsAgreement(term2Agree);
 		
 		return "user/userLogin";
 	}

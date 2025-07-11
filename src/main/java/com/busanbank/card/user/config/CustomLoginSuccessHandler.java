@@ -27,7 +27,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler  
 		session.setAttribute("loginUsername", userDetails.getUsername());
 		
 		response.sendRedirect("/user/mypage");
-		
 	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,40 +39,30 @@ body {
 <body>
 <h1>회원가입</h1>
 <h2>약관동의</h2>
-
-<div class="terms-section">
-	<h3>회원약관</h3>
-	<div class="scroll-box">
-		<p class="center-text">홈페이지 회원약관</p>
-		<p>${term1}</p>
-	</div>
-	<div class="radio-group">
-		<span>위의 내용에 동의하십니까?</span>
-		<input type="radio" name="term1Agreement" value="Y">동의함
-		<input type="radio" name="term1Agreement" value="N" checked>동의하지않음		
-	</div>
-</div>
-<div class="terms-section">
-	<h3>개인정보처리취급방침</h3>
-	<div class="scroll-box">
-		<p class="center-text">개인정보처리취급방침</p>
-		<p>${term2}</p>
-	</div>
-	<div class="radio-group">
-		<span>위의 내용에 동의하십니까?</span>
-		<input type="radio" name="term2Agreement" value="Y">동의함
-		<input type="radio" name="term2Agreement" value="N" checked>동의하지않음		
-	</div>
-</div>
-<button type="button" onclick="nextPage()">다음</button>
-<button type="button" onclick="cancelRegist()">취소</button>
-
+<!-- <form action="/regist/userRegistForm?role=${role}" method="post"> -->
+	<c:forEach var="term" items="${terms}">
+		<div class="terms-section">
+			<h3>${term.termType} (필수)</h3>
+			<div class="scroll-box">
+				<p class="center-text">${term.termType}</p>
+				<p>${term.content}</p>
+			</div>
+			<div class="radio-group">
+				<span>위의 내용에 동의하십니까?</span>
+				<input type="radio" name="terms${term.termNo}" value="Y">동의함
+				<input type="radio" name="terms${term.termNo}" value="N" checked>동의하지않음		
+			</div>
+		</div>
+	</c:forEach>
+	<button type="button" onclick="nextPage()">다음</button>
+	<button type="button" onclick="cancelRegist()">취소</button>
+<!-- </form> -->
 <script>
 	function nextPage(){
 		const role = "${role}";
-		
-		const term1 = document.querySelector('input[name="term1Agreement"]:checked');
-		const term2 = document.querySelector('input[name="term2Agreement"]:checked');
+		/*
+		const term1 = document.querySelector('input[name="term1"]:checked');
+		const term2 = document.querySelector('input[name="term2"]:checked');
 		
 		if(!term1 || term1.value !== 'Y'){
 			alert("회원약관에 동의해 주세요.");
@@ -81,7 +72,7 @@ body {
 		if(!term2 || term2.value !== 'Y'){
 			alert("개인정보처리취급방침에 동의해 주세요.");
 			return;
-		}
+		}*/
 		
 		location.href = "/regist/userRegistForm?role=" + role;
 	}

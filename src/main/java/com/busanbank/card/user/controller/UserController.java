@@ -2,7 +2,6 @@ package com.busanbank.card.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +26,22 @@ public class UserController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/login")
-	public String login(@RequestParam(name = "error", required = false) String error) {
+	public String login(@RequestParam(name = "error", required = false) String error,
+						@RequestParam(name = "logout", required = false) String logout,
+						Model model) {
+		if(error != null) {
+			model.addAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다.");
+		}
+		if(logout != null) {
+			model.addAttribute("msg", "로그아웃 되었습니다.");
+		}
 		return "user/userLogin";
 	}
 	
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 		
-		session.setMaxInactiveInterval(1200);
+		session.setMaxInactiveInterval(1200); //세션 시간 20분 설정
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
