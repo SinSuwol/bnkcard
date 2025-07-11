@@ -30,11 +30,6 @@ public class AdminCardRegistController {
     public ResponseEntity<Map<String, Object>> registerCard(
             @RequestBody CardDto cardDto
     ) {
-    	   System.out.println("=== CardDto 내용 ===");
-    	    System.out.println("sService: " + cardDto.getSService());
-    	    System.out.println("cardIssueDate: " + cardDto.getCardIssueDate());
-    	    System.out.println("cardDueDate: " + cardDto.getCardDueDate());
-    	    System.out.println("====================");
     	
         Map<String, Object> response = new HashMap<>();
 
