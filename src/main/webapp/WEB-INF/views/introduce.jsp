@@ -5,13 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
-<jsp:include page="../fragments/header.jsp"></jsp:include>
-
-	<h1>관리자 스크래핑</h1>
-	
-<script src="/js/adminHeader.js"></script>
+<h1>은행소개</h1>
+<hr>
 </body>
 </html>

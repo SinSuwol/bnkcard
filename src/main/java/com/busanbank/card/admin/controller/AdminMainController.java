@@ -53,7 +53,7 @@ public class AdminMainController {
 	// 메인 페이지
 	@GetMapping("/Mainpage")
 	public String adminMainpage() {
-		return "admin/adminMainpage";
+		return "index";
 	}
 
 }
