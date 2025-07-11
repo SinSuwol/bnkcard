@@ -20,7 +20,7 @@ public class AdminCardRegistService {
         cardDto.setCardNo(cardNo);
 
         PermissionParamDto perDto = new PermissionParamDto();
-        perDto.setCardNo(cardNo);
+        perDto.setCardNo(cardDto.getCardNo());
         perDto.setPerContent(perContent);
         perDto.setAdmin(adminId);
 
