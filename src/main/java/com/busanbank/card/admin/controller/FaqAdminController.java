@@ -37,8 +37,9 @@ public class FaqAdminController {
             list = faqDao.searchFaqsWithPaging(keyword, startRow, endRow);
         } else {
             list = faqDao.searchFaqsWithPaging("", startRow, endRow);
+            
         }
-
+        
         int totalCount = faqDao.countFaqs(keyword != null ? keyword : "");
         int totalPage = (int) Math.ceil(totalCount / (double) pageSize);
 
