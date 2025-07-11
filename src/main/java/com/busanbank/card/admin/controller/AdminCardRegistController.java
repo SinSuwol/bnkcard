@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.busanbank.card.admin.dto.AdminDto;
 import com.busanbank.card.admin.service.AdminCardRegistService;
-import com.busanbank.card.admin.service.AdminCardService;
 import com.busanbank.card.admin.session.AdminSession;
 import com.busanbank.card.card.dto.CardDto;
 
@@ -31,13 +30,18 @@ public class AdminCardRegistController {
     public ResponseEntity<Map<String, Object>> registerCard(
             @RequestBody CardDto cardDto
     ) {
+    	   System.out.println("=== CardDto 내용 ===");
+    	    System.out.println("sService: " + cardDto.getSService());
+    	    System.out.println("cardIssueDate: " + cardDto.getCardIssueDate());
+    	    System.out.println("cardDueDate: " + cardDto.getCardDueDate());
+    	    System.out.println("====================");
+    	
         Map<String, Object> response = new HashMap<>();
 
         // ✅ AdminSession에서 로그인 사용자 정보 가져오기
         AdminDto loginAdmin = adminSession.getLoginUser();
 
         if (loginAdmin == null) {
-            response.put("success", false);
             response.put("message", "로그인이 필요합니다.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }

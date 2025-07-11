@@ -2,6 +2,8 @@ package com.busanbank.card.card.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,10 @@ public class CardDto {
     private Integer annualFee;
     private String issuedTo;
     private String service;
+    
+    @JsonProperty("sService")
     private String sService;
+    
     private String cardStatus;
     private String cardUrl;
     private LocalDate cardIssueDate;

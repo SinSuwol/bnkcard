@@ -33,7 +33,7 @@
 		#{annualFee},
 		#{issuedTo},
 		#{service},
-		#{sService},
+		#{sService, jdbcType=VARCHAR},
 		#{cardStatus},
 		#{cardUrl},
 		#{cardIssueDate},
