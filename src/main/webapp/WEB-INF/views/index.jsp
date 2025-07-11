@@ -6,6 +6,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/carousel.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
+
+
+
 </head>
 <body>
 <header>
@@ -50,6 +58,24 @@
 	<img style="width:200px;" src="/image/card1.png">
 	<div style="height:800px;"></div>
 </div>
+
+<div class="wrapper">
+  <div class="container">
+    <svg viewBox="0 0 400 400">
+      <path stroke-width="2" stroke="red" id="myPath" fill="none" d="M396,200 C396,308.24781 308.24781,396 200,396 91.75219,396 4,308.24781 4,200 4,91.75219 91.75219,4 200,4 308.24781,4 396,91.75219 396,200 z"></path>
+    </svg>
+    <div class="box gradient-blue-2 active">box 1</div>
+    <div class="box gradient-blue-2">box 2</div>
+    <div class="box gradient-blue-2">box 3</div>
+    <div class="box gradient-blue-2">box 4</div>
+    <div class="box gradient-blue-2">box 5</div>
+    <div class="box gradient-blue-2">box 6</div>
+    <div class="box gradient-blue-2">box 7</div>
+    <div class="box gradient-blue-2">box 8</div>
+    <div class="box gradient-blue-2">box 9</div>
+  </div>
+</div>
+<script src="/js/carousel.js"></script>
 <script>
 	window.addEventListener('scroll', function() {
 	    const header = document.querySelector('header');
