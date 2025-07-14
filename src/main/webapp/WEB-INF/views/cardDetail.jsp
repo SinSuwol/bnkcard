@@ -7,8 +7,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     html, body {
-      background: #fff !important;
-      background-image: none !important;
+      background: #fff;
       margin: 0;
       padding: 0;
       font-family: 'Noto Sans KR', sans-serif;
@@ -18,23 +17,19 @@
     .wrap {
       max-width: 1000px;
       margin: 40px auto;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
     }
 
     .top {
       display: flex;
       gap: 40px;
-      padding: 40px;
-      border-bottom: 1px solid #eee;
+      padding: 40px 20px 20px;
       align-items: flex-start;
     }
 
     .card-img {
       width: 260px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .info {
@@ -78,23 +73,26 @@
     .summary-benefit {
       display: flex;
       gap: 12px;
-      margin-top: 30px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
 
     .benefit-card {
       flex: 1 1 calc(50% - 12px);
       background: #f9faff;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border: 1px solid #e0e6ff;
       border-radius: 6px;
       font-size: 15px;
       font-weight: 500;
       color: #222;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .accordion-container {
-      padding: 30px 40px;
+      padding: 20px;
     }
 
     .accordion {
@@ -115,6 +113,9 @@
       font-size: 17px;
       font-weight: 600;
       color: #002e5b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .accordion p {
@@ -130,9 +131,7 @@
     }
 
     .section {
-      padding: 30px 40px;
-      background: #fff;
-      border-top: 1px solid #eee;
+      padding: 30px 20px;
     }
 
     .section h3 {
@@ -159,27 +158,15 @@
 
 <div class="wrap">
   <div class="top">
-    <!-- 카드 이미지 및 연회비 -->
     <div>
       <img id="cardImg" src="" alt="카드이미지" class="card-img">
       <div class="fee-box">
         <p><strong>연회비:</strong></p>
-        <div class="fee-line">
-          <img src="/image/overseas_pay_domestic.png" alt="국내">
-          <span id="feeDomestic">-</span>
-        </div>
-        <div class="fee-line">
-          <img src="/image/overseas_pay_visa.png" alt="VISA">
-          <span id="feeVisa">-</span>
-        </div>
-        <div class="fee-line">
-          <img src="/image/overseas_pay_master.png" alt="MASTER">
-          <span id="feeMaster">-</span>
-        </div>
+        <div class="fee-line"><img src="/image/overseas_pay_domestic.png" alt="국내"><span id="feeDomestic">-</span></div>
+        <div class="fee-line"><img src="/image/overseas_pay_visa.png" alt="VISA"><span id="feeVisa">-</span></div>
+        <div class="fee-line"><img src="/image/overseas_pay_master.png" alt="MASTER"><span id="feeMaster">-</span></div>
       </div>
     </div>
-
-    <!-- 카드 정보 및 요약 혜택 -->
     <div class="info">
       <h2 id="cardName"></h2>
       <p id="cardSlogan"></p>
@@ -187,10 +174,8 @@
     </div>
   </div>
 
-  <!-- 아코디언 혜택 -->
   <div class="accordion-container" id="accordionContainer"></div>
 
-  <!-- 특화 서비스 / 유의사항 -->
   <div class="section">
     <h3>특화 서비스</h3>
     <pre id="sService"></pre>
@@ -248,23 +233,19 @@
     const accordionDiv = document.getElementById('accordionContainer');
     const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
 
-    const summaryItems = parts.slice(0, 4).map(part => {
+    const summaryItems = parts.slice(0, 3).map(part => {
       const [titleLine, ...contentLines] = part.split('\n');
       const summaryText = `${titleLine.trim()} - ${contentLines[0]?.trim() || ''}`;
       return `<div class="benefit-card">${summaryText}</div>`;
     });
     summaryDiv.innerHTML = summaryItems.join('');
 
-    accordionDiv.innerHTML = parts.map(part => {
-      const [titleLine, ...contentLines] = part.split('\n');
-      const content = contentLines.map(line => line.trim()).join('<br>');
-      return `
-        <div class="accordion" onclick="toggleAccordion(this)">
-          <h4>${titleLine.trim()}</h4>
-          <p>${content}</p>
-        </div>
-      `;
-    }).join('');
+    accordionDiv.innerHTML = `
+      <div class="accordion" onclick="toggleAccordion(this)">
+        <h4>기본 서비스 <span>▼</span></h4>
+        <p>${parts.map(p => p.replace(/\n/g, "<br>")).join("<br><br>")}</p>
+      </div>
+    `;
   }
 
   function toggleAccordion(el) {
