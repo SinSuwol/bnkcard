@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanbank.card.admin.mapper.AdminChatMapper">
+
+    <select id="selectAllRooms" resultType="com.busanbank.card.user.dto.ChatRoomDto">
+        SELECT
+            ROOM_ID as roomId,
+            MEMBER_NO as memberNo,
+            ADMIN_NO as adminNo,
+            UNREAD_COUNT as unreadCount,
+            CREATED_AT as createdAt,
+            CLOSED_AT as closedAt
+        FROM CHAT_ROOM
+    </select>
+
+    <update id="assignAdmin">
+        UPDATE CHAT_ROOM
+        SET ADMIN_NO = #{adminNo}
+        WHERE ROOM_ID = #{roomId}
+    </update>
+
+    <update id="closeRoom">
+        UPDATE CHAT_ROOM
+        SET CLOSED_AT = SYSDATE
+        WHERE ROOM_ID = #{roomId}
+    </update>
+
+    <insert id="insertAdminMessage">
+        INSERT INTO CHAT_MESSAGE
+            (MSG_ID, ROOM_ID, SENDER_TYPE, SENDER_ID, MESSAGE, SENT_AT)
+        VALUES
+            (SEQ_CHAT_MESSAGE.NEXTVAL, #{roomId}, #{senderType}, #{senderId}, #{message}, SYSDATE)
+    </insert>
+    
+    <select id="selectMessages" resultType="com.busanbank.card.user.dto.ChatMessageDto">
+    SELECT
+        ROOM_ID as roomId,
+        SENDER_TYPE as senderType,
+        SENDER_ID as senderId,
+        MESSAGE as message,
+        SENT_AT as sentAt
+    FROM CHAT_MESSAGE
+    WHERE ROOM_ID = #{roomId}
+    ORDER BY SENT_AT
+</select>
+    
+
+</mapper>

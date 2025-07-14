@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanbank.card.user.mapper.ChatMapper">
+
+    <insert id="insertChatRoom">
+        INSERT INTO CHAT_ROOM
+            (ROOM_ID, MEMBER_NO, UNREAD_COUNT, CREATED_AT)
+        VALUES
+            (SEQ_CHAT_ROOM.NEXTVAL, #{memberNo}, 0, SYSDATE)
+    </insert>
+
+    <select id="selectCurrRoomId" resultType="long">
+        SELECT SEQ_CHAT_ROOM.CURRVAL FROM DUAL
+    </select>
+
+    <select id="selectChatRoom" resultType="com.busanbank.card.user.dto.ChatRoomDto">
+        SELECT
+            ROOM_ID as roomId,
+            MEMBER_NO as memberNo,
+            ADMIN_NO as adminNo,
+            UNREAD_COUNT as unreadCount,
+            CREATED_AT as createdAt,
+            CLOSED_AT as closedAt
+        FROM CHAT_ROOM
+        WHERE ROOM_ID = #{roomId}
+    </select>
+
+    <insert id="insertChatMessage">
+        INSERT INTO CHAT_MESSAGE
+            (MSG_ID, ROOM_ID, SENDER_TYPE, SENDER_ID, MESSAGE, SENT_AT)
+        VALUES
+            (SEQ_CHAT_MESSAGE.NEXTVAL, #{roomId}, #{senderType}, #{senderId}, #{message}, SYSDATE)
+    </insert>
+
+    <update id="increaseUnreadCount">
+        UPDATE CHAT_ROOM
+        SET UNREAD_COUNT = UNREAD_COUNT + 1
+        WHERE ROOM_ID = #{roomId}
+    </update>
+    
+    <select id="selectMessages" resultType="com.busanbank.card.user.dto.ChatMessageDto">
+    SELECT
+        ROOM_ID as roomId,
+        SENDER_TYPE as senderType,
+        SENDER_ID as senderId,
+        MESSAGE as message,
+        SENT_AT as sentAt
+    FROM CHAT_MESSAGE
+    WHERE ROOM_ID = #{roomId}
+    ORDER BY SENT_AT
+</select>
+    
+
+</mapper>
