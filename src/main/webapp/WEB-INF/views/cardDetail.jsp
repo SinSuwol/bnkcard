@@ -4,19 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <title>카드 상세</title>
+  <link rel="stylesheet" href="/css/style.css">
   <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #f7f7f7;
+    html, body {
+      background: #fff !important;
+      background-image: none !important;
       margin: 0;
       padding: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #333;
     }
 
     .wrap {
       max-width: 1000px;
       margin: 40px auto;
       background: #fff;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
       border-radius: 8px;
       overflow: hidden;
     }
@@ -25,60 +27,70 @@
       display: flex;
       gap: 40px;
       padding: 40px;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid #eee;
+      align-items: flex-start;
     }
 
     .card-img {
-      width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
+      width: 260px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .info {
+      flex: 1;
     }
 
     .info h2 {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 10px;
+      font-size: 32px;
+      font-weight: 700;
+      color: #111;
+      margin: 0;
     }
 
     .info p {
       font-size: 18px;
-      font-weight: bold;
       color: #555;
-      margin: 6px 0;
+      margin: 14px 0;
     }
 
     .fee-box {
       margin-top: 20px;
+      display: flex;
+      gap: 20px;
     }
 
     .fee-line {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
+      gap: 6px;
     }
 
     .fee-line img {
-      width: 40px;
-      height: auto;
+      width: 24px;
     }
 
-    /* 🔽 요약 혜택 카드 스타일 */
+    .fee-line span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
     .summary-benefit {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 30px;
+      flex-wrap: wrap;
     }
 
     .benefit-card {
-      background: #f2f4f6;
-      padding: 12px 16px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      flex: 1 1 calc(50% - 12px);
+      background: #f9faff;
+      padding: 14px 18px;
+      border: 1px solid #e0e6ff;
+      border-radius: 6px;
       font-size: 15px;
-      color: #333;
       font-weight: 500;
+      color: #222;
     }
 
     .accordion-container {
@@ -86,30 +98,31 @@
     }
 
     .accordion {
-      background: #f2f4f6;
-      border: 1px solid #cfd6e1;
-      border-radius: 4px;
-      padding: 15px 20px;
-      margin-bottom: 12px;
+      background: #f8f9fb;
+      border: 1px solid #dcdfe6;
+      border-radius: 6px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
     }
 
     .accordion:hover {
-      background: #e6ebf2;
+      background: #edf0f6;
     }
 
     .accordion h4 {
       margin: 0;
       font-size: 17px;
-      color: #003478;
+      font-weight: 600;
+      color: #002e5b;
     }
 
     .accordion p {
       display: none;
       margin-top: 12px;
-      font-size: 14px;
-      color: #333;
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
     }
 
     .accordion.active p {
@@ -118,28 +131,31 @@
 
     .section {
       padding: 30px 40px;
-      border-top: 1px solid #e0e0e0;
       background: #fff;
+      border-top: 1px solid #eee;
     }
 
     .section h3 {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
       font-size: 18px;
-      color: #003478;
-      border-left: 4px solid #003478;
+      font-weight: 600;
+      color: #002e5b;
+      border-left: 4px solid #002e5b;
       padding-left: 10px;
     }
 
     .section pre {
       white-space: pre-wrap;
       font-family: 'Noto Sans KR', sans-serif;
-      font-size: 14px;
-      color: #444;
-      line-height: 1.6;
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
     }
   </style>
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
 
 <div class="wrap">
   <div class="top">
@@ -167,15 +183,14 @@
     <div class="info">
       <h2 id="cardName"></h2>
       <p id="cardSlogan"></p>
-
       <div class="summary-benefit" id="summaryBenefit"></div>
     </div>
   </div>
 
-  <!-- 아코디언 혜택 박스 -->
+  <!-- 아코디언 혜택 -->
   <div class="accordion-container" id="accordionContainer"></div>
 
-  <!-- 특화 서비스, 유의사항 -->
+  <!-- 특화 서비스 / 유의사항 -->
   <div class="section">
     <h3>특화 서비스</h3>
     <pre id="sService"></pre>
@@ -233,7 +248,6 @@
     const accordionDiv = document.getElementById('accordionContainer');
     const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
 
-    // 요약 카드 4개 출력
     const summaryItems = parts.slice(0, 4).map(part => {
       const [titleLine, ...contentLines] = part.split('\n');
       const summaryText = `${titleLine.trim()} - ${contentLines[0]?.trim() || ''}`;
@@ -241,7 +255,6 @@
     });
     summaryDiv.innerHTML = summaryItems.join('');
 
-    // 아코디언 전체
     accordionDiv.innerHTML = parts.map(part => {
       const [titleLine, ...contentLines] = part.split('\n');
       const content = contentLines.map(line => line.trim()).join('<br>');

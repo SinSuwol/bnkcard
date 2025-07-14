@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>카드 리스트</title>
-<!-- ✅ jQuery -->
+<link rel="stylesheet" href="/css/style.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <!-- ✅ Slick Slider CSS + JS -->
@@ -276,8 +276,9 @@
 </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
 
-	<h2 style="text-align: center;">인기 카드</h2>
+
 	
 	<!-- 🔥 인기 카드 슬라이더 -->
 <div class="slider-container">
@@ -286,7 +287,6 @@
   </div>
 </div>
 	
-	<h2 style="text-align: center;">전체 카드 항목</h2>
 
 	<!-- 카드 타입 필터 -->
 	<div style="text-align: center; margin-bottom: 15px;">
