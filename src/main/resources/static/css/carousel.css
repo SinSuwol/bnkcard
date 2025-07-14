@@ -1,5 +1,5 @@
 
-.container {
+.carousel {
   box-sizing: border-box;
   position: relative;
   width: 100%;
@@ -74,6 +74,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 6%;
   transition:0.2s;
 }
 .descriptions {
@@ -112,14 +113,34 @@
 	height:500px;
 	position:relative;
 }
-.spacer .txt{
+.spacer .txt-box{
 	position:absolute;
 	left:50%;
 	transform:translateX(-50%);
 	opacity:0;
-    font-size: 6rem;
-    font-weight: bold;
 }
+
+.color-txt{
+	font-size:6rem;
+	font-weight: bold;
+	
+}
+
+.desc{
+	font-size:2rem;
+	font-weight:bold;
+}
+.previous{
+	position:absolute;
+	top:50%;
+}
+.next{
+	position:absolute;
+	top:50%;
+	right:0;
+}
+
+
 
 @media (max-width: 799px) {
   .wrapper {

@@ -1,6 +1,6 @@
 	gsap.registerPlugin(Draggable, InertiaPlugin);
 	
-	let descriptions = gsap.utils.toArray(".spacer .txt");
+	let descriptions = gsap.utils.toArray(".spacer .txt-box");
 	let items = gsap.utils.toArray(".content .item");
 	
 	gsap.set(descriptions[0], {autoAlpha: 1}); // make the first description visible.

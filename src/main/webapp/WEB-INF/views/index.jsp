@@ -39,50 +39,97 @@
 <div class="inner main-wrap flex">
 	<h1>동백PLUS 체크카드</h1>
 	<h3>매일 쓰는 소비에, 매달 받는 보상</h2>
-	<img style="width:200px;" src="/image/card1.png">
+	<img style="width:200px;" src="/image/CARD 1.png">
+	<div class="carousel">
+		  <div class="spacer">
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:orange">ORANGE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:green">GREEN</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:purple">PURPLE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:yellow">YELLOW</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:pink">RED</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:orange">ORANGE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:green">GREEN</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:purple">PURPLE</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:yellow">YELLOW</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	<div class="txt-box">
+		  		<p class="color-txt" style="color:pink">RED</p>
+		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+		  	</div>
+		  	
+		  </div>
+	      <div class="wrapper">
+	           
+            <div class="content">
+	              <div class="track"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 1.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 2.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 3.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 4.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 5.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 6.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 1.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 2.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 3.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 4.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 5.png"></div>
+	                  <div class="item"><img class="child" src="/image/CARD 6.png"></div>
+	            </div>    
+	           
+	      </div>
+	<button class="previous">previous</button> <button class="next">next</button>
+	
+	</div>
+	<div class="bubble-wrap flex">
+		<div class="hover-target-wrapper">
+			<div class="hover-target b1">hover me</div>
+			<div class="tooltip">툴팁1</div>
+		</div>
+		<div class="hover-target-wrapper">
+			<div class="hover-target b2">hover me</div>
+			<div class="tooltip">툴팁2</div>
+		</div>
+		<div class="hover-target-wrapper">
+			<div class="hover-target b3">hover me</div>
+			<div class="tooltip">툴팁3</div>
+		</div>
+	</div>
 </div>
 
-<div class="container">
-	  <div class="spacer">
-	  	<p class="txt" style="color:skyblue">SKY BLUE</p>
-	  	<p class="txt" style="color:orange">ORANGE</p>
-	  	<p class="txt" style="color:green">GREEN</p>
-	  	<p class="txt" style="color:purple">PURPLE</p>
-	  	<p class="txt" style="color:yellow">YELLOW</p>
-	  	<p class="txt" style="color:pink">RED</p>
-	  	<p class="txt" style="color:skyblue">SKY BLUE</p>
-	  	<p class="txt" style="color:orange">ORANGE</p>
-	  	<p class="txt" style="color:green">GREEN</p>
-	  	<p class="txt" style="color:purple">PURPLE</p>
-	  	<p class="txt" style="color:yellow">YELLOW</p>
-	  	<p class="txt" style="color:pink">RED</p>
-	  </div>
-      <div class="wrapper">
-            <div class="descriptions">
-                  <div class="title">TITLE ONE</div>
-                  <div class="title">TITLE TWO</div>
-                  <div class="title">TITLE THREE</div>
-                  <div class="title">TITLE FOUR</div>
-            </div>
-            <div class="content">
-              <div class="track"></div>
-                  <div class="item"><img class="child" src="/image/card1.png"></div>
-                  <div class="item"><img class="child" src="/image/card2.png"></div>
-                  <div class="item"><img class="child" src="/image/card3.png"></div>
-                  <div class="item"><img class="child" src="/image/card4.png"></div>
-                  <div class="item"><img class="child" src="/image/card5.png"></div>
-                  <div class="item"><img class="child" src="/image/card6.png"></div>
-                  <div class="item"><img class="child" src="/image/card1.png"></div>
-                  <div class="item"><img class="child" src="/image/card2.png"></div>
-                  <div class="item"><img class="child" src="/image/card3.png"></div>
-                  <div class="item"><img class="child" src="/image/card4.png"></div>
-                  <div class="item"><img class="child" src="/image/card5.png"></div>
-                  <div class="item"><img class="child" src="/image/card6.png"></div>
-            </div>    
-           
-      </div>
-</div>
-<div style="text-align: center"><button class="previous">previous</button> <button class="next">next</button></div>
 <script src="/js/carousel.js"></script>
 <script>
 	window.addEventListener('scroll', function() {
@@ -92,6 +139,27 @@
 	    } else {
 	        header.classList.remove('scrolled');
 	    }
+	});
+	
+	
+	const wrappers = document.querySelectorAll('.hover-target-wrapper');
+
+	wrappers.forEach(wrapper => {
+	  const target = wrapper.querySelector('.hover-target');
+	  const tooltip = wrapper.querySelector('.tooltip');
+
+	  target.addEventListener('mouseenter', () => {
+	    tooltip.style.opacity = 1;
+	  });
+
+	  target.addEventListener('mouseleave', () => {
+	    tooltip.style.opacity = 0;
+	  });
+
+	  target.addEventListener('mousemove', (e) => {
+	    tooltip.style.left = `\${e.clientX + 10}px`;
+	    tooltip.style.top = `\${e.clientY + 10}px`;
+	  });
 	});
 </script>	
 </body>
