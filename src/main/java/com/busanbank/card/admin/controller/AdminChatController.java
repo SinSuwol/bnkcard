@@ -46,7 +46,7 @@ public class AdminChatController {
     }
     
     @GetMapping("/room/{roomId}/messages")
-    public ResponseEntity<List<ChatMessageDto>> getMessages(@PathVariable Long roomId) {
+    public ResponseEntity<List<ChatMessageDto>> getMessages(@PathVariable("roomId") Long roomId) {
         List<ChatMessageDto> messages = adminChatService.getMessages(roomId);
         return ResponseEntity.ok(messages);
     }

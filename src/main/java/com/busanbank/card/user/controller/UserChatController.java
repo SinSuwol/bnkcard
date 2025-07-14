@@ -45,7 +45,7 @@ public class UserChatController {
     }
 
     @GetMapping("/room/{roomId}/messages")
-    public ResponseEntity<List<ChatMessageDto>> getUserMessages(@PathVariable Long roomId) {
+    public ResponseEntity<List<ChatMessageDto>> getUserMessages(@PathVariable("roomId") Long roomId) {
         List<ChatMessageDto> list = chatService.getMessages(roomId);
         return ResponseEntity.ok(list);
     }

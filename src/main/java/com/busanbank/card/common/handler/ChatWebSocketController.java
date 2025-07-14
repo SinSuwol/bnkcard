@@ -16,13 +16,15 @@ public class ChatWebSocketController {
 
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(ChatMessageDto dto) {
-        // DB 저장
         chatService.sendMessage(dto);
 
-        // 구독자들에게 메시지 전송
+        System.out.println("==== WebSocket BROADCAST DTO ====");
+        System.out.println(dto);
+
         messagingTemplate.convertAndSend(
                 "/topic/room/" + dto.getRoomId(),
                 dto
         );
     }
+
 }
