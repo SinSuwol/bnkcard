@@ -63,7 +63,7 @@
 	    #{cardNo},
 	    '대기중',
 	    NULL,
-	    NULL,
+	    #{admin},
 	    NULL,
 	    SYSDATE,
 	    NULL,

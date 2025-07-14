@@ -16,11 +16,11 @@ public class AdminCardService {
 
 	//수정,등록 용
 	@Transactional
-	public boolean insertCardTemp(CardDto cardDto, String s) {
+	public boolean insertCardTemp(CardDto cardDto, String s, String adminId) {
 		PermissionParamDto perDto = new PermissionParamDto();
 		perDto.setCardNo(cardDto.getCardNo());
 		perDto.setPerContent(s);
-		
+		perDto.setAdmin(adminId);
 		
 		int updated1 = adminCardDao.insertCardTemp(cardDto);
 		int updated2 = adminCardDao.insertPermission(perDto);
@@ -29,11 +29,12 @@ public class AdminCardService {
 	}
 	
 	//삭제용
-	public boolean insertCardTemp2(Long i, String s) {
+	public boolean insertCardTemp2(Long i, String s, String adminId) {
 		PermissionParamDto perDto = new PermissionParamDto();
 		perDto.setCardNo(i);
 		perDto.setPerContent(s);
-	
+		perDto.setAdmin(adminId);
+		
 		System.out.println(i + s);
 		
 		int updated2 = adminCardDao.insertPermission(perDto);
