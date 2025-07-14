@@ -8,14 +8,126 @@
 <title>개인 정보 수정</title>
 <link rel="stylesheet" href="/css/style.css">
 <style>
+/* 메인 컨텐츠 */
 .main-content {
-  padding-top: 130px; /* 💡 fixed header + top-bar 높이 고려 */
-  margin: 0 30px;
+
+  width: 100%;
+  max-width: 600px;        /* 적당한 너비 지정 */
+  margin: 0 auto;          /* 가로 중앙 정렬 */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 40px 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
+
+/* 제목 */
+.main-content h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* 구분선 */
+.main-content hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+/* 폼 테이블 */
+form#updateForm table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+form#updateForm th, form#updateForm td {
+  padding: 12px 10px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+form#updateForm th {
+  width: 30%;
+  font-weight: 600;
+  color: #555;
+  background-color: #f7f7f7;
+  border-radius: 6px 0 0 6px;
+}
+
+form#updateForm td input[type="text"],
+form#updateForm td input[type="password"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+form#updateForm td input[type="text"]:focus,
+form#updateForm td input[type="password"]:focus {
+  border-color: #0078d4;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0,120,212,0.4);
+}
+
+/* 설명 스팬 */
+form#updateForm td span {
+  font-size: 0.85rem;
+  color: #888;
+  margin-left: 8px;
+}
+
+/* 비밀번호 에러 메시지 */
+#pwErrorMsg {
+  color: red;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding-left: 10px;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+/* 버튼들 */
+form#updateForm button {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  margin-right: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#updateForm button:hover {
+  background-color: #005a9e;
+}
+
+form#updateForm button[type="button"]:last-child {
+  background-color: #888;
+}
+
+form#updateForm button[type="button"]:last-child:hover {
+  background-color: #555;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;  /* 가로 가운데 정렬 */
+  gap: 12px;                /* 버튼 사이 간격 */
+  margin-top: 20px;         /* 버튼 위쪽 여백 (선택) */
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<div style="height: 150px;"></div> 
 <div class="main-content">
 	<h1>개인 정보 수정</h1>
 	<hr>
@@ -35,11 +147,11 @@
 			</tr>
 			<tr>
 				<th>새 비밀번호 확인</th>
-				<td><input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><div id="pwErrorMsg"></div></td>
+				<td>
+					<input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()">
+					<span> ※ 비밀번호 재입력</span>
+					<div id="pwErrorMsg"></div>
+				</td>
 			</tr>
 			<tr>
 				<th>주소</th>
@@ -51,8 +163,10 @@
 			</tr>
 		</table>
 		<input type="hidden" name="role" value="${role}">
-		<button type="button" onclick="editProfile()">수정</button>
-		<button type="button" onclick="cancelEdit()">취소</button>
+		<div class="button-group">
+			<button type="button" onclick="editProfile()">수정</button>
+			<button type="button" onclick="cancelEdit()">취소</button>
+		</div>
 	</form>
 	<c:if test="${not empty msg}">
 	    <script>

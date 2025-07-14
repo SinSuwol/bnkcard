@@ -1,5 +1,7 @@
 package com.busanbank.card.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.busanbank.card.card.dto.CardDto;
 import com.busanbank.card.user.dao.IUserDao;
 import com.busanbank.card.user.dto.UserDto;
+import com.busanbank.card.user.service.SessionService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,6 +26,8 @@ public class UserController {
 
 	@Autowired
 	private IUserDao userDao;
+	@Autowired
+	private SessionService sessionService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -41,21 +47,14 @@ public class UserController {
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 		
-		if(session == null || session.getAttribute("loginUsername") == null) {
+		UserDto loginUser = sessionService.prepareLoginUserAndSession(session, model);
+		if(loginUser == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
 			return "user/userLogin";
 		}
 		
-		session.setMaxInactiveInterval(1200); //세션 시간 20분 설정
-		int remainingSeconds = session.getMaxInactiveInterval();
-		model.addAttribute("remainingSeconds", remainingSeconds);
-		
-		String username = (String) session.getAttribute("loginUsername");
-		UserDto loginUser = userDao.findByUsername(username);
-		
-		System.out.println(loginUser);
-		
-		model.addAttribute("loginUser", loginUser);
+		List<CardDto> cards = userDao.findMyCard();
+		model.addAttribute("cards", cards);
 		
 		return "user/mypage";
 	}
@@ -63,14 +62,11 @@ public class UserController {
 	@GetMapping("/editProfile")
 	public String editProfile(HttpSession session, Model model) {
 		
-		session.setMaxInactiveInterval(1200); //세션 시간 20분 설정
-		int remainingSeconds = session.getMaxInactiveInterval();
-		model.addAttribute("remainingSeconds", remainingSeconds);
-		
-		String username = (String) session.getAttribute("loginUsername");
-		UserDto loginUser = userDao.findByUsername(username);
-		
-		model.addAttribute("loginUser", loginUser);
+		UserDto loginUser = sessionService.prepareLoginUserAndSession(session, model);
+		if(loginUser == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "user/userLogin";
+		}
 		
 		return "user/editProfile";
 	}

@@ -11,12 +11,17 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #333;
 }
 
 .main-content {
-  padding-top: 130px; /* 💡 fixed header + top-bar 높이 고려 */
-  margin: 0 30px;
+  padding-top: 130px; /* header 고려 */
+  margin: 0 auto;
+  max-width: 1000px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .page-section {
@@ -28,23 +33,78 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
 
 .section-header .title {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
+  color: #222;
+}
+
+.section-header .title a {
+  color: black;             /* 까만색으로 설정 */
+  text-decoration: none;    /* 밑줄 제거 (원하는 경우) */
+  font-weight: 500;
+}
+
+.section-header a {
+  font-size: 0.95em;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.section-header a:hover {
+  text-decoration: underline;
+}
+
+.section-header .title a:hover {
+  text-decoration: underline;  /* 호버 시 밑줄 추가 (선택 사항) */
 }
 
 .card-box {
-  border: 1px solid #ccc;
   padding: 30px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-nav a {
-  text-decoration: none;
-  color: #333;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-list:hover {
+  transform: translateY(-4px);
+}
+
+.card-image {
+  width: 160px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #444;
+  margin: 0;
+  text-align: center;
 }
 
 </style>
@@ -58,11 +118,15 @@ nav a {
 			<a href="/user/editProfile">개인 정보 수정</a>
 		</div>
 		<div class="card-box highlight">
-			<p>내 카드 리스트</p>
+			<div class="card-container">
+				<c:forEach var="card" items="${cards}">
+					<div class="card-list">
+						<img class="card-image" src="${card.cardUrl}">
+						<p class="card-name">${card.cardName}</p>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-		<!-- <div class="card-box">
-			<p>카드 신청 내역</p>
-		</div> -->
 	</div>
 	<div>
 		<div class="section-header">

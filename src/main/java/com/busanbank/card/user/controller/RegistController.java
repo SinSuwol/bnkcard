@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.busanbank.card.user.dao.IUserDao;
 import com.busanbank.card.user.dto.TermDto;
@@ -32,12 +33,14 @@ public class RegistController {
 	
 	//회원유형선택
 	@GetMapping("/selectMemberType")
-	public String registForm(HttpSession session) {
+	public String registForm(HttpSession session, Model model,
+							 RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
 		
 		if(loginUser != null) {
+			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
 		
@@ -47,12 +50,14 @@ public class RegistController {
 	//약관 동의
 	@GetMapping("/terms")
 	public String terms(@RequestParam("role")String role, Model model,
-						HttpSession session) {
+						HttpSession session,
+						RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
 		
 		if(loginUser != null) {
+			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}		
 		
@@ -66,12 +71,14 @@ public class RegistController {
 	//정보입력 폼 페이지
 	@GetMapping("/userRegistForm")
 	public String userRegistForm(@RequestParam("role")String role, Model model,
-								 HttpSession session) {
+								 HttpSession session,
+								 RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
 		
 		if(loginUser != null) {
+			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
 		
@@ -81,7 +88,8 @@ public class RegistController {
 	
 	//아이디 중복확인
 	@PostMapping("/check-username")
-	public @ResponseBody String checkUsername(@RequestParam("username")String username) {
+	public @ResponseBody String checkUsername(@RequestParam("username")String username,
+											  RedirectAttributes rttr) {
 		UserDto user = userDao.findByUsername(username);
 		if(user != null) {
 			return "이미 사용중인 아이디입니다.";

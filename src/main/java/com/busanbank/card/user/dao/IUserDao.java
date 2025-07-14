@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.busanbank.card.card.dto.CardDto;
 import com.busanbank.card.user.dto.TermDto;
 import com.busanbank.card.user.dto.TermsAgreementDto;
 import com.busanbank.card.user.dto.UserDto;
@@ -30,4 +31,7 @@ public interface IUserDao {
 	@Insert("INSERT INTO terms_agreement (no, member_no, term_no, agreed_at, created_at, updated_at) "
 			+ "VALUES (terms_agreement_seq.nextval, #{memberNo}, #{termNo}, SYSDATE, SYSDATE, SYSDATE)")
 	int insertTermsAgreement(TermsAgreementDto termsAgreementDto);
+	
+	@Select("SELECT card_url, card_name FROM card WHERE card_no IN (1, 2, 3)")
+	List<CardDto> findMyCard();
 }
