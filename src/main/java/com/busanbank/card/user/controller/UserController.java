@@ -41,7 +41,14 @@ public class UserController {
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 		
+		if(session == null || session.getAttribute("loginUsername") == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "user/userLogin";
+		}
+		
 		session.setMaxInactiveInterval(1200); //세션 시간 20분 설정
+		int remainingSeconds = session.getMaxInactiveInterval();
+		model.addAttribute("remainingSeconds", remainingSeconds);
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
@@ -55,6 +62,10 @@ public class UserController {
 	
 	@GetMapping("/editProfile")
 	public String editProfile(HttpSession session, Model model) {
+		
+		session.setMaxInactiveInterval(1200); //세션 시간 20분 설정
+		int remainingSeconds = session.getMaxInactiveInterval();
+		model.addAttribute("remainingSeconds", remainingSeconds);
 		
 		String username = (String) session.getAttribute("loginUsername");
 		UserDto loginUser = userDao.findByUsername(username);
