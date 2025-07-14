@@ -6,51 +6,63 @@
 <head>
 <meta charset="UTF-8">
 <title>개인 정보 수정</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.main-content {
+  padding-top: 130px; /* 💡 fixed header + top-bar 높이 고려 */
+  margin: 0 30px;
+}
+</style>
 </head>
 <body>
-<h1>개인 정보 수정</h1>
-<hr>
-<form id="updateForm" action="/user/update" method="post">
-	<table>
-		<tr>
-			<th>성명(실명)</th>
-			<td><input type="text" name="name" id="name" value="${loginUser.name}" readonly></td>
-		</tr>
-		<tr>
-			<th>아이디</th>
-			<td><input type="text" name="username" id="username" value="${loginUser.username}" readonly></td>
-		</tr>
-		<tr>
-			<th>새 비밀번호</th>
-			<td><input type="password" name="password" id="password" onblur="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
-		</tr>
-		<tr>
-			<th>새 비밀번호 확인</th>
-			<td><input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
-		</tr>
-		<tr>
-			<th></th>
-			<td><div id="pwErrorMsg"></div></td>
-		</tr>
-		<tr>
-			<th>주소</th>
-			<td>
-				<input type="text" name="zipCode" id="zipCode" value="${loginUser.zipCode}"><br>
-				<input type="text" name="address1" id="address1" value="${loginUser.address1}"><br>
-				<input type="text" name="address2" id="address2" value="${loginUser.address2}">
-			</td>
-		</tr>
-	</table>
-	<input type="hidden" name="role" value="${role}">
-	<button type="button" onclick="editProfile()">수정</button>
-	<button type="button" onclick="cancelEdit()">취소</button>
-</form>
-<c:if test="${not empty msg}">
-    <script>
-        alert("${msg}");
-    </script>
-</c:if>
+<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<div class="main-content">
+	<h1>개인 정보 수정</h1>
+	<hr>
+	<form id="updateForm" action="/user/update" method="post">
+		<table>
+			<tr>
+				<th>성명(실명)</th>
+				<td><input type="text" name="name" id="name" value="${loginUser.name}" readonly></td>
+			</tr>
+			<tr>
+				<th>아이디</th>
+				<td><input type="text" name="username" id="username" value="${loginUser.username}" readonly></td>
+			</tr>
+			<tr>
+				<th>새 비밀번호</th>
+				<td><input type="password" name="password" id="password" onblur="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
+			</tr>
+			<tr>
+				<th>새 비밀번호 확인</th>
+				<td><input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><div id="pwErrorMsg"></div></td>
+			</tr>
+			<tr>
+				<th>주소</th>
+				<td>
+					<input type="text" name="zipCode" id="zipCode" value="${loginUser.zipCode}"><br>
+					<input type="text" name="address1" id="address1" value="${loginUser.address1}"><br>
+					<input type="text" name="address2" id="address2" value="${loginUser.address2}">
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="role" value="${role}">
+		<button type="button" onclick="editProfile()">수정</button>
+		<button type="button" onclick="cancelEdit()">취소</button>
+	</form>
+	<c:if test="${not empty msg}">
+	    <script>
+	        alert("${msg}");
+	    </script>
+	</c:if>
+</div>
 <script>
+	let remainingSeconds = ${remainingSeconds};
+
 	//비밀번호 유효성 검사
 	function isPasswordValid(password){
 		const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{}|\\;:'",.<>?/`~\-]).{8,12}$/;
@@ -149,5 +161,6 @@
 		location.href = "/user/mypage";
 	}
 </script>
+<script src="/js/sessionTime.js"></script>
 </body>
 </html>

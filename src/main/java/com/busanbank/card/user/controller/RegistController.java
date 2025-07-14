@@ -19,6 +19,8 @@ import com.busanbank.card.user.dto.UserDto;
 import com.busanbank.card.user.dto.UserJoinDto;
 import com.busanbank.card.user.util.AESUtil;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/regist")
 public class RegistController {
@@ -30,13 +32,29 @@ public class RegistController {
 	
 	//회원유형선택
 	@GetMapping("/selectMemberType")
-	public String registForm() {
+	public String registForm(HttpSession session) {
+		
+		String username = (String) session.getAttribute("loginUsername");
+		UserDto loginUser = userDao.findByUsername(username);
+		
+		if(loginUser != null) {
+			return "redirect:/";
+		}
+		
 		return "user/selectMemberType";
 	}
 	
 	//약관 동의
 	@GetMapping("/terms")
-	public String terms(@RequestParam("role")String role, Model model) {
+	public String terms(@RequestParam("role")String role, Model model,
+						HttpSession session) {
+		
+		String username = (String) session.getAttribute("loginUsername");
+		UserDto loginUser = userDao.findByUsername(username);
+		
+		if(loginUser != null) {
+			return "redirect:/";
+		}		
 		
 		List<TermDto> terms = userDao.findAllTerms();
 		model.addAttribute("terms", terms);
@@ -47,7 +65,16 @@ public class RegistController {
 	
 	//정보입력 폼 페이지
 	@GetMapping("/userRegistForm")
-	public String userRegistForm(@RequestParam("role")String role, Model model) {
+	public String userRegistForm(@RequestParam("role")String role, Model model,
+								 HttpSession session) {
+		
+		String username = (String) session.getAttribute("loginUsername");
+		UserDto loginUser = userDao.findByUsername(username);
+		
+		if(loginUser != null) {
+			return "redirect:/";
+		}
+		
 		model.addAttribute("role", role);
 		return "user/userRegistForm";
 	}

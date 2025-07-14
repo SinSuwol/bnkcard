@@ -2,6 +2,20 @@
 pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
+	<c:if test="${not empty loginUser}">
+		<div class="top-bar">
+			<nav>
+				<ul>
+					<li>${loginUser.name}</li>
+					<li>
+						<span id="session-timer"></span>
+						<button id="extend-btn" onclick="extend()">연장</button>
+					</li>
+				</ul>
+			</nav>
+			<form id="logoutForm" action="/logout" method="post" style="display:none;"></form>
+		</div>
+	</c:if>
 	<div class="header inner flex">
 		<a href="/" class="main-logo">
 			<img class="logo_img" src="https://www.busanbank.co.kr/resource/img/tit/h1_busanbank_new.png" alt="메인로고">
@@ -14,7 +28,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<li><a href="/admin/adminLoginForm" >관리자 로그인 페이지로</a></li>
 		</ul>
 		<div class="login-box">
-			<a href="/user/login">로그인</a>
+			<c:choose>
+				<c:when test="${not empty loginUser}">
+					<a href="/logout">로그아웃</a>
+				</c:when>
+				<c:otherwise>
+					<a href="/user/login">로그인</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </header>
