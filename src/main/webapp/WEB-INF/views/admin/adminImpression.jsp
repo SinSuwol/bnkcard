@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>\${p.status}</td>
                     <td>\${p.reason}</td>
                     <td>\${p.admin}</td>
-                    <td>\${p.sAdmin}</td>
+                    <td>\${p.sadmin}</td>
                     <td>\${regDate}</td>
                     <td>\${perDate}</td>
                     <td>\${p.perContent}</td>

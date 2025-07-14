@@ -142,7 +142,7 @@
         document.getElementById('editAnnualFee').value = card.annualFee;
         document.getElementById('editIssuedTo').value = card.issuedTo;
         document.getElementById('editService').value = card.service;
-        document.getElementById('editSService').value = card.sservice;
+        document.getElementById('editSService').value = card.sService;
         document.getElementById('editCardStatus').value = card.cardStatus;
         document.getElementById('editCardUrl').value = card.cardUrl;
         document.getElementById('editCardIssueDate').value = card.cardIssueDate;
