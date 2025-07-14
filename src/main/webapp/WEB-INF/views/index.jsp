@@ -38,7 +38,8 @@
 </div>
 <div class="inner main-wrap flex">
 	<h1>동백PLUS 체크카드</h1>
-	<h3>매일 쓰는 소비에, 매달 받는 보상</h2>
+	<h2>'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
+	<p>매일 쓰는 소비에, 매달 받는 보상</p>
 	<img style="width:200px;" src="/image/CARD 1.png">
 	<div class="carousel">
 		  <div class="spacer">
@@ -114,18 +115,36 @@
 	<button class="previous">previous</button> <button class="next">next</button>
 	
 	</div>
+	<h2 class="bubble-title t1">혜택은 명확하게</h2>
+	<h2 class="bubble-title t2">어디서나 간편하게</h2>
 	<div class="bubble-wrap flex">
 		<div class="hover-target-wrapper">
-			<div class="hover-target b1">hover me</div>
+			<div class="hover-target b1">
+				<img src="/image/웃는얼굴.png">
+				<p>연회비 무료</p>
+			</div>
 			<div class="tooltip">툴팁1</div>
 		</div>
 		<div class="hover-target-wrapper">
-			<div class="hover-target b2">hover me</div>
+			<div class="hover-target b2">
+				<img src="/image/버스.png">
+				<p>후불 교통카드</p>
+			</div>
 			<div class="tooltip">툴팁2</div>
 		</div>
 		<div class="hover-target-wrapper">
-			<div class="hover-target b3">hover me</div>
+			<div class="hover-target b3">
+				<img src="/image/atm.png">
+				<p>수수료 무료</p>
+			</div>
 			<div class="tooltip">툴팁3</div>
+		</div>
+		<div class="hover-target-wrapper">
+			<div class="hover-target b4">
+				<img src="/image/번개.png">
+				<p>빠른 On/Off</p>
+			</div>
+			<div class="tooltip">툴팁4</div>
 		</div>
 	</div>
 </div>
