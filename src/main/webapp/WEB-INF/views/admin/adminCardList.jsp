@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #card-list {
+    #card-list , #card-list2{
         display: grid;
         grid-template-columns: repeat(4, 1fr); /* 4칸 */
         gap: 16px;
@@ -76,7 +76,11 @@
 	<h1>Admin CardList 페이지</h1>
 	<hr>
 	<a href="/admin/adminCardRegistForm">등록</a>
+	<h1>게시중인 카드 상품</h1>
 	<ul id="card-list"></ul>
+	
+	<h1>수정중 기타 등등 카드 상품</h1>
+	<ul id="card-list2"></ul>
 	
 	<!-- 모달 오버레이 -->
 	<div id="modalOverlay"></div>
@@ -121,7 +125,6 @@
                     <p>연회비: \${card.annualFee}원</p>
                     <p>브랜드: \${card.cardBrand}</p>
                     <p>조회수: \${card.viewCount}</p>
-                    <button>게시</button>
                     <button onclick='openEditModal(\${JSON.stringify(card)})'>수정</button>
                     <button onclick='deleteCard(\${card.cardNo})'>삭제</button>
                 `;
@@ -132,6 +135,32 @@
             document.getElementById('card-list').innerText = '카드 정보를 불러오지 못했습니다.';
             console.error('에러:', err);
         });
+    
+    fetch('/admin/card/getCardList2') // ← 실제 REST API 경로
+    .then(res => res.json())
+    .then(cards => {
+        const list = document.getElementById('card-list2');
+        cards.forEach(card => {
+            console.log(card);
+            const li = document.createElement('li');
+            li.className = 'card';
+            li.innerHTML = `
+            	<img src=\${card.cardUrl}>
+                <h3 class="hi">\${card.cardName}</h3>
+                <p>연회비: \${card.annualFee}원</p>
+                <p>브랜드: \${card.cardBrand}</p>
+                <p>조회수: \${card.viewCount}</p>
+                <button onclick='openEditModal(\${JSON.stringify(card)})'>수정</button>
+                <button onclick='deleteCard(\${card.cardNo})'>삭제</button>
+            `;
+            list.appendChild(li);
+        });
+    })
+    .catch(err => {
+        document.getElementById('card-list').innerText = '카드 정보를 불러오지 못했습니다.';
+        console.error('에러:', err);
+    });
+    
  // 수정 모달 열기
     function openEditModal(card) {
 	 	console.log(card)

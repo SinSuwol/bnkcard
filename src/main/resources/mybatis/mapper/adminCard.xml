@@ -4,7 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.busanbank.card.admin.dao.IAdminCardDao">
 	<select id="getCardList" resultType="com.busanbank.card.card.dto.CardDto">
-		SELECT * FROM CARD ORDER BY CARD_NO
+		SELECT * FROM CARD WHERE CARD_STATUS = '게시중' ORDER BY CARD_NO
+	</select>
+	
+	<select id="getCardList2" resultType="com.busanbank.card.card.dto.CardDto">
+		 SELECT *
+    FROM CARD
+    WHERE CARD_STATUS != '게시중' OR CARD_STATUS IS NULL
+    ORDER BY CARD_NO
 	</select>
 	
 	<insert id="insertCardTemp" parameterType="com.busanbank.card.card.dto.CardDto">

@@ -18,12 +18,25 @@ public class AdminMainController {
 	// 상품 목록 페이지
 	@GetMapping("/CardList")
 	public String adminCardList() {
+		AdminDto admin = adminSession.getLoginUser();
+
+		if (admin == null) {
+			// 로그인 안한 경우
+			return "redirect:/admin/adminLoginForm";
+		}
+		else {}
 		return "admin/adminCardList";
 	}
 
 	// 상품 등록 페이지
 	@GetMapping("/adminCardRegistForm")
 	public String adminCardRegistForm() {
+		AdminDto admin = adminSession.getLoginUser();
+		if (admin == null) {
+			// 로그인 안한 경우
+			return "redirect:/admin/adminLoginForm";
+		}
+		else {}
 		return "admin/adminCardRegistForm";
 	}
 
@@ -36,12 +49,24 @@ public class AdminMainController {
 	// 검색어 관리 페이지
 	@GetMapping("/Search")
 	public String adminSearch() {
+		AdminDto admin = adminSession.getLoginUser();
+		if (admin == null) {
+			// 로그인 안한 경우
+			return "redirect:/admin/adminLoginForm";
+		}
+		else {}
 		return "admin/adminSearch";
 	}
 
 	// 검색어 관리 통계 페이지
 	@GetMapping("/Statistics")
 	public String adminStatistics() {
+		AdminDto admin = adminSession.getLoginUser();
+		if (admin == null) {
+			// 로그인 안한 경우
+			return "redirect:/admin/adminLoginForm";
+		}
+		else {}
 		return "admin/adminStatistics";
 	}
 
@@ -67,6 +92,12 @@ public class AdminMainController {
 	// 관리자 스크래핑 페이지
 	@GetMapping("/Scraping")
 	public String adminScraping() {
+		AdminDto admin = adminSession.getLoginUser();
+		if (admin == null) {
+			// 로그인 안한 경우
+			return "redirect:/admin/adminLoginForm";
+		}
+		else {}
 		return "admin/adminScraping";
 	}
 

@@ -9,12 +9,18 @@ import com.busanbank.card.card.dto.CardDto;
 
 @Mapper
 public interface IAdminCardDao {
+	
+	// 게시중인 상품
 	public List<CardDto> getCardList();
+	// 수정중 기타 종류인 상품
+	public List<CardDto> getCardList2();
 	
 	public int insertCardTemp(CardDto cardDto);
 	
 	public int insertPermission(PermissionParamDto perDto);
 	//카드번호, 담당관리자
+
+	
 	
 	
 }

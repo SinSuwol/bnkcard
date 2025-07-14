@@ -29,9 +29,17 @@ public class AdminCardController {
 	@Autowired
 	private AdminSession adminSession;
 
+	// 게시중인 상품
 	@GetMapping("/getCardList")
 	public List<CardDto> getAllCards() {
 		List<CardDto> cards = iAdminCardDao.getCardList();
+		return cards;
+	}
+	
+	// 수정 기타 등등 상품
+	@GetMapping("/getCardList2")
+	public List<CardDto> getAllCards2() {
+		List<CardDto> cards = iAdminCardDao.getCardList2();
 		return cards;
 	}
 
