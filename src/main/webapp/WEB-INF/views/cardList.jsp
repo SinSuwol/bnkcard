@@ -122,6 +122,19 @@
 	z-index: 2000;
 }
 
+.compare-label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid #000;
+  padding-bottom: 2px;
+  margin-top: 6px;
+}
+.compare-label input {
+  display: none;
+}
+
 #modalOverlay {
 	display: none;
 	position: fixed;
@@ -502,27 +515,24 @@ function drawCards() {
     div.className = 'item';              // ← 부모 div는 클릭 이벤트 없음!
 
     div.innerHTML = `
-      <img src="${c.cardUrl}" alt="${c.cardName}"
-           style="cursor:pointer"
-           onclick="goDetail(${c.cardNo})"><br>
+    	  <img src="${c.cardUrl}" alt="${c.cardName}"
+    	       style="cursor:pointer"
+    	       onclick="goDetail(${c.cardNo})"><br>
 
-      <strong style="cursor:pointer"
-              onclick="goDetail(${c.cardNo})">${c.cardName}</strong><br>
+    	  <strong style="cursor:pointer"
+    	          onclick="goDetail(${c.cardNo})">${c.cardName}</strong><br>
 
-      <span style="font-size:12px;">${c.cardSlogan || ''}</span><br>
+    	  <span style="font-size:12px;">${c.cardSlogan || ''}</span><br>
 
-      <label onclick="event.stopPropagation();">
-        <input type="checkbox"
-               value="${c.cardNo}"
-               onclick="event.stopPropagation(); toggleCompare(this)">
-        비교함 담기
-      </label><br>
-
-      <button style="margin-top:6px;"
-              onclick="goDetail(${c.cardNo})">상세보기</button>`;
-    grid.appendChild(div);
-  }
-
+    	  <label class="compare-label" onclick="event.stopPropagation();">
+    	    <input type="checkbox"
+    	           value="${c.cardNo}"
+    	           onclick="event.stopPropagation(); toggleCompare(this)">
+    	    비교함 담기
+    	  </label>
+    	`;
+    	grid.appendChild(div);
+}
   currentIndex = end;
   if (currentIndex >= fullCardList.length)
     document.getElementById('loadMoreWrap').style.display = 'none';
