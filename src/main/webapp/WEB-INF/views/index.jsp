@@ -9,30 +9,14 @@
 <link rel="stylesheet" href="/css/carousel.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
 
 
 
 </head>
 <body>
-<header>
-	<div class="header inner flex">
-		<a href="/" class="main-logo">
-			<img class="logo_img" src="https://www.busanbank.co.kr/resource/img/tit/h1_busanbank_new.png" alt="메인로고">
-		</a>
-		<ul class="flex nav">
-			<li><a href="/cardList">카드</a></li>
-			<li><a href="/introduce">은행소개</a></li>
-			<li><a href="/faq">고객센터</a></li>
-			<li><a href="/admin" id="load-admin">관리자 페이지로</a> <br></li>
-			<li><a href="/admin/adminLoginForm" >관리자 로그인 페이지로</a></li>
-		</ul>
-		<div class="login-box">
-			<a href="/user/login">로그인</a>
-		</div>
-	</div>
-</header>
+<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
 <div class="video-wrapper">
 	<div class="video-container">
 	    <!-- 흐릿한 배경용 영상 -->
@@ -56,25 +40,49 @@
 	<h1>동백PLUS 체크카드</h1>
 	<h3>매일 쓰는 소비에, 매달 받는 보상</h2>
 	<img style="width:200px;" src="/image/card1.png">
-	<div style="height:800px;"></div>
 </div>
 
-<div class="wrapper">
-  <div class="container">
-    <svg viewBox="0 0 400 400">
-      <path stroke-width="2" stroke="red" id="myPath" fill="none" d="M396,200 C396,308.24781 308.24781,396 200,396 91.75219,396 4,308.24781 4,200 4,91.75219 91.75219,4 200,4 308.24781,4 396,91.75219 396,200 z"></path>
-    </svg>
-    <div class="box gradient-blue-2 active">box 1</div>
-    <div class="box gradient-blue-2">box 2</div>
-    <div class="box gradient-blue-2">box 3</div>
-    <div class="box gradient-blue-2">box 4</div>
-    <div class="box gradient-blue-2">box 5</div>
-    <div class="box gradient-blue-2">box 6</div>
-    <div class="box gradient-blue-2">box 7</div>
-    <div class="box gradient-blue-2">box 8</div>
-    <div class="box gradient-blue-2">box 9</div>
-  </div>
+<div class="container">
+	  <div class="spacer">
+	  	<p class="txt" style="color:skyblue">SKY BLUE</p>
+	  	<p class="txt" style="color:orange">ORANGE</p>
+	  	<p class="txt" style="color:green">GREEN</p>
+	  	<p class="txt" style="color:purple">PURPLE</p>
+	  	<p class="txt" style="color:yellow">YELLOW</p>
+	  	<p class="txt" style="color:pink">RED</p>
+	  	<p class="txt" style="color:skyblue">SKY BLUE</p>
+	  	<p class="txt" style="color:orange">ORANGE</p>
+	  	<p class="txt" style="color:green">GREEN</p>
+	  	<p class="txt" style="color:purple">PURPLE</p>
+	  	<p class="txt" style="color:yellow">YELLOW</p>
+	  	<p class="txt" style="color:pink">RED</p>
+	  </div>
+      <div class="wrapper">
+            <div class="descriptions">
+                  <div class="title">TITLE ONE</div>
+                  <div class="title">TITLE TWO</div>
+                  <div class="title">TITLE THREE</div>
+                  <div class="title">TITLE FOUR</div>
+            </div>
+            <div class="content">
+              <div class="track"></div>
+                  <div class="item"><img class="child" src="/image/card1.png"></div>
+                  <div class="item"><img class="child" src="/image/card2.png"></div>
+                  <div class="item"><img class="child" src="/image/card3.png"></div>
+                  <div class="item"><img class="child" src="/image/card4.png"></div>
+                  <div class="item"><img class="child" src="/image/card5.png"></div>
+                  <div class="item"><img class="child" src="/image/card6.png"></div>
+                  <div class="item"><img class="child" src="/image/card1.png"></div>
+                  <div class="item"><img class="child" src="/image/card2.png"></div>
+                  <div class="item"><img class="child" src="/image/card3.png"></div>
+                  <div class="item"><img class="child" src="/image/card4.png"></div>
+                  <div class="item"><img class="child" src="/image/card5.png"></div>
+                  <div class="item"><img class="child" src="/image/card6.png"></div>
+            </div>    
+           
+      </div>
 </div>
+<div style="text-align: center"><button class="previous">previous</button> <button class="next">next</button></div>
 <script src="/js/carousel.js"></script>
 <script>
 	window.addEventListener('scroll', function() {
