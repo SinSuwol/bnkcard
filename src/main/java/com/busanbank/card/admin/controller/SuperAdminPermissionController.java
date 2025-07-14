@@ -42,7 +42,12 @@ public class SuperAdminPermissionController {
 			throw new IllegalStateException("로그인이 필요합니다.");
 		}
 
-		boolean success = permissionService.approveCard(dto, loginAdmin.getUsername());
+		 CardDto tempCard = permissionService.getCardTemp(dto.getCardNo());
+		    if (tempCard == null) {
+		        throw new IllegalStateException("카드 TEMP 데이터가 존재하지 않습니다.");
+		    }
+		
+		boolean success = permissionService.approveCard(tempCard, loginAdmin.getUsername());
 		return Map.of("success", success, "message", success ? "카드를 승인했습니다." : "승인 실패");
 	}
 
