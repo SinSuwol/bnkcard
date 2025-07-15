@@ -14,6 +14,8 @@
 		VIEW_COUNT AS viewCount,
 		ANNUAL_FEE AS annualFee
 		FROM CARD
+		WHERE 
+    CARD_STATUS = '게시중'
 		ORDER BY CARD_NO
 	</select>
 
