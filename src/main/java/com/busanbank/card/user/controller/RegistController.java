@@ -1,6 +1,7 @@
 package com.busanbank.card.user.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,38 +48,60 @@ public class RegistController {
 	
 	//약관 동의
 	@GetMapping("/terms")
-	public String terms(@RequestParam("role")String role, Model model,
-						HttpSession session,
-						RedirectAttributes rttr) {
-		
+	public String terms(@RequestParam("role") String role,
+	                    Model model,
+	                    HttpSession session,
+	                    RedirectAttributes rttr) {
+
 		String username = (String) session.getAttribute("loginUsername");
-		if(username != null) {
+		if (username != null) {
 			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
-		}		
-		
+		}
+
 		List<TermDto> terms = userDao.findAllTerms();
+		for (TermDto term : terms) {
+			term.setAgreeYn("N");
+		}
+
 		model.addAttribute("terms", terms);
-		
 		model.addAttribute("role", role);
 		return "user/terms";
 	}
 	
 	//정보입력 폼 페이지
-	@GetMapping("/userRegistForm")
-	public String userRegistForm(@RequestParam("role")String role, Model model,
-								 HttpSession session,
-								 RedirectAttributes rttr) {
-		
-		String username = (String) session.getAttribute("loginUsername");
-		if(username != null) {
-			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
-			return "redirect:/";
-		}
-		
-		model.addAttribute("role", role);
-		return "user/userRegistForm";
+	@PostMapping("/userRegistForm")
+	public String userRegistForm(
+	    @RequestParam Map<String, String> paramMap,
+	    @RequestParam(name = "role", required = false) String role,
+	    Model model) {
+
+	    List<TermDto> terms = userDao.findAllTerms();
+
+	    for (TermDto term : terms) {
+	        String agreeYn = paramMap.get("terms" + term.getTermNo());
+	        if (agreeYn == null) {
+	            agreeYn = "N";
+	        }
+	        term.setAgreeYn(agreeYn);
+	    }
+
+	    for (TermDto term : terms) {
+	        if ("Y".equals(term.getIsRequired()) && !"Y".equals(term.getAgreeYn())) {
+	            model.addAttribute("terms", terms);
+	            model.addAttribute("role", role);
+	            model.addAttribute("msg", "필수 약관에 동의해 주세요.");
+	            return "user/terms";
+	        }
+	    }
+
+	    model.addAttribute("terms", terms);
+	    model.addAttribute("role", role);
+	    return "user/userRegistForm";
 	}
+
+
+
 	
 	//아이디 중복확인
 	@PostMapping("/check-username")
