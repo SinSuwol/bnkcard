@@ -101,7 +101,7 @@ body {
     <h2 class="page-title">회원가입</h2>
     <p class="sub-title">약관에 동의해 주세요</p>
 
-    <form id="termsForm" action="/regist/userRegistForm?role=${role}" method="post">
+    <form id="termsForm" action="/regist/userRegistForm" method="post">
         <c:forEach var="term" items="${terms}">
             <div class="terms-section">
                 <h3>
@@ -137,6 +137,8 @@ body {
             <button type="submit">다음</button>
             <button type="button" onclick="cancelRegist()">취소</button>
         </div>
+        
+        <input type="hidden" name="role" value="${role}">
     </form>
 </div>
 

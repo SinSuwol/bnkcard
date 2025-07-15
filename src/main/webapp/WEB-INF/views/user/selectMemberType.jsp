@@ -44,12 +44,19 @@ body {
 	justify-content: flex-start;
 	gap: 20px;
 	flex-wrap: wrap;
+	align-items: stretch; /* 높이 통일 핵심 */
 }
 
 /* 각 카드 스타일 */
 .member-type {
 	flex: 1;
 	min-width: 200px;
+	max-width: 300px;
+	height: 100%; /* form 내부에서 꽉 채우기 */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-radius: 16px;
@@ -59,6 +66,7 @@ body {
 	color: #000;
 	transition: all 0.3s ease;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
 }
 
 .member-type:hover {
@@ -94,22 +102,35 @@ body {
 		<p class="page-subtitle">회원유형을 선택해 주세요</p>
 
 		<div class="member-type-container">
-			<a href="/regist/terms?role=ROLE_PERSON" class="member-type">
-				<div class="title">일반회원(개인)</div>
-				<div class="desc">
-					영업점 방문 없이 홈페이지에서<br>간편하게 신청 가능합니다
-				</div>
-			</a> <a href="/regist/terms?role=ROLE_OWNER" class="member-type">
-				<div class="title">개인사업자</div>
-				<div class="desc">
-					사업체를 운영하는 개인 고객을 위한<br>전용 서비스입니다
-				</div>
-			</a> <a href="/regist/terms?role=ROLE_CORP" class="member-type">
-				<div class="title">법인</div>
-				<div class="desc">
-					법인 사업체를 위한<br>신뢰도 높은 금융 솔루션 제공
-				</div>
-			</a>
+			<form action="/regist/terms" method="POST">
+				<input type="hidden" name="role" value="ROLE_PERSON">
+				<button type="submit" class="member-type">
+					<div class="title">일반회원(개인)</div>
+					<div class="desc">
+						영업점 방문 없이 홈페이지에서<br>간편하게 신청 가능합니다
+					</div>
+				</button>
+			</form>
+			
+			<form action="/regist/terms" method="POST">
+				<input type="hidden" name="role" value="ROLE_OWNER">
+				<button type="submit" class="member-type">
+					<div class="title">개인사업자</div>
+					<div class="desc">
+						사업체를 운영하는 개인 고객을 위한<br>전용 서비스입니다
+					</div>
+				</button>
+			</form>
+			
+			<form action="/regist/terms" method="POST">
+				<input type="hidden" name="role" value="ROLE_CORP">
+				<button type="submit" class="member-type">
+					<div class="title">법인</div>
+					<div class="desc">
+						법인 사업체를 위한<br>신뢰도 높은 금융 솔루션 제공
+					</div>
+				</button>
+			</form>
 		</div>
 	</div>
 </body>

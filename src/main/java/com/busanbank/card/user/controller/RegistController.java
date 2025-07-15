@@ -47,7 +47,7 @@ public class RegistController {
 	}
 	
 	//약관 동의
-	@GetMapping("/terms")
+	@PostMapping("/terms")
 	public String terms(@RequestParam("role") String role,
 	                    Model model,
 	                    HttpSession session,
@@ -73,7 +73,7 @@ public class RegistController {
 	@PostMapping("/userRegistForm")
 	public String userRegistForm(
 	    @RequestParam Map<String, String> paramMap,
-	    @RequestParam(name = "role", required = false) String role,
+	    @RequestParam("role") String role,
 	    Model model) {
 
 	    List<TermDto> terms = userDao.findAllTerms();
@@ -181,7 +181,8 @@ public class RegistController {
 		user.setRrnTailEnc(encryptedRrnTail);
 		
 		user.setZipCode(joinUser.getZipCode());
-		user.setAddress1(joinUser.getAddress1());
+		String address1 = joinUser.getAddress1() + joinUser.getExtraAddress();
+		user.setAddress1(address1);
 		user.setAddress2(joinUser.getAddress2());
 		
 		user.setRole(joinUser.getRole());

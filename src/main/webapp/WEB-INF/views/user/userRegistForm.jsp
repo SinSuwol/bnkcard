@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<th>아이디</th>
-			<td><input type="text" name="username" id="username"> <button type="button" onclick="checkUsername()">중복확인</button></td>
+			<td><input type="text" name="username" id="username" onchange="changeUsername()"> <button type="button" onclick="checkUsername()">중복확인</button></td>
 		</tr>
 		<tr>
 			<th></th>
@@ -26,11 +26,11 @@
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" name="password" id="password" onblur="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
+			<td><input type="password" name="password" id="password" oninput="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
 		</tr>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
+			<td><input type="password" name="passwordCheck" id="passwordCheck" oninput="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
 		</tr>
 		<tr>
 			<th></th>
@@ -38,14 +38,16 @@
 		</tr>
 		<tr>
 			<th>주민번호</th>
-			<td><input type="text" name="rrnFront" id="rrnFront"> - <input type="password" name="rrnBack" id="rrnBack"></td>
+			<td><input type="text" name="rrnFront" id="rrnFront" maxlength="6" pattern="\d{6}">
+			 - <input type="password" name="rrnBack" id="rrnBack" maxlength="7" pattern="\d{7}"></td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" name="zipCode" id="zipCode">
+			<td><input type="text" name="zipCode" id="zipCode" placeholder="우편번호" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" name="address1" id="address1"><br>
-				<input type="text" name="address2" id="address2">
+				<input type="text" name="address1" id="address1" placeholder="기본주소" readonly><br>
+				<input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly><br>
+				<input type="text" name="address2" id="address2" placeholder="상세주소">
 			</td>
 		</tr>
 	</table>
@@ -85,6 +87,10 @@
 		xhr.open("POST", "/regist/check-username");
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("username=" + username);
+	}
+	function changeUsername(){
+		idErrorMsg.textContent = "아이디 중복 확인을 해주세요.";
+		idErrorMsg.style.color = "red";
 	}
 
 	//비밀번호 유효성 검사
@@ -176,7 +182,28 @@
 			passwordCheck.focus();
 			return;
 		}
-			
+		
+		// 주민등록번호 유효성 검사
+		const rrnFront = document.getElementById("rrnFront");
+		const rrnBack = document.getElementById("rrnBack");
+
+		const rrnFrontValue = rrnFront.value.trim();
+		const rrnBackValue = rrnBack.value.trim();
+
+		const rrnRegex6 = /^\d{6}$/;
+		const rrnRegex7 = /^\d{7}$/;
+
+		if (!rrnRegex6.test(rrnFrontValue)) {
+			alert("주민등록번호 앞자리는 6자리 숫자여야 합니다.");
+			rrnFront.focus();
+			return;
+		}
+
+		if (!rrnRegex7.test(rrnBackValue)) {
+			alert("주민등록번호 뒷자리는 7자리 숫자여야 합니다.");
+			rrnBack.focus();
+			return;
+		}
 		//주민등록번호 검사
 		if(!document.getElementById("rrnFront").value.trim() || !document.getElementById("rrnBack").value.trim()) {
 			alert("주민등록번호를 입력해주세요.");
@@ -185,9 +212,14 @@
 		}
 		
 		//주소 검사
-		if(!document.getElementById("zipCode").value.trim() || !document.getElementById("address1").value.trim() || !document.getElementById("address2").value.trim()) {
+		if(!document.getElementById("zipCode").value.trim() || !document.getElementById("address1").value.trim()) {
 			alert("주소를 입력해주세요.");
 			document.getElementById("zipCode").focus();
+			return;
+		}
+		if(!document.getElementById("address2").value.trim()){			
+			alert("상세주소를 입력해주세요.");
+			document.getElementById("address2").focus();
 			return;
 		}
 		

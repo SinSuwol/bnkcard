@@ -18,5 +18,6 @@ public class UserJoinDto {
 	//주소
 	private String zipCode;
 	private String address1;
+	private String extraAddress;
 	private String address2;
 }
