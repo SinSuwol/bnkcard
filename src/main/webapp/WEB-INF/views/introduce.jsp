@@ -14,12 +14,12 @@
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <div class="main-content">
 	<h1>은행소개</h1>
 	<hr>
 </div>
-
+<script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
 </script>

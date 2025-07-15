@@ -334,7 +334,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 
 	
@@ -404,8 +404,10 @@
 				style="width: 100%; padding: 10px 0; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
 		</div>
 	</div>
-	
-	<script>
+
+
+<script src="/js/header2.js"></script>
+<script>
 // 🔥 인기 카드 슬라이더 데이터 불러오기
 fetch('/api/cards')
   .then(r => r.json())
@@ -437,7 +439,7 @@ fetch('/api/cards')
   });
 </script>
 
-	<script>
+<script>
 let fullCardList=[],currentIndex=0,currentType='',currentKeyword='',selectedTags=[];
 const advModal=document.getElementById('advModal');
 

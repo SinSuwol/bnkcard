@@ -160,7 +160,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 <div class="wrap">
   <div class="top">
@@ -193,6 +193,8 @@
   </div>
 </div>
 
+
+<script src="/js/header2.js"></script>
 <script>
   const CATEGORY_KEYWORDS = {
     '커피': ['커피', '스타벅스', '이디야', '카페베네'],

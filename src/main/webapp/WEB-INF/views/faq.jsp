@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <div class="main-content">
 <h1>고객센터(faq페이지)</h1>
 <hr>
@@ -28,6 +28,7 @@
 </c:if>
 
 
+<script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
 </script>
