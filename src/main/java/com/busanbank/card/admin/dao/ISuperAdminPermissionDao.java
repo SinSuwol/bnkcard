@@ -21,4 +21,11 @@ public interface ISuperAdminPermissionDao {
     int deleteCardTemp(@Param("cardNo") Long cardNo);
 
     List<PermissionDto> selectPermissionList();
+    
+    List<PermissionDto> selectPermissionListPaged(
+    		 @Param("offset") Integer offset,
+    		    @Param("size") Integer size
+        );
+
+    int selectPermissionCount();
 }

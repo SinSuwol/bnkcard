@@ -118,4 +118,16 @@
     DELETE FROM CARD
     WHERE CARD_NO = #{cardNo}
 </delete>
+
+<select id="selectPermissionListPaged" resultType="com.busanbank.card.admin.dto.PermissionDto">
+  SELECT *
+    FROM PERMISSION
+    ORDER BY per_No DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+</select>
+
+<select id="selectPermissionCount" resultType="int">
+SELECT COUNT(*) FROM permission
+</select>
+
 </mapper>

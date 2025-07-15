@@ -51,6 +51,7 @@
 </thead>
 <tbody id="permissionTable"></tbody>
 </table>
+<div id="pagination" style="margin-top:10px; text-align:center;"></div>
 
 <div id="modalOverlay"></div>
 
@@ -112,12 +113,26 @@
 </div>
 
 <script>
-function loadPermissions() {
-    fetch('/superadmin/permission/list')
+let currentPage = 1;
+
+function loadPermissions(page) {
+	 if (!page) page = 1;
+	    console.log('loadPermissions() 호출됨, page=', page);
+	    currentPage = page;
+
+	    const size = 10;
+
+    fetch(`/superadmin/permission/list?page=\${page}&size=\${size}`)
         .then(res => res.json())
-        .then(data => {
+        .then(result => {
+        	 console.log('API 응답 도착, page=', page, 'result:', result);
+        	
+            const data = result.content || [];
+            const totalPages = result.totalPages;
+
             const tbody = document.getElementById('permissionTable');
             tbody.innerHTML = '';
+
             data.forEach(row => {
                 const regDate = row.regDate ? row.regDate.substring(0,10) : '';
                 const perDate = row.perDate ? row.perDate.substring(0,10) : '';
@@ -145,8 +160,36 @@ function loadPermissions() {
                 `;
                 tbody.appendChild(tr);
             });
+
+            renderPagination(totalPages, page);
         });
 }
+
+
+function renderPagination(totalPages, page) {
+    const container = document.getElementById('pagination');
+    container.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.style.margin = '0 3px';
+        if (i === page) {
+            btn.style.fontWeight = 'bold';
+        }
+        // IIFE로 캡처
+        (function(pageNumber) {
+            btn.addEventListener('click', function() {
+                console.log('버튼 클릭: 페이지', pageNumber);
+                loadPermissions(pageNumber);
+            });
+        })(i);
+        container.appendChild(btn);
+    }
+}
+
 
 function openModal(cardNo, perContent) {
     // 버튼 초기화
@@ -236,7 +279,7 @@ function sendApprove() {
     .then(data => {
         alert(data.message);
         closeModal();
-        loadPermissions();
+        loadPermissions(currentPage); // 현재 페이지 다시 로드
     });
 }
 
@@ -250,7 +293,7 @@ function remove() {
     .then(data => {
         alert(data.message);
         closeModal();
-        loadPermissions();
+        loadPermissions(currentPage); // 현재 페이지 다시 로드
     });
 }
 
@@ -273,14 +316,16 @@ function submitReject() {
     .then(data=>{
         alert(data.message);
         closeModal();
-        loadPermissions();
+        loadPermissions(currentPage); // 현재 페이지 다시 로드
     });
 }
 
 
 
 // 초기 로드
-loadPermissions();
+if (currentPage === 1) {
+    loadPermissions(1);
+}
 </script>
 
 </body>

@@ -48,4 +48,13 @@ public class SuperAdminPermissionService {
         int updatedPermission = dao.updatePermissionCancel(cardNo, sAdmin);
         return deletedMain > 0 && updatedPermission > 0;
     }
+
+    public List<PermissionDto> getPermissionListPaged(int offset, int size) {
+    	System.out.println("SERVICE offset = " + offset + ", size = " + size);
+        return dao.selectPermissionListPaged(offset, size);
+    }
+
+    public int getPermissionCount() {
+        return dao.selectPermissionCount();
+    }
 }
