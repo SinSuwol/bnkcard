@@ -25,7 +25,7 @@ public class UserSecurityConfig {
 	@Bean(name = "userFilterChain")
 	SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
 		
-		http.securityMatcher("/user/**", "/loginProc", "/logout")
+		http.securityMatcher("/regist/**", "/user/**", "/loginProc", "/logout")
 			.authorizeHttpRequests((auth) -> auth
 				.anyRequest().permitAll()
 				);

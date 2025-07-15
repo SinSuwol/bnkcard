@@ -37,9 +37,7 @@ public class RegistController {
 							 RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
-		UserDto loginUser = userDao.findByUsername(username);
-		
-		if(loginUser != null) {
+		if(username != null) {
 			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
@@ -54,9 +52,7 @@ public class RegistController {
 						RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
-		UserDto loginUser = userDao.findByUsername(username);
-		
-		if(loginUser != null) {
+		if(username != null) {
 			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}		
@@ -75,9 +71,7 @@ public class RegistController {
 								 RedirectAttributes rttr) {
 		
 		String username = (String) session.getAttribute("loginUsername");
-		UserDto loginUser = userDao.findByUsername(username);
-		
-		if(loginUser != null) {
+		if(username != null) {
 			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
