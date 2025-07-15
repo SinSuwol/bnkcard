@@ -1,5 +1,6 @@
 package com.busanbank.card.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,19 +100,23 @@ public class RegistController {
 	    model.addAttribute("role", role);
 	    return "user/userRegistForm";
 	}
-
-
-
 	
 	//아이디 중복확인
 	@PostMapping("/check-username")
-	public @ResponseBody String checkUsername(@RequestParam("username")String username,
-											  RedirectAttributes rttr) {
+	@ResponseBody
+	public Map<String, Object> checkUsername(@RequestParam("username")String username) {
+		Map<String, Object> result = new HashMap<>();
+		
 		UserDto user = userDao.findByUsername(username);
 		if(user != null) {
-			return "이미 사용중인 아이디입니다.";
+			result.put("valid", false);
+			result.put("msg", "이미 사용중인 아이디입니다.");
+		} else {
+			result.put("valid", true);
+			result.put("msg", "사용 가능한 아이디입니다.");
 		}
-		return "사용가능한 아이디입니다.";
+		
+		return result;
 	}
 	
 	//유효성 검사 및 insert

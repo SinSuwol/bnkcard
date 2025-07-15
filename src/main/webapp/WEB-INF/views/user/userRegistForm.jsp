@@ -8,6 +8,7 @@
 <title>회원가입 - 정보입력</title>
 </head>
 <body>
+
 <h1>회원가입</h1>
 <hr>
 <form id="signupForm" action="/regist/regist" method="post">
@@ -18,7 +19,10 @@
 		</tr>
 		<tr>
 			<th>아이디</th>
-			<td><input type="text" name="username" id="username" onchange="changeUsername()"> <button type="button" onclick="checkUsername()">중복확인</button></td>
+			<td>
+				<input type="text" name="username" id="username" onchange="resetUsernameCheck()" oninput="resetUsernameCheck()">
+				<button type="button" id="checkBtn" onclick="checkUsername()">중복확인</button>
+			</td>
 		</tr>
 		<tr>
 			<th></th>
@@ -43,10 +47,10 @@
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" name="zipCode" id="zipCode" placeholder="우편번호" readonly>
+			<td><input type="text" name="zipCode" id="zipCode" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" name="address1" id="address1" placeholder="기본주소" readonly><br>
-				<input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly><br>
+				<input type="text" name="address1" id="address1" readonly><br>
+				<input type="text" name="extraAddress" id="extraAddress" readonly><br>
 				<input type="text" name="address2" id="address2" placeholder="상세주소">
 			</td>
 		</tr>
@@ -62,10 +66,24 @@
 </c:if>
 
 <script>
+	let usernameChecked = false; // 중복확인 완료 여부
+	
+	//아이디 입력이 바뀌었을 때 중복확인 상태 초기화
+	function resetUsernameCheck() {
+		usernameChecked = false;
+		const checkBtn = document.getElementById("checkBtn");
+		checkBtn.disabled = false;
+		
+		const idErrorMsg = document.getElementById("idErrorMsg");
+		idErrorMsg.textContent = "아이디 중복 확인을 해주세요.";
+		idErrorMsg.style.color = "red";
+	}
+	
 	//아이디 중복확인
-	const idErrorMsg = document.getElementById("idErrorMsg");
 	function checkUsername(){
 		const username = document.getElementById("username").value.trim();
+		const idErrorMsg = document.getElementById("idErrorMsg");
+		const checkBtn = document.getElementById("checkBtn");
 		
 		if(!username){
 			idErrorMsg.textContent = "아이디를 입력해주세요.";
@@ -75,19 +93,23 @@
 		
 		const xhr = new XMLHttpRequest();
 		xhr.onload = function(){
-			const msg = xhr.responseText;
-			idErrorMsg.textContent = msg;
-			if(msg.includes("이미")){
-				idErrorMsg.style.color = "red";
+			const res = JSON.parse(xhr.responseText);
+			idErrorMsg.textContent = res.msg;
+			if(res.valid){
+				idErrorMsg.style.color = "green";
+				usernameChecked = true;
+                checkBtn.disabled = true; // 중복확인 완료 → 버튼 비활성화
 			}
 			else{
-				idErrorMsg.style.color = "green";				
+				idErrorMsg.style.color = "red";	
+				usernameChecked = false;
 			}
 		}
 		xhr.open("POST", "/regist/check-username");
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("username=" + username);
 	}
+	
 	function changeUsername(){
 		idErrorMsg.textContent = "아이디 중복 확인을 해주세요.";
 		idErrorMsg.style.color = "red";
@@ -141,6 +163,21 @@
 	function validateAndSubmit(){
 		const form = document.getElementById("signupForm");
 		
+		//성명 유효성 검사
+		const nameInput = document.getElementById("name");
+		const nameValue = nameInput.value.trim();
+		const nameRegex = /^[가-힣]{2,20}$/;
+
+		if (!nameValue) {
+			alert("성명을 입력해주세요.");
+			nameInput.focus();
+			return;
+		}
+		if (!nameRegex.test(nameValue)) {
+			alert("성명은 한글 2~20자여야 합니다.");
+			nameInput.focus();
+			return;
+		}
 		//성명 검사
 		if (!document.getElementById("name").value.trim()) {
 			alert("성명을 입력해주세요.");
@@ -154,12 +191,9 @@
 			document.getElementById("username").focus();
 			return;
 		}
-		if(idErrorMsg.textContent === ""){
+		if (!usernameChecked) {
 			alert("아이디 중복 확인을 해주세요.");
-			return;
-		}
-		if(idErrorMsg.textContent === "이미 사용중인 아이디입니다."){
-			alert("아이디를 확인 해주세요.");
+			document.getElementById("checkBtn").focus();
 			return;
 		}
 		
