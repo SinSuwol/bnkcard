@@ -154,7 +154,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 <div class="wrap">
   <div class="top">
@@ -187,6 +187,8 @@
   </div>
 </div>
 
+
+<script src="/js/header2.js"></script>
 <script>
   const urlParams = new URLSearchParams(location.search);
   const cardNo = urlParams.get("no");
