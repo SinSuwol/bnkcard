@@ -88,6 +88,12 @@ public class AdminMainController {
 		else {return "admin/adminScraping";}
 		
 	}
+	
+	//
+	@GetMapping("/Mainpage")
+	public String Mainpage() {
+		return "index";
+	}
 
 	
 	
