@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.busanbank.card.admin.dto.AdminDto;
+import com.busanbank.card.admin.session.AdminSession;
 import com.busanbank.card.user.dao.IUserDao;
 import com.busanbank.card.user.dto.UserDto;
 import com.busanbank.card.user.service.SessionService;
@@ -20,6 +22,9 @@ public class MainController {
 	private IUserDao userDao;
 	@Autowired
 	private SessionService sessionService;
+	
+	@Autowired
+	private AdminSession adminSession;
 	// 여기가 페이지 이동기능 모아놓은 컨트롤러입니다.
 
 	@GetMapping("/")
@@ -34,6 +39,11 @@ public class MainController {
 
 	@GetMapping("/admin")
 	public String admin() {
+		AdminDto admin = adminSession.getLoginUser();
+        if (admin == null) {
+            return "redirect:/admin/adminLoginForm";
+        }
+		
 		return "admin/admin";
 	}
 

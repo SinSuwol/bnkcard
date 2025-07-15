@@ -14,7 +14,7 @@ public class AdminMainController {
 
 	@Autowired
 	private AdminSession adminSession;
-
+	
 	// 상품 목록 페이지
 	@GetMapping("/CardList")
 	public String adminCardList() {
@@ -26,18 +26,6 @@ public class AdminMainController {
 		}
 		else {}
 		return "admin/adminCardList";
-	}
-
-	// 상품 등록 페이지
-	@GetMapping("/adminCardRegistForm")
-	public String adminCardRegistForm() {
-		AdminDto admin = adminSession.getLoginUser();
-		if (admin == null) {
-			// 로그인 안한 경우
-			return "redirect:/admin/adminLoginForm";
-		}
-		else {}
-		return "admin/adminCardRegistForm";
 	}
 
 	// 관리자 로그인 페이지
@@ -54,8 +42,8 @@ public class AdminMainController {
 			// 로그인 안한 경우
 			return "redirect:/admin/adminLoginForm";
 		}
-		else {}
-		return "admin/adminSearch";
+		else {return "admin/adminSearch";}
+		
 	}
 
 	// 검색어 관리 통계 페이지
@@ -66,8 +54,8 @@ public class AdminMainController {
 			// 로그인 안한 경우
 			return "redirect:/admin/adminLoginForm";
 		}
-		else {}
-		return "admin/adminStatistics";
+		else {return "admin/adminStatistics";}
+		
 	}
 
 	// 상품 인가 페이지
@@ -97,15 +85,16 @@ public class AdminMainController {
 			// 로그인 안한 경우
 			return "redirect:/admin/adminLoginForm";
 		}
-		else {}
-		return "admin/adminScraping";
+		else {return "admin/adminScraping";}
+		
 	}
-
-	// 메인 페이지
+	
+	//
 	@GetMapping("/Mainpage")
-	public String adminMainpage() {
+	public String Mainpage() {
 		return "index";
 	}
+
 	
 	
 	//=========================================

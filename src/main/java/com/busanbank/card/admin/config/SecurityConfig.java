@@ -7,20 +7,36 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.busanbank.card.admin.session.AdminSession;
+
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-        	.securityMatcher("/admin/**")
-            .authorizeHttpRequests((auth) -> auth
-                .anyRequest().permitAll()   // 모든 요청 허용
-            )
-            .csrf().disable(); // CSRF 보호 비활성화 (필요시)
+	@Bean(name = "adminFilterChain")
+    public SecurityFilterChain adminFilterChain(HttpSecurity http, AdminSession adminSession) throws Exception {
+
+		http
+	    // /admin 및 하위 경로 적용
+		.securityMatcher("/admin/**")
+
+	    .authorizeHttpRequests(auth -> auth
+	        .requestMatchers("/admin/adminLoginForm","/admin/login", "/admin/logout").permitAll()
+	        .anyRequest()
+	            .access((authentication, context) -> {
+	                boolean loggedIn = adminSession.isLoggedIn();
+	                return new org.springframework.security.authorization.AuthorizationDecision(loggedIn);
+	            })
+	    )
+
+	    .csrf(csrf -> csrf.disable())
+	    .sessionManagement(session -> session
+	        .maximumSessions(1)
+	        .maxSessionsPreventsLogin(true)
+	    );
 
         return http.build();
     }
 }
+

@@ -44,7 +44,7 @@
 <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 <script>
     let stompClient = null;
-    let currentRoomId = null;
+    let currentRoomId = 1;
     let adminNo = 999;
 
     window.onload = function () {

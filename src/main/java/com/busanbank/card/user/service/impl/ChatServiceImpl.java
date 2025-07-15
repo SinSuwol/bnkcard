@@ -18,9 +18,13 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Long createRoom(Long memberNo) {
-        chatMapper.insertChatRoom(memberNo);
-        return chatMapper.selectCurrRoomId();
+        ChatRoomDto room = new ChatRoomDto();
+        room.setMemberNo(memberNo);
+        chatMapper.insertChatRoom(room);
+        System.out.println("roomId = " + room.getRoomId());
+        return room.getRoomId();
     }
+
 
     @Override
     public ChatRoomDto getRoom(Long roomId) {
@@ -45,5 +49,21 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatMessageDto> getMessages(Long roomId) {
         return chatMapper.selectMessages(roomId);
     }
+    
+    @Override
+    public Long createOrGetRoom(Long memberNo) {
+        Long roomId = chatMapper.selectRoomIdByMember(memberNo);
+        if (roomId != null) {
+            System.out.println("기존 방 존재! roomId=" + roomId);
+            return roomId;
+        }
+        // 없으면 새로 생성
+        ChatRoomDto room = new ChatRoomDto();
+        room.setMemberNo(memberNo);
+        chatMapper.insertChatRoom(room);
+        System.out.println("새로 생성된 roomId = " + room.getRoomId());
+        return room.getRoomId();
+    }
+
 
 }
