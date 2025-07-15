@@ -127,10 +127,11 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid black;
   padding-bottom: 2px;
   margin-top: 6px;
 }
+
 .compare-label input {
   display: none;
 }
@@ -365,6 +366,8 @@
 	<div id="loadMoreWrap">
 		<button onclick="loadMore()">더보기 ▼</button>
 	</div>
+	
+	
 
 	<!-- 비교함 -->
 	<div id="compareBox">
@@ -568,13 +571,12 @@ function drawCards() {
 
     	  <span style="font-size:12px;">${c.cardSlogan || ''}</span><br>
 
-    	  <label onclick="event.stopPropagation();">
-	    	  <input type="checkbox"
-	    	         value="${c.cardNo}"
-	    	         onclick="event.stopPropagation(); toggleCompare(this)">
-	    	  비교함 담기
-	    	</label>
-
+    	  <label class="compare-label" onclick="event.stopPropagation();">
+    	    <input type="checkbox"
+    	           value="${c.cardNo}"
+    	           onclick="event.stopPropagation(); toggleCompare(this)">
+    	    비교함 담기
+    	  </label>
     	`;
     	grid.appendChild(div);
 }
