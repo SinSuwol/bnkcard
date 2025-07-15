@@ -18,4 +18,5 @@ public interface ChatService {
     List<ChatMessageDto> getMessages(Long roomId);
 
     Long createOrGetRoom(Long memberNo);
+    //에러확인
 }
