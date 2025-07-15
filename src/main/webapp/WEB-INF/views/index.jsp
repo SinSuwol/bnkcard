@@ -33,14 +33,16 @@
 	    <div class="overlay-text">
 	        <h1 class="red">플러스, &nbsp</h1>
 	        <h1> 그 이상의 혜택</h1>
-	    </div>
+	    </div>	
 	</div>
 </div>
 <div class="inner main-wrap flex">
 	<h1>동백PLUS 체크카드</h1>
 	<h2>'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
 	<p>매일 쓰는 소비에, 매달 받는 보상</p>
-	<img style="width:200px;" src="/image/CARD 1.png">
+	<div class="spline-wrapper">
+		<iframe class="spline" src='https://my.spline.design/untitled-67oSHmsx6d7B7LdHEmbvKlKh/' frameborder='0'></iframe>
+	</div>
 	<div class="carousel">
 		  <div class="spacer">
 		  	<div class="txt-box">
@@ -64,7 +66,7 @@
 		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
 		  	</div>
 		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:pink">RED</p>
+		  		<p class="color-txt" style="color:red">RED</p>
 		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
 		  	</div>
 		  	<div class="txt-box">
@@ -88,7 +90,7 @@
 		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
 		  	</div>
 		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:pink">RED</p>
+		  		<p class="color-txt" style="color:red">RED</p>
 		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
 		  	</div>
 		  	
