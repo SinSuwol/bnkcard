@@ -110,7 +110,7 @@ body {
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <div class="main-content">
 	<div>
 		<div class="section-header">
@@ -136,6 +136,7 @@ body {
 		</div>
 	</div>
 </div>
+<script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
 </script>

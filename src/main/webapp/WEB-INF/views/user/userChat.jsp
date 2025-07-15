@@ -36,8 +36,10 @@
             align-self: flex-start;
         }
     </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <h2>User Chat Page</h2>
 
 <div id="chatBox"></div>
@@ -45,6 +47,7 @@
 <input type="text" id="messageInput" placeholder="메시지를 입력하세요">
 <button id="sendBtn">보내기</button>
 
+<script src="/js/header2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 <script>

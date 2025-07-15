@@ -98,7 +98,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <div class="login-content">
 	<h1 class="login-title">로그인</h1>
 	<hr>
@@ -115,6 +115,6 @@
 	    <script>alert("${msg}");</script>
 	</c:if>
 </div>
-
+<script src="/js/header2.js"></script>
 </body>
 </html>

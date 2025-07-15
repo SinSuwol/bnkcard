@@ -95,7 +95,7 @@ body {
 </style>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+	<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 	<div class="container">
 		<h2 class="page-title">회원가입</h2>
@@ -133,5 +133,6 @@ body {
 			</form>
 		</div>
 	</div>
+	<script src="/js/header2.js"></script>
 </body>
 </html>

@@ -95,7 +95,7 @@ body {
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 <div class="content-wrapper">
     <h2 class="page-title">회원가입</h2>
@@ -141,7 +141,7 @@ body {
         <input type="hidden" name="role" value="${role}">
     </form>
 </div>
-
+<script src="/js/header2.js"></script>
 <script>
 <c:if test="${not empty msg}">
     alert('<c:out value="${msg}" escapeXml="true"/>');

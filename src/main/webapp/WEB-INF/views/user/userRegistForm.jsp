@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 - 정보입력</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <h1>회원가입</h1>
 <hr>
 <form id="signupForm" action="/regist/regist" method="post">
@@ -64,6 +65,8 @@
         alert("${msg}");
     </script>
 </c:if>
+
+<script src="/js/header2.js"></script>
 
 <script>
 	let usernameChecked = false; // 중복확인 완료 여부

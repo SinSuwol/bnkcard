@@ -126,7 +126,7 @@ form#updateForm button[type="button"]:last-child:hover {
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 <div style="height: 150px;"></div> 
 <div class="main-content">
 	<h1>개인 정보 수정</h1>
@@ -174,6 +174,7 @@ form#updateForm button[type="button"]:last-child:hover {
 	    </script>
 	</c:if>
 </div>
+<script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
 
@@ -275,6 +276,7 @@ form#updateForm button[type="button"]:last-child:hover {
 		location.href = "/user/mypage";
 	}
 </script>
+
 <script src="/js/sessionTime.js"></script>
 </body>
 </html>
