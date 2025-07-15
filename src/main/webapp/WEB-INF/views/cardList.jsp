@@ -286,6 +286,50 @@
 	font-weight: 700;
 	cursor: pointer;
 }
+
+.compare-card {
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.card-image-group img {
+  width: 60px;
+  height: auto;
+  margin: 2px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.card-name {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 6px 0 3px;
+}
+.card-fee {
+  color: #333;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.card-tags {
+  color: #777;
+  font-size: 12px;
+  margin: 4px 0;
+}
+.card-icons img {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+}
+.card-summary {
+  text-align: left;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -371,7 +415,7 @@ fetch('/api/cards')
           <img src="${c.cardUrl}" alt="${c.cardName}">
           <div class="popular-sub">인기 카드</div>
           <div class="popular-title">${c.cardName}</div>
-          <div style="font-size:13px;color:#888;">조회수 ${c.viewCount}</div>
+ 
         </div>
       </div>`).join('');
     $('.popular-slider').slick({
@@ -524,12 +568,13 @@ function drawCards() {
 
     	  <span style="font-size:12px;">${c.cardSlogan || ''}</span><br>
 
-    	  <label class="compare-label" onclick="event.stopPropagation();">
-    	    <input type="checkbox"
-    	           value="${c.cardNo}"
-    	           onclick="event.stopPropagation(); toggleCompare(this)">
-    	    비교함 담기
-    	  </label>
+    	  <label onclick="event.stopPropagation();">
+	    	  <input type="checkbox"
+	    	         value="${c.cardNo}"
+	    	         onclick="event.stopPropagation(); toggleCompare(this)">
+	    	  비교함 담기
+	    	</label>
+
     	`;
     	grid.appendChild(div);
 }
@@ -562,30 +607,124 @@ function renderCompareList(){
 }
 renderCompareList();
 
+const categoryToIcon = {
+		  "커피": "coffee",
+		  "편의점": "convenience-store",
+		  "베이커리": "bakery",
+		  "영화": "movie",
+		  "쇼핑": "shopping",
+		  "외식": "meal",
+		  "교통": "metro",
+		  "통신": "telecommunication",
+		  "교육": "education",
+		  "레저&스포츠": "leisure",
+		  "구독": "subscribe",
+		  "병원": "hospital",
+		  "공공요금": "charges",
+		  "주유": "gas-station",
+		  "하이패스": "hipass",
+		  "배달앱": "delivery",
+		  "환경": "environment",
+		  "공유모빌리티": "socar",
+		  "세무지원": "tax",
+		  "포인트&캐시백": "point",
+		  "놀이공원": "amusementpark",
+		  "라운지": "lounge",
+		  "발렛": "valetparking"
+};
+
 /* 비교 모달 */
-function openCompare(){
-  const box=JSON.parse(sessionStorage.getItem('compareCards')||'[]');
-  if(box.length<2){alert('최소 2개 이상 선택');return;}
-  document.getElementById('compareModal').style.display='block';
-  document.getElementById('modalOverlay').style.display='block';
-  const wrap=document.getElementById('modalContent');wrap.innerHTML='';
-  box.forEach(c=>{
+function openCompare() {
+  const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+  if (box.length < 2) {
+    alert('최소 2개 이상 선택');
+    return;
+  }
+
+  document.getElementById('compareModal').style.display = 'block';
+  document.getElementById('modalOverlay').style.display = 'block';
+
+  const wrap = document.getElementById('modalContent');
+  wrap.innerHTML = '';
+
+  // 아이콘 매핑 사전
+  const categoryToIcon = {
+    "커피": "coffee",
+    "편의점": "convenience-store",
+    "베이커리": "bakery",
+    "영화": "movie",
+    "쇼핑": "shopping",
+    "외식": "meal",
+    "교통": "metro",
+    "통신": "telecommunication",
+    "교육": "education",
+    "레저&스포츠": "leisure",
+    "구독": "subscribe",
+    "병원": "hospital",
+    "공공요금": "charges",
+    "주유": "gas-station",
+    "하이패스": "hipass",
+    "배달앱": "delivery",
+    "환경": "environment",
+    "공유모빌리티": "socar",
+    "세무지원": "tax",
+    "포인트&캐시백": "point",
+    "놀이공원": "amusementpark",
+    "라운지": "lounge",
+    "발렛": "valetparking"
+  };
+
+  box.forEach(c => {
     fetch(`/api/cards/${c.cardNo}`)
-      .then(r=>r.json())
-      .then(d=>{
-        const div=document.createElement('div');
-        div.innerHTML=`
-          <img src="${d.cardUrl}" alt="${d.cardName}">
-          <h4>${d.cardName}</h4>
-          <p><b>연회비:</b> ${d.annualFee?.toLocaleString() || 0}원</p>
-          <p style="text-align:left;font-size:12px;">
-            <b>주요혜택</b><br>${(d.service || '').replace(/\n/g,'<br>')}
-          </p>`;
-        wrap.appendChild(div);
+      .then(r => r.json())
+      .then(d => {
+        const div = document.createElement('div');
+
+        // 해시태그 추출
+        const tagStr = (d.cardType || '') + ',' + (d.service || '') + ',' + (d.sService || '') + ',' + (d.issuedTo || '');
+        const tags = ['커피', '편의점', '베이커리', '영화', '쇼핑', '외식', '교통', '통신', '교육', '레저&스포츠', '구독', '병원', '공공요금', '주유', '하이패스', '배달앱', '환경', '공유모빌리티', '세무지원', '포인트&캐시백', '놀이공원', '라운지', '발렛']
+          .filter(t => tagStr.includes(t));
+
+        // 아이콘 이미지
+        const iconHtml = tags.map(name => {
+          const icon = categoryToIcon[name];
+          if (!icon) return '';
+          return `<img src="/image/benifits/${icon}.png" alt="${name}" style="width:22px;height:22px;margin-right:3px;">`;
+        }).join('');
+
+        // 태그 텍스트
+        const tagHtml = tags.map(t => `#${t}`).join(' ');
+
+        // 카드 이미지 최대 3장
+        const images = d.cardUrl?.split(',') || [];
+        const imageHtml = images.slice(0, 3).map(url =>
+          `<img src="${url.trim()}" alt="" style="width:60px; height:auto; border-radius:6px; border:1px solid #ddd; margin:2px;">`
+        ).join('');
+
+        // 요약 혜택: 최대 5줄, ◆ 기호 제거
+        const summary = (d.service || '')
+          .replace(/◆/g, '•')
+          .split(/\n|<br>/)
+          .filter(line => line.trim())
+          .slice(0, 5)
+          .join('<br>');
+
+        // HTML 렌더링
+        div.innerHTML = `
+        	  <div class="card-image-group">${imageHtml}</div>
+        	  <div class="card-name">${d.cardName}</div>
+        	  <div class="card-fee"><b>연회비:</b> ${d.annualFee?.toLocaleString() || 0}원</div>
+        	  <div class="card-tags">${tagHtml}</div>
+        	  <div class="card-icons">${iconHtml}</div>
+        	  <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
+        	`;
+        	wrap.appendChild(div);
       })
-      .catch(err=>console.error(err));
+      .catch(err => console.error(err));
   });
 }
+
+
 function closeCompareModal(){
   document.getElementById('compareModal').style.display='none';
   document.getElementById('modalOverlay').style.display='none';
