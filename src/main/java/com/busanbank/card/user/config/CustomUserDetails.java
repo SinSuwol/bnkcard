@@ -53,5 +53,9 @@ public class CustomUserDetails implements UserDetails {
 	public String getRole() {
 		return user.getRole();
 	}
+	//suwol
+	public int getMemberNo() {
+        return user.getMemberNo();
+    }
 
 }

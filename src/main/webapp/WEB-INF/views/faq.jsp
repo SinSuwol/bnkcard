@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,12 @@
 <h1>고객센터(faq페이지)</h1>
 <hr>
 </div>
+
+
+<c:if test="${not empty sessionScope.loginUsername}">
+    <button onclick="location.href='/user/chat/page'">실시간 상담하기</button>
+</c:if>
+
 
 <script>
 	let remainingSeconds = ${remainingSeconds};

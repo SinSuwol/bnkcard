@@ -2,20 +2,58 @@ package com.busanbank.card.user.controller;
 
 import com.busanbank.card.user.dto.ChatMessageDto;
 import com.busanbank.card.user.dto.ChatRoomDto;
+import com.busanbank.card.user.dto.UserDto;
 import com.busanbank.card.user.service.ChatService;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/chat")
+@Controller
+@RequestMapping("/user/chat")
 @RequiredArgsConstructor
 public class UserChatController {
 
     private final ChatService chatService;
+
+    
+    @GetMapping("/page")
+    public String userChatPage() {
+        return "user/userChat";
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserDto> getUserInfo(HttpSession session) {
+        Integer memberNoInt = (Integer) session.getAttribute("loginMemberNo");
+        if (memberNoInt == null) {
+            System.out.println("세션에 memberNo가 없습니다. 로그인 필요.");
+            return ResponseEntity.status(401).build();
+        }
+
+        Long memberNo = memberNoInt.longValue();
+
+        String username = (String) session.getAttribute("loginUsername");
+        String role = (String) session.getAttribute("loginRole");
+
+        System.out.println("========= User Info =========");
+        System.out.println("memberNo: " + memberNo);
+        System.out.println("username: " + username);
+        System.out.println("role: " + role);
+        System.out.println("=============================");
+
+        UserDto dto = new UserDto();
+        dto.setMemberNo(memberNo.intValue());
+        dto.setUsername(username);
+        dto.setRole(role);
+
+        return ResponseEntity.ok(dto);
+    }
+
 
     /**
      * 방 생성
