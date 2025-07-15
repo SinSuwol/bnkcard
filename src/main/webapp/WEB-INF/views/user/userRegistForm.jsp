@@ -42,7 +42,7 @@
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" name="zipCode" id="zipCode"><br>
+			<td><input type="text" name="zipCode" id="zipCode">
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 				<input type="text" name="address1" id="address1"><br>
 				<input type="text" name="address2" id="address2">

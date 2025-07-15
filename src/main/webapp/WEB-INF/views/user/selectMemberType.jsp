@@ -1,95 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 - 회원유형선택</title>
+<title>회원가입 - 회원유형 선택</title>
 <link rel="stylesheet" href="/css/style.css">
-</head>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
+	/*background-color: #f5f7fa;*/
 	margin: 0;
 	padding: 0;
-	background-color: #f8f8f8;
-	color: #222;
 }
 
-/* 헤더 아래 컨텐츠 여백 */
-.content-wrapper {
-	padding: 130px 40px 40px 40px; /* 헤더 고려 상단 여백 */
-	max-width: 1200px;
+/* 전체 wrapper */
+.container {
+	max-width: 960px;
 	margin: 0 auto;
+	padding: 130px 30px 50px; /* header 공간 포함 */
 }
 
-/* 제목 스타일 */
-.content-wrapper h1 {
-	font-size: 28px;
-	margin-bottom: 10px;
-}
-
-.content-wrapper h2 {
+/* 제목 및 부제목 */
+.page-title {
 	font-size: 20px;
-	color: #444;
-	margin-bottom: 20px;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 6px;
 }
 
-/* === 회원유형 선택 박스 === */
+.page-subtitle {
+	font-size: 14px;
+	color: #777;
+	margin-bottom: 30px;
+}
+
+/* 유형 선택 카드들 */
 .member-type-container {
 	display: flex;
+	justify-content: flex-start;
 	gap: 20px;
+	flex-wrap: wrap;
 }
 
+/* 각 카드 스타일 */
 .member-type {
-	width: 240px;
-	padding: 20px;
+	flex: 1;
+	min-width: 200px;
+	background-color: #fff;
 	border: 1px solid #ddd;
-	border-radius: 12px;
-	text-align: left;
+	border-radius: 16px;
+	padding: 24px;
+	text-align: center;
 	text-decoration: none;
 	color: #000;
-	background-color: #fff;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-	transition: all 0.2s ease;
-	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .member-type:hover {
-	box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+	border-color: #005bac;
+	box-shadow: 0 4px 12px rgba(0, 91, 172, 0.15);
 	transform: translateY(-4px);
 }
 
-.title {
-	font-size: 18px;
-	font-weight: 600;
-	margin-bottom: 8px;
+.member-type .title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #005bac;
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.desc {
-	font-size: 14px;
-	color: #666;
-	line-height: 1.5;
+.member-type .desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin-top: 12px;
 }
+
 </style>
+</head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
-<div class="content-wrapper">
-	<h1>회원가입</h1>
-	<h2>회원유형선택</h2>
-	<br>
-	<div class="member-type-container">
-		<a href="/regist/terms?role=ROLE_PERSON" class="member-type">
-			<div class="title">일반회원(개인)</div>
-			<div class="desc">영업점에서 인터넷뱅킹을 신청하지 않아도 홈페이지 신청 가능함</div>
-		</a> <a href="/regist/terms?role=ROLE_OWNER" class="member-type">
-			<div class="title">개인사업자</div>
-			<div class="desc">개인이 운영하는 사업체를 가지고 계신 고객</div>
-		</a> <a href="/regist/terms?role=ROLE_CORP" class="member-type">
-			<div class="title">법인</div>
-			<div class="desc">영리 또는 비영리를 목적으로 사업체를 가지고 계신 고객</div>
-		</a>
+	<jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
+
+	<div class="container">
+		<h2 class="page-title">회원가입</h2>
+		<p class="page-subtitle">회원유형을 선택해 주세요</p>
+
+		<div class="member-type-container">
+			<a href="/regist/terms?role=ROLE_PERSON" class="member-type">
+				<div class="title">일반회원(개인)</div>
+				<div class="desc">
+					영업점 방문 없이 홈페이지에서<br>간편하게 신청 가능합니다
+				</div>
+			</a> <a href="/regist/terms?role=ROLE_OWNER" class="member-type">
+				<div class="title">개인사업자</div>
+				<div class="desc">
+					사업체를 운영하는 개인 고객을 위한<br>전용 서비스입니다
+				</div>
+			</a> <a href="/regist/terms?role=ROLE_CORP" class="member-type">
+				<div class="title">법인</div>
+				<div class="desc">
+					법인 사업체를 위한<br>신뢰도 높은 금융 솔루션 제공
+				</div>
+			</a>
+		</div>
 	</div>
-</div>
 </body>
 </html>

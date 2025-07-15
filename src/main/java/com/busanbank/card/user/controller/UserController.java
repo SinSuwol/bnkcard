@@ -56,6 +56,16 @@ public class UserController {
 		List<CardDto> cards = userDao.findMyCard();
 		model.addAttribute("cards", cards);
 		
+        String username = (String) session.getAttribute("loginUsername");
+        String role = (String) session.getAttribute("loginRole");
+
+        System.out.println("========= User Info =========");
+        //System.out.println("memberNo: " + memberNo);
+        System.out.println("username: " + username);
+        System.out.println("role: " + role);
+        System.out.println("=============================");
+
+		
 		return "user/mypage";
 	}
 	

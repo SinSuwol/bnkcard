@@ -7,7 +7,7 @@ public class TermDto {
 
 	private int termNo;
 	private String termType;
-	private char isRequired;
+	private String isRequired;
 	private String content;
 	private String createdAt;
 	private String updatedAt;
