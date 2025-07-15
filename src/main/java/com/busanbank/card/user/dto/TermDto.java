@@ -11,4 +11,8 @@ public class TermDto {
 	private String content;
 	private String createdAt;
 	private String updatedAt;
+	
+	
+	//이거하나 추가 할게요 수현님?
+	private String agreeYn;
 }
