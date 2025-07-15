@@ -34,7 +34,7 @@
 		color:red;
 	}
     /* 모달 스타일 */
-    #editModal {
+    #editModal ,#registerModal{
         display: none;
         position: fixed;
         top: 20%;
@@ -57,14 +57,14 @@
         z-index: 999;
     }
 
-    #editModal input {
+    #editModal input ,#registerModal input{
         width: 100%;
         padding: 6px;
         margin-bottom: 10px;
         box-sizing: border-box;
     }
 
-    #editModal button {
+    #editModal button ,#registerModal button{
         margin-right: 5px;
     }
 </style>
@@ -81,7 +81,7 @@
 <div id="modalOverlay"></div>
 
 <!-- 모달 폼 -->
-<div id="editModal">
+<div id="registerModal">
   <h2>상품 등록</h2>
   <form id="cardForm">
     <input type="text" name="cardName" placeholder="카드명">
@@ -215,6 +215,7 @@
     // 모달 닫기
     function closeModal() {
         document.getElementById('editModal').style.display = 'none';
+        document.getElementById('registerModal').style.display = 'none';
         document.getElementById('modalOverlay').style.display = 'none';
     }
 
@@ -277,7 +278,7 @@
     
     function openModal() {
     	  document.getElementById('modalOverlay').style.display = 'block';
-    	  document.getElementById('editModal').style.display = 'block';
+    	  document.getElementById('registerModal').style.display = 'block';
     	}
 
  // 닫기 버튼 이벤트
