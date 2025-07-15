@@ -12,15 +12,22 @@
       padding: 0;
       font-family: 'Noto Sans KR', sans-serif;
       color: #333;
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
     }
 
     .wrap {
+      width: 100%;
       max-width: 1000px;
       margin: 40px auto;
     }
 
     .top {
       display: flex;
+      flex-wrap: wrap;
       gap: 40px;
       padding: 40px 20px 20px;
       align-items: flex-start;
@@ -28,12 +35,15 @@
 
     .card-img {
       width: 260px;
+      min-width: 260px;
+      max-width: 260px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .info {
-      flex: 1;
+      flex: 1 1 0;
+      min-width: 0;
     }
 
     .info h2 {
@@ -78,17 +88,13 @@
     }
 
     .benefit-card {
-      flex: 1 1 calc(50% - 12px);
-      background: #f9faff;
-      padding: 12px 16px;
-      border: 1px solid #e0e6ff;
-      border-radius: 6px;
-      font-size: 15px;
+      background: #f0f4ff;
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-size: 14px;
       font-weight: 500;
-      color: #222;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: #002e5b;
+      border: 1px solid #cdd9ff;
     }
 
     .accordion-container {
@@ -188,6 +194,49 @@
 </div>
 
 <script>
+  const CATEGORY_KEYWORDS = {
+    '커피': ['커피', '스타벅스', '이디야', '카페베네'],
+    '편의점': ['편의점', 'GS25', 'CU', '세븐일레븐'],
+    '베이커리': ['베이커리', '파리바게뜨', '뚜레쥬르', '던킨'],
+    '영화': ['영화관', '영화', '롯데시네마', 'CGV'],
+    '쇼핑': ['쇼핑몰', '쿠팡', '마켓컬리', 'G마켓', '다이소', '백화점', '홈쇼핑'],
+    '외식': ['음식점', '레스토랑', '맥도날드', '롯데리아'],
+    '교통': ['버스', '지하철', '택시', '대중교통', '후불교통'],
+    '통신': ['통신요금', '휴대폰', 'SKT', 'KT', 'LGU+'],
+    '교육': ['학원', '학습지'],
+    '레저&스포츠': ['체육', '골프', '스포츠', '레저'],
+    '구독': ['넷플릭스', '멜론', '유튜브프리미엄', '정기결제', '디지털 구독'],
+    '병원': ['병원', '약국', '동물병원'],
+    '공공요금': ['전기요금', '도시가스', '아파트관리비'],
+    '주유': ['주유', '주유소', 'SK주유소', 'LPG'],
+    '하이패스': ['하이패스'],
+    '배달앱' : ['쿠팡', '배달앱'],
+    '환경': ['전기차', '수소차', '친환경'],
+    '공유모빌리티': ['공유모빌리티', '카카오T바이크', '따릉이', '쏘카', '투루카'],
+    '세무지원': ['세무', '전자세금계산서', '부가세'],
+    '포인트&캐시백': ['포인트', '캐시백'],
+    '놀이공원': ['놀이공원', '자유이용권'],
+    '라운지': ['공항라운지'],
+    '발렛': ['발렛파킹']
+  };
+
+  function extractCategories(text, max = 5) {
+    const found = new Set();
+    const lowerText = text.toLowerCase();
+
+    for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+      if (found.size >= max) break;
+      for (const keyword of keywords) {
+        if (lowerText.includes(keyword.toLowerCase())) {
+          found.add(category);
+          break;
+        }
+      }
+    }
+
+    return Array.from(found);
+  }
+
   const urlParams = new URLSearchParams(location.search);
   const cardNo = urlParams.get("no");
 
@@ -225,21 +274,20 @@
     document.getElementById('feeVisa').innerText     = brand.includes('VISA') ? fee : '없음';
     document.getElementById('feeMaster').innerText   = brand.includes('MASTER') ? fee : '없음';
 
+    renderCategories(c.service + '\n' + (c.sService ?? ''));
     renderBenefits(c.service);
   }
 
+  function renderCategories(text) {
+	  const categories = extractCategories(text, 5);
+	  const html = categories.map(c => `<div class="benefit-card">#${c}</div>`).join('');
+	  document.getElementById("summaryBenefit").innerHTML = html;
+	}
+
+
   function renderBenefits(rawService) {
-    const summaryDiv = document.getElementById('summaryBenefit');
     const accordionDiv = document.getElementById('accordionContainer');
     const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
-
-    const summaryItems = parts.slice(0, 3).map(part => {
-      const [titleLine, ...contentLines] = part.split('\n');
-      const summaryText = `${titleLine.trim()} - ${contentLines[0]?.trim() || ''}`;
-      return `<div class="benefit-card">${summaryText}</div>`;
-    });
-    summaryDiv.innerHTML = summaryItems.join('');
-
     accordionDiv.innerHTML = `
       <div class="accordion" onclick="toggleAccordion(this)">
         <h4>기본 서비스 <span>▼</span></h4>
