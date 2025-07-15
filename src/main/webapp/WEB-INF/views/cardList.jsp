@@ -91,7 +91,7 @@
 
 .item img {
 	width: 100%;
-	border: 1px solid #ddd
+	
 }
 
 /* ---------- 비교함 ---------- */

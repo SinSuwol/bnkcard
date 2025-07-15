@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 import org.springframework.stereotype.Service;
 
+import com.busanbank.card.busancrawler.dto.CardInfoDTO;
+
 @Service
 public class BnkCrawlerService {
 
@@ -50,5 +52,7 @@ public class BnkCrawlerService {
             driver.quit();
         }
     }
+    
+
 }
 
