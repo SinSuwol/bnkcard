@@ -39,7 +39,7 @@
 
 .slider-container {
   max-width: 1000px;
-  margin: 20px auto 50px;
+  margin: 0px auto 50px;
   overflow: hidden;
   position: relative;
 }
