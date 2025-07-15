@@ -59,10 +59,11 @@ public class UserChatController {
      * 방 생성
      */
     @PostMapping("/room")
-    public ResponseEntity<Long> createRoom(@RequestParam("memberNo") Long memberNo) {
-        Long roomId = chatService.createRoom(memberNo);
+    public ResponseEntity<Long> createOrGetRoom(@RequestParam("memberNo") Long memberNo) {
+        Long roomId = chatService.createOrGetRoom(memberNo);
         return ResponseEntity.ok(roomId);
     }
+
 
     /**
      * 내 방 정보 조회
@@ -84,9 +85,13 @@ public class UserChatController {
 
     @GetMapping("/room/{roomId}/messages")
     public ResponseEntity<List<ChatMessageDto>> getUserMessages(@PathVariable("roomId") Long roomId) {
+        System.out.println("========= getUserMessages =========");
+        System.out.println("roomId = " + roomId);
         List<ChatMessageDto> list = chatService.getMessages(roomId);
+        System.out.println("조회된 메시지 수 = " + list.size());
         return ResponseEntity.ok(list);
     }
+
 
     /**
      * 상담사 연결 요청

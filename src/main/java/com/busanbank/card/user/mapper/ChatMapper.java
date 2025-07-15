@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ChatMapper {
-
-    void insertChatRoom(Long memberNo);
+    
+    void insertChatRoom(ChatRoomDto room);
 
     Long selectCurrRoomId();
 
@@ -21,5 +21,8 @@ public interface ChatMapper {
     void increaseUnreadCount(Long roomId);
     
     List<ChatMessageDto> selectMessages(Long roomId);
+    
+    Long selectRoomIdByMember(Long memberNo);
+
 
 }
