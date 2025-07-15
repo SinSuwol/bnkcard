@@ -22,7 +22,7 @@
     .wrap {
       width: 100%;
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 0px auto;
     }
 
     .top {

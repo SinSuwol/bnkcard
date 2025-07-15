@@ -10,5 +10,5 @@ public class CardInfoDTO {
     private String service;
     private Integer annualFee;
     private String cardUrl;
-    // ... 혜택, 연회비, 브랜드 등 추가 가능
+    // 신한
 }
