@@ -457,11 +457,37 @@
 		<h3>상세 검색</h3>
 		<input id="advKeyword" type="text" placeholder="카드 이름 또는 키워드 입력">
 		<p style="margin: 0 0 6px; font-weight: 600">주요혜택 (최대 5개)</p>
+		
 		<div id="hotArea">
-			<span class="hot">할인</span><span class="hot">포인트</span> <span
-				class="hot">여행</span><span class="hot">카페</span> <span class="hot">교통</span><span
-				class="hot">병원</span>
+		  <span class="hot" data-keyword="커피">#커피</span>
+		  <span class="hot" data-keyword="편의점">#편의점</span>
+		  <span class="hot" data-keyword="베이커리">#베이커리</span>
+		  <span class="hot" data-keyword="영화">#영화</span>
+		  <span class="hot" data-keyword="쇼핑">#쇼핑</span>
+		  <span class="hot" data-keyword="외식">#외식</span>
+		  <span class="hot" data-keyword="교통">#교통</span>
+		  <span class="hot" data-keyword="통신">#통신</span>
+		  <span class="hot" data-keyword="교육">#교육</span>
+		  <span class="hot" data-keyword="레저">#레저</span>
+		  <span class="hot" data-keyword="스포츠">#스포츠</span>
+		  <span class="hot" data-keyword="구독">#구독</span>
+		  <span class="hot" data-keyword="병원">#병원</span>
+		  <span class="hot" data-keyword="약국">#약국</span>
+		  <span class="hot" data-keyword="공공요금">#공공요금</span>
+		  <span class="hot" data-keyword="주유">#주유</span>
+		  <span class="hot" data-keyword="하이패스">#하이패스</span>
+		  <span class="hot" data-keyword="배달앱">#배달앱</span>
+		  <span class="hot" data-keyword="환경">#환경</span>
+		  <span class="hot" data-keyword="공유모빌리티">#공유모빌리티</span>
+		  <span class="hot" data-keyword="세무지원">#세무지원</span>
+		  <span class="hot" data-keyword="포인트">#포인트</span>
+		  <span class="hot" data-keyword="캐시백">#캐시백</span>
+		  <span class="hot" data-keyword="놀이공원">#놀이공원</span>
+		  <span class="hot" data-keyword="라운지">#라운지</span>
+		  <span class="hot" data-keyword="발렛">#발렛</span>
 		</div>
+		
+
 		<div id="modalResultGrid"></div>
 		<div style="text-align: center; margin-top: 15px;">
 			<button id="advSearchBtn"
@@ -542,17 +568,25 @@ document.getElementById('searchInput').addEventListener('keydown',e=>{
 });
 
 /* 태그 선택 */
-document.querySelectorAll('#hotArea .hot').forEach(h=>{
-  h.addEventListener('click',()=>{
-    if(h.classList.contains('sel')){
-      h.classList.remove('sel');selectedTags=selectedTags.filter(t=>t!==h.innerText);
-    }else{
-      if(selectedTags.length>=5){alert('최대 5개 선택');return;}
-      h.classList.add('sel');selectedTags.push(h.innerText);
+document.querySelectorAll('#hotArea .hot').forEach(h => {
+  h.addEventListener('click', () => {
+    if (h.classList.contains('sel')) {
+      h.classList.remove('sel');
+      selectedTags = selectedTags.filter(t => t !== h.dataset.keyword);
+    } else {
+      if (selectedTags.length >= 5) {
+        alert('최대 5개 선택');
+        return;
+      }
+      h.classList.add('sel');
+      selectedTags.push(h.dataset.keyword);
     }
-    if(!advModal.classList.contains('show')) performSearch(currentKeyword);
+
+    // ✅ 항상 performSearch 호출 (모달 안이든 밖이든)
+    performSearch(currentKeyword);
   });
 });
+
 
 /* 상세 검색 실행 */
 document.getElementById('advSearchBtn').addEventListener('click',()=>{
