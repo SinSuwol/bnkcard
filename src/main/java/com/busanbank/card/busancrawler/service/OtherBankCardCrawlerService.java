@@ -1,7 +1,7 @@
 package com.busanbank.card.busancrawler.service;
 
 import com.busanbank.card.busancrawler.dto.CardInfoDTO;
-import io.github.bonigarcia.wdm.WebDriverManager;
+//import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +18,7 @@ import java.util.List;
 public class OtherBankCardCrawlerService {
 
     public CardInfoDTO crawlShinhanCard(String url) {
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new"); // 창 없이 실행
