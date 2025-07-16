@@ -57,5 +57,18 @@ public class CustomUserDetails implements UserDetails {
 	public int getMemberNo() {
         return user.getMemberNo();
     }
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (!(obj instanceof CustomUserDetails)) return false;
+	    CustomUserDetails other = (CustomUserDetails) obj;
+	    return this.getUsername().equals(other.getUsername());
+	}
+
+	@Override
+	public int hashCode() {
+	    return this.getUsername().hashCode();
+	}
 
 }

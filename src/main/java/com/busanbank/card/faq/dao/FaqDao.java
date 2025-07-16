@@ -19,17 +19,20 @@ public class FaqDao {
         String sql = """
             SELECT COUNT(*)
               FROM FAQ
-             WHERE FAQ_QUESTION LIKE '%' || ? || '%'
-                OR FAQ_ANSWER LIKE '%' || ? || '%'
+             WHERE FAQ_QUESTION LIKE ?
+                OR FAQ_ANSWER LIKE ?
         """;
+
+        String likeKeyword = "%" + keyword + "%";
 
         return jdbcTemplate.queryForObject(
                 sql,
                 Integer.class,
-                keyword,
-                keyword
+                likeKeyword,
+                likeKeyword
         );
     }
+
     public List<FaqDto> searchFaqsWithPaging(String keyword, int startRow, int endRow) {
         String sql = """
             SELECT * FROM (
@@ -38,8 +41,8 @@ public class FaqDao {
                         SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
                                REG_DATE, WRITER, ADMIN, CATTEGORY
                           FROM FAQ
-                         WHERE FAQ_QUESTION LIKE '%' || ? || '%'
-                            OR FAQ_ANSWER LIKE '%' || ? || '%'
+                         WHERE FAQ_QUESTION LIKE ?
+                            OR FAQ_ANSWER LIKE ?
                          ORDER BY FAQ_NO
                        ) A
                  WHERE ROWNUM <= ?
@@ -47,21 +50,18 @@ public class FaqDao {
             WHERE rnum >= ?
         """;
 
+        String likeKeyword = "%" + keyword + "%";
+
         return jdbcTemplate.query(
                 sql,
                 (rs, rowNum) -> mapRow(rs),
-                keyword,
-                keyword,
+                likeKeyword,
+                likeKeyword,
                 endRow,
                 startRow
         );
     }
 
-    
-    
-    /**
-     * FAQ 전체 조회
-     */
     public List<FaqDto> getAllFaqs() {
         String sql = """
             SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
@@ -73,9 +73,6 @@ public class FaqDao {
         return jdbcTemplate.query(sql, (rs, rowNum) -> mapRow(rs));
     }
 
-    /**
-     * FAQ 등록
-     */
     public void insertFaq(FaqDto dto) {
         String sql = """
             INSERT INTO FAQ (
@@ -96,9 +93,6 @@ public class FaqDao {
         );
     }
 
-    /**
-     * FAQ 수정
-     */
     public void updateFaq(FaqDto dto) {
         String sql = """
             UPDATE FAQ
@@ -120,9 +114,6 @@ public class FaqDao {
         );
     }
 
-    /**
-     * FAQ 삭제
-     */
     public void deleteFaq(Long faqNo) {
         String sql = """
             DELETE FROM FAQ
@@ -132,9 +123,6 @@ public class FaqDao {
         jdbcTemplate.update(sql, faqNo);
     }
 
-    /**
-     * ResultSet → FaqDto 매핑
-     */
     private FaqDto mapRow(ResultSet rs) throws SQLException {
         return new FaqDto(
             (int)rs.getLong("FAQ_NO"),
@@ -146,46 +134,39 @@ public class FaqDao {
             rs.getString("CATTEGORY")
         );
     }
-    
+
     public FaqDto getFaqById(int faqNo) {
         String sql = """
             SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
                    REG_DATE, WRITER, ADMIN, CATTEGORY
-            FROM FAQ
-            WHERE FAQ_NO = ?
+              FROM FAQ
+             WHERE FAQ_NO = ?
         """;
 
         return jdbcTemplate.queryForObject(
             sql,
-            (rs, rowNum) -> new FaqDto(
-                (int) rs.getLong("FAQ_NO"),
-                rs.getString("FAQ_QUESTION"),
-                rs.getString("FAQ_ANSWER"),
-                rs.getDate("REG_DATE"),
-                rs.getString("WRITER"),
-                rs.getString("ADMIN"),
-                rs.getString("CATTEGORY")
-            ),
+            (rs, rowNum) -> mapRow(rs),
             faqNo
         );
     }
 
-    
     public List<FaqDto> searchFaqs(String keyword) {
         String sql = """
             SELECT FAQ_NO, FAQ_QUESTION, FAQ_ANSWER,
                    REG_DATE, WRITER, ADMIN, CATTEGORY
               FROM FAQ
-             WHERE FAQ_QUESTION LIKE '%' || ? || '%'
-                OR FAQ_ANSWER LIKE '%' || ? || '%'
+             WHERE FAQ_QUESTION LIKE ?
+                OR FAQ_ANSWER LIKE ?
             ORDER BY FAQ_NO
         """;
+
+        String likeKeyword = "%" + keyword + "%";
 
         return jdbcTemplate.query(
             sql,
             (rs, rowNum) -> mapRow(rs),
-            keyword,
-            keyword
+            likeKeyword,
+            likeKeyword
         );
     }
 }
