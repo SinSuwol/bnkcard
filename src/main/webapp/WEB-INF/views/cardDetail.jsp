@@ -91,13 +91,13 @@
     }
 
     .benefit-card {
-      background: #f0f4ff;
-      padding: 10px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #002e5b;
-      border: 1px solid #cdd9ff;
+      background: WHITE;
+	  padding: 10px 14px;
+	  border-radius: 20px;
+	  font-size: 14px;
+	  font-weight: 500;
+	  color: #bf2c2c;
+	  border: 1px solid #bf2c2c;
     }
 
     .accordion-container {

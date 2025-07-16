@@ -520,31 +520,43 @@
 fetch('/api/cards')
   .then(r => r.json())
   .then(cards => {
-    const sorted = [...cards].sort((a, b) => b.viewCount - a.viewCount).slice(0, 6);
+    const sorted = [...cards]
+      .sort((a, b) => b.viewCount - a.viewCount)
+      .slice(0, 6);
+
     const slider = document.querySelector('.popular-slider');
+
+    // 슬라이더가 이미 초기화되어 있다면 먼저 destroy
+    if ($(slider).hasClass('slick-initialized')) {
+      $(slider).slick('unslick');
+    }
+
     slider.innerHTML = sorted.map(c => `
       <div>
         <div class="popular-card" onclick="goDetail(${c.cardNo})">
-        <img src="${c.cardUrl}" alt="${c.cardName}">
-        <div class="best-badge">Best</div> <!-- 추가된 부분 -->
-        <div class="popular-title">${c.cardName}</div>
- 
+          <img src="${c.cardUrl}" alt="${c.cardName}">
+          <div class="best-badge">Best</div>
+          <div class="popular-title">${c.cardName}</div>
         </div>
-      </div>`).join('');
-    $('.popular-slider').slick({
-    	  slidesToShow: 3,
-    	  slidesToScroll: 1,
-    	  autoplay: true,
-    	  autoplaySpeed: 2000,
-    	  arrows: true,
-    	  dots: false,
-    	  infinite: true,
-    	  draggable: false,
-    	  swipe: false,
-    	  prevArrow: '<button class="slick-prev">&#10094;</button>',
-    	  nextArrow: '<button class="slick-next">&#10095;</button>'
-    	});
+      </div>
+    `).join('');
+
+    // 다시 슬릭 초기화
+    $(slider).slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      draggable: false,
+      swipe: false,
+      prevArrow: '<button class="slick-prev">&#10094;</button>',
+      nextArrow: '<button class="slick-next">&#10095;</button>'
+    });
   });
+
 </script>
 
 <script>
