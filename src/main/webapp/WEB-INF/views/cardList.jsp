@@ -63,7 +63,7 @@
   margin-bottom: 10px;
 }
 .popular-title {
-  font-weight: bold;
+  font-weight;
   font-size: 16px;
   margin: 5px 0;
 }
@@ -840,5 +840,11 @@ function closeCompareModal(){
   document.getElementById('modalOverlay').style.display='none';
 }
 </script>
+
+<script>
+   let remainingSeconds = ${remainingSeconds};
+</script>
+
+<script src="/js/sessionTime.js"></script>
 </body>
 </html>

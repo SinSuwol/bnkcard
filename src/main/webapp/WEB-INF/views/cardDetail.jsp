@@ -51,7 +51,7 @@
 
     .info h2 {
       font-size: 32px;
-      font-weight: 700;
+      font-weight: 500;
       color: #111;
       margin: 0;
     }
@@ -305,6 +305,11 @@
     el.classList.toggle("active");
   }
 </script>
+
+<script>
+   let remainingSeconds = ${remainingSeconds};
+</script>
+<script src="/js/sessionTime.js"></script>
 
 </body>
 </html>
