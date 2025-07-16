@@ -14,3 +14,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		<div class="header-close-btn"></div>
 		<div class="header-open-btn"></div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.admin-header a').forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.style.color = 'red';
+    }
+  });
+});
+</script>
+
+
