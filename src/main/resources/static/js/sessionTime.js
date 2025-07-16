@@ -1,7 +1,11 @@
 function formatTime(sec){
 	const min = Math.floor(sec / 60);
-	const secStr = sec % 60 < 10 ? "0" + (sec % 60) : (sec % 60);
-	return min + ":" + secStr;
+	const secVal = sec % 60;
+
+	const minStr = min < 10 ? "0" + min : "" + min;
+	const secStr = secVal < 10 ? "0" + secVal : "" + secVal;
+
+	return minStr + ":" + secStr;
 }
 
 function updateTimer(){
@@ -10,7 +14,7 @@ function updateTimer(){
 		timer.textContent = "00:00";
 		clearInterval(timerInterval);
 		
-		location.href = "/logout";
+		location.href = "/logout?expired=true";
 		return;
 	}
 	timer.textContent = formatTime(remainingSeconds);

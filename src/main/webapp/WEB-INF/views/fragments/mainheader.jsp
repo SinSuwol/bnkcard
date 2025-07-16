@@ -6,7 +6,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		<div class="top-bar">
 			<nav>
 				<ul>
-					<li>${loginUser.name}</li>
+					<li>
+						<a href="/user/mypage">${loginUser.name}</a>
+					</li>
 					<li>
 						<span id="session-timer"></span>
 						<button id="extend-btn" onclick="extend()">연장</button>

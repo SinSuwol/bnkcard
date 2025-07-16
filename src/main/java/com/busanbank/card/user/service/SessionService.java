@@ -21,7 +21,7 @@ public class SessionService {
             return null;
         }
 
-        session.setMaxInactiveInterval(1200); // 20분
+        session.setMaxInactiveInterval(30); // 20분
         int remainingSeconds = session.getMaxInactiveInterval();
         model.addAttribute("remainingSeconds", remainingSeconds);
 

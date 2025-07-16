@@ -179,7 +179,7 @@ input::placeholder {
 			</tr>
 			<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" name="passwordCheck" id="passwordCheck" oninput="checkPasswordMatch()"><span> ※ 비밀번호 재입력</span></td>
+				<td><input type="password" name="passwordCheck" id="passwordCheck" oninput="checkPasswordMatch()" onfocus="blockIfInvalidPassword()"><span> ※ 비밀번호 재입력</span></td>
 			</tr>
 			<tr>
 				<th></th>
@@ -278,6 +278,8 @@ input::placeholder {
 		const password = document.getElementById("password");
 		const pwErrorMsg = document.getElementById("pwErrorMsg");
 		
+		console.log("validatePassword 실행됨:", password.value);
+		
 		if(!password.value.trim()){
 			pwErrorMsg.textContent = "";
 			return;
@@ -285,15 +287,27 @@ input::placeholder {
 		if(!isPasswordValid(password.value)){
 			pwErrorMsg.textContent = "비밀번호는 영문자, 숫자, 특수문자를 포함한 8~12자리여야 합니다.";
 		    pwErrorMsg.style.color = "red";
-		    password.focus();
+		    //password.focus();
 		}
 		else{
 			pwErrorMsg.textContent = "사용가능한 비밀번호입니다.";	
 			pwErrorMsg.style.color = "green";
 		}
 		
-		checkPasswordMatch();
 	}
+	function blockIfInvalidPassword() {
+		const password = document.getElementById("password");
+		const passwordCheck = document.getElementById("passwordCheck");
+		const pwErrorMsg = document.getElementById("pwErrorMsg");
+
+		if (!isPasswordValid(password.value)) {
+			pwErrorMsg.textContent = "비밀번호 양식이 올바르지 않습니다. 비밀번호를 먼저 정확히 입력해주세요.";
+		    pwErrorMsg.style.color = "red";
+			//alert("비밀번호 양식이 올바르지 않습니다. 비밀번호를 먼저 정확히 입력해주세요.");
+			password.focus();
+		}
+	}
+	
 	//비밀번호 확인
 	function checkPasswordMatch(){
 		const password = document.getElementById("password");
