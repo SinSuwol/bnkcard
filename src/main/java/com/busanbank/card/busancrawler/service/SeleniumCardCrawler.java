@@ -42,7 +42,7 @@ public class SeleniumCardCrawler {
             StringBuilder result = new StringBuilder();
 //            result.append("총 카드 수: ").append(cardItems.size()).append("\n\n");
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 try {
                     // 카드 목록이 페이지 이동 시 사라지므로, 매번 새로 가져와야 함
                     cardItems = driver.findElements(By.cssSelector(".card_thumb_list_wrap li"));
@@ -96,7 +96,9 @@ public class SeleniumCardCrawler {
             }
             
             if (!cardList.isEmpty()) {
-                scrapCardMapper.insertCards(cardList);
+                for (ScrapCardDto  card : cardList) {
+                    scrapCardMapper.insertCard(card);  // 단건 insert
+                }
                 result.append("\n").append(cardList.size()).append("건 DB 저장 완료됨.");
                 System.out.println("db저장 완료");
             }
