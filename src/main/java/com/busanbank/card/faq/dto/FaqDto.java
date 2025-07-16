@@ -20,5 +20,5 @@ public class FaqDto {
 
     private String writer;
     private String admin;
-    private String cattegory;
+    private String cattegory ;
 }
