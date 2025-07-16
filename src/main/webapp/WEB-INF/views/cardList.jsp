@@ -507,9 +507,9 @@ fetch('/api/cards')
     slider.innerHTML = sorted.map(c => `
       <div>
         <div class="popular-card" onclick="goDetail(${c.cardNo})">
-          <img src="${c.cardUrl}" alt="${c.cardName}">
-          <div class="popular-sub">인기 카드</div>
-          <div class="popular-title">${c.cardName}</div>
+        <div class="best-badge">Best</div> <!-- 추가된 부분 -->
+        <img src="${c.cardUrl}" alt="${c.cardName}">
+        <div class="popular-title">${c.cardName}</div>
  
         </div>
       </div>`).join('');
