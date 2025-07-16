@@ -56,7 +56,14 @@ public class UserSecurityConfig {
 		
 		http.logout(logout -> logout
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/user/login?logout=true")
+				.logoutSuccessHandler((request, response, authentication) -> {
+				    String expired = request.getParameter("expired");
+				    if (expired != null) {
+				        response.sendRedirect("/user/login?expired=true");
+				    } else {
+				        response.sendRedirect("/user/login?logout=true");
+				    }
+				})
 				.invalidateHttpSession(true)
 				);
 

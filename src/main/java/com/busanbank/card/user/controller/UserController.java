@@ -45,7 +45,7 @@ public class UserController {
 		}
 		
 		//로그아웃 버튼 눌렀을 때
-		if(logout != null) {
+		if(logout != null && expired == null) {
 			model.addAttribute("msg", "로그아웃 되었습니다.");
 		}
 		

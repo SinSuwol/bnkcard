@@ -11,7 +11,7 @@
 	rel="stylesheet">
 <style>
 body {
-	font-family: 'Noto Sans KR', sans-serif;
+	font-family: "맑은 고딕", sans-serif;
 	/*background-color: #f5f7fa;*/
 	margin: 0;
 	padding: 0;
@@ -19,9 +19,9 @@ body {
 
 /* 전체 wrapper */
 .container {
-	max-width: 960px;
+	max-width: 800px;
 	margin: 0 auto;
-	padding: 130px 30px 50px; /* header 공간 포함 */
+	padding: 90px 30px 60px; /* header 공간 포함 */
 }
 
 /* 제목 및 부제목 */
@@ -36,6 +36,13 @@ body {
 	font-size: 14px;
 	color: #777;
 	margin-bottom: 30px;
+}
+
+.divider-section {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 /* 유형 선택 카드들 */
@@ -100,37 +107,38 @@ body {
 	<div class="container">
 		<h2 class="page-title">회원가입</h2>
 		<p class="page-subtitle">회원유형을 선택해 주세요</p>
-
-		<div class="member-type-container">
-			<form action="/regist/terms" method="POST">
-				<input type="hidden" name="role" value="ROLE_PERSON">
-				<button type="submit" class="member-type">
-					<div class="title">일반회원(개인)</div>
-					<div class="desc">
-						영업점 방문 없이 홈페이지에서<br>간편하게 신청 가능합니다
-					</div>
-				</button>
-			</form>
-			
-			<form action="/regist/terms" method="POST">
-				<input type="hidden" name="role" value="ROLE_OWNER">
-				<button type="submit" class="member-type">
-					<div class="title">개인사업자</div>
-					<div class="desc">
-						사업체를 운영하는 개인 고객을 위한<br>전용 서비스입니다
-					</div>
-				</button>
-			</form>
-			
-			<form action="/regist/terms" method="POST">
-				<input type="hidden" name="role" value="ROLE_CORP">
-				<button type="submit" class="member-type">
-					<div class="title">법인</div>
-					<div class="desc">
-						법인 사업체를 위한<br>신뢰도 높은 금융 솔루션 제공
-					</div>
-				</button>
-			</form>
+		<div class="divider-section">
+			<div class="member-type-container">
+				<form action="/regist/terms" method="POST">
+					<input type="hidden" name="role" value="ROLE_PERSON">
+					<button type="submit" class="member-type">
+						<div class="title">일반회원(개인)</div>
+						<div class="desc">
+							영업점 방문 없이 홈페이지에서<br>간편하게 신청 가능합니다
+						</div>
+					</button>
+				</form>
+				
+				<form action="/regist/terms" method="POST">
+					<input type="hidden" name="role" value="ROLE_OWNER">
+					<button type="submit" class="member-type">
+						<div class="title">개인사업자</div>
+						<div class="desc">
+							사업체를 운영하는 개인 고객을 위한<br>전용 서비스입니다
+						</div>
+					</button>
+				</form>
+				
+				<form action="/regist/terms" method="POST">
+					<input type="hidden" name="role" value="ROLE_CORP">
+					<button type="submit" class="member-type">
+						<div class="title">법인</div>
+						<div class="desc">
+							법인 사업체를 위한<br>신뢰도 높은 금융 솔루션 제공
+						</div>
+					</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	<script src="/js/header2.js"></script>
