@@ -168,7 +168,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
-	justify-content: center
+	justify-content: space-around;
 }
 
 #modalContent::after {
@@ -507,8 +507,8 @@ fetch('/api/cards')
     slider.innerHTML = sorted.map(c => `
       <div>
         <div class="popular-card" onclick="goDetail(${c.cardNo})">
-        <div class="best-badge">Best</div> <!-- 추가된 부분 -->
         <img src="${c.cardUrl}" alt="${c.cardName}">
+        <div class="best-badge">Best</div> <!-- 추가된 부분 -->
         <div class="popular-title">${c.cardName}</div>
  
         </div>

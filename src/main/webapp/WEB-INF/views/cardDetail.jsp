@@ -34,6 +34,9 @@
     }
 
     .card-img {
+	  rotate: 90deg;
+	  margin-bottom: 50px;
+	  margin-top: 50px;
       width: 260px;
       min-width: 260px;
       max-width: 260px;
