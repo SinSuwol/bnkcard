@@ -47,6 +47,8 @@
       S_SERVICE    AS sService
   FROM CARD
   <where>
+  CARD_STATUS = '게시중'
+  
   <if test="keyword != null and keyword != ''">
   (
     LOWER(CARD_NAME) LIKE '%' || LOWER(#{keyword}) || '%'
