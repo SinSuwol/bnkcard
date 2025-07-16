@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanbank.card.busancrawler.mapper.ScrapCardMapper">
+
+
+    <insert id="insertCards">
+        INSERT ALL
+        <foreach collection="cards" item="card">
+            INTO SCRAP_CARD (
+                SC_CARD_NO, SC_CARD_URL, SC_CARD_SLOGAN,
+                SC_CARD_NAME, SC_ANNUAL_FEE, SC_S_SERVICE, SC_DATE
+            ) VALUES (
+                SCRAP_CARD_SEQ.NEXTVAL,
+                #{card.scCardUrl},
+                #{card.scCardSlogan},
+                #{card.scCardName},
+                #{card.scAnnualFee},
+                #{card.scSService},
+                SYSDATE
+            )
+        </foreach>
+        SELECT * FROM dual
+    </insert>
+
+</mapper>
