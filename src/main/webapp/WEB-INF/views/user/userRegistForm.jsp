@@ -19,7 +19,7 @@ body {
 .content-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    padding: 120px 30px 60px;
+    padding: 90px 30px 60px;
 }
 
 .page-title {
@@ -35,6 +35,13 @@ body {
     color: #777;
     margin-bottom: 30px;
     text-align: left;
+}
+
+.divider-section {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 form {
@@ -144,6 +151,7 @@ input::placeholder {
     font-size: 13px;
     color: #aaa;
 }
+
 </style>
 </head>
 <body>
@@ -154,61 +162,63 @@ input::placeholder {
 	<h2 class="page-title">회원가입</h2>
 	<p class="sub-title">정보를 입력해 주세요.</p>
 
-	<form id="signupForm" action="/regist/regist" method="post">
-		<table>
-			<tr>
-				<th>성명(실명)</th>
-				<td><input type="text" name="name" id="name"></td>
-			</tr>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<div class="id-check-wrapper">
-						<input type="text" name="username" id="username" onchange="resetUsernameCheck()" oninput="resetUsernameCheck()">
-						<button type="button" id="checkBtn" onclick="checkUsername()">중복확인</button>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><div id="idErrorMsg"></div></td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td><input type="password" name="password" id="password" oninput="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
-			</tr>
-			<tr>
-				<th>비밀번호 확인</th>
-				<td><input type="password" name="passwordCheck" id="passwordCheck" oninput="checkPasswordMatch()" onfocus="blockIfInvalidPassword()"><span> ※ 비밀번호 재입력</span></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><div id="pwErrorMsg"></div></td>
-			</tr>
-			<tr>
-				<th>주민번호</th>
-				<td><input type="text" name="rrnFront" id="rrnFront" maxlength="6">
-				 - <input type="password" name="rrnBack" id="rrnBack" maxlength="7"></td>
-			</tr>
-			<tr>
-				<th>주소</th>
-				<td>
-					<div class="zipcode-wrapper">
-						<input type="text" name="zipCode" id="zipCode" readonly>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-					</div>
-					<input type="text" name="address1" id="address1" readonly><br>
-					<input type="text" name="extraAddress" id="extraAddress" readonly><br>
-					<input type="text" name="address2" id="address2" placeholder="상세주소">
-				</td>
-			</tr>
-		</table>
-		<input type="hidden" name="role" value="${role}">
-		<div class="button-group">
-			<button type="button" onclick="validateAndSubmit()">등록</button>
-			<button type="button" onclick="cancelRegist()">취소</button>
-		</div>
-	</form>
+	<div class="divider-section">
+		<form id="signupForm" action="/regist/regist" method="post">
+			<table>
+				<tr>
+					<th>성명(실명)</th>
+					<td><input type="text" name="name" id="name"></td>
+				</tr>
+				<tr>
+					<th>아이디</th>
+					<td>
+						<div class="id-check-wrapper">
+							<input type="text" name="username" id="username" onchange="resetUsernameCheck()" oninput="resetUsernameCheck()">
+							<button type="button" id="checkBtn" onclick="checkUsername()">중복확인</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><div id="idErrorMsg"></div></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="password" name="password" id="password" oninput="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td><input type="password" name="passwordCheck" id="passwordCheck" oninput="checkPasswordMatch()" onfocus="blockIfInvalidPassword()"><span> ※ 비밀번호 재입력</span></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><div id="pwErrorMsg"></div></td>
+				</tr>
+				<tr>
+					<th>주민번호</th>
+					<td><input type="text" name="rrnFront" id="rrnFront" maxlength="6">
+					 - <input type="password" name="rrnBack" id="rrnBack" maxlength="7"></td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td>
+						<div class="zipcode-wrapper">
+							<input type="text" name="zipCode" id="zipCode" readonly>
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						</div>
+						<input type="text" name="address1" id="address1" readonly><br>
+						<input type="text" name="extraAddress" id="extraAddress" readonly><br>
+						<input type="text" name="address2" id="address2" placeholder="상세주소">
+					</td>
+				</tr>
+			</table>
+			<input type="hidden" name="role" value="${role}">
+			<div class="button-group">
+				<button type="button" onclick="validateAndSubmit()">등록</button>
+				<button type="button" onclick="cancelRegist()">취소</button>
+			</div>
+		</form>
+	</div>
 </div>
 <c:if test="${not empty msg}">
     <script>

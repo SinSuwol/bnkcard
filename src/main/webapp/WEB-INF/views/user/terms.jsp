@@ -16,7 +16,7 @@ body {
 .content-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    padding: 120px 30px 60px;
+    padding: 90px 30px 60px;
 }
 .page-title {
     font-size: 20px;
@@ -30,9 +30,10 @@ body {
     margin-bottom: 30px;
 }
 .terms-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     border-top: 1px solid #ddd;
     padding-top: 20px;
+    margin-top: 20px;
 }
 .terms-section+.terms-section {
     border-top: none;
@@ -91,6 +92,10 @@ body {
 .button-group button:last-child {
     background-color: #f2f2f2;
     color: #333;
+}
+body, html {
+    height: 100%;
+    overflow-y: auto; /* 또는 scroll */
 }
 </style>
 </head>
