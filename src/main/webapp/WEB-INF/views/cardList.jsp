@@ -175,7 +175,8 @@
 	content:"";
 	position:absolute;
 	width: 1px;
-	height: 404px;
+	margin-top: 20px;
+	height: 604px;
 	background-color: #ededed;
 }
 
@@ -392,6 +393,21 @@
   margin-top: 10px;
 }
 
+.card-summary b {
+  
+}
+
+.card-icons {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 30px;
+    margin-top: 8px;
+    max-width: 200px;
+    align-content: space-around;
+    flex-direction: column-reverse;
+}
+
 
 </style>
 </head>
@@ -428,7 +444,9 @@
 	<!-- 카드 그리드 -->
 	<div id="cardGrid"></div>
 	<div id="loadMoreWrap">
-		<button onclick="loadMore()">더보기 ▼</button>
+	  <button onclick="loadMore()" style="background:none; border:none; cursor:pointer;">
+	    <img src="/image/benifits/more_arrow.png" alt="더보기" style="width:24px; height:auto; border: 1px solid black; border-radius: 50%; padding:10px;">
+	  </button>
 	</div>
 	
 	
@@ -793,10 +811,11 @@ function openCompare() {
         div.innerHTML = `
           <div class="card-image-group">${imageHtml}</div>
           <div class="card-name">${d.cardName}</div>
-          <div class="card-fee"><b>연회비:</b> ${d.annualFee?.toLocaleString() || 0}원</div>
           <div class="card-tags">${tagHtml}</div>
-          <div class="card-icons">${iconHtml}</div>
+          <div class="card-fee"><b>연회비:</b> ${d.annualFee?.toLocaleString() || 0}원</div>
           <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
+          <div class="card-explain">혜택 특성</div>
+          <div class="card-icons">${iconHtml}</div>
         `;
         wrap.appendChild(div);
       });
