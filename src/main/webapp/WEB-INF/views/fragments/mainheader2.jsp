@@ -26,7 +26,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<li><a href="/cardList">카드</a></li>
 			<li><a href="/introduce">은행소개</a></li>
 			<li><a href="/faq/list">고객센터</a></li>
-			<li><a href="/admin" id="load-admin">관리자 페이지로</a> <br></li>
 			<li><a href="/admin/adminLoginForm" >관리자 로그인 페이지로</a></li>
 		</ul>
 		<div class="login-box">
@@ -35,7 +34,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 					<a href="/logout">로그아웃</a>
 				</c:when>
 				<c:otherwise>
-					<a href="/user/login">로그인</a>
+					<a class="header-login-btn" href="/user/login">로그인</a>
 				</c:otherwise>
 			</c:choose>
 		</div>

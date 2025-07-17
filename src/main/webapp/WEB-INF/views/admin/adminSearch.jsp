@@ -16,19 +16,46 @@
 }
 
 /* ===== 제목 ===== */
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 40px;
+h2 {
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 40px;
+	width: fit-content;
 }
 
-h2 {
+h3 {
   margin-top: 48px;
   margin-bottom: 12px;
   color: #2c3e50;
   font-size: 20px;
   font-weight: 600;
 }
+
+/* 제목과 버튼/날짜를 같은 줄에 정렬 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  margin-bottom: 12px;
+}
+
+/* 제목 자체 스타일은 기존 유지 */
+.section-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 날짜 + 버튼 그룹: 한 줄로 붙이고 오른쪽 끝 정렬 */
+.date-button-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 요소 간 간격 */
+  margin-left: auto; /* 좌측 공간을 밀어서 오른쪽 끝으로 이동 */
+}
+
 
 /* ===== 링크 ===== */
 a {
@@ -122,12 +149,14 @@ tbody tr:hover {
 <body>
 <jsp:include page="../fragments/header.jsp"></jsp:include>
 <div class="container">
-  <h1>검색어 관리 대시보드</h1>
+  <h2>검색어 관리 대시보드</h2>
 
 	<a href="/admin/Statistics">통계</a>
 	<!-- 추천어 관리 -->
-	<h2>추천어</h2>
-	<button onclick="addRecommended()">[+] 추천어 등록</button>
+	<div class="section-header">
+		<h3>추천어</h3>
+		<button onclick="addRecommended()">[+] 추천어 등록</button>
+	</div>
 	<table id="recommended-table">
 		<thead>
 			<tr>
@@ -141,8 +170,10 @@ tbody tr:hover {
 	</table>
 
 	<!-- 금칙어 관리 -->
-	<h2>금칙어</h2>
-	<button onclick="addProhibited()">[+] 금칙어 등록</button>
+	<div class="section-header">
+		<h3>금칙어</h3>
+		<button onclick="addProhibited()">[+] 금칙어 등록</button>
+	</div>
 	<table id="prohibited-table">
 		<thead>
 			<tr>
@@ -156,7 +187,7 @@ tbody tr:hover {
 	</table>
 
 	<!-- 인기 검색어 -->
-	<h2>인기 검색어 TOP10</h2>
+	<h3>인기 검색어 TOP10</h3>
 	<table id="top-table">
 		<thead>
 			<tr>
@@ -168,10 +199,14 @@ tbody tr:hover {
 	</table>
 
 	<!-- 기간별 로그 조회 -->
-	<h2>검색어 로그 조회</h2>
-	<input type="date" id="fromDate"> ~
-	<input type="date" id="toDate">
-	<button onclick="loadLogs()">조회</button>
+	<div class="section-header">
+		<h3>검색어 로그 조회</h3>
+		<div class="date-button-group">
+			<input type="date" id="fromDate"> ~
+			<input type="date" id="toDate">
+			<button onclick="loadLogs()">조회</button>
+		</div>	
+	</div>
 
   <table id="logs-table">
     <thead>

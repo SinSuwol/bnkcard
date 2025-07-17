@@ -1,55 +1,161 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-    <title>상품 인가 목록</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+<title>상품 인가 목록</title>
+<style>
+h2 {
+	text-align: center;
+	margin: 40px auto 30px auto;
+	width: fit-content;
+}
+
+.card-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  color: #212529;
+  table-layout: fixed;
+}
+
+/* 테이블 헤더 */
+.card-table thead {
+  background-color: #f1f3f5;
+}
+
+.card-table thead th {
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+  color: #212529;
+  border-right: 1px solid #dee2e6;
+}
+
+/* 마지막 헤더 셀은 오른쪽 테두리 제거 */
+.card-table thead th:last-child {
+  border-right: none;
+}
+
+/* 테이블 바디 */
+.card-table tbody td {
+  padding: 14px;
+  text-align: center;
+  background-color: #ffffff;
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  word-wrap: break-word;
+}
+
+/* 마지막 바디 셀 오른쪽 선 제거 */
+.card-table tbody td:last-child {
+  border-right: none;
+}
+
+/* 마지막 행 둥근 테두리 처리 */
+.card-table thead tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+}
+.card-table thead tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+.card-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+.card-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+/* 호버 효과 (선택)
+.card-table tbody tr:hover td {
+  background-color: #f1f3f5;
+} */
+
+#noDataMessage {
+	text-align: center;
+	color: #999;
+	font-size: 1.1em;
+}
+
+#pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+#pagination button {
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	color: #333;
+	padding: 6px 12px;
+	margin: 0 3px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+#pagination button:hover:not(:disabled) {
+	background-color: #007bff;
+	color: white;
+	border-color: #007bff;
+}
+
+#pagination button:disabled {
+	background-color: #e9ecef;
+	color: #999;
+	cursor: default;
+}
+
+.admin-content-wrapper {
+	display: flex;
+	justify-content: center;
+	padding: 0 200px; /* ← 사이드바 여백과 같은 좌우 여백 */
+	box-sizing: border-box;
+}
+</style>
+
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
-<jsp:include page="../fragments/header.jsp"></jsp:include>
-<h2>상품 인가 목록</h2>
+	<jsp:include page="../fragments/header.jsp"></jsp:include>
 
-<table id="permissionTable">
-    <thead>
-    <tr>
-        <th>번호</th>
-        <th>카드 번호</th>
-        <th>상태</th>
-        <th>이유</th>
-        <th>요청한 담당관리자</th>
-        <th>결정한 상위 관리자</th>
-        <th>요청 날짜</th>
-        <th>인가 날짜</th>
-        <th>인가 내용</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 데이터는 fetch로 채워짐 -->
-    </tbody>
-</table>
+	<div class="admin-content-wrapper">
+		<div class="inner">
+			<h2>상품 인가 목록</h2>
 
-<div id="noDataMessage" style="display: none; margin-top: 10px;">상품 인가 목록이 없습니다.</div>
+			<table id="permissionTable" class="card-table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>카드 번호</th>
+						<th>상태</th>
+						<th>이유</th>
+						<th>요청한 담당관리자</th>
+						<th>결정한 상위 관리자</th>
+						<th>요청 날짜</th>
+						<th>인가 날짜</th>
+						<th>인가 내용</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 데이터는 fetch로 채워짐 -->
+				</tbody>
+			</table>
 
-<div id="pagination" style="margin-top: 10px; display: none;">
-    <button id="prevPage">이전</button>
-    <span id="pageInfo"></span>
-    <button id="nextPage">다음</button>
-</div>
+			<div id="noDataMessage" style="display: none; margin-top: 10px;">상품
+				인가 목록이 없습니다.</div>
 
-<script src="/js/adminHeader.js"></script>
-<script>
+			<div id="pagination" style="margin-top: 10px; display: none;">
+				<button id="prevPage">이전</button>
+				<span id="pageInfo"></span>
+				<button id="nextPage">다음</button>
+			</div>
+		</div>
+	</div>
+	<script src="/js/adminHeader.js"></script>
+	<script>
 	document.addEventListener('DOMContentLoaded', function() {
     	const tbody = document.querySelector('#permissionTable tbody');
         const thead = document.querySelector('#permissionTable thead');

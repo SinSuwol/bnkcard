@@ -14,17 +14,14 @@
       color: #333;
       box-sizing: border-box;
     }
-
     *, *::before, *::after {
       box-sizing: inherit;
     }
-
     .wrap {
       width: 100%;
       max-width: 1000px;
       margin: 0px auto;
     }
-
     .top {
       display: flex;
       flex-wrap: wrap;
@@ -32,78 +29,65 @@
       padding: 40px 20px 20px;
       align-items: flex-start;
     }
-
     .card-img {
-	  rotate: 90deg;
-	  margin-bottom: 50px;
-	  margin-top: 50px;
+      margin-left: 50px;
+      rotate: 90deg;
+      margin-bottom: 50px;
+      margin-top: 50px;
       width: 260px;
       min-width: 260px;
       max-width: 260px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
     .info {
       flex: 1 1 0;
       min-width: 0;
     }
-
     .info h2 {
       font-size: 32px;
       font-weight: 500;
       color: #111;
       margin: 0;
     }
-
     .info p {
       font-size: 18px;
       color: #555;
       margin: 14px 0;
     }
-
     .fee-box {
-      margin-top: 20px;
+      margin-top: 50px;
       display: flex;
       gap: 20px;
     }
-
     .fee-line {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-
     .fee-line img {
       width: 24px;
     }
-
     .fee-line span {
       font-size: 16px;
       font-weight: 500;
     }
-
     .summary-benefit {
       display: flex;
       gap: 12px;
       margin-top: 20px;
       flex-wrap: wrap;
     }
-
     .benefit-card {
-      background: WHITE;
-	  padding: 10px 14px;
-	  border-radius: 20px;
-	  font-size: 14px;
-	  font-weight: 500;
-	  color: #bf2c2c;
-	  border: 1px solid #bf2c2c;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #bf2c2c;
+      border: 1px solid #bf2c2c;
     }
-
-    .accordion-container {
-      padding: 20px;
-    }
-
+    
     .accordion {
       background: #f8f9fb;
       border: 1px solid #dcdfe6;
@@ -112,11 +96,9 @@
       margin-bottom: 14px;
       cursor: pointer;
     }
-
     .accordion:hover {
       background: #edf0f6;
     }
-
     .accordion h4 {
       margin: 0;
       font-size: 17px;
@@ -126,23 +108,19 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .accordion p {
-      display: none;
-      margin-top: 12px;
-      font-size: 15px;
-      color: #444;
-      line-height: 1.6;
-    }
-
-    .accordion.active p {
-      display: block;
-    }
-
+	  display: none;
+	  margin-top: 12px;
+	  font-size: 15px;
+	  color: #444;
+	  line-height: 1.6;
+	}
+	.accordion.active p {
+	  display: block;
+	}
     .section {
       padding: 30px 20px;
     }
-
     .section h3 {
       margin-bottom: 16px;
       font-size: 18px;
@@ -151,7 +129,6 @@
       border-left: 4px solid #002e5b;
       padding-left: 10px;
     }
-
     .section pre {
       white-space: pre-wrap;
       font-family: 'Noto Sans KR', sans-serif;
@@ -186,16 +163,18 @@
   <div class="accordion-container" id="accordionContainer"></div>
 
   <div class="section">
-    <h3>특화 서비스</h3>
+    <h3>혜택 부문</h3>
     <pre id="sService"></pre>
   </div>
 
   <div class="section">
-    <h3>유의사항</h3>
-    <pre id="notice"></pre>
-  </div>
+	  <h3>유의사항</h3>
+	  <div class="accordion" onclick="toggleNoticeAccordion(this)">
+	    <h4>전체 보기 <span>▼</span></h4>
+	    <p id="noticeFull"></p>
+	  </div>
+	</div>
 </div>
-
 
 <script src="/js/header2.js"></script>
 <script>
@@ -228,7 +207,6 @@
   function extractCategories(text, max = 5) {
     const found = new Set();
     const lowerText = text.toLowerCase();
-
     for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
       if (found.size >= max) break;
       for (const keyword of keywords) {
@@ -238,7 +216,6 @@
         }
       }
     }
-
     return Array.from(found);
   }
 
@@ -271,7 +248,10 @@
     document.getElementById('cardName').innerText = c.cardName;
     document.getElementById('cardSlogan').innerText = c.cardSlogan ?? '-';
     document.getElementById('sService').innerText = c.sService ?? '';
-    document.getElementById('notice').innerText = c.cardNotice ?? '';
+
+    // 유의사항 줄이기
+    const notice = c.cardNotice ?? '';
+    document.getElementById('noticeFull').innerHTML = notice.replace(/\n/g, "<br>");
 
     const brand = (c.cardBrand || '').toUpperCase();
     const fee = (c.annualFee ?? 0).toLocaleString() + '원';
@@ -284,24 +264,27 @@
   }
 
   function renderCategories(text) {
-	  const categories = extractCategories(text, 5);
-	  const html = categories.map(c => `<div class="benefit-card">#${c}</div>`).join('');
-	  document.getElementById("summaryBenefit").innerHTML = html;
-	}
-
-
-  function renderBenefits(rawService) {
-    const accordionDiv = document.getElementById('accordionContainer');
-    const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
-    accordionDiv.innerHTML = `
-      <div class="accordion" onclick="toggleAccordion(this)">
-        <h4>기본 서비스 <span>▼</span></h4>
-        <p>${parts.map(p => p.replace(/\n/g, "<br>")).join("<br><br>")}</p>
-      </div>
-    `;
+    const categories = extractCategories(text, 5);
+    const html = categories.map(c => `<div class="benefit-card">#${c}</div>`).join('');
+    document.getElementById("summaryBenefit").innerHTML = html;
   }
 
+  function renderBenefits(rawService) {
+	  const accordionDiv = document.getElementById('accordionContainer');
+	  const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
+	  accordionDiv.innerHTML = `
+	    <div class="section">
+	      <h3>혜택 내용</h3>
+	      <pre>${parts.map(p => p.replace(/\n/g, "<br>")).join("<br><br>")}</pre>
+	    </div>
+	  `;
+	}
+
   function toggleAccordion(el) {
+    el.classList.toggle("active");
+  }
+
+  function toggleNoticeAccordion(el) {
     el.classList.toggle("active");
   }
 </script>
