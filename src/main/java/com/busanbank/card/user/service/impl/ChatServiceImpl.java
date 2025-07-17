@@ -27,6 +27,11 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Override
+    public Long findLatestOpenRoomId(Long memberNo) {
+        return chatMapper.selectLatestOpenRoomIdByMember(memberNo);
+    }
+
+    @Override
     public ChatRoomDto getRoom(Long roomId) {
         return chatMapper.selectChatRoom(roomId);
     }

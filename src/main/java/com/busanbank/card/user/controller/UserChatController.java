@@ -80,6 +80,8 @@ public class UserChatController {
     @PostMapping("/message")
     public ResponseEntity<Void> sendMessage(@RequestBody ChatMessageDto dto) {
         chatService.sendMessage(dto);
+        System.out.println("보내는 메시지 확인: " + dto);
+
         return ResponseEntity.ok().build();
     }
 
@@ -92,6 +94,20 @@ public class UserChatController {
         return ResponseEntity.ok(list);
     }
 
+
+    @GetMapping("/my-room")
+    public ResponseEntity<Long> getMyRoomId(HttpSession session) {
+        Integer memberNoInt = (Integer) session.getAttribute("loginMemberNo");
+        if (memberNoInt == null) {
+            return ResponseEntity.status(401).build();
+        }
+        Long memberNo = memberNoInt.longValue();
+        Long existing = chatService.findLatestOpenRoomId(memberNo);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(existing);
+    }
 
     /**
      * 상담사 연결 요청
