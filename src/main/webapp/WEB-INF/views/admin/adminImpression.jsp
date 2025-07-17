@@ -18,6 +18,7 @@
 </head>
 
 <body>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <h2>상품 인가 목록</h2>
 
 <table id="permissionTable">
@@ -39,6 +40,7 @@
     </tbody>
 </table>
 
+<script src="/js/adminHeader.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     fetch('/admin/permissions')

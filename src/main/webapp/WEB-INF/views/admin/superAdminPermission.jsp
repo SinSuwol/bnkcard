@@ -29,9 +29,10 @@
     margin-bottom: 5px;
 }
 </style>
+<link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
-
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <h1>카드 승인 검토</h1>
 
 <table border="1" cellpadding="6" width="100%">
@@ -112,6 +113,8 @@
   </div>
 </div>
 
+
+<script src="/js/adminHeader.js"></script>
 <script>
 let currentPage = 1;
 

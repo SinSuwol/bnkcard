@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
+
     #card-list , #card-list2{
         display: grid;
         grid-template-columns: repeat(4, 1fr); /* 4칸 */
@@ -67,6 +69,60 @@
     #editModal button ,#registerModal button{
         margin-right: 5px;
     }
+    
+/*이대영이 추가====================  */
+
+/* 상품 등록 버튼 (파랑) */
+button[onclick="openModal()"] {
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+
+  background-color: #3498db;
+  color: #fff;
+}
+
+button[onclick="openModal()"]:hover {
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+
+  background-color: #2980b9;
+}
+
+/* 카드 안 수정 버튼 (녹색) */
+.card button:first-of-type {
+  background-color: #27ae60;
+  color: #fff;
+  margin-right: 4px;
+}
+
+.card button:first-of-type:hover {
+  background-color: #1e874b;
+}
+
+/* 카드 안 삭제 버튼 (빨강) */
+.card button:last-of-type {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.card button:last-of-type:hover {
+  background-color: #c0392b;
+}
+
+/* 클릭 시 눌림 효과 */
+button:active {
+  transform: scale(0.96);
+}
+    
+    
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
