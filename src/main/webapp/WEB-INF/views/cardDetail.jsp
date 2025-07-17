@@ -163,7 +163,7 @@
   <div class="accordion-container" id="accordionContainer"></div>
 
   <div class="section">
-    <h3>특화 서비스</h3>
+    <h3>혜택 부문</h3>
     <pre id="sService"></pre>
   </div>
 
@@ -274,7 +274,7 @@
 	  const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
 	  accordionDiv.innerHTML = `
 	    <div class="section">
-	      <h3>기본 서비스</h3>
+	      <h3>혜택 내용</h3>
 	      <pre>${parts.map(p => p.replace(/\n/g, "<br>")).join("<br><br>")}</pre>
 	    </div>
 	  `;

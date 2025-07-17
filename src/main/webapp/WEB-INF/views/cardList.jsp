@@ -117,10 +117,11 @@
 #compareBox {
 	position: fixed;
 	right: 20px;
-	top: 100px;
-	width: 160px;
+	top: 200px;
+	width: 140px;
 	padding: 10px;
 	border: 1px solid #ccc;
+	border-radius: 20px;
 	background: #fff;
 	z-index: 1010;
 }
@@ -741,15 +742,47 @@ function toggleCompare(cb){
   renderCompareList();
 }
 
-function renderCompareList(){
-  const list=document.getElementById('compareList');list.innerHTML='';
-  JSON.parse(sessionStorage.getItem('compareCards')||'[]').forEach(c=>{
-    const li=document.createElement('li');
-    li.innerHTML=`<img src="${c.cardUrl}" style="width:60px"><br>${c.cardName}`;
-    list.appendChild(li);
-  });
-}
+function renderCompareList() {
+	  const list = document.getElementById('compareList');
+	  list.innerHTML = '';
+
+	  JSON.parse(sessionStorage.getItem('compareCards') || '[]').forEach(c => {
+	    const li = document.createElement('li');
+	    li.style.marginBottom = '10px';
+
+	    li.innerHTML = `
+	      <img src="${c.cardUrl}" style="width:80px; display:block; margin:0 auto 5px;">
+	      <div style="font-size:13px; margin-bottom:4px;">${c.cardName}</div>
+	      <button onclick="removeFromCompare('${c.cardNo}')" style="
+	        background: #ff4d4f;
+	        color: white;
+	        border: none;
+	        padding: 4px 8px;
+	        border-radius: 6px;
+	        font-size: 12px;
+	        cursor: pointer;
+	      ">제거</button>
+	    `;
+
+	    list.appendChild(li);
+	  });
+	}
+
 renderCompareList();
+
+function removeFromCompare(cardNo) {
+	  let box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+	  box = box.filter(c => c.cardNo !== cardNo);
+	  sessionStorage.setItem('compareCards', JSON.stringify(box));
+	  renderCompareList();
+
+	  // 체크박스 상태도 해제
+	  const checkbox = document.querySelector(
+	    `input[type="checkbox"][value="${cardNo}"]`
+	  );
+	  if (checkbox) checkbox.checked = false;
+	}
+
 
 const categoryToIcon = {
 		  "커피": "coffee",
@@ -833,6 +866,8 @@ function openCompare() {
       });
   });
 }
+
+
 
 
 function closeCompareModal(){
