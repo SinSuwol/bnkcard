@@ -116,7 +116,7 @@
 /* ---------- 비교함 ---------- */
 #compareBox {
 	position: fixed;
-	right: 20px;
+	right: 12px;
 	top: 200px;
 	width: 140px;
 	padding: 10px;
@@ -177,7 +177,7 @@
 	position:absolute;
 	width: 1px;
 	margin-top: 20px;
-	height: 604px;
+	height: 500px;
 	background-color: #ededed;
 }
 
