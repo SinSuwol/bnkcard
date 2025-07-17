@@ -6,28 +6,122 @@
 <title>검색어 관리 대시보드</title>
 <link rel="stylesheet" href="/css/adminstyle.css">
 <style>
-body {
-	font-family: sans-serif;
+/* ===== 전체 구조 ===== */
+
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-button {
-	margin: 0 2px;
-	padding: 4px 8px;
+/* ===== 제목 ===== */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 40px;
 }
 
+h2 {
+  margin-top: 48px;
+  margin-bottom: 12px;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ===== 링크 ===== */
+a {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ===== 버튼 ===== */
+.button-group {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+/* ===== 날짜 필터 ===== */
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+input[type="date"] {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ===== 테이블 ===== */
 table {
-	border-collapse: collapse;
-	margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 th, td {
-	border: 1px solid #ccc;
-	padding: 4px 8px;
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  text-align: center;
+  font-size: 14px;
 }
+
+thead {
+  background-color: #f1f3f5;
+}
+
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* ===== 페이지네이션 ===== */
+#log-pagination {
+  margin-top: 24px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+#log-pagination button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #495057;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#log-pagination button:hover {
+  background-color: #e9ecef;
+}
+
+#log-pagination button[style*="bold"] {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="../fragments/header.jsp"></jsp:include>
+<div class="container">
   <h1>검색어 관리 대시보드</h1>
 
 	<a href="/admin/Statistics">통계</a>
@@ -95,7 +189,7 @@ th, td {
   
   
 <div id="log-pagination" style="margin-top:10px;"></div>
-  
+  </div>
 <script src="/js/adminHeader.js"></script>
 <script>
 /* 오늘 날짜 기본값 */

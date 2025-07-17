@@ -5,29 +5,296 @@
 <meta charset="UTF-8">
 <title>카드 승인 검토</title>
 <style>
+/* ===== 글로벌 ===== */
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  background-color: #f5f7fa;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+/* ===== 테이블 스타일 ===== */
+table {
+  width: 50%;
+  margin: 0 auto; 
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+thead {
+  background-color: #f1f3f5;
+}
+
+thead th {
+  padding: 14px 12px;
+  font-size: 14px;
+  color: #495057;
+  border-bottom: 1px solid #dee2e6;
+}
+
+tbody td {
+  padding: 14px 12px;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* ===== 버튼 ===== */
+button {
+  color: black;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  background-color: #ced4da;
+  cursor: not-allowed;
+}
+
+/* ===== 페이지네이션 ===== */
+#pagination button {
+  background-color: #fff;
+  color: #495057;
+  border: 1px solid #ced4da;
+  padding: 6px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+#pagination button:hover {
+  background-color: #e9ecef;
+}
+
+#pagination button:disabled {
+  color: #adb5bd;
+  background-color: #f1f3f5;
+}
+
+/* ===== 모달 오버레이 ===== */
 #modalOverlay {
-    display: none;
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
-    z-index: 999;
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
 }
+
+/* ===== 모달 박스 ===== */
 .modalBox {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 560px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  max-height: 85%;
+}
+
+.modalBox h2 {
+  font-size: 18px;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+/* ===== 모달 내용 ===== */
+.modalBox p {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #212529;
+}
+
+.modalBox input,
+.modalBox textarea,
+.modalBox select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modalBox textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== 버튼 영역 ===== */
+#approveButtons,
+#updateButtons,
+#deleteButtons,
+#rejectSection {
+  margin-top: 20px;
+}
+
+#rejectSection h3 {
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+#rejectSection textarea {
+  margin-top: 8px;
+}
+
+/* ===== 반응형 개선 (선택 사항) ===== */
+@media (max-width: 600px) {
+  .modalBox {
+    width: 90%;
+    padding: 16px;
+  }
+
+  table thead {
     display: none;
-    position: fixed;
-    top: 10%;
-    width: 40%;
-    background: #fff;
-    padding: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    z-index: 1000;
-}
-#modalOriginal { left: 5%; }
-#modalTemp { right: 5%; }
-.modalBox input, .modalBox textarea {
+  }
+
+  table, table tbody, table tr, table td {
+    display: block;
     width: 100%;
-    margin-bottom: 5px;
+  }
+
+  table tr {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    padding: 10px;
+  }
+
+  table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+    color: #495057;
+    text-align: left;
+  }
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  thead {
+    display: none;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  tbody tr {
+    margin-bottom: 16px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #fff;
+    padding: 12px;
+  }
+
+  tbody td {
+    text-align: left;
+    padding: 8px 12px;
+    position: relative;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #495057;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* 모달 반응형 */
+  .modalBox {
+    width: 95%;
+    padding: 16px;
+    max-height: 90%;
+    top: 5%;
+  }
+
+  .modalBox h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .modalBox p {
+    margin-bottom: 10px;
+  }
+
+  .modalBox input,
+  .modalBox textarea,
+  .modalBox select {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+
+
+  #rejectSection h3 {
+    font-size: 14px;
+  }
+
+  #pagination button {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+}
+
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
