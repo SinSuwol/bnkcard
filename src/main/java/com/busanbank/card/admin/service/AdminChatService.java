@@ -15,5 +15,7 @@ public interface AdminChatService {
     void sendAdminMessage(ChatMessageDto dto);
     
     List<ChatMessageDto> getMessages(Long roomId);
+    
+ 
 
 }

@@ -37,6 +37,7 @@ public class AdminChatServiceImpl implements AdminChatService {
     @Override
     public void sendAdminMessage(ChatMessageDto dto) {
         adminChatMapper.insertAdminMessage(dto);
+        
 
         // WebSocket 전송
         messagingTemplate.convertAndSend("/topic/room/" + dto.getRoomId(), dto);

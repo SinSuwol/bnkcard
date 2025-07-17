@@ -6,17 +6,18 @@
 <mapper namespace="com.busanbank.card.admin.mapper.AdminChatMapper">
 
   <!-- 전체 방 목록 -->
-  <select id="selectAllRooms" resultType="com.busanbank.card.user.dto.ChatRoomDto">
-    SELECT
-      ROOM_ID as roomId,
-      MEMBER_NO as memberNo,
-      ADMIN_NO as adminNo,
-      UNREAD_COUNT as unreadCount,
-      CREATED_AT as createdAt,
-      CLOSED_AT as closedAt
-    FROM CHAT_ROOM
-    ORDER BY CREATED_AT DESC
-  </select>
+<select id="selectAllRooms" resultType="com.busanbank.card.user.dto.ChatRoomDto">
+  SELECT
+    ROOM_ID AS roomId,
+    MEMBER_NO AS memberNo,
+    ADMIN_NO AS adminNo,
+    UNREAD_COUNT AS unreadCount,
+    CREATED_AT AS createdAt,
+    CLOSED_AT AS closedAt,
+    LAST_MSG_AT AS lastMessageAt
+  FROM CHAT_ROOM
+  ORDER BY NVL(LAST_MSG_AT, CREATED_AT) DESC
+</select>
 
   <!-- 관리자 배정 -->
   <update id="assignAdmin">
@@ -58,5 +59,7 @@
   SET UNREAD_COUNT = 0
   WHERE ROOM_ID = #{roomId}
 </update>
+
+
 
 </mapper>

@@ -22,5 +22,8 @@ public interface AdminChatMapper {
     List<ChatMessageDto> selectMessages(@Param("roomId") Long roomId);
     
     void resetUnreadCount(@Param("roomId") Long roomId);
+    
+ // (선택) 최근 메시지 시간 갱신
+    void updateRoomLastMsgAt(@Param("roomId") Long roomId);
 
 }

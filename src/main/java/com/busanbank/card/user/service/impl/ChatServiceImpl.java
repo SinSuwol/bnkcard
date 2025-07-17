@@ -39,7 +39,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void sendMessage(ChatMessageDto dto) {
         chatMapper.insertChatMessage(dto);
-
+        chatMapper.updateRoomLastMsgAt(dto.getRoomId()); // ★ 추가
+        
         if ("USER".equals(dto.getSenderType())) {
             chatMapper.increaseUnreadCount(dto.getRoomId());
         }
