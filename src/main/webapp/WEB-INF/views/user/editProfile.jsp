@@ -8,128 +8,119 @@
 <title>개인 정보 수정</title>
 <link rel="stylesheet" href="/css/style.css">
 <style>
-/* 메인 컨텐츠 */
-.main-content {
-
-  width: 100%;
-  max-width: 600px;        /* 적당한 너비 지정 */
-  margin: 0 auto;          /* 가로 중앙 정렬 */
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  padding: 40px 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+body {
+    font-family: "맑은 고딕", sans-serif;
+    background-color: #fff;
+    color: #333;
 }
 
-/* 제목 */
-.main-content h1 {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #222;
+.content-wrapper {
+    max-width: 800px;
+    margin: 100px auto 0;
+    padding: 40px 30px 60px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* 구분선 */
-.main-content hr {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
+.content-wrapper h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.content-wrapper hr {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 30px;
 }
 
 /* 폼 테이블 */
 form#updateForm table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-form#updateForm th, form#updateForm td {
-  padding: 12px 10px;
-  text-align: left;
-  vertical-align: middle;
+form#updateForm th,
+form#updateForm td {
+    padding: 12px 10px;
+    text-align: left;
+    vertical-align: middle;
 }
 
 form#updateForm th {
-  width: 30%;
-  font-weight: 600;
-  color: #555;
-  background-color: #f7f7f7;
-  border-radius: 6px 0 0 6px;
+    width: 30%;
+    font-weight: 600;
+    color: #555;
+    background-color: #f7f7f7;
+    border-radius: 6px 0 0 6px;
 }
 
 form#updateForm td input[type="text"],
 form#updateForm td input[type="password"] {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
 form#updateForm td input[type="text"]:focus,
 form#updateForm td input[type="password"]:focus {
-  border-color: #0078d4;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0,120,212,0.4);
+    border-color: #c10c0c;
+    outline: none;
+    box-shadow: 0 0 5px rgba(193,12,12,0.3);
 }
 
-/* 설명 스팬 */
 form#updateForm td span {
-  font-size: 0.85rem;
-  color: #888;
-  margin-left: 8px;
+    font-size: 0.85rem;
+    color: #888;
+    margin-left: 8px;
 }
 
 /* 비밀번호 에러 메시지 */
 #pwErrorMsg {
-  color: red;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding-left: 10px;
-  margin-top: 4px;
-  min-height: 20px;
+    color: red;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding-left: 10px;
+    margin-top: 4px;
+    min-height: 20px;
 }
 
-/* 버튼들 */
-form#updateForm button {
-  background-color: #0078d4;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  margin-right: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form#updateForm button:hover {
-  background-color: #005a9e;
-}
-
-form#updateForm button[type="button"]:last-child {
-  background-color: #888;
-}
-
-form#updateForm button[type="button"]:last-child:hover {
-  background-color: #555;
-}
-
+/* 버튼 그룹 */
 .button-group {
-  display: flex;
-  justify-content: center;  /* 가로 가운데 정렬 */
-  gap: 12px;                /* 버튼 사이 간격 */
-  margin-top: 20px;         /* 버튼 위쪽 여백 (선택) */
+    text-align: center;
+    margin-top: 40px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 0 8px;
+}
+
+.button-group button:first-child {
+    background-color: #c10c0c;
+    color: white;
+}
+
+.button-group button:last-child {
+    background-color: #f2f2f2;
+    color: #333;
 }
 
 </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
-<div style="height: 150px;"></div> 
-<div class="main-content">
-	<h1>개인 정보 수정</h1>
+<!-- <div style="height: 150px;"></div> -->
+<div class="content-wrapper">
+	<h2>개인 정보 수정</h2>
 	<hr>
 	<form id="updateForm" action="/user/update" method="post">
 		<table>
