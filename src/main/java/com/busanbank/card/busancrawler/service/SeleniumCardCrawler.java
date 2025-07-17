@@ -42,7 +42,7 @@ public class SeleniumCardCrawler {
             StringBuilder result = new StringBuilder();
 //            result.append("총 카드 수: ").append(cardItems.size()).append("\n\n");
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 9; i++) {
                 try {
                     // 카드 목록이 페이지 이동 시 사라지므로, 매번 새로 가져와야 함
                     cardItems = driver.findElements(By.cssSelector(".card_thumb_list_wrap li"));
