@@ -17,8 +17,16 @@
         #{scCardName},
         #{scAnnualFee},
         #{scSService},
-        SYSDATE
+        #{scDate}
     )
 	</insert>
+	
+	<select id="getScrapList" resultType="com.busanbank.card.busancrawler.dto.ScrapCardDto">
+		SELECT * FROM SCRAP_CARD ORDER BY SC_CARD_NO
+	</select>
+	
+	<delete id="deleteAllCards">
+    	DELETE FROM scrap_card
+	</delete>
 
 </mapper>
