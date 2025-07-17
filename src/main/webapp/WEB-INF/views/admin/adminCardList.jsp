@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 상품 목록 페이지</title>
 <style>
 
 
@@ -83,6 +83,8 @@ button[onclick="openModal()"] {
 
   background-color: #3498db;
   color: #fff;
+  
+  margin-bottom: 12px; /* 추가 */
 }
 
 button[onclick="openModal()"]:hover {
@@ -122,7 +124,29 @@ button:active {
   transform: scale(0.96);
 }
     
-    
+/* 검색창 스타일 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+#searchInput {
+    width: 240px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#searchInput:focus {
+    border-color: #c10c0c; /* CGV/부산은행 스타일 포인트 색상 */
+    box-shadow: 0 0 5px rgba(193, 12, 12, 0.3);
+}
+
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
@@ -158,6 +182,12 @@ button:active {
       <button type="button" id="closeModal">닫기</button>
     </div>
   </form>
+</div>
+
+<!-- 검색창 -->
+<div class="search-container">
+	<input type="text" id="searchInput" placeholder="카드명 검색">
+	<button id="searchBtn">검색</button>
 </div>
 
 <!-- ============================================================= -->
@@ -384,6 +414,35 @@ button:active {
    });
  });
     
+	//검색
+	document.getElementById('searchInput').addEventListener('input', function() {
+	    const query = this.value.trim().toLowerCase();
+	
+	    if (!query) {
+	        // 입력이 비어 있으면 전체 다시 보이기
+	        document.querySelectorAll('.card').forEach(card => {
+	            card.style.display = '';
+	        });
+	        return;
+	    }
+	
+	    function filterCards(listId) {
+	        const list = document.getElementById(listId);
+	        const cards = list.querySelectorAll('.card');
+	        cards.forEach(card => {
+	            const cardName = card.querySelector('h3.hi').textContent.toLowerCase();
+	            if (cardName.includes(query)) {
+	                card.style.display = '';
+	            } else {
+	                card.style.display = 'none';
+	            }
+	        });
+	    }
+	
+	    filterCards('card-list');
+	    filterCards('card-list2');
+	});
+
 </script>
 </body>
 </html>
