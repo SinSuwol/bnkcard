@@ -6,24 +6,76 @@
 <title>회원/비회원 검색 통계</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-body {
-	font-family: sans-serif;
+/* ===== 기본 설정 ===== */
+
+
+/* ===== 제목 스타일 ===== */
+h1, h2 {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
 }
 
+/* ===== 테이블 공통 ===== */
 table {
-	border-collapse: collapse;
-	margin-top: 20px;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto 40px auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+thead {
+  background-color: #f1f3f5;
 }
 
 th, td {
-	border: 1px solid #ccc;
-	padding: 6px 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid #e9ecef;
 }
 
-.chart-container {
-	width: 400px;
-	margin-top: 20px;
+tbody tr:hover {
+  background-color: #f8f9fa;
 }
+
+/* ===== 차트 영역 ===== */
+.chart-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  padding: 30px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== 전환율 통계 박스 ===== */
+#conversionStats {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto 80px auto;
+  background-color: #ffffff;
+  padding: 24px 28px;
+  font-size: 15px;
+  text-align: left;
+  color: #495057;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+#conversionStats p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+
+
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
