@@ -1,6 +1,7 @@
 package com.busanbank.card.busancrawler.service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,10 +72,11 @@ public class SeleniumCardCrawler {
                     // 카드 데이터 저장
                     ScrapCardDto dto = new ScrapCardDto();
                     dto.setScCardName(cardName);
-                    dto.setScCardUrl(detailUrl);
+                    dto.setScCardUrl(imgUrl);
                     dto.setScCardSlogan("-"); // 슬로건 없으면 일단 빈값 or "미정"
                     dto.setScSService(benefit);
                     dto.setScAnnualFee(fee);
+                    dto.setScDate(LocalDate.now());
                     
                     cardList.add(dto);
 
@@ -112,4 +114,21 @@ public class SeleniumCardCrawler {
             driver.quit();
         }
     }
+    
+    
+    
+    public List<ScrapCardDto> getScrapList(){
+    	List<ScrapCardDto> cards = scrapCardMapper.getScrapList();
+    	
+    	return cards;
+    };
+    
+    public int deleteAllScrapCards() {
+        return scrapCardMapper.deleteAllCards();
+    };
+    
+    
+    
+    
+    
 }
