@@ -45,8 +45,8 @@
 	    #{sService, jdbcType=VARCHAR},
 	    #{cardStatus},
 	    #{cardUrl},
-	    #{cardIssueDate},
-	    #{cardDueDate},
+	    #{cardIssueDate, jdbcType=DATE},
+#{cardDueDate, jdbcType=DATE},
 	    #{cardSlogan},
 	    #{cardNotice},
 	    SYSDATE,
@@ -77,4 +77,11 @@
 	    #{perContent}
 	  )
     </insert>
+    
+    
+    <select id="selectCard" resultType="com.busanbank.card.card.dto.CardDto">
+    SELECT *
+    FROM CARD
+    WHERE CARD_NO = #{cardNo}
+</select>
 </mapper>

@@ -29,17 +29,27 @@ public class AdminCardService {
 	}
 	
 	//삭제용
-	public boolean insertCardTemp2(Long i, String s, String adminId) {
-		PermissionParamDto perDto = new PermissionParamDto();
-		perDto.setCardNo(i);
-		perDto.setPerContent(s);
-		perDto.setAdmin(adminId);
-		
-		System.out.println(i + s);
-		
-		int updated2 = adminCardDao.insertPermission(perDto);
-		
-		return updated2 > 0;
+	@Transactional
+	public boolean insertCardTemp2(Long cardNo, String perContent, String adminId) {
+	    // 1. 원본 카드 정보 조회
+	    CardDto originalCard = adminCardDao.selectCard(cardNo);
+	    if (originalCard == null) {
+	    	 System.out.println("❌ CARD에서 해당 카드 번호를 찾을 수 없습니다: " + cardNo);
+	        return false; // 존재하지 않으면 실패
+	    }
+
+	    System.out.println("✅ CARD_TEMP에 저장할 카드 정보: " + originalCard);
+	    int tempInserted = adminCardDao.insertCardTemp(originalCard);
+	    System.out.println("insertCardTemp result: " + tempInserted);
+
+	    // 3. PERMISSION 테이블에 삭제 요청 등록
+	    PermissionParamDto perDto = new PermissionParamDto();
+	    perDto.setCardNo(cardNo);
+	    perDto.setPerContent(perContent);
+	    perDto.setAdmin(adminId);
+	    int permissionInserted = adminCardDao.insertPermission(perDto);
+
+	    return tempInserted > 0 && permissionInserted > 0;
 	}
 
 

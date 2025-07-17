@@ -63,7 +63,7 @@
 
         /* 테이블 */
         table {
-            width: 80%;
+            width: 60%;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);

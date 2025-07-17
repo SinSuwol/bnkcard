@@ -115,11 +115,11 @@ button:disabled {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 560px;
+  width: 80%;
+  max-width: 440ㅔㅌ;
   background: #fff;
   border-radius: 8px;
-  padding: 24px;
+  padding: 20px;
   z-index: 1000;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
@@ -176,8 +176,8 @@ button:disabled {
 /* ===== 반응형 개선 (선택 사항) ===== */
 @media (max-width: 600px) {
   .modalBox {
-    width: 90%;
-    padding: 16px;
+  width: 95%;
+    padding: 12px;
   }
 
   table thead {
@@ -294,6 +294,41 @@ button:disabled {
     padding: 4px 8px;
   }
 }
+
+/* 기존 카드 정보 (왼쪽) */
+#modalOriginal {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  transform: none;
+  width: 38%;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  max-height: 85%;
+}
+
+/* 요청 카드 정보 (오른쪽) */
+#modalTemp {
+  display: none;
+  position: fixed;
+  top: 10%;
+  right: 5%;
+  transform: none;
+  width: 38%;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  z-index: 1000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  max-height: 85%;
+}
+
 
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
