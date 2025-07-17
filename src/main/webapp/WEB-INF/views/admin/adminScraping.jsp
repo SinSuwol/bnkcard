@@ -6,15 +6,101 @@
 <meta charset="UTF-8">
 <title>관리자 스크래핑</title>
 <link rel="stylesheet" href="/css/adminstyle.css">
+<style>
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.inner {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom:20px;
+}
+#crawlBtn{
+background-color: #a2a2a2;}
+#deleteBtn{
+    background-color: #eb2626;
+}
+button:hover {
+    background-color: #0056b3;
+}
+
+#card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+    padding: 0;
+    list-style: none;
+}
+
+.card {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+    color: #222;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+</style>
 </head>
 <body>
 <jsp:include page="../fragments/header.jsp"></jsp:include>
 	<div class="inner">
-		<h1>관리자 스크래핑</h1>
-		<hr>
+		<h1>스크래핑 관리</h1>
 		<button id="crawlBtn">신한카드 크롤링 실행</button>
 		<button id="deleteBtn">신한카드 상품 전체삭제</button>
-		<h1>타행 카드 상품</h1>
+		<h1>타행 카드 상품목록</h1>
 		<ul id="card-list"></ul>
 	</div>
 	
