@@ -26,6 +26,7 @@ public class AdminChatServiceImpl implements AdminChatService {
     @Override
     public void assignAdmin(Long roomId, Long adminNo) {
         adminChatMapper.assignAdmin(roomId, adminNo);
+        adminChatMapper.resetUnreadCount(roomId); // 선택
     }
 
     @Override
@@ -46,5 +47,8 @@ public class AdminChatServiceImpl implements AdminChatService {
     public List<ChatMessageDto> getMessages(Long roomId) {
         return adminChatMapper.selectMessages(roomId);
     }
+
+    
+  
 
 }
