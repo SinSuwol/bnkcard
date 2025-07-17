@@ -30,6 +30,7 @@
       align-items: flex-start;
     }
     .card-img {
+      margin-left: 50px;
       rotate: 90deg;
       margin-bottom: 50px;
       margin-top: 50px;
@@ -55,7 +56,7 @@
       margin: 14px 0;
     }
     .fee-box {
-      margin-top: 20px;
+      margin-top: 50px;
       display: flex;
       gap: 20px;
     }
@@ -86,9 +87,7 @@
       color: #bf2c2c;
       border: 1px solid #bf2c2c;
     }
-    .accordion-container {
-      padding: 20px;
-    }
+    
     .accordion {
       background: #f8f9fb;
       border: 1px solid #dcdfe6;
