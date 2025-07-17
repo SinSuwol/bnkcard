@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/carousel.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
@@ -15,7 +16,7 @@
 
 
 </head>
-<body>
+<body class="main-body">
 <jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
 <div class="video-wrapper">
 	<div class="video-container">
@@ -36,66 +37,70 @@
 	    </div>	
 	</div>
 </div>
-<div class="inner main-wrap flex">
-	<h1>동백PLUS 체크카드</h1>
-	<h2>'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
-	<p>매일 쓰는 소비에, 매달 받는 보상</p>
-	<div class="spline-wrapper">
-		<spline-viewer orbit class="spline" scroll-blocking="false" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
+<div class="main-wrap flex">
+	<div class="section">
+		<h1 class="mainTit1">동백PLUS 체크카드</h1>
+		<h2 class="mainTit2">'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
+		<p class="mainTit3">매일 쓰는 소비에, 매달 받는 보상</p>
+		<div class="spline-wrapper">
+			<spline-viewer orbit class="spline" scroll-blocking="false" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
+		</div>
 	</div>
-	<div class="carousel">
-		  <div class="spacer">
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:orange">ORANGE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:green">GREEN</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:purple">PURPLE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:yellow">YELLOW</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:red">RED</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:orange">ORANGE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:green">GREEN</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:purple">PURPLE</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:yellow">YELLOW</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	<div class="txt-box">
-		  		<p class="color-txt" style="color:red">RED</p>
-		  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
-		  	</div>
-		  	
-		  </div>
-	      <div class="wrapper">
+	<div class="section">
+	
+		<div class="carousel">
+			  <div class="spacer">
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:orange">ORANGE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:green">GREEN</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:purple">PURPLE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:yellow">YELLOW</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:red">RED</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:skyblue">SKY BLUE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:orange">ORANGE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:green">GREEN</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:purple">PURPLE</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:yellow">YELLOW</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  	<div class="txt-box">
+			  		<p class="color-txt" style="color:red">RED</p>
+			  		<p class="desc"> 내가 고르는 선택의 즐거움</p>
+			  	</div>
+			  </div>
+	
+	    <div class="wrapper">
 	           
             <div class="content">
 	              <div class="track"></div>
@@ -114,41 +119,50 @@
 	            </div>    
 	           
 	      </div>
-	<button class="previous">previous</button> <button class="next">next</button>
+		<button class="carousel-btn previous"><i class="fas fa-chevron-left"></i></button>
+		<button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+
 	
+		</div>
+    </div>
+    
+    <div class="section section3">
+    	<div class="inner">
+			<h2 class="bubble-title t1">혜택은 명확하게</h2>
+			<h2 class="bubble-title t2">어디서나 간편하게</h2>
+			<div class="bubble-wrap flex">
+				<div class="hover-target-wrapper">
+					<div class="hover-target b1">
+						<img src="/image/웃는얼굴.png">
+						<p>연회비 무료</p>
+					</div>
+					<div class="tooltip">툴팁1</div>
+				</div>
+				<div class="hover-target-wrapper">
+					<div class="hover-target b2">
+						<img src="/image/버스.png">
+						<p>후불 교통카드</p>
+					</div>
+					<div class="tooltip">툴팁2</div>
+				</div>
+				<div class="hover-target-wrapper">
+					<div class="hover-target b3">
+						<img src="/image/atm.png">
+						<p>수수료 무료</p>
+					</div>
+					<div class="tooltip">툴팁3</div>
+				</div>
+				<div class="hover-target-wrapper">
+					<div class="hover-target b4">
+						<img src="/image/번개.png">
+						<p>빠른 On/Off</p>
+					</div>
+					<div class="tooltip">툴팁4</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<h2 class="bubble-title t1">혜택은 명확하게</h2>
-	<h2 class="bubble-title t2">어디서나 간편하게</h2>
-	<div class="bubble-wrap flex">
-		<div class="hover-target-wrapper">
-			<div class="hover-target b1">
-				<img src="/image/웃는얼굴.png">
-				<p>연회비 무료</p>
-			</div>
-			<div class="tooltip">툴팁1</div>
-		</div>
-		<div class="hover-target-wrapper">
-			<div class="hover-target b2">
-				<img src="/image/버스.png">
-				<p>후불 교통카드</p>
-			</div>
-			<div class="tooltip">툴팁2</div>
-		</div>
-		<div class="hover-target-wrapper">
-			<div class="hover-target b3">
-				<img src="/image/atm.png">
-				<p>수수료 무료</p>
-			</div>
-			<div class="tooltip">툴팁3</div>
-		</div>
-		<div class="hover-target-wrapper">
-			<div class="hover-target b4">
-				<img src="/image/번개.png">
-				<p>빠른 On/Off</p>
-			</div>
-			<div class="tooltip">툴팁4</div>
-		</div>
-	</div>
+	
 </div>
 <footer class="site-footer">
 	<div class="inner footer-inner">
