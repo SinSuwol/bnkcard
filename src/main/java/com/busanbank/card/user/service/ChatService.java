@@ -19,4 +19,6 @@ public interface ChatService {
 
     Long createOrGetRoom(Long memberNo);
     //에러확인
+    Long findLatestOpenRoomId(Long memberNo);   // 추가
+    
 }

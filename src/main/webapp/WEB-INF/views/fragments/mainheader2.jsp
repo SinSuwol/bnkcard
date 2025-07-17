@@ -25,7 +25,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		<ul class="flex nav">
 			<li><a href="/cardList">카드</a></li>
 			<li><a href="/introduce">은행소개</a></li>
-			<li><a href="/faq">고객센터</a></li>
+			<li><a href="/faq/list">고객센터</a></li>
 			<li><a href="/admin" id="load-admin">관리자 페이지로</a> <br></li>
 			<li><a href="/admin/adminLoginForm" >관리자 로그인 페이지로</a></li>
 		</ul>

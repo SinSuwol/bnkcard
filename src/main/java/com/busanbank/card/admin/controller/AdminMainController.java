@@ -95,7 +95,16 @@ public class AdminMainController {
 		return "index";
 	}
 
-	
+	// 어드민 고객 채팅 관리 페이지 (adminChat.jsp)
+	@GetMapping("/chat")
+	public String adminChatPage() {
+	    AdminDto admin = adminSession.getLoginUser();
+	    if (admin == null) {
+	        return "redirect:/admin/adminLoginForm";
+	    }
+	    return "admin/adminChat";
+	}
+
 	
 	//=========================================
 	// 상위 관리자

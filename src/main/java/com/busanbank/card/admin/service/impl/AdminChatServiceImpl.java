@@ -1,5 +1,7 @@
 package com.busanbank.card.admin.service.impl;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+
 import com.busanbank.card.admin.mapper.AdminChatMapper;
 import com.busanbank.card.admin.service.AdminChatService;
 import com.busanbank.card.user.dto.ChatRoomDto;
@@ -12,7 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AdminChatServiceImpl implements AdminChatService {
-
+	
+	private final SimpMessagingTemplate messagingTemplate;
     private final AdminChatMapper adminChatMapper;
 
     @Override
@@ -33,7 +36,11 @@ public class AdminChatServiceImpl implements AdminChatService {
     @Override
     public void sendAdminMessage(ChatMessageDto dto) {
         adminChatMapper.insertAdminMessage(dto);
+
+        // WebSocket 전송
+        messagingTemplate.convertAndSend("/topic/room/" + dto.getRoomId(), dto);
     }
+
     
     @Override
     public List<ChatMessageDto> getMessages(Long roomId) {

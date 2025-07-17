@@ -6,6 +6,7 @@ import com.busanbank.card.user.dto.ChatRoomDto;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ChatMapper {
@@ -24,5 +25,6 @@ public interface ChatMapper {
     
     Long selectRoomIdByMember(Long memberNo);
 
+    Long selectLatestOpenRoomIdByMember(@Param("memberNo") Long memberNo);
 
 }
