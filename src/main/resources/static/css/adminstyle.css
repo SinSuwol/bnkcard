@@ -66,10 +66,17 @@ a,li,ul{
 
 /*이대영 추가==========  */
 button {
+	background-color: while;
+	 color: black;
   font-size: 0.9rem;
   padding: 8px 14px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+	background-color: black;
+	 color: white;
 }
