@@ -75,71 +75,71 @@
 
 /* ---------- 카드 그리드 ---------- */
 #cardGrid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 130px 170px;
-	justify-items: center;
-	max-width: 1060px;
-	margin: 125px auto;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 130px 170px;
+   justify-items: center;
+   max-width: 1060px;
+   margin: 125px auto;
 }
 
 .item {
-	width: 220px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	cursor: pointer; /* ← 클릭 가능 커서 */
+   width: 220px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   cursor: pointer; /* ← 클릭 가능 커서 */
 }
 
 .item img {
-	width: 300px;
-	rotate: 90deg;
-	margin-bottom: 50px;
-	
+   width: 300px;
+   rotate: 90deg;
+   margin-bottom: 50px;
+   
 }
 
 /* ---------- 카드 이름 ---------- */
 .item p:nth-of-type(1) {
-	font-size: 20px;
-	font-weight: 500;
-	margin-top: 40px;
+   font-size: 20px;
+   font-weight: 500;
+   margin-top: 40px;
 }
 
 /* ---------- 카드 설명 ---------- */
 .item p:nth-of-type(2) {
-	margin-top: 10px;
-	margin-bottom: 20px;
-	word-break: keep-all;
+   margin-top: 10px;
+   margin-bottom: 20px;
+   word-break: keep-all;
 }
 
 /* ---------- 비교함 ---------- */
 #compareBox {
-	position: fixed;
-	right: 12px;
-	top: 200px;
-	width: 140px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 20px;
-	background: #fff;
-	z-index: 1010;
+   position: fixed;
+   right: 12px;
+   top: 200px;
+   width: 140px;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 20px;
+   background: #fff;
+   z-index: 1010;
 }
 
 /* ---------- 비교 모달 ---------- */
 #compareModal {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 80%;
-	max-width: 800px;
-	background: #fff;
-	padding: 30px;
-	border-radius: 12px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, .35);
-	z-index: 2000;
+   display: none;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 80%;
+   max-width: 800px;
+   background: #fff;
+   padding: 30px;
+   border-radius: 12px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, .35);
+   z-index: 2000;
 }
 
 .compare-label {
@@ -157,198 +157,198 @@
 }
 
 #modalOverlay {
-	display: none;
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, .6);
-	z-index: 1999;
+   display: none;
+   position: fixed;
+   inset: 0;
+   background: rgba(0, 0, 0, .6);
+   z-index: 1999;
 }
 
 #modalContent {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	justify-content: space-around;
+   position: relative;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   justify-content: space-around;
 }
 
 #modalContent::after {
-	content:"";
-	position:absolute;
-	width: 1px;
-	margin-top: 20px;
-	height: 500px;
-	background-color: #ededed;
+   content:"";
+   position:absolute;
+   width: 1px;
+   margin-top: 20px;
+   height: 500px;
+   background-color: #ededed;
 }
 
 #modalContent div {
-	width: 200px;
-	text-align: center
+   width: 200px;
+   text-align: center
 }
 
 #modalContent div .card-name {
-	font-size: 20px;
+   font-size: 20px;
 }
 
 #modalContent div .card-image-group img{
-	width: 150px;
+   width: 150px;
 }
 
 #modalContent img {
-	width: 100%;
-	border: 1px solid #ccc
+   width: 100%;
+   border: 1px solid #ccc
 }
 
 /* 더보기 */
 #loadMoreWrap {
-	text-align: center;
-	margin: 40px 0
+   text-align: center;
+   margin: 40px 0
 }
 
 /* ---------- 검색바 + 타입버튼 ---------- */
 .typeBtn {
-	display: inline-block;
-	padding: 7px 20px;
-	margin: 0 3px;
-	font-weight: 600;
-	border: 1px solid #aaa;
-	border-radius: 9999px;
-	background: #fff;
-	cursor: pointer;
+   display: inline-block;
+   padding: 7px 20px;
+   margin: 0 3px;
+   font-weight: 600;
+   border: 1px solid #aaa;
+   border-radius: 9999px;
+   background: #fff;
+   cursor: pointer;
 }
 
 .typeBtn.active {
-	background: #000;
-	color: #fff
+   background: #000;
+   color: #fff
 }
 
 .icon_img {
-	display: flex;
-	justify-content: center;
-	width: 100%;
+   display: flex;
+   justify-content: center;
+   width: 100%;
 }
 
 .icon_img > div {
-	position: relative;
+   position: relative;
 }
 
 .icon_img input::placeholder {
-	color: #828282;
+   color: #828282;
 }
 
 .icon_img > div > img {
-	position: absolute;
-	top: 50%;
-	left: 12px;
-	transform: translateY(-50%);
+   position: absolute;
+   top: 50%;
+   left: 12px;
+   transform: translateY(-50%);
     width: 18px;
     height: 18px;
 }
 
 
 #searchInput {
-	width: 400px;
-	padding: 10px 35px;
-	font-size: 15px;
-	border: none;
-	background-color: #ededed;
-	border-radius: 40px;
-	outline: none;
-	
+   width: 400px;
+   padding: 10px 35px;
+   font-size: 15px;
+   border: none;
+   background-color: #ededed;
+   border-radius: 40px;
+   outline: none;
+   
 }
 
 #searchInput 
 
 #filterBtn {
-	width: 40px;
-	height: 40px;
-	margin-left: 8px;
-	border: none;
-	border-radius: 50%;
-	background: #eee;
-	font-size: 18px;
-	cursor: pointer;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+   width: 40px;
+   height: 40px;
+   margin-left: 8px;
+   border: none;
+   border-radius: 50%;
+   background: #eee;
+   font-size: 18px;
+   cursor: pointer;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
 }
 
 /* ---------- 상세 검색 모달 ---------- */
 #advOverlay {
-	display: none;
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, .6);
-	z-index: 3000;
+   display: none;
+   position: fixed;
+   inset: 0;
+   background: rgba(0, 0, 0, .6);
+   z-index: 3000;
 }
 
 #advModal {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 90%;
-	max-width: 600px;
-	max-height: 85vh;
-	background: #fff;
-	border-radius: 12px;
-	padding: 25px;
-	z-index: 3001;
-	box-shadow: 0 0 20px rgba(0, 0, 0, .35);
-	flex-direction: column;
+   display: none;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 90%;
+   max-width: 600px;
+   max-height: 85vh;
+   background: #fff;
+   border-radius: 12px;
+   padding: 25px;
+   z-index: 3001;
+   box-shadow: 0 0 20px rgba(0, 0, 0, .35);
+   flex-direction: column;
 }
 
 #advModal.show {
-	display: flex
+   display: flex
 }
 
 #advModal h3 {
-	text-align: center;
-	margin-top: 0
+   text-align: center;
+   margin-top: 0
 }
 
 #advKeyword {
-	width: 100%;
-	padding: 8px 12px;
-	margin-bottom: 15px;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 8px;
+   width: 100%;
+   padding: 8px 12px;
+   margin-bottom: 15px;
+   box-sizing: border-box;
+   border: 1px solid #ccc;
+   border-radius: 8px;
 }
 
 .hot {
-	display: inline-block;
-	padding: 4px 12px;
-	margin: 3px;
-	border-radius: 15px;
-	background: #eee;
-	font-size: 13px;
-	cursor: pointer;
+   display: inline-block;
+   padding: 4px 12px;
+   margin: 3px;
+   border-radius: 15px;
+   background: #eee;
+   font-size: 13px;
+   cursor: pointer;
 }
 
 .hot.sel {
-	background: #000;
-	color: #fff
+   background: #000;
+   color: #fff
 }
 
 #modalResultGrid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-	gap: 20px;
-	justify-items: center;
-	margin-top: 15px;
-	flex: 1;
-	overflow-y: auto;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+   gap: 20px;
+   justify-items: center;
+   margin-top: 15px;
+   flex: 1;
+   overflow-y: auto;
 }
 
 .adv-close {
-	position: absolute;
-	top: 15px;
-	right: 20px;
-	font-size: 22px;
-	font-weight: 700;
-	cursor: pointer;
+   position: absolute;
+   top: 15px;
+   right: 20px;
+   font-size: 22px;
+   font-weight: 700;
+   cursor: pointer;
 }
 
 .compare-card {
@@ -399,7 +399,7 @@
 }
 
 .card-icons {
-	display: flex;
+   display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px 30px;
@@ -416,54 +416,54 @@
 <jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
 
-	
-	<!-- 🔥 인기 카드 슬라이더 -->
+   
+   <!-- 🔥 인기 카드 슬라이더 -->
 <div class="slider-container">
   <div class="popular-slider autoplay">
     <!-- 인기 카드가 JS로 자동 채워짐 -->
   </div>
 </div>
-	
+   
 
-	<!-- 카드 타입 필터 -->
-	<div style="text-align: center; margin-bottom: 15px;">
-		<button class="typeBtn active" data-type="">전체</button>
-		<button class="typeBtn" data-type="신용">신용카드</button>
-		<button class="typeBtn" data-type="체크">체크카드</button>
-	</div>
+   <!-- 카드 타입 필터 -->
+   <div style="text-align: center; margin-bottom: 15px;">
+      <button class="typeBtn active" data-type="">전체</button>
+      <button class="typeBtn" data-type="신용">신용카드</button>
+      <button class="typeBtn" data-type="체크">체크카드</button>
+   </div>
 
-	<!-- 검색바 + 세부 조정 아이콘 -->
-		<div class="icon_img">
-		<div>
-		<input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요">
-			<img src="/image/benifits/search.png" alt="icon">
-		</div>
-			<button id="filterBtn" title="상세 검색">🎚️</button>	
-		</div>
-		
+   <!-- 검색바 + 세부 조정 아이콘 -->
+      <div class="icon_img">
+      <div>
+      <input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요">
+         <img src="/image/benifits/search.png" alt="icon">
+      </div>
+         <button id="filterBtn" title="상세 검색">🎚️</button>   
+      </div>
+      
 
-	<!-- 카드 그리드 -->
-	<div id="cardGrid"></div>
-	<div id="loadMoreWrap">
-	  <button onclick="loadMore()" style="background:none; border:none; cursor:pointer;">
-	    <img src="/image/benifits/more_arrow.png" alt="더보기" style="width:24px; height:auto; border: 1px solid black; border-radius: 50%; padding:10px;">
-	  </button>
-	</div>
-	
-	
+   <!-- 카드 그리드 -->
+   <div id="cardGrid"></div>
+   <div id="loadMoreWrap">
+     <button onclick="loadMore()" style="background:none; border:none; cursor:pointer;">
+       <img src="/image/benifits/more_arrow.png" alt="더보기" style="width:24px; height:auto; border: 1px solid black; border-radius: 50%; padding:10px;">
+     </button>
+   </div>
+   
+   
 
-	<!-- 비교함 -->
-	<div id="compareBox">
-		<h4>비교함</h4>
-		<ul id="compareList" style="list-style: none; padding: 0; margin: 0"></ul>
-		<button onclick="openCompare()">비교하기</button>
-		<div style="text-align:center; margin-top:10px;">
-		  <button onclick="openScrapModal()" style="font-size:13px; padding:6px 10px; background:#eee; border:1px solid #ccc; border-radius:6px; cursor:pointer;">타행카드와 비교</button>
-		</div>
-	</div>
+   <!-- 비교함 -->
+   <div id="compareBox">
+      <h4>비교함</h4>
+      <ul id="compareList" style="list-style: none; padding: 0; margin: 0"></ul>
+      <button onclick="openCompare()">비교하기</button>
+      <div style="text-align:center; margin-top:10px;">
+        <button onclick="openScrapModal()" style="font-size:13px; padding:6px 10px; background:#eee; border:1px solid #ccc; border-radius:6px; cursor:pointer;">타행카드와 비교</button>
+      </div>
+   </div>
 
-	<!-- 비교 모달 -->
-	<div id="compareModal">
+   <!-- 비교 모달 -->
+   <div id="compareModal">
   <h2 style="text-align: center;">카드 비교</h2>
   <div id="modalContent"></div>
   <div style="text-align: center; margin-top: 20px;">
@@ -484,50 +484,50 @@
 
 
 
-	<!-- 상세 검색 모달 -->
-	<div id="advOverlay"></div>
-	<div id="advModal">
-		<span class="adv-close" onclick="closeAdv()">✕</span>
-		<h3>상세 검색</h3>
-		<input id="advKeyword" type="text" placeholder="카드 이름 또는 키워드 입력">
-		<p style="margin: 0 0 6px; font-weight: 600">주요혜택 (최대 5개)</p>
-		
-		<div id="hotArea">
-		  <span class="hot" data-keyword="커피">#커피</span>
-		  <span class="hot" data-keyword="편의점">#편의점</span>
-		  <span class="hot" data-keyword="베이커리">#베이커리</span>
-		  <span class="hot" data-keyword="영화">#영화</span>
-		  <span class="hot" data-keyword="쇼핑">#쇼핑</span>
-		  <span class="hot" data-keyword="외식">#외식</span>
-		  <span class="hot" data-keyword="교통">#교통</span>
-		  <span class="hot" data-keyword="통신">#통신</span>
-		  <span class="hot" data-keyword="교육">#교육</span>
-		  <span class="hot" data-keyword="레저">#레저</span>
-		  <span class="hot" data-keyword="스포츠">#스포츠</span>
-		  <span class="hot" data-keyword="구독">#구독</span>
-		  <span class="hot" data-keyword="병원">#병원</span>
-		  <span class="hot" data-keyword="약국">#약국</span>
-		  <span class="hot" data-keyword="공공요금">#공공요금</span>
-		  <span class="hot" data-keyword="주유">#주유</span>
-		  <span class="hot" data-keyword="하이패스">#하이패스</span>
-		  <span class="hot" data-keyword="배달앱">#배달앱</span>
-		  <span class="hot" data-keyword="환경">#환경</span>
-		  <span class="hot" data-keyword="공유모빌리티">#공유모빌리티</span>
-		  <span class="hot" data-keyword="세무지원">#세무지원</span>
-		  <span class="hot" data-keyword="포인트">#포인트</span>
-		  <span class="hot" data-keyword="캐시백">#캐시백</span>
-		  <span class="hot" data-keyword="놀이공원">#놀이공원</span>
-		  <span class="hot" data-keyword="라운지">#라운지</span>
-		  <span class="hot" data-keyword="발렛">#발렛</span>
-		</div>
-		
+   <!-- 상세 검색 모달 -->
+   <div id="advOverlay"></div>
+   <div id="advModal">
+      <span class="adv-close" onclick="closeAdv()">✕</span>
+      <h3>상세 검색</h3>
+      <input id="advKeyword" type="text" placeholder="카드 이름 또는 키워드 입력">
+      <p style="margin: 0 0 6px; font-weight: 600">주요혜택 (최대 5개)</p>
+      
+      <div id="hotArea">
+        <span class="hot" data-keyword="커피">#커피</span>
+        <span class="hot" data-keyword="편의점">#편의점</span>
+        <span class="hot" data-keyword="베이커리">#베이커리</span>
+        <span class="hot" data-keyword="영화">#영화</span>
+        <span class="hot" data-keyword="쇼핑">#쇼핑</span>
+        <span class="hot" data-keyword="외식">#외식</span>
+        <span class="hot" data-keyword="교통">#교통</span>
+        <span class="hot" data-keyword="통신">#통신</span>
+        <span class="hot" data-keyword="교육">#교육</span>
+        <span class="hot" data-keyword="레저">#레저</span>
+        <span class="hot" data-keyword="스포츠">#스포츠</span>
+        <span class="hot" data-keyword="구독">#구독</span>
+        <span class="hot" data-keyword="병원">#병원</span>
+        <span class="hot" data-keyword="약국">#약국</span>
+        <span class="hot" data-keyword="공공요금">#공공요금</span>
+        <span class="hot" data-keyword="주유">#주유</span>
+        <span class="hot" data-keyword="하이패스">#하이패스</span>
+        <span class="hot" data-keyword="배달앱">#배달앱</span>
+        <span class="hot" data-keyword="환경">#환경</span>
+        <span class="hot" data-keyword="공유모빌리티">#공유모빌리티</span>
+        <span class="hot" data-keyword="세무지원">#세무지원</span>
+        <span class="hot" data-keyword="포인트">#포인트</span>
+        <span class="hot" data-keyword="캐시백">#캐시백</span>
+        <span class="hot" data-keyword="놀이공원">#놀이공원</span>
+        <span class="hot" data-keyword="라운지">#라운지</span>
+        <span class="hot" data-keyword="발렛">#발렛</span>
+      </div>
+      
 
-		<div id="modalResultGrid"></div>
-		<div style="text-align: center; margin-top: 15px;">
-			<button id="advSearchBtn"
-				style="width: 100%; padding: 10px 0; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
-		</div>
-	</div>
+      <div id="modalResultGrid"></div>
+      <div style="text-align: center; margin-top: 15px;">
+         <button id="advSearchBtn"
+            style="width: 100%; padding: 10px 0; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
+      </div>
+   </div>
 
 
 <script src="/js/header2.js"></script>
@@ -643,17 +643,17 @@ document.getElementById('advKeyword').addEventListener('keydown',e=>{
 
 /* 검색 */
 function performSearch(keyword=''){
-	
-	// 🔵 1) 로그 먼저 저장
-	  fetch('/admin/Search/searchlog', {
+   
+   // 🔵 1) 로그 먼저 저장
+     fetch('/admin/Search/searchlog', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     keyword: keyword
   })
 }).catch(err => console.error('검색 로그 저장 실패', err));
-	
-	
+   
+   
   const params=new URLSearchParams();
   if(keyword)params.append('q',keyword);
   if(currentType)params.append('type',currentType);
@@ -706,23 +706,23 @@ function drawCards() {
     div.className = 'item';              // ← 부모 div는 클릭 이벤트 없음!
 
     div.innerHTML = `
-    	  <img src="${c.cardUrl}" alt="${c.cardName}"
-    	       style="cursor:pointer"
-    	       onclick="goDetail(${c.cardNo})">
+         <img src="${c.cardUrl}" alt="${c.cardName}"
+              style="cursor:pointer"
+              onclick="goDetail(${c.cardNo})">
 
-    	  <p style="cursor:pointer"
-    	          onclick="goDetail(${c.cardNo})">${c.cardName}</p>
+         <p style="cursor:pointer"
+                 onclick="goDetail(${c.cardNo})">${c.cardName}</p>
 
-    	  <p style="font-size:12px;">${c.cardSlogan || ''}</p>
+         <p style="font-size:12px;">${c.cardSlogan || ''}</p>
 
-    	  <label class="compare-label" onclick="event.stopPropagation();">
-    	    <input type="checkbox"
-    	           value="${c.cardNo}"
-    	           onclick="event.stopPropagation(); toggleCompare(this)">
-    	    비교함 담기
-    	  </label>
-    	`;
-    	grid.appendChild(div);
+         <label class="compare-label" onclick="event.stopPropagation();">
+           <input type="checkbox"
+                  value="${c.cardNo}"
+                  onclick="event.stopPropagation(); toggleCompare(this)">
+           비교함 담기
+         </label>
+       `;
+       grid.appendChild(div);
 }
   currentIndex = end;
   if (currentIndex >= fullCardList.length)
@@ -756,71 +756,71 @@ function toggleCompare(cb){
 }
 
 function renderCompareList() {
-	  const list = document.getElementById('compareList');
-	  list.innerHTML = '';
+     const list = document.getElementById('compareList');
+     list.innerHTML = '';
 
-	  JSON.parse(sessionStorage.getItem('compareCards') || '[]').forEach(c => {
-	    const li = document.createElement('li');
-	    li.style.marginBottom = '10px';
+     JSON.parse(sessionStorage.getItem('compareCards') || '[]').forEach(c => {
+       const li = document.createElement('li');
+       li.style.marginBottom = '10px';
 
-	    li.innerHTML = `
-	      <img src="${c.cardUrl}" style="width:80px; display:block; margin:0 auto 5px;">
-	      <div style="font-size:13px; margin-bottom:4px;">${c.cardName}</div>
-	      <button onclick="removeFromCompare('${c.cardNo}')" style="
-	        background: #ff4d4f;
-	        color: white;
-	        border: none;
-	        padding: 4px 8px;
-	        border-radius: 6px;
-	        font-size: 12px;
-	        cursor: pointer;
-	      ">제거</button>
-	    `;
+       li.innerHTML = `
+         <img src="${c.cardUrl}" style="width:80px; display:block; margin:0 auto 5px;">
+         <div style="font-size:13px; margin-bottom:4px;">${c.cardName}</div>
+         <button onclick="removeFromCompare('${c.cardNo}')" style="
+           background: #ff4d4f;
+           color: white;
+           border: none;
+           padding: 4px 8px;
+           border-radius: 6px;
+           font-size: 12px;
+           cursor: pointer;
+         ">제거</button>
+       `;
 
-	    list.appendChild(li);
-	  });
-	}
+       list.appendChild(li);
+     });
+   }
 
 renderCompareList();
 
 function removeFromCompare(cardNo) {
-	  let box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
-	  box = box.filter(c => c.cardNo !== cardNo);
-	  sessionStorage.setItem('compareCards', JSON.stringify(box));
-	  renderCompareList();
+     let box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+     box = box.filter(c => c.cardNo !== cardNo);
+     sessionStorage.setItem('compareCards', JSON.stringify(box));
+     renderCompareList();
 
-	  // 체크박스 상태도 해제
-	  const checkbox = document.querySelector(
-	    `input[type="checkbox"][value="${cardNo}"]`
-	  );
-	  if (checkbox) checkbox.checked = false;
-	}
+     // 체크박스 상태도 해제
+     const checkbox = document.querySelector(
+       `input[type="checkbox"][value="${cardNo}"]`
+     );
+     if (checkbox) checkbox.checked = false;
+   }
 
 
 const categoryToIcon = {
-		  "커피": "coffee",
-		  "편의점": "convenience-store",
-		  "베이커리": "bakery",
-		  "영화": "movie",
-		  "쇼핑": "shopping",
-		  "외식": "meal",
-		  "교통": "metro",
-		  "통신": "telecommunication",
-		  "교육": "education",
-		  "레저&스포츠": "leisure",
-		  "구독": "subscribe",
-		  "병원": "hospital",
-		  "공공요금": "charges",
-		  "주유": "gas-station",
-		  "하이패스": "hipass",
-		  "배달앱": "delivery",
-		  "환경": "environment",
-		  "공유모빌리티": "socar",
-		  "세무지원": "tax",
-		  "포인트&캐시백": "point",
-		  "놀이공원": "amusementpark",
-		  "라운지": "lounge",
-		  "발렛": "valetparking"
+        "커피": "coffee",
+        "편의점": "convenience-store",
+        "베이커리": "bakery",
+        "영화": "movie",
+        "쇼핑": "shopping",
+        "외식": "meal",
+        "교통": "metro",
+        "통신": "telecommunication",
+        "교육": "education",
+        "레저&스포츠": "leisure",
+        "구독": "subscribe",
+        "병원": "hospital",
+        "공공요금": "charges",
+        "주유": "gas-station",
+        "하이패스": "hipass",
+        "배달앱": "delivery",
+        "환경": "environment",
+        "공유모빌리티": "socar",
+        "세무지원": "tax",
+        "포인트&캐시백": "point",
+        "놀이공원": "amusementpark",
+        "라운지": "lounge",
+        "발렛": "valetparking"
 };
 
 /* 비교 모달 */
@@ -856,24 +856,24 @@ function openCompare() {
         const tagHtml = tags.map(t => `#${t}`).join(' ');
 
         // 카드 이미지 (최대 3장)
-        const images = d.cardUrl?.split(',') || [];
-        const imageHtml = images.slice(0, 3).map(url =>
-          `<img src="${url.trim()}" alt="">`
-        ).join('');
+        const images = (d.cardUrl || d.scCardUrl || '').split(',');
+      const imageHtml = images.slice(0, 3).map(url =>
+        `<img src="${url.trim()}" alt="">`
+      ).join('');
 
         // ✅ 요약 혜택: benefits 또는 scbenefits 우선 사용
         let summary = '';
-		if (d.benefits || d.scBenefits) {
-		  summary = (d.benefits || d.scBenefits)
-		    .replace(/<br\s*\/?>/gi, '<br>');
-		} else if (d.service) {
-		  summary = d.service
-		    .replace(/◆/g, '•')
-		    .split(/\n|<br>/)
-		    .filter(line => line.trim())
-		    .slice(0, 5)
-		    .join('<br>');
-		}
+      if (d.benefits || d.scBenefits) {
+        summary = (d.benefits || d.scBenefits)
+          .replace(/<br\s*\/?>/gi, '<br>');
+      } else if (d.service) {
+        summary = d.service
+          .replace(/◆/g, '•')
+          .split(/\n|<br>/)
+          .filter(line => line.trim())
+          .slice(0, 5)
+          .join('<br>');
+      }
 
         // 연회비: 일반 or 스크랩 카드용
         const fee = d.annualFee ?? d.scAnnualFee ?? 0;
@@ -904,46 +904,46 @@ function closeCompareModal(){
 }
 
 function openScrapModal() {
-	console.log("타행카드 모달 실행");
-	fetch('/api/public/cards/scrap')
-	    .then(res => res.json())
-	    .then(data => {
-	      const listDiv = document.getElementById('scrapModalList');
-	      listDiv.innerHTML = '';
-	      data.forEach(card => {
-	        const div = document.createElement('div');
-	        div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
-	        div.innerHTML = `
-	          <div><b>${card.scCardName}</b></div>
-	          <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
-	          <button onclick='addScrapToCompare("${card.scCardNo}","${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
-	        `;
-	        listDiv.appendChild(div);
-	      });
-	      document.getElementById('scrapCompareModal').style.display = 'block';
-	      document.getElementById('scrapOverlay').style.display = 'block';
-	    });
-	}
+   console.log("타행카드 모달 실행");
+   fetch('/api/public/cards/scrap')
+       .then(res => res.json())
+       .then(data => {
+         const listDiv = document.getElementById('scrapModalList');
+         listDiv.innerHTML = '';
+         data.forEach(card => {
+           const div = document.createElement('div');
+           div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
+           div.innerHTML = `
+             <div><b>${card.scCardName}</b></div>
+             <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
+             <button onclick='addScrapToCompare("${card.scCardNo}","${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
+           `;
+           listDiv.appendChild(div);
+         });
+         document.getElementById('scrapCompareModal').style.display = 'block';
+         document.getElementById('scrapOverlay').style.display = 'block';
+       });
+   }
 
-	function closeScrapModal() {
-	  document.getElementById('scrapCompareModal').style.display = 'none';
-	  document.getElementById('scrapOverlay').style.display = 'none';
-	}
+   function closeScrapModal() {
+     document.getElementById('scrapCompareModal').style.display = 'none';
+     document.getElementById('scrapOverlay').style.display = 'none';
+   }
 
-	function addScrapToCompare(cardNo, url, name) {
-	  const slot = document.getElementById('compareList');
-	  const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
-	  if (box.length >= 2) {
-	    alert('최대 2개까지만 비교 가능합니다.');
-	    return;
-	  }
-	  console.log("addScrapToCompare실행")
-	  console.log(cardNo);
-	  box.push({cardNo: 'scrap_' + cardNo, cardName: name, cardUrl: url});
-	  sessionStorage.setItem('compareCards', JSON.stringify(box));
-	  renderCompareList();
-	  closeScrapModal();
-	}
+   function addScrapToCompare(cardNo, url, name) {
+     const slot = document.getElementById('compareList');
+     const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+     if (box.length >= 2) {
+       alert('최대 2개까지만 비교 가능합니다.');
+       return;
+     }
+     console.log("addScrapToCompare실행")
+     console.log(cardNo);
+     box.push({cardNo: 'scrap_' + cardNo, cardName: name, cardUrl: url});
+     sessionStorage.setItem('compareCards', JSON.stringify(box));
+     renderCompareList();
+     closeScrapModal();
+   }
 
 </script>
 
