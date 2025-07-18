@@ -267,37 +267,65 @@
 	    }
 	});
 	
-	//콘페티 애니메이션
-	function launchConfetti() {
+	// 콘페티 애니메이션
+function launchConfetti() {
   const ul = document.querySelector('.particles');
-  ul.innerHTML = ''; // 기존 파티클 제거
+  ul.innerHTML = '';
 
-  const count = 25;
+  const count = 40;
+
+  // 3~5개의 랜덤 인덱스 선택 (중복 없이)
+  const imageParticleCount = Math.floor(Math.random() * 3) + 3; // 3~5개
+  const imageIndexes = new Set();
+  while (imageIndexes.size < imageParticleCount) {
+    imageIndexes.add(Math.floor(Math.random() * count));
+  }
+
+  const imageUrl = '/image/동전.png'; // 사용할 이미지 1종
 
   for (let i = 0; i < count; i++) {
     const li = document.createElement('li');
-    li.style.setProperty('--i', i); // 색상용 인덱스
+    li.style.setProperty('--i', i);
 
     const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 200 + 50; // 퍼지는 정도
+    const distance = Math.random() * 180 + 50;
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
 
-    li.style.setProperty('--x', `${x}px`);
-    li.style.setProperty('--y', `${y}px`);
+    li.style.setProperty('--x', `\${x}px`);
+    li.style.setProperty('--y', `\${y}px`);
+    const rotation = Math.random() * 720 - 360;
+    li.style.setProperty('--r', `\${rotation}deg`);
 
-    const rotation = Math.random() * 720 - 360; // -360 ~ 360도 회전
-    li.style.setProperty('--r', `${rotation}deg`);
+    if (imageIndexes.has(i)) {
+      // 🎯 이미지 파티클 - 더 크게, 배경 이미지 적용
+      const size = Math.random() * 30 + 20; // 14~24px
+      li.style.width = `\${size}px`;
+      li.style.height = `\${size}px`;
+      li.style.backgroundImage = `url(\${imageUrl})`;
+      li.style.backgroundSize = 'contain';
+      li.style.backgroundRepeat = 'no-repeat';
+      li.style.backgroundPosition = 'center';
+      li.style.backgroundColor = 'transparent';
+      li.style.borderRadius = '0'; // 필요시
+    } else {
+      // 기본 파티클 - 작고 색상만 있음
+      const size = Math.random() * 8 + 8; // 6~16px
+      li.style.width = `\${size}px`;
+      li.style.height = `\${size}px`;
+    }
 
     ul.appendChild(li);
   }
 }
 
-}
+
+
+
 
 setInterval(() => {
 	  launchConfetti();
-	}, 2000); // 2초마다 터짐
+	}, 3000); // 3초마다 터짐
 	
 	
 	

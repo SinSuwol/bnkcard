@@ -228,8 +228,9 @@ body.main-body{
   position: absolute;
   width: 500px;
   height: 500px; /* 필요에 따라 조정 */
-  overflow: hidden;
   pointer-events: none;
+  top:50%;
+  left:50%;
 }
 
 .particles {
@@ -244,17 +245,20 @@ body.main-body{
 
 .particles li {
   position: absolute;
-  width: 10px;
-  height: 10px;
   background-color: hsl(calc(var(--i) * 20), 70%, 60%);
-  animation: confetti 1.2s ease-out forwards;
+  animation: confetti 1.5s linear forwards;
   transform: translate(var(--x), var(--y)) rotate(var(--r));
   opacity: 0;
+  border-radius:3px;
 }
 
 @keyframes confetti {
   0% {
     transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(calc(var(--x) * 0.9), calc(var(--y) * 0.9)) rotate(var(--r)) scale(1);
     opacity: 1;
   }
   100% {
