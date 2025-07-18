@@ -829,7 +829,7 @@ const categoryToIcon = {
 function openCompare() {
   const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
   if (box.length < 2) {
-    alert('최소 2개 이상 선택하세요.');
+    alert('최소 2개 이상 선택');
     return;
   }
 
@@ -840,73 +840,60 @@ function openCompare() {
   wrap.innerHTML = '';
 
   box.forEach(c => {
-    if (c.cardNo.startsWith('scrap_')) {
-      // 🔷 타행카드 처리
-      fetch('/api/public/cards/scrap')
-        .then(res => res.json())
-        .then(scrapList => {
-          const match = scrapList.find(sc => sc.scCardName === c.cardName);
-          if (!match) return;
+    fetch(`/api/cards/${c.cardNo}`)
+      .then(r => r.json())
+      .then(d => {
+        const div = document.createElement('div');
+        div.className = 'compare-card';
 
-          const imageHtml = `<img src="${match.scCardUrl}" alt="" style="width:150px;">`;
-          const summary = (match.scSService || '')
-            .replace(/◆/g, '•')
-            .split(/\\n|<br>/)
-            .filter(line => line.trim())
-            .slice(0, 5)
-            .join('<br>');
+        // 해시태그 추출
+        const tagStr = (d.cardType || '') + ',' + (d.service || '') + ',' + (d.sService || '') + ',' + (d.issuedTo || '');
+        const tags = Object.keys(categoryToIcon).filter(t => tagStr.includes(t));
 
-          const div = document.createElement('div');
-          div.className = 'compare-card';
-          div.innerHTML = `
-            <div class="card-image-group">${imageHtml}</div>
-            <div class="card-name">${match.scCardName}</div>
-            <div class="card-fee"><b>연회비:</b> ${match.scAnnualFee?.toLocaleString() || 0}원</div>
-            <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
-            <div class="card-explain">혜택 특성</div>
-          `;
-          wrap.appendChild(div);
-        });
+        // 아이콘
+        const iconHtml = tags.map(name => {
+          const icon = categoryToIcon[name];
+          return `<img src="/image/benifits/${icon}.png" alt="${name}">`;
+        }).join('');
+        const tagHtml = tags.map(t => `#${t}`).join(' ');
 
-    } else {
-      // 🔷 자행카드 처리
-      fetch(`/api/cards/${c.cardNo}`)
-        .then(r => r.json())
-        .then(d => {
-          const div = document.createElement('div');
-          div.className = 'compare-card';
+        // 카드 이미지 (최대 3장)
+        const images = (d.cardUrl || d.scCardUrl || '').split(',');
+		const imageHtml = images.slice(0, 3).map(url =>
+		  `<img src="${url.trim()}" alt="">`
+		).join('');
 
-          const tagStr = (d.cardType || '') + ',' + (d.service || '') + ',' + (d.sService || '') + ',' + (d.issuedTo || '');
-          const tags = Object.keys(categoryToIcon).filter(t => tagStr.includes(t));
-          const iconHtml = tags.map(name =>
-            `<img src="/image/benifits/${categoryToIcon[name]}.png" alt="${name}">`
-          ).join('');
-          const tagHtml = tags.map(t => `#${t}`).join(' ');
+        // ✅ 요약 혜택: benefits 또는 scbenefits 우선 사용
+        let summary = '';
+		if (d.benefits || d.scBenefits) {
+		  summary = (d.benefits || d.scBenefits)
+		    .replace(/<br\s*\/?>/gi, '<br>');
+		} else if (d.service) {
+		  summary = d.service
+		    .replace(/◆/g, '•')
+		    .split(/\n|<br>/)
+		    .filter(line => line.trim())
+		    .slice(0, 5)
+		    .join('<br>');
+		}
 
-          const images = d.cardUrl?.split(',') || [];
-          const imageHtml = images.slice(0, 3).map(url =>
-            `<img src="${url.trim()}" alt="">`
-          ).join('');
+        // 연회비: 일반 or 스크랩 카드용
+        const fee = d.annualFee ?? d.scAnnualFee ?? 0;
 
-          const summary = (d.service || '')
-            .replace(/◆/g, '•')
-            .split(/\n|<br>/)
-            .filter(line => line.trim())
-            .slice(0, 5)
-            .join('<br>');
+        // 카드명: 일반 or 스크랩 카드용
+        const name = d.cardName || d.scCardName;
 
-          div.innerHTML = `
-            <div class="card-image-group">${imageHtml}</div>
-            <div class="card-name">${d.cardName}</div>
-            <div class="card-tags">${tagHtml}</div>
-            <div class="card-fee"><b>연회비:</b> ${d.annualFee?.toLocaleString() || 0}원</div>
-            <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
-            <div class="card-explain">혜택 특성</div>
-            <div class="card-icons">${iconHtml}</div>
-          `;
-          wrap.appendChild(div);
-        });
-    }
+        div.innerHTML = `
+          <div class="card-image-group">${imageHtml}</div>
+          <div class="card-name">${name}</div>
+          <div class="card-tags">${tagHtml}</div>
+          <div class="card-fee"><b>연회비:</b> ${fee.toLocaleString()}원</div>
+          <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
+          <div class="card-explain">혜택 특성</div>
+          <div class="card-icons">${iconHtml}</div>
+        `;
+        wrap.appendChild(div);
+      });
   });
 }
 
