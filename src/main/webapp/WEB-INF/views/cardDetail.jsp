@@ -182,7 +182,7 @@
 	  </div>
 	</div>
 </div>
-
+<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 <script src="/js/header2.js"></script>
 <script>
   const CATEGORY_KEYWORDS = {
