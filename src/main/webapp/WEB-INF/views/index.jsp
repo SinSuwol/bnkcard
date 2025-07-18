@@ -43,6 +43,13 @@
 		<h2 class="mainTit2">'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
 		<p class="mainTit3">매일 쓰는 소비에, 매달 받는 보상</p>
 		<div class="spline-wrapper">
+			<img src="/image/bnk프렌즈1.gif" class="bnk-gif bnk-gif1">
+			<img src="/image/bnk프렌즈2.gif" class="bnk-gif bnk-gif2">
+			<img src="/image/bnk프렌즈3.gif" class="bnk-gif bnk-gif3">
+			<img src="/image/bnk프렌즈4.gif" class="bnk-gif bnk-gif4">
+			<div class="confetti-wrapper">
+			  <ul class="particles"></ul>
+			</div>
 			<spline-viewer orbit class="spline" scroll-blocking="false" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
 		</div>
 	</div>
@@ -141,7 +148,6 @@
 						<div class="toolip-txt-box">
 							<p>동백+ 체크카드는 연회비 무료!</p>
 						</div>
-						
 					</div>
 				</div>
 				<div class="hover-target-wrapper">
@@ -149,21 +155,36 @@
 						<img src="/image/버스.png">
 						<p>후불 교통카드</p>
 					</div>
-					<div class="tooltip">툴팁2</div>
+					<div class="tooltip">
+						<img class="tooltip-img" src="/image/툴팁2.png" alt="툴팁 이미지">
+						<div class="toolip-txt-box">
+							<p>후불교통카드 기능은 그대로!</p>
+						</div>
+					</div>
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b3">
 						<img src="/image/atm.png">
 						<p>수수료 무료</p>
 					</div>
-					<div class="tooltip">툴팁3</div>
+					<div class="tooltip">
+						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
+						<div class="toolip-txt-box">
+							<p>동백+ 체크카드는 연회비 무료!</p>
+						</div>
+					</div>
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b4">
 						<img src="/image/번개.png">
 						<p>즉시 캐쉬백</p>
 					</div>
-					<div class="tooltip">툴팁4</div>
+					<div class="tooltip">
+						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
+						<div class="toolip-txt-box">
+							<p>동백+ 체크카드는 연회비 무료!</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -229,6 +250,11 @@
 
 <script src="/js/carousel.js"></script>
 <script>
+
+	
+
+
+	//헤더
 	window.addEventListener('scroll', function() {
 	    const header = document.querySelector('header');
 	    if (window.scrollY > 50) {
@@ -238,7 +264,43 @@
 	    }
 	});
 	
+	//콘페티 애니메이션
+	function launchConfetti() {
+  const ul = document.querySelector('.particles');
+  ul.innerHTML = ''; // 기존 파티클 제거
+
+  const count = 25;
+
+  for (let i = 0; i < count; i++) {
+    const li = document.createElement('li');
+    li.style.setProperty('--i', i); // 색상용 인덱스
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 200 + 50; // 퍼지는 정도
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    li.style.setProperty('--x', `${x}px`);
+    li.style.setProperty('--y', `${y}px`);
+
+    const rotation = Math.random() * 720 - 360; // -360 ~ 360도 회전
+    li.style.setProperty('--r', `${rotation}deg`);
+
+    ul.appendChild(li);
+  }
+}
+
+}
+
+setInterval(() => {
+	  launchConfetti();
+	}, 2000); // 2초마다 터짐
 	
+	
+	
+	
+	
+	//버블
 	const wrappers = document.querySelectorAll('.hover-target-wrapper');
 
 	wrappers.forEach(wrapper => {
