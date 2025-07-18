@@ -29,5 +29,12 @@
 	<delete id="deleteAllCards">
     	DELETE FROM scrap_card
 	</delete>
+	
+	<select id="getCardById" resultType="com.busanbank.card.busancrawler.dto.ScrapCardDto">
+	    SELECT *
+	    FROM SCRAP_CARD
+	    WHERE SC_CARD_NO = #{scCardNo}
+	</select>
+	
 
 </mapper>
