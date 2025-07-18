@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import url('https://cdn.jsdelivr.net/npm/suitcss@1.0.0/suit.min.css');
+/* @import url('https://cdn.jsdelivr.net/npm/suitcss@1.0.0/suit.min.css'); */
 
 
 
@@ -67,11 +67,9 @@ header.scrolled a{
 .nav{
 	gap:60px;
 }
-
 header a.header-login-btn{
 	padding: 10px 20px;
     border: 1px solid gray;
-    background-color: #f7f7f7;
     border-radius: 25px;
     font-size: 0.8rem;
 }
@@ -211,7 +209,7 @@ body.main-body{
 	font-size:4rem;
 	font-weight:bold;
 }
-.bubble-title.t1 {color:gray; margin-top:120px;}
+.bubble-title.t1 {color:#ff2a2a; margin-top:120px;}
 .bubble-title.t2 {color:black;}
 
 .bubble-wrap {
@@ -226,6 +224,7 @@ body.main-body{
   width: 20%;
   aspect-ratio: 1 / 1;
   position: relative;
+  
 }
 .hover-target{
 	border-radius:50%;
@@ -237,14 +236,16 @@ body.main-body{
   	align-items: center;
     justify-content: center;
     flex-direction: column;
+    transform:scale(1);
+  	transition:0.2s;
 }
 .hover-target img{
 	width:80px;
 }
 .tooltip {
   position: fixed;
-  width:400px; height:400px;
-  background-color: black;
+  width:300px; height:400px;
+  background-color: white;
   color: #fff;
   border-radius: 6px;
   font-size: 14px;
@@ -254,11 +255,24 @@ body.main-body{
   z-index: 9999;
   transform:scale(0);
   transform-origin: top left;
+  border: 2px solid #dbdbdb;
+  overflow: hidden;
 }
 .hover-target-wrapper:hover .tooltip {
   transform:  scale(1); /* ← 호버 시 팡! */
 }
 
+.hover-target-wrapper:hover .hover-target{
+	transform: scale(1.1);
+}
+
+.tooltip-img{
+	width:100%;
+}
+.tooltip-txt-box{
+	width:100%;
+	padding:0px 20px;
+}
 
 
 /* ✅  푸터  ✅*/

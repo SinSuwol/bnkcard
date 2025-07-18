@@ -34,7 +34,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 					<a href="/logout">로그아웃</a>
 				</c:when>
 				<c:otherwise>
-					<a class="header-login-btn" href="/user/login">로그인</a>
+					<a class="header-login-btn main1" href="/user/login">로그인</a>
 				</c:otherwise>
 			</c:choose>
 		</div>
