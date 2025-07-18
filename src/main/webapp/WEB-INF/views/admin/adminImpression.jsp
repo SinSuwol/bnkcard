@@ -19,7 +19,7 @@ h2 {
   font-size: 14px;
   background-color: #f8f9fa;
   color: #212529;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 /* 테이블 헤더 */
