@@ -42,10 +42,13 @@ public class AdminSearchController {
 		
 		
 	    // 세션에서 회원번호 꺼내기
-		 Object memberNoObj = session.getAttribute("loginMemberNo");
-		 Long memberNo = ((Number) memberNoObj).longValue();
-		    dto.setMemberNo(memberNo);
-
+		   Object memberNoObj = session.getAttribute("loginMemberNo");
+		    if (memberNoObj != null) {
+		        Long memberNo = ((Number) memberNoObj).longValue();
+		        dto.setMemberNo(memberNo);
+		    } else {
+		        dto.setMemberNo(null); // 비회원은 null 처리
+		    }
 
 	    // 금칙어/추천어 여부 체크
 	    boolean isProhibited = adminSearchDao.isProhibitedKeyword(dto.getKeyword()) > 0;
