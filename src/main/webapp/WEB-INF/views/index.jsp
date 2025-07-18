@@ -44,12 +44,18 @@
 		<h2 class="mainTit2">'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
 		<p class="mainTit3">매일 쓰는 소비에, 매달 받는 보상</p>
 		<div class="spline-wrapper">
-			<img src="/image/bnk프렌즈1.gif" class="bnk-gif bnk-gif1">
-			<img src="/image/bnk프렌즈2.gif" class="bnk-gif bnk-gif2">
-			<img src="/image/bnk프렌즈3.gif" class="bnk-gif bnk-gif3">
-			<img src="/image/bnk프렌즈4.gif" class="bnk-gif bnk-gif4">
-			<div class="confetti-wrapper">
-			  <ul class="particles"></ul>
+			
+			<div class="confetti-wrapper c1">
+			  <ul class="particles "></ul>
+			</div>
+			<div class="confetti-wrapper c2">
+			  <ul class="particles "></ul>
+			</div>
+			<div class="confetti-wrapper c3">
+			  <ul class="particles2 "></ul>
+			</div>
+			<div class="confetti-wrapper c4">
+			  <ul class="particles2 "></ul>
 			</div>
 			<spline-viewer orbit class="spline" scroll-blocking="false" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
 		</div>
@@ -268,65 +274,120 @@
 	});
 	
 	// 콘페티 애니메이션
-function launchConfetti() {
-  const ul = document.querySelector('.particles');
-  ul.innerHTML = '';
+function launchConfettiAll() {
+  const containers = document.querySelectorAll('.particles');
+  containers.forEach(ul => {
+    ul.innerHTML = '';
 
-  const count = 40;
+    const count = 20;
 
-  // 3~5개의 랜덤 인덱스 선택 (중복 없이)
-  const imageParticleCount = Math.floor(Math.random() * 3) + 3; // 3~5개
-  const imageIndexes = new Set();
-  while (imageIndexes.size < imageParticleCount) {
-    imageIndexes.add(Math.floor(Math.random() * count));
-  }
-
-  const imageUrl = '/image/동전.png'; // 사용할 이미지 1종
-
-  for (let i = 0; i < count; i++) {
-    const li = document.createElement('li');
-    li.style.setProperty('--i', i);
-
-    const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 180 + 50;
-    const x = Math.cos(angle) * distance;
-    const y = Math.sin(angle) * distance;
-
-    li.style.setProperty('--x', `\${x}px`);
-    li.style.setProperty('--y', `\${y}px`);
-    const rotation = Math.random() * 720 - 360;
-    li.style.setProperty('--r', `\${rotation}deg`);
-
-    if (imageIndexes.has(i)) {
-      // 🎯 이미지 파티클 - 더 크게, 배경 이미지 적용
-      const size = Math.random() * 30 + 20; // 14~24px
-      li.style.width = `\${size}px`;
-      li.style.height = `\${size}px`;
-      li.style.backgroundImage = `url(\${imageUrl})`;
-      li.style.backgroundSize = 'contain';
-      li.style.backgroundRepeat = 'no-repeat';
-      li.style.backgroundPosition = 'center';
-      li.style.backgroundColor = 'transparent';
-      li.style.borderRadius = '0'; // 필요시
-    } else {
-      // 기본 파티클 - 작고 색상만 있음
-      const size = Math.random() * 8 + 8; // 6~16px
-      li.style.width = `\${size}px`;
-      li.style.height = `\${size}px`;
+    const imageParticleCount = Math.floor(Math.random() * 3) + 3; // 3~5개
+    const imageIndexes = new Set();
+    while (imageIndexes.size < imageParticleCount) {
+      imageIndexes.add(Math.floor(Math.random() * count));
     }
 
-    ul.appendChild(li);
-  }
-}
+    const imageUrl = '/image/동전.png';
 
+    for (let i = 0; i < count; i++) {
+      const li = document.createElement('li');
+      li.style.setProperty('--i', i);
+
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 180 + 50;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      li.style.setProperty('--x', `\${x}px`);
+      li.style.setProperty('--y', `\${y}px`);
+      const rotation = Math.random() * 720 - 360;
+      li.style.setProperty('--r', `\${rotation}deg`);
+
+      if (imageIndexes.has(i)) {
+        const size = Math.random() * 30 + 30;
+        li.style.width = `\${size}px`;
+        li.style.height = `\${size}px`;
+        li.style.backgroundImage = `url(\${imageUrl})`;
+        li.style.backgroundSize = 'contain';
+        li.style.backgroundRepeat = 'no-repeat';
+        li.style.backgroundPosition = 'center';
+        li.style.backgroundColor = 'transparent';
+        li.style.borderRadius = '0';
+      } else {
+        const size = Math.random() * 6 + 12;
+        li.style.width = `\${size}px`;
+        li.style.height = `\${size}px`;
+      }
+
+      ul.appendChild(li);
+    }
+  });
+}
+	
+
+function launchConfettiAll2() {
+	  const containers = document.querySelectorAll('.particles2');
+	  containers.forEach(ul => {
+	    ul.innerHTML = '';
+
+	    const count = 20;
+
+	    const imageParticleCount = Math.floor(Math.random() * 3) + 3; // 3~5개
+	    const imageIndexes = new Set();
+	    while (imageIndexes.size < imageParticleCount) {
+	      imageIndexes.add(Math.floor(Math.random() * count));
+	    }
+
+	    const imageUrl = '/image/동전.png';
+
+	    for (let i = 0; i < count; i++) {
+	      const li = document.createElement('li');
+	      li.style.setProperty('--i', i);
+
+	      const angle = Math.random() * 2 * Math.PI;
+	      const distance = Math.random() * 180 + 50;
+	      const x = Math.cos(angle) * distance;
+	      const y = Math.sin(angle) * distance;
+
+	      li.style.setProperty('--x', `\${x}px`);
+	      li.style.setProperty('--y', `\${y}px`);
+	      const rotation = Math.random() * 720 - 360;
+	      li.style.setProperty('--r', `\${rotation}deg`);
+
+	      if (imageIndexes.has(i)) {
+	        const size = Math.random() * 30 + 30;
+	        li.style.width = `\${size}px`;
+	        li.style.height = `\${size}px`;
+	        li.style.backgroundImage = `url(\${imageUrl})`;
+	        li.style.backgroundSize = 'contain';
+	        li.style.backgroundRepeat = 'no-repeat';
+	        li.style.backgroundPosition = 'center';
+	        li.style.backgroundColor = 'transparent';
+	        li.style.borderRadius = '0';
+	      } else {
+	        const size = Math.random() * 6 + 12;
+	        li.style.width = `\${size}px`;
+	        li.style.height = `\${size}px`;
+	      }
+
+	      ul.appendChild(li);
+	    }
+	  });
+	}
+		
 
 
 
 
 setInterval(() => {
-	  launchConfetti();
-	}, 3000); // 3초마다 터짐
+		launchConfettiAll();
+	}, 6000); // 3초마다 터짐
 	
+setTimeout(() => {
+	  setInterval(() => {
+	    launchConfettiAll2();
+	  }, 6000);
+	}, 3000); // 첫 실행을 3초 뒤에 시작
 	
 	
 	
