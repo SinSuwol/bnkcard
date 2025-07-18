@@ -61,14 +61,16 @@ public class UserSecurityConfig {
         http.logout(logout -> logout
             .logoutUrl("/logout")
             .logoutSuccessHandler((request, response, authentication) -> {
-                // ✅ 회원 로그아웃 시 관리자 세션 보존을 위해 전체 세션 무효화는 하지 않음
+                // 회원 로그아웃 시 관리자 세션 보존을 위해 전체 세션 무효화는 하지 않음
                 HttpSession session = request.getSession(false);
                 if (session != null) {
-                    // 회원 인증 정보만 제거
-                    session.removeAttribute("SPRING_SECURITY_CONTEXT");
+                	
+                	// 사용자 인증 정보만 제거
+                	session.removeAttribute("SPRING_SECURITY_CONTEXT");
+                	session.removeAttribute("loginUsername");
                 }
 
-                // Spring Security 인증 컨텍스트도 클리어
+                // Spring Security 인증 컨텍스트 제거
                 SecurityContextHolder.clearContext();
 
                 // 로그아웃 후 리다이렉트
@@ -79,14 +81,12 @@ public class UserSecurityConfig {
                     response.sendRedirect("/user/login?logout=true");
                 }
             })
-            .invalidateHttpSession(false) // ✅ 반드시 명시
+            .invalidateHttpSession(false)
             .permitAll()
-            // ❌ 절대 사용하지 마세요: 세션 전체 무효화
-            // .invalidateHttpSession(true)
         );
 
         http.sessionManagement(session -> session
-            .sessionFixation().none()  // ✅ 세션 ID 고정 (기존 세션 그대로 사용)
+            .sessionFixation().none()  // 세션 ID 고정 (기존 세션 그대로 사용)
             .maximumSessions(1)
             .expiredSessionStrategy(customSessionExpiredStrategy)
             .maxSessionsPreventsLogin(false)
