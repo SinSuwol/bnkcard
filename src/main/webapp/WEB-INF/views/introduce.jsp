@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <style>
 .main-content {
-  padding-top: 130px; /* 💡 fixed header + top-bar 높이 고려 */
+  padding-top: 130px;
   margin: 0 30px;
 }
 </style>

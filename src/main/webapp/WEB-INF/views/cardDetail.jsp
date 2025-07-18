@@ -290,7 +290,7 @@
 </script>
 
 <script>
-   let remainingSeconds = ${remainingSeconds};
+   let remainingSeconds = <%= request.getAttribute("remainingSeconds") %>;
 </script>
 <script src="/js/sessionTime.js"></script>
 
