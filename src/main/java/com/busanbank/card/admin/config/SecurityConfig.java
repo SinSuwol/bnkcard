@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
             .securityMatcher("/admin/**")
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/adminLoginForm", "/admin/login", "/admin/logout").permitAll()
+                .requestMatchers("/admin/Search/searchlog/**","/admin/Mainpage","/admin/adminLoginForm", "/admin/login", "/admin/logout").permitAll()
                 .anyRequest().access((authContext, context) -> {
                     boolean loggedIn = adminSession.isLoggedIn();
                     return new org.springframework.security.authorization.AuthorizationDecision(loggedIn);

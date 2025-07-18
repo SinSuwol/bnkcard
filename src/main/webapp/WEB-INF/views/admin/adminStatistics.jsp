@@ -11,7 +11,7 @@
 
 /* ===== 제목 스타일 ===== */
 h1, h2 {
-  margin-top: 50px;
+  padding-top: 40px;
   margin-bottom: 20px;
   font-weight: 600;
   color: #2c3e50;

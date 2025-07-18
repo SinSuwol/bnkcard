@@ -16,7 +16,7 @@
 		SEARCH_DATE
 		) VALUES (
 		SEARCH_LOG_SEQ.NEXTVAL,
-		#{memberNo, jdbcType=NUMERIC},
+		#{memberNo},
 		#{keyword},
 		#{isProhibited},
 		#{isRecommended},
