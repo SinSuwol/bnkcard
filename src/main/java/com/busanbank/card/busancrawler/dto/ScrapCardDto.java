@@ -15,4 +15,5 @@ public class ScrapCardDto {
     private int scAnnualFee;
     private String scSService;
     private LocalDate scDate;
+    private String scBenefits;
 }

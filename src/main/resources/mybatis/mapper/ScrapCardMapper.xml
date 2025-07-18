@@ -9,7 +9,7 @@
     <insert id="insertCard">
     INSERT INTO SCRAP_CARD (
         SC_CARD_NO, SC_CARD_URL, SC_CARD_SLOGAN,
-        SC_CARD_NAME, SC_ANNUAL_FEE, SC_S_SERVICE, SC_DATE
+        SC_CARD_NAME, SC_ANNUAL_FEE, SC_S_SERVICE, SC_DATE, SC_BENEFITS
     ) VALUES (
         SCRAP_CARD_SEQ.NEXTVAL,
         #{scCardUrl},
@@ -17,7 +17,8 @@
         #{scCardName},
         #{scAnnualFee},
         #{scSService},
-        #{scDate}
+        #{scDate},
+        #{scBenefits}
     )
 	</insert>
 	

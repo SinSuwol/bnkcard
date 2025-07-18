@@ -35,12 +35,22 @@ public class CardController {
 	}
 
 	@GetMapping("/cards/{cardNo}")
-	public CardDto findOne(@PathVariable("cardNo") Long cardNo) {
-		CardDto dto = cardService.getCard(cardNo);
-		if (dto == null)
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 카드");
-		return dto;
+	public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
+	    if (cardNo.startsWith("scrap_")) {
+	        // 타행카드 처리
+	        List<ScrapCardDto> all = seleniumCardCrawler.getScrapList();
+	        long timestamp = Long.parseLong(cardNo.replace("scrap_", ""));
+	        ScrapCardDto match = all.stream()
+	            .filter(c -> c.getScCardName().contains("Pick E")) // 이름 또는 날짜 등으로 매칭
+	            .findFirst()
+	            .orElse(null);
+	        return ResponseEntity.ok(match);
+	    } else {
+	        Long realNo = Long.parseLong(cardNo);
+	        return ResponseEntity.ok(cardService.getCard(realNo));
+	    }
 	}
+
 
 	@GetMapping("/cards/search")
 	public List<CardDto> searchCards(@RequestParam(value = "q", required = false) String q,

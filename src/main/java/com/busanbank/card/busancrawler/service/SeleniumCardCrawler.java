@@ -79,6 +79,20 @@ public class SeleniumCardCrawler {
                         fee = 0;
                     }
                     
+                    String benefitDetails = "-";
+                    try {
+                        List<WebElement> liElements = driver.findElements(By.cssSelector("ul.info-benefit li"));
+                        List<String> lines = new ArrayList<>();
+                        for (WebElement li : liElements) {
+                            String label = li.findElement(By.tagName("span")).getText().trim();
+                            String value = li.findElement(By.tagName("b")).getText().trim();
+                            lines.add("• " + label + " " + value);
+                        }
+                        benefitDetails = String.join("<br>", lines);
+                    } catch (Exception e) {
+                        benefitDetails = "세부 혜택 없음";
+                    }
+                    
                     // 카드 데이터 저장
                     ScrapCardDto dto = new ScrapCardDto();
                     dto.setScCardName(cardName);
@@ -87,6 +101,7 @@ public class SeleniumCardCrawler {
                     dto.setScSService(benefit);
                     dto.setScAnnualFee(fee);
                     dto.setScDate(LocalDate.now());
+                    dto.setScBenefits(benefitDetails);
                     
                     cardList.add(dto);
                     
