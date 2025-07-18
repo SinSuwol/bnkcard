@@ -13,4 +13,7 @@ public interface ScrapCardMapper {
 	public List<ScrapCardDto> getScrapList(); //리스트 조회
 	
 	int deleteAllCards(); // 전체 삭제
+	
+	ScrapCardDto getCardById(Long scCardNo);
+	
 }

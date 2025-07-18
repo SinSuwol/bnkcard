@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ChatMapper {
-    
+
     void insertChatRoom(ChatRoomDto room);
 
     Long selectCurrRoomId();
@@ -19,12 +19,21 @@ public interface ChatMapper {
 
     void insertChatMessage(ChatMessageDto dto);
 
+    void updateRoomLastMsgAt(Long roomId);   // ★ 추가
+
     void increaseUnreadCount(Long roomId);
-    
+
     List<ChatMessageDto> selectMessages(Long roomId);
-    
+
     Long selectRoomIdByMember(Long memberNo);
 
     Long selectLatestOpenRoomIdByMember(@Param("memberNo") Long memberNo);
 
+    // 관리자용
+    List<ChatRoomDto> selectAllRooms();
+
+    void assignAdminToRoom(@Param("roomId") Long roomId,
+                           @Param("adminNo") Long adminNo);
+
+    void closeRoom(Long roomId);
 }

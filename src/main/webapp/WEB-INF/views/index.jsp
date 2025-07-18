@@ -258,6 +258,10 @@
 	    tooltip.style.top = `\${e.clientY + 10}px`;
 	  });
 	});
-</script>	
+</script>
+<script>
+	let remainingSeconds = ${remainingSeconds};
+</script>
+<script src="/js/sessionTime.js"></script>
 </body>
 </html>

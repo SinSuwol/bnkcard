@@ -16,27 +16,29 @@ public class SecurityConfig {
 
 	@Bean(name = "adminFilterChain")
     public SecurityFilterChain adminFilterChain(HttpSecurity http, AdminSession adminSession) throws Exception {
-
-		http
-	    // /admin 및 하위 경로 적용
-		.securityMatcher("/admin/**")
-
-	    .authorizeHttpRequests(auth -> auth
-	        .requestMatchers("/admin/adminLoginForm","/admin/login", "/admin/logout").permitAll()
-	        .anyRequest()
-	            .access((authentication, context) -> {
-	                boolean loggedIn = adminSession.isLoggedIn();
-	                return new org.springframework.security.authorization.AuthorizationDecision(loggedIn);
-	            })
-	    )
-
-	    .csrf(csrf -> csrf.disable())
-	    .sessionManagement(session -> session
-	        .maximumSessions(1)
-	        .maxSessionsPreventsLogin(true)
-	    );
+        http
+            .securityMatcher("/admin/**")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/adminLoginForm", "/admin/login", "/admin/logout").permitAll()
+                .anyRequest().access((authContext, context) -> {
+                    boolean loggedIn = adminSession.isLoggedIn();
+                    return new org.springframework.security.authorization.AuthorizationDecision(loggedIn);
+                })
+            )
+            .exceptionHandling(exception -> 
+                exception
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.sendRedirect("/admin/adminLoginForm");
+                    })
+            )
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+            );
 
         return http.build();
     }
+
 }
 

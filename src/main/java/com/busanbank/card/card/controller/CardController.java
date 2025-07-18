@@ -15,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.busanbank.card.admin.dao.IAdminSearchDao;
 import com.busanbank.card.card.dto.CardDto;
 import com.busanbank.card.card.service.CardService;
+import com.busanbank.card.busancrawler.dto.ScrapCardDto;
+import com.busanbank.card.busancrawler.service.SeleniumCardCrawler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,33 +27,39 @@ public class CardController {
 
 	private final CardService cardService;
 	private final IAdminSearchDao adminSearchDao;
+	private final SeleniumCardCrawler seleniumCardCrawler;  // ✅ 추가
 
-	// 전체 카드 목록
 	@GetMapping("/cards")
 	public List<CardDto> findAll() {
 		return cardService.getCardList();
 	}
 
-	// 카드디테일(단건 조회)
-	@GetMapping("/cards/{cardNo}") // ← 메서드 경로
-	public CardDto findOne(@PathVariable("cardNo") Long cardNo) {
-		CardDto dto = cardService.getCard(cardNo);
-		if (dto == null) // 없으면 404 던지기 (선택)
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 카드");
-		return dto;
+	@GetMapping("/cards/{cardNo}")
+	public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
+	    if (cardNo.startsWith("scrap_")) {
+	        // 타행카드 처리
+	        List<ScrapCardDto> all = seleniumCardCrawler.getScrapList();
+	        long timestamp = Long.parseLong(cardNo.replace("scrap_", ""));
+	        ScrapCardDto match = all.stream()
+	            .filter(c -> c.getScCardName().contains("Pick E")) // 이름 또는 날짜 등으로 매칭
+	            .findFirst()
+	            .orElse(null);
+	        return ResponseEntity.ok(match);
+	    } else {
+	        Long realNo = Long.parseLong(cardNo);
+	        return ResponseEntity.ok(cardService.getCard(realNo));
+	    }
 	}
 
-	// 카드리스트 검색기능
+
 	@GetMapping("/cards/search")
 	public List<CardDto> searchCards(@RequestParam(value = "q", required = false) String q,
 	                                 @RequestParam(value = "type", required = false) String type,
 	                                 @RequestParam(value = "tags", required = false) String tags) {
-
 	    if (q != null && adminSearchDao.isProhibitedKeyword(q) > 0) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 단어는 검색할 수 없습니다");
 	    }
 
-	    // [조건 추가] 기존 type이 없을 때만 type 값을 q로 설정
 	    if (type == null || type.isBlank()) {
 	        if ("신용".equals(q)) {
 	            type = "신용";
@@ -66,17 +74,15 @@ public class CardController {
 	    return cardService.search(q, type, tagList);
 	}
 
+	@PutMapping("/cards/{cardNo}/view")
+	public ResponseEntity<Void> increaseViewCount(@PathVariable("cardNo") int cardNo) {
+	    cardService.increaseViewCount(cardNo);
+	    return ResponseEntity.ok().build();  
+	}
 
-    
-    
-    //카드디테일 페이지에서 view_count 상승시키기
-    @PutMapping("/cards/{cardNo}/view")
-    public ResponseEntity<Void> increaseViewCount(@PathVariable("cardNo") int cardNo) {
-        cardService.increaseViewCount(cardNo);
-        return ResponseEntity.ok().build();  
-    }
-    
-    
-   
-	
+	// 타행카드 전체 목록 (공개용)
+	@GetMapping("/public/cards/scrap")
+	public List<ScrapCardDto> publicScrapCards() {
+	    return seleniumCardCrawler.getScrapList();
+	}
 }
