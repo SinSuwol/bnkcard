@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <style>
 .main-content {
-  padding-top: 130px;
+  padding-top: 70px;
   margin: 0 30px;
 }
 </style>

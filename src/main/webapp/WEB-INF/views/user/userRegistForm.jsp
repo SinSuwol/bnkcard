@@ -70,6 +70,10 @@ td {
     padding: 8px 10px;
 }
 
+td span {
+    white-space: nowrap;
+}
+
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -184,7 +188,10 @@ input::placeholder {
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><input type="password" name="password" id="password" oninput="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
+					<td>
+						<input type="password" name="password" id="password" oninput="validatePassword()">
+						<span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span>
+					</td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>

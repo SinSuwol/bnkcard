@@ -43,7 +43,7 @@ public class RegistController {
 		
 		String username = (String) session.getAttribute("loginUsername");
 		if(username != null) {
-			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
+			rttr.addFlashAttribute("msg", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
 		
@@ -59,7 +59,7 @@ public class RegistController {
 
 		String username = (String) session.getAttribute("loginUsername");
 		if (username != null) {
-			rttr.addFlashAttribute("message", "이미 로그인된 사용자입니다.");
+			rttr.addFlashAttribute("msg", "이미 로그인된 사용자입니다.");
 			return "redirect:/";
 		}
 
@@ -149,10 +149,13 @@ public class RegistController {
 			model.addAttribute("msg", "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
 			return "user/userRegistForm";
 		}
+		
+		//주민등록번호
 		user.setRrnFront(joinUser.getRrnFront());
 		user.setRrnGender(rrn_gender);
 		user.setRrnTailEnc(encryptedRrnTail);
 		
+		//주소
 		user.setZipCode(joinUser.getZipCode());
 		String address1 = joinUser.getAddress1() + joinUser.getExtraAddress();
 		user.setAddress1(address1);
