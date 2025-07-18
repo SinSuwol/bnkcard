@@ -119,7 +119,14 @@
 	  display: block;
 	}
     .section {
-      padding: 30px 20px;
+      margin-top: 70px;
+      background-color: white;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 30px;
+
     }
     .section h3 {
       margin-bottom: 16px;

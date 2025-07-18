@@ -457,6 +457,9 @@
 		<h4>비교함</h4>
 		<ul id="compareList" style="list-style: none; padding: 0; margin: 0"></ul>
 		<button onclick="openCompare()">비교하기</button>
+		<div style="text-align:center; margin-top:10px;">
+		  <button onclick="openScrapModal()" style="font-size:13px; padding:6px 10px; background:#eee; border:1px solid #ccc; border-radius:6px; cursor:pointer;">타행카드와 비교</button>
+		</div>
 	</div>
 
 	<!-- 비교 모달 -->
@@ -468,6 +471,18 @@
   </div>
 </div>
 <div id="modalOverlay" onclick="closeCompareModal()"></div>
+
+<div id="scrapCompareModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:80%; max-width:700px; background:#fff; border-radius:12px; padding:30px; box-shadow:0 0 20px rgba(0,0,0,.4); z-index:3000;">
+  <h2 style="text-align:center;">타행카드 비교하기</h2>
+  <div id="scrapModalList" style="max-height:400px; overflow-y:auto; margin-top:20px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
+  <div style="text-align:center; margin-top:20px;">
+    <button onclick="closeScrapModal()">닫기</button>
+  </div>
+</div>
+<div id="scrapOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2999;" onclick="closeScrapModal()"></div>
+
+
+
 
 	<!-- 상세 검색 모달 -->
 	<div id="advOverlay"></div>
@@ -874,6 +889,46 @@ function closeCompareModal(){
   document.getElementById('compareModal').style.display='none';
   document.getElementById('modalOverlay').style.display='none';
 }
+
+function openScrapModal() {
+	fetch('/api/public/cards/scrap')
+	    .then(res => res.json())
+	    .then(data => {
+	      const listDiv = document.getElementById('scrapModalList');
+	      listDiv.innerHTML = '';
+	      data.forEach(card => {
+	        const div = document.createElement('div');
+	        div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
+	        div.innerHTML = `
+	          <div><b>${card.scCardName}</b></div>
+	          <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
+	          <button onclick='addScrapToCompare("${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
+	        `;
+	        listDiv.appendChild(div);
+	      });
+	      document.getElementById('scrapCompareModal').style.display = 'block';
+	      document.getElementById('scrapOverlay').style.display = 'block';
+	    });
+	}
+
+	function closeScrapModal() {
+	  document.getElementById('scrapCompareModal').style.display = 'none';
+	  document.getElementById('scrapOverlay').style.display = 'none';
+	}
+
+	function addScrapToCompare(url, name) {
+	  const slot = document.getElementById('compareList');
+	  const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+	  if (box.length >= 2) {
+	    alert('최대 2개까지만 비교 가능합니다.');
+	    return;
+	  }
+	  box.push({cardNo: 'scrap_' + Date.now(), cardName: name, cardUrl: url});
+	  sessionStorage.setItem('compareCards', JSON.stringify(box));
+	  renderCompareList();
+	  closeScrapModal();
+	}
+
 </script>
 
 <script>
