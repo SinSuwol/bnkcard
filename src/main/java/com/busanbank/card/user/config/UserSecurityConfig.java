@@ -68,6 +68,8 @@ public class UserSecurityConfig {
                 	// 사용자 인증 정보만 제거
                 	session.removeAttribute("SPRING_SECURITY_CONTEXT");
                 	session.removeAttribute("loginUsername");
+                	session.removeAttribute("loginUsername");
+                	session.removeAttribute("loginRole");
                 }
 
                 // Spring Security 인증 컨텍스트 제거
