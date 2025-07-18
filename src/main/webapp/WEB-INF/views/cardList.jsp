@@ -48,6 +48,7 @@
   box-sizing: border-box;
 }
 .popular-card {
+  margin-top: 30px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -177,26 +178,18 @@
    position:absolute;
    width: 1px;
    margin-top: 20px;
-   height: 500px;
+   height: 450px;
    background-color: #ededed;
 }
 
-#modalContent div {
-   width: 200px;
-   text-align: center
-}
 
 #modalContent div .card-name {
    font-size: 20px;
+   text-align: left;
 }
 
 #modalContent div .card-image-group img{
-   width: 150px;
-}
-
-#modalContent img {
    width: 100%;
-   border: 1px solid #ccc
 }
 
 /* 더보기 */
@@ -374,18 +367,25 @@
   margin: 6px 0 3px;
 }
 .card-fee {
+  margin-top: 20px;
+  text-align: left;
   color: #333;
   font-size: 13px;
   margin-bottom: 5px;
 }
 .card-tags {
+  text-align: left;
   color: #777;
-  font-size: 12px;
+  font-size: 15px;
   margin: 4px 0;
 }
+
+.card-explain {
+	text-align: left;
+}
 #modalContent .card-icons img {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin: 2px;
 }
 .card-summary {
@@ -399,14 +399,15 @@
 }
 
 .card-icons {
-   display: flex;
-    flex-wrap: wrap;
+    display: flex;
     justify-content: center;
     gap: 10px 30px;
     margin-top: 8px;
     max-width: 200px;
-    align-content: space-around;
-    flex-direction: column-reverse;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+
 }
 
 
@@ -885,10 +886,10 @@ function openCompare() {
           <div class="card-image-group">${imageHtml}</div>
           <div class="card-name">${name}</div>
           <div class="card-tags">${tagHtml}</div>
+          <div class="card-icons">${iconHtml}</div>
           <div class="card-fee"><b>연회비:</b> ${fee.toLocaleString()}원</div>
           <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
           <div class="card-explain">혜택 특성</div>
-          <div class="card-icons">${iconHtml}</div>
         `;
         wrap.appendChild(div);
       });
@@ -904,26 +905,51 @@ function closeCompareModal(){
 }
 
 function openScrapModal() {
-   console.log("타행카드 모달 실행");
-   fetch('/api/public/cards/scrap')
-       .then(res => res.json())
-       .then(data => {
-         const listDiv = document.getElementById('scrapModalList');
-         listDiv.innerHTML = '';
-         data.forEach(card => {
-           const div = document.createElement('div');
-           div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
-           div.innerHTML = `
-             <div><b>${card.scCardName}</b></div>
-             <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
-             <button onclick='addScrapToCompare("${card.scCardNo}","${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
-           `;
-           listDiv.appendChild(div);
-         });
-         document.getElementById('scrapCompareModal').style.display = 'block';
-         document.getElementById('scrapOverlay').style.display = 'block';
-       });
-   }
+	  console.log("타행카드 모달 실행");
+
+	  // 1. 현재 비교함(cardNo 리스트) 중 scrap 카드만 추출
+	  const comparedScrapNos = JSON.parse(sessionStorage.getItem('compareCards') || '[]')
+	    .filter(c => c.cardNo.startsWith('scrap_'))
+	    .map(c => c.cardNo.replace('scrap_', ''));
+
+	  fetch('/api/public/cards/scrap')
+	    .then(res => res.json())
+	    .then(data => {
+	      const listDiv = document.getElementById('scrapModalList');
+	      listDiv.innerHTML = '';
+
+	      data.forEach(card => {
+	        const div = document.createElement('div');
+	        div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
+
+	        // 이미지 추출 (첫 번째 URL만 사용)
+	        const imageUrl = (card.scCardUrl || '').split(',')[0]?.trim();
+
+	        // 비교함에 이미 담겼는지 확인
+	        const isAlreadyAdded = comparedScrapNos.includes(String(card.scCardNo));
+
+	        // innerHTML 구성
+	        div.innerHTML = `
+	          <img src="${imageUrl}" alt="${card.scCardName}" style="width:100%; height:auto; border-radius:8px; margin-bottom:8px;">
+	          <div><b>${card.scCardName}</b></div>
+	          <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
+	          ${
+	            isAlreadyAdded
+	              ? `<div style="font-size:12px; color:green;">✔ 비교함에 추가됨</div>`
+	              : `<button onclick='addScrapToCompare("${card.scCardNo}","${imageUrl}", "${card.scCardName}")'
+	                         style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">
+	                   비교함 담기
+	                 </button>`
+	          }
+	        `;
+	        listDiv.appendChild(div);
+	      });
+
+	      document.getElementById('scrapCompareModal').style.display = 'block';
+	      document.getElementById('scrapOverlay').style.display = 'block';
+	    });
+	}
+
 
    function closeScrapModal() {
      document.getElementById('scrapCompareModal').style.display = 'none';
