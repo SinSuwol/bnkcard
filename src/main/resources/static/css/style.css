@@ -318,3 +318,48 @@ body.main-body{
   margin-left: 5px;
 }
 
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #222;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.user-name:hover {
+  text-decoration: underline;
+}
+
+.session-timer-box {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 0.95rem;
+  color: #222;
+  border-radius: 2px;
+}
+
+#extend-btn {
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#extend-btn:hover {
+  background-color: #555;
+}
