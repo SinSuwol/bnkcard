@@ -99,7 +99,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/update")
-	public String update(UserDto user, HttpSession session, Model model,
+	public String update(UserDto user,
+						@RequestParam("extraAddress") String extraAddress,
+						HttpSession session, Model model,
 						RedirectAttributes rttr) {
 		
 		UserDto loginUser = userDao.findByUsername(user.getUsername());
@@ -124,6 +126,15 @@ public class UserController {
 				//기존값 유지
 				user.setPassword(loginUser.getPassword());				
 			}
+			
+			//주소 처리
+			if (!extraAddress.trim().isEmpty()) {
+		        user.setAddress1(user.getAddress1() + extraAddress);
+		    }
+			else {
+		        user.setAddress1(user.getAddress1());
+		    }
+			
 			//DB 수정
 			userDao.updateMember(user);
 			System.out.println(user);

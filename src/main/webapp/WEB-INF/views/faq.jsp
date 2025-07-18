@@ -38,7 +38,7 @@ body {
 }
 
 .main-content {
-	padding-top: 130px;
+	padding-top: 70px;
 	margin: 0 auto;
 	width: 100%;
 	max-width: var(--bnk-max-width);
@@ -363,6 +363,11 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	<script src="${ctx}/js/sessionTime.js"></script>
 	<!-- 공통 챗봇 모달 -->
 	<jsp:include page="/WEB-INF/views/fragments/chatbotModal.jsp" />
+	<script src="/js/header2.js"></script>
+<script>
+	let remainingSeconds = ${remainingSeconds};
+</script>
+<script src="/js/sessionTime.js"></script>
 </body>
 </html>
 

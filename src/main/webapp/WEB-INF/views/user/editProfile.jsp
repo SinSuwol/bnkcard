@@ -5,91 +5,118 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>개인 정보 수정</title>
+<title>내 정보 수정</title>
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body {
     font-family: "맑은 고딕", sans-serif;
     background-color: #fff;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 .content-wrapper {
     max-width: 800px;
-    margin: 100px auto 0;
-    padding: 40px 30px 60px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin: 0 auto;
+    padding: 90px 30px 60px;
 }
 
-.content-wrapper h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
+.page-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    text-align: left;
 }
 
-.content-wrapper hr {
-    border: none;
-    border-bottom: 1px solid #ddd;
+.sub-title {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.divider-section {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
     margin-bottom: 30px;
 }
 
-/* 폼 테이블 */
-form#updateForm table {
+form {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
 }
 
-form#updateForm th,
-form#updateForm td {
-    padding: 12px 10px;
+th {
     text-align: left;
-    vertical-align: middle;
-}
-
-form#updateForm th {
-    width: 30%;
+    vertical-align: top;
+    padding: 12px 10px 8px;
+    width: 140px;
     font-weight: 600;
-    color: #555;
-    background-color: #f7f7f7;
-    border-radius: 6px 0 0 6px;
+    color: #222;
+    white-space: nowrap;
 }
 
-form#updateForm td input[type="text"],
-form#updateForm td input[type="password"] {
+td {
+    padding: 8px 10px;
+}
+
+td span {
+    white-space: nowrap;
+}
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[readonly] {
+    background-color: #f9f9f9;
+    color: #666;
+}
+
+span {
+    font-size: 12px;
+    color: #777;
+    margin-left: 6px;
+}
+
+.zipcode-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.zipcode-wrapper input[type="text"] {
+    flex: 1;
+}
+
+.zipcode-wrapper input[type="button"] {
     padding: 8px 12px;
-    border: 1.5px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+    font-size: 13px;
+    background-color: #c10c0c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-form#updateForm td input[type="text"]:focus,
-form#updateForm td input[type="password"]:focus {
-    border-color: #c10c0c;
-    outline: none;
-    box-shadow: 0 0 5px rgba(193,12,12,0.3);
-}
-
-form#updateForm td span {
-    font-size: 0.85rem;
-    color: #888;
-    margin-left: 8px;
-}
-
-/* 비밀번호 에러 메시지 */
-#pwErrorMsg {
-    color: red;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding-left: 10px;
-    margin-top: 4px;
-    min-height: 20px;
-}
-
-/* 버튼 그룹 */
 .button-group {
     text-align: center;
     margin-top: 40px;
@@ -101,7 +128,7 @@ form#updateForm td span {
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
-    margin: 0 8px;
+    margin: 0 10px;
 }
 
 .button-group button:first-child {
@@ -114,51 +141,79 @@ form#updateForm td span {
     color: #333;
 }
 
+input::placeholder {
+    font-size: 13px;
+    color: #aaa;
+}
+
+.input-with-guide {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 입력창과 문장 사이 여백 */
+}
+
+.input-with-guide span {
+    white-space: nowrap;
+    font-size: 12px;
+    color: #777;
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
-<!-- <div style="height: 150px;"></div> -->
+
 <div class="content-wrapper">
-	<h2>개인 정보 수정</h2>
-	<hr>
-	<form id="updateForm" action="/user/update" method="post">
-		<table>
-			<tr>
-				<th>성명(실명)</th>
-				<td><input type="text" name="name" id="name" value="${loginUser.name}" readonly></td>
-			</tr>
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" name="username" id="username" value="${loginUser.username}" readonly></td>
-			</tr>
-			<tr>
-				<th>새 비밀번호</th>
-				<td><input type="password" name="password" id="password" onblur="validatePassword()"><span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span></td>
-			</tr>
-			<tr>
-				<th>새 비밀번호 확인</th>
-				<td>
-					<input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()">
-					<span> ※ 비밀번호 재입력</span>
-					<div id="pwErrorMsg"></div>
-				</td>
-			</tr>
-			<tr>
-				<th>주소</th>
-				<td>
-					<input type="text" name="zipCode" id="zipCode" value="${loginUser.zipCode}"><br>
-					<input type="text" name="address1" id="address1" value="${loginUser.address1}"><br>
-					<input type="text" name="address2" id="address2" value="${loginUser.address2}">
-				</td>
-			</tr>
-		</table>
-		<input type="hidden" name="role" value="${role}">
-		<div class="button-group">
-			<button type="button" onclick="editProfile()">수정</button>
-			<button type="button" onclick="cancelEdit()">취소</button>
-		</div>
-	</form>
+	<h2 class="page-title">회원정보 수정</h2>
+    <p class="sub-title">수정할 정보를 입력해주세요.</p>
+    
+    <div class="divider-section">
+		<form id="updateForm" action="/user/update" method="post">
+			<table>
+				<tr>
+					<th>성명(실명)</th>
+					<td><input type="text" name="name" id="name" value="${loginUser.name}" readonly></td>
+				</tr>
+				<tr>
+					<th>아이디</th>
+					<td><input type="text" name="username" id="username" value="${loginUser.username}" readonly></td>
+				</tr>
+				<tr>
+					<th>새 비밀번호</th>
+					<td>
+						<input type="password" name="password" id="password" onblur="validatePassword()">
+						<span> ※ 영문자, 숫자, 특수문자 포함 8~12자 이내 (영문, 숫자, 특수문자 조합)</span>
+					</td>
+				</tr>
+				<tr>
+					<th>새 비밀번호 확인</th>
+					<td>
+						<input type="password" name="passwordCheck" id="passwordCheck" onblur="checkPasswordMatch()">
+						<span> ※ 비밀번호 재입력</span>
+						<div id="pwErrorMsg"></div>
+					</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td>
+						<div class="zipcode-wrapper">
+							<input type="text" name="zipCode" id="zipCode" value="${loginUser.zipCode}" readonly>
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						</div>
+						<input type="text" name="address1" id="address1" value="${loginUser.address1}" readonly><br>
+						<input type="text" name="extraAddress" id="extraAddress" readonly><br>
+						<input type="text" name="address2" id="address2" placeholder="상세주소" value="${loginUser.address2}">
+					</td>
+				</tr>
+			</table>
+			<input type="hidden" name="role" value="${role}">
+			<div class="button-group">
+				<button type="button" onclick="editProfile()">수정</button>
+				<button type="button" onclick="cancelEdit()">취소</button>
+			</div>
+		</form>
+	</div>
+	
 	<c:if test="${not empty msg}">
 	    <script>
 	        alert("${msg}");
@@ -252,9 +307,14 @@ form#updateForm td span {
 		}
 			
 		//주소 검사
-		if(!document.getElementById("zipCode").value.trim() || !document.getElementById("address1").value.trim() || !document.getElementById("address2").value.trim()) {
+		if(!document.getElementById("zipCode").value.trim() || !document.getElementById("address1").value.trim()) {
 			alert("주소를 입력해주세요.");
 			document.getElementById("zipCode").focus();
+			return;
+		}
+		if(!document.getElementById("address2").value.trim()){			
+			alert("상세주소를 입력해주세요.");
+			document.getElementById("address2").focus();
 			return;
 		}
 		
@@ -269,5 +329,7 @@ form#updateForm td span {
 </script>
 
 <script src="/js/sessionTime.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/postcode.js"></script>
 </body>
 </html>

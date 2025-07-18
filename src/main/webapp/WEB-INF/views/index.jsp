@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -226,7 +227,9 @@
 	  </div>
 	</div>
 </footer>
-
+<c:if test="${not empty msg}">
+	    <script>alert("${msg}");</script>
+	</c:if>
 <script src="/js/carousel.js"></script>
 <script>
 	window.addEventListener('scroll', function() {
