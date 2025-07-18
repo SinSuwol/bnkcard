@@ -856,10 +856,10 @@ function openCompare() {
         const tagHtml = tags.map(t => `#${t}`).join(' ');
 
         // 카드 이미지 (최대 3장)
-        const images = (d.cardUrl || d.scCardUrl || '').split(',');
-		const imageHtml = images.slice(0, 3).map(url =>
-		  `<img src="${url.trim()}" alt="">`
-		).join('');
+        const images = d.cardUrl?.split(',') || [];
+        const imageHtml = images.slice(0, 3).map(url =>
+          `<img src="${url.trim()}" alt="">`
+        ).join('');
 
         // ✅ 요약 혜택: benefits 또는 scbenefits 우선 사용
         let summary = '';
