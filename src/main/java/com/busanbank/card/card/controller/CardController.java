@@ -29,33 +29,34 @@ public class CardController {
 	private final CardService cardService;
 	private final IAdminSearchDao adminSearchDao;
 	private final SeleniumCardCrawler seleniumCardCrawler;  // ✅ 추가
-	private final ScrapCardMapper scrapCardMapper;
+	private final ScrapCardMapper scrapCardMapper;  // ✅ 추가
 
 	@GetMapping("/cards")
 	public List<CardDto> findAll() {
 		return cardService.getCardList();
 	}
 
-	 @GetMapping("/cards/{cardNo}")
-	   public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
-	       if (cardNo.startsWith("scrap_")) {
-	           // scrap_ 접두어 제거하고 scCardNo로 파싱
-	           long scCardNo = Long.parseLong(cardNo.replace("scrap_", ""));
-	           ScrapCardDto match = scrapCardMapper.getCardById(scCardNo); // Mapper 메서드 필요
-	           System.out.println("타행카드: "+scCardNo);
-	           System.out.println(match);
-	           if (match == null) {
-	               return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                                    .body("타행카드 정보를 찾을 수 없습니다.");
-	           }
+	//비교하기
+	@GetMapping("/cards/{cardNo}")
+	public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
+	    if (cardNo.startsWith("scrap_")) {
+	        // scrap_ 접두어 제거하고 scCardNo로 파싱
+	        long scCardNo = Long.parseLong(cardNo.replace("scrap_", ""));
+	        ScrapCardDto match = scrapCardMapper.getCardById(scCardNo); // Mapper 메서드 필요
+	        System.out.println("타행카드: "+scCardNo);
+	        System.out.println(match);
+	        if (match == null) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                                 .body("타행카드 정보를 찾을 수 없습니다.");
+	        }
 
-	           return ResponseEntity.ok(match);
-	       } else {
-	          System.out.println("자행카드: "+cardNo);
-	           Long realNo = Long.parseLong(cardNo);
-	           return ResponseEntity.ok(cardService.getCard(realNo));
-	       }
-	   }
+	        return ResponseEntity.ok(match);
+	    } else {
+	    	System.out.println("자행카드: "+cardNo);
+	        Long realNo = Long.parseLong(cardNo);
+	        return ResponseEntity.ok(cardService.getCard(realNo));
+	    }
+	}
 
 
 	@GetMapping("/cards/search")

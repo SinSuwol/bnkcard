@@ -136,7 +136,13 @@
 						<img src="/image/웃는얼굴.png">
 						<p>연회비 무료</p>
 					</div>
-					<div class="tooltip">툴팁1</div>
+					<div class="tooltip">
+						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
+						<div class="toolip-txt-box">
+							<p>동백+ 체크카드는 연회비 무료!</p>
+						</div>
+						
+					</div>
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b2">
@@ -155,7 +161,7 @@
 				<div class="hover-target-wrapper">
 					<div class="hover-target b4">
 						<img src="/image/번개.png">
-						<p>빠른 On/Off</p>
+						<p>즉시 캐쉬백</p>
 					</div>
 					<div class="tooltip">툴팁4</div>
 				</div>

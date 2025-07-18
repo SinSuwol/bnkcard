@@ -573,9 +573,7 @@ fetch('/api/cards')
     });
   });
 
-</script>
 
-<script>
 let fullCardList=[],currentIndex=0,currentType='',currentKeyword='',selectedTags=[];
 const advModal=document.getElementById('advModal');
 
@@ -906,6 +904,7 @@ function closeCompareModal(){
 }
 
 function openScrapModal() {
+	console.log("타행카드 모달 실행");
 	fetch('/api/public/cards/scrap')
 	    .then(res => res.json())
 	    .then(data => {
@@ -917,7 +916,7 @@ function openScrapModal() {
 	        div.innerHTML = `
 	          <div><b>${card.scCardName}</b></div>
 	          <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
-	          <button onclick='addScrapToCompare("${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
+	          <button onclick='addScrapToCompare("${card.scCardNo}","${card.scCardUrl}", "${card.scCardName}")' style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">비교함 담기</button>
 	        `;
 	        listDiv.appendChild(div);
 	      });
@@ -931,14 +930,16 @@ function openScrapModal() {
 	  document.getElementById('scrapOverlay').style.display = 'none';
 	}
 
-	function addScrapToCompare(url, name) {
+	function addScrapToCompare(cardNo, url, name) {
 	  const slot = document.getElementById('compareList');
 	  const box = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
 	  if (box.length >= 2) {
 	    alert('최대 2개까지만 비교 가능합니다.');
 	    return;
 	  }
-	  box.push({cardNo: 'scrap_' + Date.now(), cardName: name, cardUrl: url});
+	  console.log("addScrapToCompare실행")
+	  console.log(cardNo);
+	  box.push({cardNo: 'scrap_' + cardNo, cardName: name, cardUrl: url});
 	  sessionStorage.setItem('compareCards', JSON.stringify(box));
 	  renderCompareList();
 	  closeScrapModal();

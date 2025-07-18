@@ -27,7 +27,8 @@ public class SeleniumCardCrawler {
         
         List<ScrapCardDto> cardList = new ArrayList<>();
         
-        System.setProperty("webdriver.chrome.driver", "C:/Users/chboy/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/Users/GGG/Desktop/chromedriver-win64/chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "C:/Users/chboy/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         
         try {
