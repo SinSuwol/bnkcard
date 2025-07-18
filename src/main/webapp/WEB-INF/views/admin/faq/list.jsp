@@ -16,6 +16,7 @@
             justify-content: center;
             padding: 0 200px;
             box-sizing: border-box;
+            margin-bottom: 40px;
         }
 
         .faq-table {
@@ -73,6 +74,12 @@
 		    width: 60px;
 		    white-space: nowrap;
 		}		
+		
+		.faq-table thead th:nth-child(4),
+		.faq-table tbody td:nth-child(4) {
+		    min-width: 80px;
+		    text-align: center;
+		}
 
         .faq-table thead tr:first-child th:first-child {
             border-top-left-radius: 6px;
@@ -122,18 +129,16 @@
 
         /* 등록 버튼 */
         .faq-insert-btn {
-            display: block;
+            display: inline-block;
             width: fit-content;
-            margin: 0 auto 16px;
             background-color: #c22800;
             color: white;
-            padding: 8px 12px;
+            padding: 8px 23px;
             text-decoration: none;
             border-radius: 4px;
         }
 
         .faq-insert-btn:hover {
-            text-decoration: underline;
             text-decoration-color: white;
         }
 
@@ -151,7 +156,7 @@
         /* 페이징 */
         .pagination {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 40px;
             font-size: 1rem;
         }
 
@@ -178,6 +183,18 @@
             font-size: 1.1em;
             margin-top: 10px;
         }
+        
+        .inner {
+		    text-align: left; /* 필요하다면 */
+		}
+        
+        .btn-wrapper {
+		    display: flex;
+		    justify-content: flex-end; /* 오른쪽 정렬 */
+		    margin-bottom: 16px; /* 버튼과 위아래 간격 */
+		    width: 100%;
+		}
+        
     </style>
 </head>
 <body>
@@ -192,7 +209,9 @@
             <button type="submit">검색</button>
         </form>
 
-        <a href="${pageContext.request.contextPath}/admin/faq/insertForm" class="faq-insert-btn">FAQ 등록</a>
+		<div class="btn-wrapper">
+        	<a href="${pageContext.request.contextPath}/admin/faq/insertForm" class="faq-insert-btn">FAQ 등록</a>
+		</div>
 
         <c:choose>
             <c:when test="${empty faqList}">
