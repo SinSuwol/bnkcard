@@ -40,4 +40,9 @@ public class CrawlController {
         int deletedCount = seleniumCardCrawler.deleteAllScrapCards();
         return deletedCount + "건 삭제 완료되었습니다.";
     }
+    
+    @GetMapping("/compare")
+    public List<ScrapCardDto> getScrapedCards() {
+        return seleniumCardCrawler.getScrapList();  // DB에서 타행 카드 리스트 조회
+    }
 }
