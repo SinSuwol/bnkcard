@@ -252,14 +252,42 @@ button[onclick="openModal()"]:hover {
 .modal-buttons button:hover {
 	background-color: #0056b3;
 }
+
+#progressContainer {
+  position: relative;
+  width: 100%;
+  height: 25px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: #FFA726;
+  transition: width 0.2s ease;
+}
+
+#progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  font-weight: bold;
+}
+
 </style>
+
 
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
 	<jsp:include page="../fragments/header.jsp"></jsp:include>
 	<div class="inner">
-		
+
 
 		<!-- 모달 오버레이 -->
 		<div id="modalOverlay"></div>
@@ -335,7 +363,23 @@ button[onclick="openModal()"]:hover {
 			<button id="searchBtn">검색</button>
 		</div>
 
+
+
 		<!-- ============================================================= -->
+
+		<!-- 학습 버튼 -->
+		<button id="trainBtn" class="btn btn-warning">AI 정보 업데이트 (학습)</button>
+
+		<!-- 프로그레스 바 -->
+		<div id="progressContainer">
+			<div id="progressBar"></div>
+			<span id="progressText">0%</span>
+		</div>
+		<!-- 학습 시간 -->
+		<span id="lastTrained" style="font-size: 13px; color: #555;">마지막
+			학습 시간: 불러오는 중...</span>
+
+
 		<h1 class="tit1">게시중인 카드 상품</h1>
 		<ul id="card-list"></ul>
 
@@ -629,6 +673,90 @@ button[onclick="openModal()"]:hover {
 	    filterCards('card-list');
 	    filterCards('card-list2');
 	});
+
+	
+	
+	
+	
+	
+	
+	/*----------------------------------------------------------------------------------------  */
+	document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("trainBtn");
+    const timeLabel = document.getElementById("lastTrained");
+
+    
+    function fakeProgress(callback) {
+    	  const bar = document.getElementById("progressBar");
+    	  const text = document.getElementById("progressText");
+    	  const container = document.getElementById("progressContainer");
+    	  container.style.display = "block";
+
+    	  let percent = 0;
+
+    	  const interval = setInterval(() => {
+    	    percent += Math.random() * 8;
+    	    if (percent >= 100) {
+    	      percent = 100;
+    	      clearInterval(interval);
+    	      if (callback) callback(); // 학습 요청 보내기
+    	    }
+
+    	    bar.style.width = percent + "%";
+    	    text.textContent = Math.floor(percent) + "%";
+    	  }, 200);
+    	}
+
+    
+    // 마지막 학습 시간 로드
+    fetch("http://localhost:8000/train-card/time")
+        .then(res => res.json())
+        .then(data => {
+            timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
+        });
+
+    // 버튼 클릭 이벤트
+    btn.addEventListener("click", () => {
+        if (!confirm("정말 AI 정보를 업데이트 하시겠습니까?")) return;
+
+        btn.disabled = true;
+        btn.innerText = "학습 중입니다...";
+
+        //  프로그레스바 시작
+        fakeProgress(() => {
+            //  학습 요청 후 처리
+            fetch("http://localhost:8000/train-card", {
+                method: "POST"
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("서버 응답:", data);
+                if (data.message) {
+                    alert("학습 완료: " + data.message);
+                } else if (data.error) {
+                    alert("오류: " + data.error);
+                } else {
+                    alert("응답 형식이 예상과 다릅니다.");
+                }
+                return fetch("http://localhost:8000/train-card/time");
+            })
+            .then(res => res.json())
+            .then(data => {
+                timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
+            })
+            .catch(err => {
+                alert("오류 발생: " + err);
+                console.error(err);
+            })
+            .finally(() => {
+                // ✅ 학습 완료 후 버튼 복구 & 진행률 숨김
+                btn.disabled = false;
+                btn.innerText = "AI 정보 업데이트 (학습)";
+                document.getElementById("progressContainer").style.display = "none";
+            });
+        });
+    });
+});
 
 </script>
 </body>
