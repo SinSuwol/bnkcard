@@ -138,6 +138,9 @@
     overlay.setAttribute('aria-hidden','false');
     setTimeout(() => { if (qEl) qEl.focus(); }, 50);
     trapFocus(modal);
+	if (!ansEl.textContent || ansEl.textContent.trim() === '') {
+	   ansEl.textContent = "안녕하세요! 도우미 챗봇 부뱅이입니다. 무엇을 도와드릴까요?";
+	 }
   }
   function closeModal(){
     overlay.style.display = 'none';
