@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.busanbank.card.admin.dao.IAdminSearchDao;
+import com.busanbank.card.busancrawler.dto.ScrapCardDto;
+import com.busanbank.card.busancrawler.mapper.ScrapCardMapper;
+import com.busanbank.card.busancrawler.service.SeleniumCardCrawler;
 import com.busanbank.card.card.dto.CardDto;
 import com.busanbank.card.card.service.CardService;
-import com.busanbank.card.busancrawler.dto.ScrapCardDto;
-import com.busanbank.card.busancrawler.service.SeleniumCardCrawler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,28 +29,33 @@ public class CardController {
 	private final CardService cardService;
 	private final IAdminSearchDao adminSearchDao;
 	private final SeleniumCardCrawler seleniumCardCrawler;  // ✅ 추가
+	private final ScrapCardMapper scrapCardMapper;
 
 	@GetMapping("/cards")
 	public List<CardDto> findAll() {
 		return cardService.getCardList();
 	}
 
-	@GetMapping("/cards/{cardNo}")
-	public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
-	    if (cardNo.startsWith("scrap_")) {
-	        // 타행카드 처리
-	        List<ScrapCardDto> all = seleniumCardCrawler.getScrapList();
-	        long timestamp = Long.parseLong(cardNo.replace("scrap_", ""));
-	        ScrapCardDto match = all.stream()
-	            .filter(c -> c.getScCardName().contains("Pick E")) // 이름 또는 날짜 등으로 매칭
-	            .findFirst()
-	            .orElse(null);
-	        return ResponseEntity.ok(match);
-	    } else {
-	        Long realNo = Long.parseLong(cardNo);
-	        return ResponseEntity.ok(cardService.getCard(realNo));
-	    }
-	}
+	 @GetMapping("/cards/{cardNo}")
+	   public ResponseEntity<?> getCard(@PathVariable("cardNo") String cardNo) {
+	       if (cardNo.startsWith("scrap_")) {
+	           // scrap_ 접두어 제거하고 scCardNo로 파싱
+	           long scCardNo = Long.parseLong(cardNo.replace("scrap_", ""));
+	           ScrapCardDto match = scrapCardMapper.getCardById(scCardNo); // Mapper 메서드 필요
+	           System.out.println("타행카드: "+scCardNo);
+	           System.out.println(match);
+	           if (match == null) {
+	               return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                                    .body("타행카드 정보를 찾을 수 없습니다.");
+	           }
+
+	           return ResponseEntity.ok(match);
+	       } else {
+	          System.out.println("자행카드: "+cardNo);
+	           Long realNo = Long.parseLong(cardNo);
+	           return ResponseEntity.ok(cardService.getCard(realNo));
+	       }
+	   }
 
 
 	@GetMapping("/cards/search")
