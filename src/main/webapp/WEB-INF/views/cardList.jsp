@@ -11,11 +11,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
-/* ---------- 슬라이더 ---------- */
 
 .popular-slider.slick-slider {
   background-color: #d6b8b8;
-  padding: 50px 0 100px; /* ← 원하는 값으로 변경 */
+  padding: 50px 0 100px; 
 }
 
 .slick-prev {
@@ -117,7 +116,7 @@
 #cardGrid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
-   gap: 130px 170px;
+   gap: 130px 0px;
    justify-items: center;
    max-width: 1060px;
    margin: 125px auto;
@@ -273,7 +272,7 @@
 }
 
 .typeBtn.active {
-   background: #000;
+   background: #b91111;
    color: #fff
 }
 
@@ -609,7 +608,7 @@
    <!-- 검색바 + 세부 조정 아이콘 -->
       <div class="icon_img">
       <div>
-      <input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요">
+      <input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요" autocomplete="off" readonly>
          <img src="/image/benifits/search.png" alt="icon">
       </div>
          <button id="filterBtn" title="상세 검색">🎚️</button>   
@@ -718,7 +717,7 @@
 
 <script src="/js/header2.js"></script>
 <script>
-// 🔥 인기 카드 슬라이더 데이터 불러오기
+//  인기 카드 슬라이더 데이터 불러오기
 fetch('/api/cards')
   .then(r => r.json())
   .then(cards => {
@@ -812,7 +811,7 @@ document.querySelectorAll('#hotArea .hot').forEach(h => {
       selectedTags.push(h.dataset.keyword);
     }
 
-    // ✅ 항상 performSearch 호출 (모달 안이든 밖이든)
+    //  항상 performSearch 호출 (모달 안이든 밖이든)
     performSearch(currentKeyword);
   });
 });
@@ -830,7 +829,7 @@ document.getElementById('advKeyword').addEventListener('keydown',e=>{
 /* 검색 */
 function performSearch(keyword=''){
    
-   // 🔵 1) 로그 먼저 저장
+   //  1) 로그 먼저 저장
      fetch('/admin/Search/searchlog', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -1053,7 +1052,7 @@ function openCompare() {
         `<img src="${url.trim()}" alt="">`
       ).join('');
 
-        // ✅ 요약 혜택: benefits 또는 scbenefits 우선 사용
+        // 요약 혜택: benefits 또는 scbenefits 우선 사용
         let summary = '';
       if (d.benefits || d.scBenefits) {
         summary = (d.benefits || d.scBenefits)
@@ -1087,8 +1086,6 @@ function openCompare() {
 }
 
 
-
-
 function closeCompareModal(){
   document.getElementById('compareModal').style.display='none';
   document.getElementById('modalOverlay').style.display='none';
@@ -1097,7 +1094,6 @@ function closeCompareModal(){
 function openScrapModal() {
 	  console.log("타행카드 모달 실행");
 
-	  // 1. 현재 비교함(cardNo 리스트) 중 scrap 카드만 추출
 	  const comparedScrapNos = JSON.parse(sessionStorage.getItem('compareCards') || '[]')
 	    .filter(c => c.cardNo.startsWith('scrap_'))
 	    .map(c => c.cardNo.replace('scrap_', ''));
