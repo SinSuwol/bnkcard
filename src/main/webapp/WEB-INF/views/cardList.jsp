@@ -123,6 +123,7 @@
 }
 
 .item {
+	position: relative;
    width: 220px;
    display: flex;
    flex-direction: column;
@@ -135,7 +136,24 @@
    width: 300px;
    rotate: 90deg;
    margin-bottom: 50px;
-   
+}
+
+.item:hover img {
+	opacity:0.2;
+	background-color: #ddd;
+	transition: opacity 0.3s ease; /* 부드럽게 나타나도록 */
+    pointer-events: none;
+}
+
+.item:hover::before{
+	content:'상세보기';
+	position: absolute;
+	top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+    font-size: 16px;
 }
 
 /* ---------- 카드 이름 ---------- */
