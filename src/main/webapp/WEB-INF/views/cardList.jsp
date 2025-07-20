@@ -507,7 +507,7 @@
 
 /* 비교함 썸네일 이미지 */
 .compare-thumb {
-  width: 140px;
+  width: 120px;
   padding-top: 5px;
   display: block;
   margin: 0 auto 5px;
@@ -524,15 +524,15 @@
 
 /* 비교함 제거 버튼 */
 .compare-remove-btn {
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-  display: block;
-  margin: 0 auto;
+    background: #ffffff;
+    color: #b91111;
+    border: 1px solid #b91111;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto 0;
 }
 
 /* 비교 버튼 */
@@ -545,7 +545,7 @@
   border-radius: 6px;
   cursor: pointer;
   display: block;
-  margin: 6px auto 0;
+  margin: 15px auto 0;
 }
 
 /* 플레이스홀더 */
