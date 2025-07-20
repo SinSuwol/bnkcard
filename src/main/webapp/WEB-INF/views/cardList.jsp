@@ -123,38 +123,41 @@
 }
 
 .item {
-	position: relative;
-   width: 220px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   text-align: center;
-   cursor: pointer; /* ← 클릭 가능 커서 */
+  position: relative;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
 }
 
 .item img {
-   width: 300px;
-   rotate: 90deg;
-   margin-bottom: 50px;
+  width: 300px;
+  rotate: 90deg;
+  margin-bottom: 50px;
+  transition: opacity 0.3s ease;
 }
 
 .item:hover img {
-	opacity:0.2;
-	background-color: #ddd;
-	transition: opacity 0.3s ease; /* 부드럽게 나타나도록 */
-    pointer-events: none;
+  opacity: 0.2;
+  background-color: #ddd;
+  /* pointer-events 제거 */
 }
 
-.item:hover::before{
-	content:'상세보기';
-	position: absolute;
-	top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-    border-bottom: 2px solid #333;
-    font-size: 16px;
+/* 텍스트 오버레이 */
+.item:hover::before {
+  content: '상세보기';
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+  font-size: 16px;
+  pointer-events: none; /* 이 텍스트는 클릭 안 되게 */
 }
+
 
 /* ---------- 카드 이름 ---------- */
 .item p:nth-of-type(1) {
