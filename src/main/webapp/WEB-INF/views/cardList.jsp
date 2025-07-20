@@ -14,6 +14,7 @@
 /* ---------- 슬라이더 ---------- */
 
 .popular-slider.slick-slider {
+  background-color: #d6b8b8;
   padding: 50px 0 100px; /* ← 원하는 값으로 변경 */
 }
 
@@ -103,9 +104,13 @@
 
 /* 가운데(active) 슬라이드 확대 */
 .popular-slider .slick-center {
-  transform: scale(1.08);
+  transform: scale(1.2);
   opacity: 1;
   z-index: 10;
+}
+
+.popular-slider .slick-slide > div {
+  margin: 0 10px; /* ← 좌우 간격. 줄이면 좁아지고 늘리면 넓어짐 */
 }
 
 /* ---------- 카드 그리드 ---------- */
@@ -150,7 +155,7 @@
 
 /* ---------- 비교함 ---------- */
 #compareBox {
-display: none;
+
    text-align: center;
    position: fixed;
    right: 12px;
