@@ -12,10 +12,31 @@
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 /* ---------- 슬라이더 ---------- */
-.slick-prev, .slick-next {
+
+.popular-slider.slick-slider {
+  padding: 50px 0 100px; /* ← 원하는 값으로 변경 */
+}
+
+.slick-prev {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 20px;
+   left: 46%;
+  transform: translateX(-40%);
+  z-index: 100;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.slick-next {
+  position: absolute;
+  bottom: 20px;
+  right: 46%;
+  transform: translateX(-40%);
   z-index: 100;
   background: white;
   border: 1px solid #ccc;
@@ -30,19 +51,19 @@
   background: #000;
   color: #fff;
 }
-.slick-prev {
-  left: 40px;
-}
-.slick-next {
-  right: 40px;
-}
 
 .slider-container {
-  max-width: 1000px;
+  max-width: 1500px;
   margin: 0px auto 50px;
   overflow: hidden;
   position: relative;
 }
+
+.slider-container .slick-list {
+  overflow: visible !important;
+  padding: 0px 200px 30px !important; /* 위/좌우/아래 여백 설정 */
+}
+
 .popular-slider .slick-slide {
   padding: 10px;
   box-sizing: border-box;
@@ -56,6 +77,7 @@
   background: #fff;
   padding: 20px;
   text-align: center;
+  transition: all 0.3s ease;
 }
 .popular-card img {
   max-width: 100%;
@@ -72,6 +94,18 @@
   font-size: 14px;
   color: #666;
   margin-bottom: 10px;
+}
+.popular-slider .slick-slide {
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+  opacity: 0.6;
+}
+
+/* 가운데(active) 슬라이드 확대 */
+.popular-slider .slick-center {
+  transform: scale(1.08);
+  opacity: 1;
+  z-index: 10;
 }
 
 /* ---------- 카드 그리드 ---------- */
@@ -116,6 +150,8 @@
 
 /* ---------- 비교함 ---------- */
 #compareBox {
+display: none;
+   text-align: center;
    position: fixed;
    right: 12px;
    top: 200px;
@@ -127,20 +163,40 @@
    z-index: 1010;
 }
 
+/* ---------- 비교함리스트 ---------- */
+#compareList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  gap: 12px;            
+  padding: 0 0 8px 0;     
+  margin: 0;
+  list-style: none;
+}
+
+
 /* ---------- 비교 모달 ---------- */
 #compareModal {
-   display: none;
-   position: fixed;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   width: 80%;
-   max-width: 800px;
-   background: #fff;
-   padding: 30px;
-   border-radius: 12px;
-   box-shadow: 0 0 20px rgba(0, 0, 0, .35);
-   z-index: 2000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 900px;
+  height: 90vh;                  
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  overflow: hidden;               /* 전체 영역 잘림 방지 */
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+}
+
+#compareModalContent {
+  flex: 1;
+  overflow-y: auto;               
+  padding: 30px;
 }
 
 .compare-label {
@@ -178,12 +234,13 @@
    position:absolute;
    width: 1px;
    margin-top: 20px;
-   height: 450px;
+   height: 480px;
    background-color: #ededed;
 }
 
 
 #modalContent div .card-name {
+   margin-top: 50px;
    font-size: 20px;
    text-align: left;
 }
@@ -354,11 +411,10 @@
   line-height: 1.5;
 }
 .card-image-group img {
+  rotate: 90deg;
   width: 60px;
   height: auto;
   margin: 2px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
 .card-name {
@@ -380,9 +436,6 @@
   margin: 4px 0;
 }
 
-.card-explain {
-	text-align: left;
-}
 #modalContent .card-icons img {
   width: 30px;
   height: 30px;
@@ -400,15 +453,129 @@
 
 .card-icons {
     display: flex;
-    justify-content: center;
     gap: 10px 30px;
     margin-top: 8px;
     max-width: 200px;
     flex-direction: row;
     align-items: center;
-    flex-wrap: nowrap;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
 
 }
+
+.scrap-compare-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #b91111;
+  border: 1px solid #b91111;
+  cursor: pointer;
+}
+
+.scrap-compare-btn:hover {
+	/* transform: scale(1.05); */
+	background-color: #b91111;
+	color: #fff;
+}
+
+
+.scrap-card:hover {
+	 box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.10);
+}
+
+.scrap-card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+  rotate: 90deg;
+  margin-top: 35px;
+}
+
+
+.scrap-card-name {
+	margin-top: 25px;
+}
+
+/* 비교함 썸네일 이미지 */
+.compare-thumb {
+  width: 140px;
+  padding-top: 5px;
+  display: block;
+  margin: 0 auto 5px;
+  border-radius: 6px;
+}
+
+/* 비교함 카드명 */
+.compare-card-name {
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+/* 비교함 제거 버튼 */
+.compare-remove-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 비교 버튼 */
+#compareBox > button,
+#compareBox > div > button {
+  font-size: 13px;
+  padding: 6px 10px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin: 6px auto 0;
+}
+
+/* 플레이스홀더 */
+.compare-placeholder {
+  margin-top: 10px;
+  width: 100px;           
+  height: 135px;         
+  background: #f5f5f5;
+  border: 2px solid #aaa;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.compare-slot {
+  width: auto;
+}
+
+
+.compare-placeholder .plus-sign {
+  font-size: 40px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.compare-placeholder .placeholder-text {
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+  line-height: 1.4;
+}
+
 
 
 </style>
@@ -465,19 +632,31 @@
 
    <!-- 비교 모달 -->
    <div id="compareModal">
-  <h2 style="text-align: center;">카드 비교</h2>
+  <h2 style="text-align: center;margin-top: 20px;margin-bottom: 50px;">카드 비교</h2>
   <div id="modalContent"></div>
   <div style="text-align: center; margin-top: 20px;">
-    <button onclick="closeCompareModal()">닫기</button>
+    <button onclick="closeCompareModal()" style="
+	    background-color: #eeee;
+	    border: 1px solid #ddd;
+	    width: 80px;
+	    height: 32px;
+	    border-radius: 5px;
+	">닫기</button>
   </div>
 </div>
 <div id="modalOverlay" onclick="closeCompareModal()"></div>
 
-<div id="scrapCompareModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:80%; max-width:700px; background:#fff; border-radius:12px; padding:30px; box-shadow:0 0 20px rgba(0,0,0,.4); z-index:3000;">
+<div id="scrapCompareModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:180%; max-width:700px; background:#fff; border-radius:12px; padding:30px; box-shadow:0 0 20px rgba(0,0,0,.4); z-index:3000;">
   <h2 style="text-align:center;">타행카드 비교하기</h2>
   <div id="scrapModalList" style="max-height:400px; overflow-y:auto; margin-top:20px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
   <div style="text-align:center; margin-top:20px;">
-    <button onclick="closeScrapModal()">닫기</button>
+    <button onclick="closeScrapModal()" style="
+    width: 70px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+">닫기</button>
   </div>
 </div>
 <div id="scrapOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2999;" onclick="closeScrapModal()"></div>
@@ -560,18 +739,18 @@ fetch('/api/cards')
 
     // 다시 슬릭 초기화
     $(slider).slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      arrows: true,
-      dots: false,
-      infinite: true,
-      draggable: false,
-      swipe: false,
-      prevArrow: '<button class="slick-prev">&#10094;</button>',
-      nextArrow: '<button class="slick-next">&#10095;</button>'
-    });
+    	  centerMode: true,
+    	  centerPadding: '200px', // 양끝 카드가 반쯤 보이도록
+    	  slidesToShow: 3,
+    	  slidesToScroll: 1,
+    	  autoplay: true,
+    	  autoplaySpeed: 2000,
+    	  arrows: true,
+    	  dots: false,
+    	  infinite: true,
+    	  prevArrow: '<button class="slick-prev">&#10094;</button>',
+    	  nextArrow: '<button class="slick-next">&#10095;</button>',
+    	});
   });
 
 
@@ -757,30 +936,36 @@ function toggleCompare(cb){
 }
 
 function renderCompareList() {
-     const list = document.getElementById('compareList');
-     list.innerHTML = '';
+	  const list = document.getElementById('compareList');
+	  list.innerHTML = '';
 
-     JSON.parse(sessionStorage.getItem('compareCards') || '[]').forEach(c => {
-       const li = document.createElement('li');
-       li.style.marginBottom = '10px';
+	  const cards = JSON.parse(sessionStorage.getItem('compareCards') || '[]');
+	  const maxSlots = 2;
 
-       li.innerHTML = `
-         <img src="${c.cardUrl}" style="width:80px; display:block; margin:0 auto 5px;">
-         <div style="font-size:13px; margin-bottom:4px;">${c.cardName}</div>
-         <button onclick="removeFromCompare('${c.cardNo}')" style="
-           background: #ff4d4f;
-           color: white;
-           border: none;
-           padding: 4px 8px;
-           border-radius: 6px;
-           font-size: 12px;
-           cursor: pointer;
-         ">제거</button>
-       `;
+	  for (let i = 0; i < maxSlots; i++) {
+	    const li = document.createElement('li');
+	    li.className = 'compare-slot';
 
-       list.appendChild(li);
-     });
-   }
+	    if (cards[i]) {
+	      const c = cards[i];
+	      li.innerHTML = `
+	        <img src="${c.cardUrl}" class="compare-thumb">
+	        <div class="compare-card-name">${c.cardName}</div>
+	        <button class="compare-remove-btn" onclick="removeFromCompare('${c.cardNo}')">제거</button>
+	      `;
+	    } else {
+	      li.innerHTML = `
+	        <div class="compare-placeholder">
+	          <div class="plus-sign">+</div>
+	          <div class="placeholder-text">비교할 카드를<br>추가하세요</div>
+	        </div>
+	      `;
+	    }
+
+	    list.appendChild(li);
+	  }
+	}
+
 
 renderCompareList();
 
@@ -889,7 +1074,6 @@ function openCompare() {
           <div class="card-icons">${iconHtml}</div>
           <div class="card-fee"><b>연회비:</b> ${fee.toLocaleString()}원</div>
           <div class="card-summary"><b>요약 혜택</b><br>${summary}</div>
-          <div class="card-explain">혜택 특성</div>
         `;
         wrap.appendChild(div);
       });
@@ -919,8 +1103,11 @@ function openScrapModal() {
 	      listDiv.innerHTML = '';
 
 	      data.forEach(card => {
-	        const div = document.createElement('div');
-	        div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px; background:#f9f9f9;';
+	    	 
+	    	  const div = document.createElement('div');
+	    	  div.className = 'scrap-card'; 
+	    	  div.style.cssText = 'width:160px; text-align:center; border:1px solid #ddd; padding:10px; border-radius:10px;';
+
 
 	        // 이미지 추출 (첫 번째 URL만 사용)
 	        const imageUrl = (card.scCardUrl || '').split(',')[0]?.trim();
@@ -930,17 +1117,17 @@ function openScrapModal() {
 
 	        // innerHTML 구성
 	        div.innerHTML = `
-	          <img src="${imageUrl}" alt="${card.scCardName}" style="width:100%; height:auto; border-radius:8px; margin-bottom:8px;">
-	          <div><b>${card.scCardName}</b></div>
+	          <img src="${imageUrl}" alt="${card.scCardName}" class="scrap-card-img">
+	          <div class="scrap-card-name"><b>${card.scCardName}</b></div>
 	          <div style="font-size:12px; color:#666; margin:5px 0 10px;">${card.scCardSlogan || ''}</div>
 	          ${
-	            isAlreadyAdded
-	              ? `<div style="font-size:12px; color:green;">✔ 비교함에 추가됨</div>`
-	              : `<button onclick='addScrapToCompare("${card.scCardNo}","${imageUrl}", "${card.scCardName}")'
-	                         style="font-size:12px; padding:4px 8px; border-radius:6px; background:#000; color:#fff; border:none; cursor:pointer;">
-	                   비교함 담기
-	                 </button>`
-	          }
+	        	  isAlreadyAdded
+	        	    ? `<div style="font-size:12px; color:green;">✔ 비교함에 추가됨</div>`
+	        	    : `<button class="scrap-compare-btn" onclick='addScrapToCompare("${card.scCardNo}", "${imageUrl}", "${card.scCardName}")'>
+	        	        비교함 담기
+	        	    	  </button>`
+	        	}
+
 	        `;
 	        listDiv.appendChild(div);
 	      });
