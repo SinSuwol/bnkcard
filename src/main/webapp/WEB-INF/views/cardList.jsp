@@ -366,6 +366,7 @@
 #advKeyword {
    width: 100%;
    padding: 8px 12px;
+   margin-top: 20px;
    margin-bottom: 15px;
    box-sizing: border-box;
    border: 1px solid #ccc;
@@ -710,7 +711,7 @@
       <div id="modalResultGrid"></div>
       <div style="text-align: center; margin-top: 15px;">
          <button id="advSearchBtn"
-            style="width: 100%; padding: 10px 0; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
+            style="width: 100%; padding: 10px 0; background: #b91111; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
       </div>
    </div>
 
