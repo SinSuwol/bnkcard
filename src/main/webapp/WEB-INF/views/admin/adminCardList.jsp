@@ -253,32 +253,65 @@ button[onclick="openModal()"]:hover {
 	background-color: #0056b3;
 }
 
+/* 진행률 모달 */
+.progress-modal {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, .45);
+	z-index: 2000;
+	align-items: center;
+	justify-content: center;
+}
+
+/* 게이지 컨테이너 */
 #progressContainer {
-  position: relative;
-  width: 100%;
-  height: 25px;
-  background: #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 10px;
+	width: 60%;
+	max-width: 480px;
+	padding: 24px 32px 40px; /* 위에 약간 여백 */
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+	text-align: center;
 }
 
+/* 게이지 트랙 */
+#progressTrack {
+	position: relative;
+	width: 100%;
+	height: 22px;
+	background: #e0f4ff;
+	border-radius: 11px;
+	overflow: hidden;
+	margin-top: 8px;
+}
+
+/* 진행 바 = 아래 레이어 */
 #progressBar {
-  height: 100%;
-  width: 0%;
-  background: #FFA726;
-  transition: width 0.2s ease;
+	position: absolute; /* ← absolute 로 겹치기 */
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0%;
+	background: #00aaff;
+	transition: width .2s ease;
+	z-index: 0; /* 텍스트보다 뒤 */
 }
 
+/* 퍼센트 텍스트 = 위 레이어 */
 #progressText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #333;
-  font-weight: bold;
+	position: absolute; /* 트랙 안에 겹치기 */
+	left: 50%;
+	top: 50%; /* 가운데 좌표 */
+	transform: translate(-50%, -50%); /* XY 모두 중앙 정렬 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	color: #333;
+	pointer-events: none;
+	z-index: 1;
 }
-
 </style>
 
 
@@ -370,11 +403,23 @@ button[onclick="openModal()"]:hover {
 		<!-- 학습 버튼 -->
 		<button id="trainBtn" class="btn btn-warning">AI 정보 업데이트 (학습)</button>
 
-		<!-- 프로그레스 바 -->
-		<div id="progressContainer">
-			<div id="progressBar"></div>
-			<span id="progressText">0%</span>
+		<!-- 1️⃣ 모달 래퍼를 다시 넣기 : display:none 으로 숨김 -->
+		<div id="progressModal" class="progress-modal" style="display: none">
+			<div id="progressContainer">
+
+				<!-- 2️⃣ 트랙 ------------------------->
+				<div id="progressTrack">
+					<div id="progressBar"></div>
+					<span id="progressText">0%</span>
+				</div>
+
+				<!-- 3️⃣ 취소 버튼 --------------------->
+				<button id="cancelTrain" style="margin-top: 16px">취소</button>
+
+			</div>
 		</div>
+
+
 		<!-- 학습 시간 -->
 		<span id="lastTrained" style="font-size: 13px; color: #555;">마지막
 			학습 시간: 불러오는 중...</span>
@@ -673,91 +718,102 @@ button[onclick="openModal()"]:hover {
 	    filterCards('card-list');
 	    filterCards('card-list2');
 	});
-
 	
-	
-	
-	
-	
-	
-	/*----------------------------------------------------------------------------------------  */
-	document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("trainBtn");
-    const timeLabel = document.getElementById("lastTrained");
+document.addEventListener('DOMContentLoaded', () => {
 
-    
-    function fakeProgress(callback) {
-    	  const bar = document.getElementById("progressBar");
-    	  const text = document.getElementById("progressText");
-    	  const container = document.getElementById("progressContainer");
-    	  container.style.display = "block";
+  /* ── DOM 캐시 ─────────────────────────────────── */
+  const btn       = document.getElementById('trainBtn');
+  const modal     = document.getElementById('progressModal');
+  const bar       = document.getElementById('progressBar');
+  const text      = document.getElementById('progressText');
+  const cancelBtn = document.getElementById('cancelTrain');
+  const timeLbl   = document.getElementById('lastTrained');
 
-    	  let percent = 0;
+  /* ── 상태 변수 ────────────────────────────────── */
+  let progressTimer = null;   // setInterval ID
+  let finishTimer   = null;   // 100 % 후 setTimeout ID
+  let controller    = null;   // AbortController
 
-    	  const interval = setInterval(() => {
-    	    percent += Math.random() * 8;
-    	    if (percent >= 100) {
-    	      percent = 100;
-    	      clearInterval(interval);
-    	      if (callback) callback(); // 학습 요청 보내기
-    	    }
+  /* ── UI 초기화 ────────────────────────────────── */
+  const resetUI = () => {
+    modal.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'AI 정보 업데이트 (학습)';
+    bar.style.width = '0%';
+    bar.style.background = '#00aaff';
+    text.textContent = '0%';
+  };
 
-    	    bar.style.width = percent + "%";
-    	    text.textContent = Math.floor(percent) + "%";
-    	  }, 200);
-    	}
+  /* ── 가짜 진행률 애니메이션 ───────────────────── */
+  function fakeProgress(onFinish){
+    modal.style.display = 'flex';
+    let pct = 0;
+    progressTimer = setInterval(()=>{
+      pct += Math.random()*8;
+      if (pct >= 100){
+        pct = 100;
+        clearInterval(progressTimer); progressTimer = null;
 
-    
-    // 마지막 학습 시간 로드
-    fetch("http://localhost:8000/train-card/time")
-        .then(res => res.json())
-        .then(data => {
-            timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
-        });
+        bar.style.width='100%';
+        bar.style.background='#2ecc71';
+        text.textContent='완료!';
 
-    // 버튼 클릭 이벤트
-    btn.addEventListener("click", () => {
-        if (!confirm("정말 AI 정보를 업데이트 하시겠습니까?")) return;
+        finishTimer = setTimeout(()=>{
+          finishTimer = null;
+          onFinish && onFinish();
+        }, 1500);
+      }else{
+        bar.style.width = pct + '%';
+        text.textContent = Math.floor(pct) + '%';
+      }
+    }, 200);
+  }
 
-        btn.disabled = true;
-        btn.innerText = "학습 중입니다...";
+  /* ── 마지막 학습 시각 최초 표시 ───────────────── */
+  fetch('http://localhost:8000/train-card/time')
+    .then(r=>r.json())
+    .then(d=> timeLbl.textContent = '마지막 학습 시간: ' + d.last_trained)
+    .catch(console.error);
 
-        //  프로그레스바 시작
-        fakeProgress(() => {
-            //  학습 요청 후 처리
-            fetch("http://localhost:8000/train-card", {
-                method: "POST"
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log("서버 응답:", data);
-                if (data.message) {
-                    alert("학습 완료: " + data.message);
-                } else if (data.error) {
-                    alert("오류: " + data.error);
-                } else {
-                    alert("응답 형식이 예상과 다릅니다.");
-                }
-                return fetch("http://localhost:8000/train-card/time");
-            })
-            .then(res => res.json())
-            .then(data => {
-                timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
-            })
-            .catch(err => {
-                alert("오류 발생: " + err);
-                console.error(err);
-            })
-            .finally(() => {
-                // ✅ 학습 완료 후 버튼 복구 & 진행률 숨김
-                btn.disabled = false;
-                btn.innerText = "AI 정보 업데이트 (학습)";
-                document.getElementById("progressContainer").style.display = "none";
-            });
+  /* ── [학습] 버튼 클릭 ─────────────────────────── */
+  btn.addEventListener('click', ()=>{
+    if(!confirm('정말 AI 정보를 업데이트 하시겠습니까?')) return;
+
+    btn.disabled = true;
+    btn.textContent = '학습 중입니다...';
+
+    fakeProgress(()=>{
+      controller = new AbortController();
+      fetch('http://localhost:8000/train-card', { method:'POST', signal:controller.signal })
+        .then(r=>r.json())
+        .then(d => alert(d.message ?? d.error ?? '학습 완료'))
+        .catch(err=>{
+          if (err.name !== 'AbortError'){   // 사용자가 취소한 게 아니면
+            alert('오류 발생: ' + err);
+            console.error(err);
+          }
+        })
+        .finally(()=>{
+          /* 최신 학습 시각 갱신 */
+          fetch('http://localhost:8000/train-card/time')
+            .then(r=>r.json())
+            .then(d=> timeLbl.textContent = '마지막 학습 시간: ' + d.last_trained)
+            .catch(console.error);
+          resetUI();
+          controller = null;
         });
     });
-});
+  });
 
+  /* ── [취소] 버튼 클릭 ─────────────────────────── */
+  cancelBtn.addEventListener('click', ()=>{
+    if(progressTimer){ clearInterval(progressTimer); progressTimer = null; }
+    if(finishTimer){   clearTimeout(finishTimer);   finishTimer   = null; }
+    if(controller){    controller.abort();          controller    = null; }
+    resetUI();
+  });
+
+});
 </script>
 </body>
 </html>
