@@ -26,7 +26,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 40px;
-      padding: 40px 20px 20px;
+      padding: 70px 20px 20px;
       align-items: flex-start;
     }
     .card-img {
@@ -78,20 +78,22 @@
       margin-top: 20px;
       flex-wrap: wrap;
     }
+    
     .benefit-card {
-      background: white;
-      padding: 10px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #bf2c2c;
-      border: 1px solid #bf2c2c;
-    }
+	  display: inline-block;
+	  padding: 6px 12px;
+	  border: 1px solid #d44;
+	  border-radius: 20px;
+	  color: #d44;
+	  font-weight: 500;
+	  margin-bottom: 10px;
+	  font-size: 14px;
+	}
     
     .accordion {
-        background: #f8f9fb;
-	    border: 1px solid #dcdfe6;
-	    border-radius: 6px;
+        background: #f9f9f9;
+	    border: 1px solid #ddd;
+	    border-radius: 12px;
 	    padding: 18px 22px;
 	    margin-bottom: 14px;
 	    cursor: pointer;
@@ -103,7 +105,7 @@
       margin: 0;
       font-size: 14px;
       font-weight: 600;
-      color: #002e5b;
+      color: #444;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -120,6 +122,7 @@
 	}
     .section {
       margin-top: 70px;
+      margin-left: 20px;
       background-color: white;
       width: 100%;
       display: flex;
@@ -132,8 +135,8 @@
       margin-bottom: 16px;
       font-size: 18px;
       font-weight: 600;
-      color: #002e5b;
-      border-left: 4px solid #002e5b;
+      color: #444;
+      border-left: 4px solid #444;
       padding-left: 10px;
     }
     .section pre {
@@ -147,6 +150,47 @@
     #sService {
   		line-height: 2.0; /* 원하는 값으로 */
 	}
+	
+	.highlight {
+	  color: #333;
+	  font-weight: bold;
+	}
+	
+	.benefit-container {
+	  display: flex;
+	  flex-wrap: wrap;
+	  gap: 20px;
+	  margin-top: 10px;
+	}
+	
+	.benefit-block {
+	  flex: 1 1 calc(50% - 10px);
+	  background: #f9f9f9;
+	  border: 1px solid #ddd;
+	  border-radius: 12px;
+	  padding: 20px;
+	  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+	}
+	
+	.benefit-block .benefit-card {
+	  color: #d44;
+	  border: none;
+	  background: transparent;
+	  border-radius: 0;
+	  font-weight: 600;
+	  padding: 0;
+	  font-size: 16px;
+	  margin-bottom: 8px;
+	}
+	
+	
+	.benefit-block li {
+	  font-size: 15px;
+	  color: #444;
+	  margin-bottom: 6px;
+	  line-height: 1.6;
+	}
+
   </style>
 </head>
 <body>
@@ -210,7 +254,7 @@
     '환경': ['전기차', '수소차', '친환경'],
     '공유모빌리티': ['공유모빌리티', '카카오T바이크', '따릉이', '쏘카', '투루카'],
     '세무지원': ['세무', '전자세금계산서', '부가세'],
-    '포인트&캐시백': ['포인트', '캐시백'],
+    '포인트&캐시백': ['포인트', '캐시백', '가맹점', '청구할인'],
     '놀이공원': ['놀이공원', '자유이용권'],
     '라운지': ['공항라운지'],
     '발렛': ['발렛파킹']
@@ -281,16 +325,81 @@
     document.getElementById("summaryBenefit").innerHTML = html;
   }
 
+  
   function renderBenefits(rawService) {
 	  const accordionDiv = document.getElementById('accordionContainer');
-	  const parts = rawService.split('◆').map(s => s.trim()).filter(s => s !== '');
+
+	  // ◆로 구분된 블록을 분리
+	  const parts = rawService
+	    .split('◆')
+	    .map(s => s.trim())
+	    .filter(s => s !== '');
+
+	  const categoryMap = new Map(); // { '교통': [문장1, 문장2], ... }
+
+	  for (let part of parts) {
+	    // - 또는 숫자. 로 항목 분리
+	    const subLines = part
+	      .split(/\n|(?<!\d)-|(?=\d+\.\s)/g)  // ← 핵심: 숫자 리스트도 분리
+	      .map(s => s.trim())
+	      .filter(s => s !== '');
+
+	    for (let p of subLines) {
+	      let matchedCategory = null;
+
+	      for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+	        for (const keyword of keywords) {
+	          const reg = new RegExp(`(${keyword})`, 'gi');
+	          if (reg.test(p)) {
+	            matchedCategory = category;
+	            p = p.replace(reg, `<span class="highlight">$1</span>`);
+	            break;
+	          }
+	        }
+	        if (matchedCategory) break;
+	      }
+
+	      if (!matchedCategory) {
+	        matchedCategory = '기타';
+	      }
+
+	      if (!categoryMap.has(matchedCategory)) {
+	        categoryMap.set(matchedCategory, []);
+	      }
+
+	      categoryMap.get(matchedCategory).push(p);
+	    }
+	  }
+
+	  // HTML 생성
+	  let groupedHtml = '<div class="benefit-container">';
+	  for (const [category, lines] of categoryMap.entries()) {
+	    // 숫자 리스트 여부 감지
+	    const isNumberedList = lines.every(line => /^\d+\.\s/.test(line));
+
+	    const listHtml = isNumberedList
+	      ? `<ol>${lines.map(line => `<li>${line.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol>`
+	      : `<ul>${lines.map(line => `<li>${line}</li>`).join('')}</ul>`;
+
+	    groupedHtml += `
+	      <div class="benefit-block">
+	        <div class="benefit-card">#${category}</div>
+	        ${listHtml}
+	      </div>
+	    `;
+	  }
+	  groupedHtml += '</div>';
+
 	  accordionDiv.innerHTML = `
 	    <div class="section">
 	      <h3>혜택 내용</h3>
-	      <pre>${parts.map(p => p.replace(/\n/g, "<br>")).join("<br><br>")}</pre>
+	      ${groupedHtml}
 	    </div>
 	  `;
 	}
+
+
+
 
   function toggleAccordion(el) {
     el.classList.toggle("active");
