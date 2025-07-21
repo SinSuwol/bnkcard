@@ -5,97 +5,95 @@
 <link rel="stylesheet" href="/css/adminstyle.css">
 <style>
 body {
-    background-color: #f9f9f9;
+	background-color: #f9f9f9;
 }
 
 h2 {
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 40px;
-    width: fit-content;
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 40px;
+	width: fit-content;
 }
 
 form {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 24px; /* div 사이 간격 */
+	max-width: 600px;
+	margin: 30px auto;
+	padding: 30px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+	display: flex;
+	flex-direction: column;
+	gap: 24px; /* div 사이 간격 */
 }
 
 .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
 }
 
 .form-group label {
-    width: 100px;
-    font-weight: bold;
-    color: #2c3e50;
+	width: 100px;
+	font-weight: bold;
+	color: #2c3e50;
 }
 
-.form-group input[type="text"],
-.form-group textarea {
-    flex: 1;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    background-color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.form-group input[type="text"], .form-group textarea {
+	flex: 1;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 1rem;
+	box-sizing: border-box;
+	background-color: #fff;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input[type="text"]:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+.form-group input[type="text"]:focus, .form-group textarea:focus {
+	outline: none;
+	border-color: #3498db;
+	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
 }
 
 .form-group textarea {
-    resize: vertical;
-    min-height: 150px; /* 답변 입력창 크게 */
-    line-height: 1.5;
-    white-space: pre-wrap; /* 줄바꿈 유지 */
-    font-family: 'Noto Sans KR', sans-serif;
+	resize: vertical;
+	min-height: 150px; /* 답변 입력창 크게 */
+	line-height: 1.5;
+	white-space: pre-wrap; /* 줄바꿈 유지 */
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .button-group {
-    text-align: center;
-    margin-top: 40px;
+	text-align: center;
+	margin-top: 40px;
 }
 
 .button-group button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    margin: 0 8px;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	font-size: 14px;
+	cursor: pointer;
+	margin: 0 8px;
 }
 
 .button-group button:first-child {
-    background-color: #c10c0c;
-    color: white;
+	background-color: #c10c0c;
+	color: white;
 }
 
 .button-group button:first-child:hover {
-    background-color: #9b0a0a;
+	background-color: #9b0a0a;
 }
 
 .button-group button:last-child {
-    background-color: #f2f2f2;
-    color: #333;
+	background-color: #f2f2f2;
+	color: #333;
 }
 
 .button-group button:last-child:hover {
-    background-color: #dcdcdc;
+	background-color: #dcdcdc;
 }
 </style>
 </head>
@@ -128,14 +126,20 @@ form {
 		</div>
 
 		<div class="form-group">
-			<label for="cattegory">카테고리</label> <input type="text" id="cattegory"
-				name="cattegory" value="${faq.cattegory}">
+			<label for="cattegory">카테고리</label>
+			<div style="display: flex; gap: 20px;">
+				<label> <input type="radio" name="cattegory" value="카드"
+					${faq.cattegory == '카드' ? 'checked' : ''}> 카드
+				</label> <label> <input type="radio" name="cattegory" value="예적금"
+					${faq.cattegory == '예적금' ? 'checked' : ''}> 예적금
+				</label>
+			</div>
 		</div>
 
 		<div class="button-group">
-            <button type="submit">수정</button>
-            <button type="button" onclick="history.back()">취소</button>
-        </div>
+			<button type="submit">수정</button>
+			<button type="button" onclick="history.back()">취소</button>
+		</div>
 	</form>
 
 	<script src="/js/adminHeader.js"></script>

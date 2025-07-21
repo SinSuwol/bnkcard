@@ -109,8 +109,12 @@ form {
 				name="admin">
 		</div>
 		<div class="form-group">
-			<label for="cattegory">카테고리</label> <input type="text" id="cattegory"
-				name="cattegory">
+			<label for="cattegory">카테고리</label>
+			<div style="display: flex; gap: 20px;">
+				<label><input type="radio" name="cattegory" value="카드"
+					required> 카드</label> <label><input type="radio"
+					name="cattegory" value="예적금"> 예적금</label>
+			</div>
 		</div>
 		<div class="button-group">
 			<button type="submit">등록</button>
