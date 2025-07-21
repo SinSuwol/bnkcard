@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/adminstyle.css">
 
 <style>
 
@@ -93,7 +92,7 @@ justify-content: center; /* 수평 가운데 */
 
 
 <body>
-<jsp:include page="../fragments/header.jsp"></jsp:include>
+
 
 <div class="login-wrapper">
   <div class="login-container">
@@ -107,7 +106,6 @@ justify-content: center; /* 수평 가운데 */
   </div>
 </div>
 
-<script src="/js/adminHeader.js"></script>
 <script>
 document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();

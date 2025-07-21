@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <title>관리자 검색 통계</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="stylesheet" href="/css/adminstyle.css">
   <style>
+ 
+  
     body {
       font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
     }
     h1 {
       text-align: center;
@@ -110,9 +112,31 @@
       font-size: 12.5px;
       color: #999;
     }
+    
+.table-container2 {
+  display: none;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.table-container2 table {
+  width: 100%;
+  table-layout: fixed; /* 각 열 폭 균일하게 */
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-container2 th, .table-container2 td {
+  padding: 6px 8px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+    
   </style>
 </head>
 <body>
+<jsp:include page="../fragments/header.jsp"></jsp:include>
 <h1>관리자 검색 통계</h1>
 
 <h2 onclick="toggleSection('userTypeSection')">1. 회원/비회원 검색 비율</h2>
@@ -193,6 +217,9 @@
     </div>
   </div>
 </div>
+
+
+<script src="/js/adminHeader.js"></script>
 
 <script>
 let hourChartInstance;
