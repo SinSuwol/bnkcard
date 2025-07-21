@@ -392,7 +392,7 @@
 
 	  accordionDiv.innerHTML = `
 	    <div class="section">
-	      <h3>혜택 내용</h3>
+	      <h3>혜택 요약</h3>
 	      ${groupedHtml}
 	    </div>
 	  `;
