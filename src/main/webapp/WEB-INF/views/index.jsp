@@ -83,7 +83,7 @@
 			<div class="confetti-wrapper c4">
 			  <ul class="particles2 "></ul>
 			</div>
-			<spline-viewer orbit class="spline" scroll-blocking="false" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
+			<spline-viewer orbit class="spline"  allow="scroll" url="https://prod.spline.design/uHGgQogk8z9Qb0Xz/scene.splinecode"></spline-viewer>
 		</div>
 	</div>
 	<div class="section">
