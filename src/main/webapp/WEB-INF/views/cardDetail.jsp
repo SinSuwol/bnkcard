@@ -99,7 +99,7 @@
 	    cursor: pointer;
     }
     .accordion:hover {
-      background: #edf0f6;
+      background: #e7e7e7;
     }
     .accordion h4 {
       margin: 0;
