@@ -61,12 +61,13 @@
 
 .slider-container .slick-list {
   overflow: visible !important;
-  padding: 0px 200px 30px !important; /* 위/좌우/아래 여백 설정 */
+    padding: 0 220px 30px !important; /* 위/좌우/아래 여백 설정 */
 }
 
 .popular-slider .slick-slide {
   padding: 10px;
   box-sizing: border-box;
+   transition: filter 0.4s ease;
 }
 .popular-card {
   margin-top: 30px;
@@ -86,7 +87,7 @@
   margin-bottom: 10px;
 }
 .popular-title {
-  font-weight;
+  font-weight: 550;
   font-size: 16px;
   margin: 5px 0;
 }
@@ -95,10 +96,11 @@
   color: #666;
   margin-bottom: 10px;
 }
+
 .popular-slider .slick-slide {
-  transform: scale(0.9);
-  transition: transform 0.4s ease;
-  opacity: 0.6;
+  opacity: 1;
+  transition: filter 0.4s ease;
+  filter: none;
 }
 
 /* 가운데(active) 슬라이드 확대 */
@@ -106,6 +108,11 @@
   transform: scale(1.2);
   opacity: 1;
   z-index: 10;
+}
+
+.popular-slider .slick-center .popular-card {
+  transform: translateY(-10px); /* 살짝 위로 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .popular-slider .slick-slide > div {
@@ -748,11 +755,12 @@ fetch('/api/cards')
 
     const slider = document.querySelector('.popular-slider');
 
-    // 슬라이더가 이미 초기화되어 있다면 먼저 destroy
+    // 슬라이더 초기화 해제
     if ($(slider).hasClass('slick-initialized')) {
       $(slider).slick('unslick');
     }
 
+    // 카드 DOM 삽입
     slider.innerHTML = sorted.map(c => `
       <div>
         <div class="popular-card" onclick="goDetail(${c.cardNo})">
@@ -763,21 +771,49 @@ fetch('/api/cards')
       </div>
     `).join('');
 
-    // 다시 슬릭 초기화
+    // 슬릭 슬라이더 재초기화
     $(slider).slick({
-    	  centerMode: true,
-    	  centerPadding: '200px', // 양끝 카드가 반쯤 보이도록
-    	  slidesToShow: 3,
-    	  slidesToScroll: 1,
-    	  autoplay: true,
-    	  autoplaySpeed: 2000,
-    	  arrows: true,
-    	  dots: false,
-    	  infinite: true,
-    	  prevArrow: '<button class="slick-prev">&#10094;</button>',
-    	  nextArrow: '<button class="slick-next">&#10095;</button>',
-    	});
+      centerMode: true,
+      centerPadding: '170px',
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      arrows: true,
+      dots: false,
+      infinite: true,
+      prevArrow: '<button class="slick-prev">&#10094;</button>',
+      nextArrow: '<button class="slick-next">&#10095;</button>',
+    });
+
+    // blur 처리 함수 정의
+    function applyEdgeBlur() {
+	  $('.popular-slider .slick-slide').css('filter', 'none'); // 초기화
+	
+	  const $slides = $('.popular-slider .slick-slide');
+	  const currentIndex = $('.popular-slider').slick('slickCurrentSlide');
+	
+	  // blur 대상 index: 현재 인덱스 기준 왼쪽 2개, 오른쪽 2개 중 가장 바깥쪽
+	  const leftEdgeIndex = currentIndex - 2;
+	  const rightEdgeIndex = currentIndex + 2;
+	
+	  $slides.each(function () {
+	    const index = $(this).data('slick-index');
+	    if (index === leftEdgeIndex || index === rightEdgeIndex) {
+	      $(this).css('filter', 'blur(4px)');
+	    }
+	  });
+	}
+
+    // 초기 blur 적용
+    $(slider).on('init reInit afterChange', function () {
+      applyEdgeBlur();
+    });
+
+    // 강제 초기화 이벤트 트리거
+    $(slider).slick('setPosition'); // layout 계산
   });
+
 
 
 let fullCardList=[],currentIndex=0,currentType='',currentKeyword='',selectedTags=[];
