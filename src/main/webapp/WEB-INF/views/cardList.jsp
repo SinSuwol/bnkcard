@@ -168,6 +168,7 @@
 .item:hover img {
   opacity: 0.2;
   background-color: #ddd;
+  border-radius: 10px;
   /* pointer-events 제거 */
 }
 
