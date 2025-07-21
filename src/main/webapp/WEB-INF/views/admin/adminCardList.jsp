@@ -757,101 +757,109 @@ button[onclick="openModal()"]:hover {
 	    filterCards('card-list2');
 	});
 	
-document.addEventListener('DOMContentLoaded', () => {
+	
+	
+	
+	
+	
+	/*----------------------------------------------------------------------------------------  */
+document.addEventListener("DOMContentLoaded", () => {
+	
+  const btn        = document.getElementById("trainBtn");
+  const timeLabel  = document.getElementById("lastTrained");
+  const modal      = document.getElementById("progressModal");
+  const bar        = document.getElementById("progressBar");
+  const text       = document.getElementById("progressText");
 
-  /* ── DOM 캐시 ─────────────────────────────────── */
-  const btn       = document.getElementById('trainBtn');
-  const modal     = document.getElementById('progressModal');
-  const bar       = document.getElementById('progressBar');
-  const text      = document.getElementById('progressText');
-  const cancelBtn = document.getElementById('cancelTrain');
-  const timeLbl   = document.getElementById('lastTrained');
+  function fakeProgress(onFinished){
+	  bar.style.width = "0%";
+	  bar.style.background = "#00aaff";   // 초기 하늘색
+	  text.textContent = "0%";
+	  modal.style.display = "flex";
 
-  /* ── 상태 변수 ────────────────────────────────── */
-  let progressTimer = null;   // setInterval ID
-  let finishTimer   = null;   // 100 % 후 setTimeout ID
-  let controller    = null;   // AbortController
+	  let pct = 0;
+	  const id = setInterval(()=>{
+	    pct += Math.random()*8;
+	    if(pct >= 100){
+	      pct = 100;
+	      clearInterval(id);
 
-  /* ── UI 초기화 ────────────────────────────────── */
-  const resetUI = () => {
-    modal.style.display = 'none';
-    btn.disabled = false;
-    btn.textContent = 'AI 정보 업데이트 (학습)';
-    bar.style.width = '0%';
-    bar.style.background = '#00aaff';
-    text.textContent = '0%';
-  };
+	      /* ─ 완료 시 UI 변환 ─ */
+	      bar.style.width = "100%";
+	      bar.style.background = "#2ecc71";   // 초록색
+	      text.textContent = "완료!";
 
-  /* ── 가짜 진행률 애니메이션 ───────────────────── */
-  function fakeProgress(onFinish){
-    modal.style.display = 'flex';
-    let pct = 0;
-    progressTimer = setInterval(()=>{
-      pct += Math.random()*8;
-      if (pct >= 100){
-        pct = 100;
-        clearInterval(progressTimer); progressTimer = null;
+	      /* 1.5초 뒤 콜백 실행(=서버 호출) */
+	      setTimeout(()=> onFinished && onFinished(), 1500);
+	      return;                             // 이후 코드 건너뜀
+	    }
+	    bar.style.width = pct + "%";
+	    text.textContent = Math.floor(pct) + "%";
+	  }, 200);
+	}
 
-        bar.style.width='100%';
-        bar.style.background='#2ecc71';
-        text.textContent='완료!';
 
-        finishTimer = setTimeout(()=>{
-          finishTimer = null;
-          onFinish && onFinish();
-        }, 1500);
-      }else{
-        bar.style.width = pct + '%';
-        text.textContent = Math.floor(pct) + '%';
-      }
-    }, 200);
-  }
+  /* ── 마지막 학습 시간 표시 ── */
+  fetch("http://localhost:8000/train-card/time")
+      .then(r=>r.json())
+      .then(d=> timeLabel.textContent = "마지막 학습 시간: "+d.last_trained);
 
-  /* ── 마지막 학습 시각 최초 표시 ───────────────── */
-  fetch('http://localhost:8000/train-card/time')
-    .then(r=>r.json())
-    .then(d=> timeLbl.textContent = '마지막 학습 시간: ' + d.last_trained)
-    .catch(console.error);
-
-  /* ── [학습] 버튼 클릭 ─────────────────────────── */
-  btn.addEventListener('click', ()=>{
-    if(!confirm('정말 AI 정보를 업데이트 하시겠습니까?')) return;
+  /* ── 학습 버튼 클릭 ── */
+  btn.addEventListener("click", () => {
+    if(!confirm("정말 AI 정보를 업데이트 하시겠습니까?")) return;
 
     btn.disabled = true;
-    btn.textContent = '학습 중입니다...';
+    btn.textContent = "학습 중입니다...";
 
     fakeProgress(()=>{
-      controller = new AbortController();
-      fetch('http://localhost:8000/train-card', { method:'POST', signal:controller.signal })
+      fetch("http://localhost:8000/train-card", {method:"POST"})
         .then(r=>r.json())
-        .then(d => alert(d.message ?? d.error ?? '학습 완료'))
+        .then(data=>{
+          console.log(data);
+          /* ➊ 3 초 지연 후 완료 안내 */
+          setTimeout(()=>{
+            if(data.message){
+              alert("학습 완료: "+data.message);
+            }else if(data.error){
+              alert("오류: "+data.error);
+            }else{
+              alert("응답 형식이 예상과 다릅니다.");
+            }
+            /* ➋ 최신 학습 시간 재조회 */
+            return fetch("http://localhost:8000/train-card/time")
+                     .then(r=>r.json())
+                     .then(d=> timeLabel.textContent = "마지막 학습 시간: "+d.last_trained);
+          }, 1000);   
+        })
         .catch(err=>{
-          if (err.name !== 'AbortError'){   // 사용자가 취소한 게 아니면
-            alert('오류 발생: ' + err);
-            console.error(err);
-          }
+          alert("오류 발생: "+err);
+          console.error(err);
         })
         .finally(()=>{
-          /* 최신 학습 시각 갱신 */
-          fetch('http://localhost:8000/train-card/time')
-            .then(r=>r.json())
-            .then(d=> timeLbl.textContent = '마지막 학습 시간: ' + d.last_trained)
-            .catch(console.error);
-          resetUI();
-          controller = null;
+          modal.style.display = "none";    // 모달 닫기
+          btn.disabled = false;
+          btn.textContent = "AI 정보 업데이트 (학습)";
         });
     });
   });
 
-  /* ── [취소] 버튼 클릭 ─────────────────────────── */
-  cancelBtn.addEventListener('click', ()=>{
-    if(progressTimer){ clearInterval(progressTimer); progressTimer = null; }
-    if(finishTimer){   clearTimeout(finishTimer);   finishTimer   = null; }
-    if(controller){    controller.abort();          controller    = null; }
-    resetUI();
-  });
+  let progressTimer = null;
+  let fetchController = null;
+  
+  /* ─ 취소 버튼 ─ */
+  document.getElementById("cancelTrain").addEventListener("click", ()=>{
+    if(progressTimer){ clearInterval(progressTimer); progressTimer=null; }
+    if(fetchController){ fetchController.abort(); fetchController=null; }
 
+    modal.style.display="none";
+    btn.disabled=false;
+    btn.textContent="AI 정보 업데이트 (학습)";
+    bar.style.width="0%";
+    text.textContent="0%";
+  });
 });
+
+
 </script>
 </body>
 </html>

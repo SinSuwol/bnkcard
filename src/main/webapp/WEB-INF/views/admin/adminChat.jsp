@@ -1,145 +1,245 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%
-    // 세션에서 관리자 번호 꺼내 JS에 전달
     Object adminNoObj = session.getAttribute("loginAdminNo");
     Long adminNoLong = null;
     if (adminNoObj instanceof Number) {
-        adminNoLong = ((Number)adminNoObj).longValue();
+        adminNoLong = ((Number) adminNoObj).longValue();
     } else if (adminNoObj instanceof String) {
-        try { adminNoLong = Long.valueOf((String)adminNoObj); } catch(Exception ignore){}
+        try { adminNoLong = Long.valueOf((String) adminNoObj); } catch(Exception ignore){}
     }
-    if (adminNoLong == null) adminNoLong = 999L; // fallback
+    if (adminNoLong == null) adminNoLong = 999L;   // fallback
 %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Admin Chat</title>
+<title>관리자 고객관리</title>
+
+<!-- 공통 관리자 스타일(헤더 포함) -->
+<link rel="stylesheet" href="/css/adminstyle.css">
+
+<!-- 채팅 전용 스타일 -->
 <style>
+/* ── Reset / Base ───────────────────────────────────── */
+* {
+	box-sizing: border-box
+}
+
 body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #f9f9f9;
+	background: #f4f4f4;
+	color: #333
 }
 
+/* ── 메인 패널 ───────────────────────────────────────── */
 .container {
+	width: 100%;
+	max-width: 1020px;
+	height: 800px;
+	margin: 90px auto 40px; /* ↑ 헤더 높이만큼 top 여백 */
 	display: flex;
-	height: 100vh;
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid #dcdcdc;
+	border-radius: 10px;
+	box-shadow: 0 4px 18px rgba(0, 0, 0, .15)
 }
 
-.sidebar {
-	width: 300px;
-	background: #fff;
+/* === 헤더를 화면 상단에 고정 === */
+header.sidebar{
+  position:fixed;     /* 문서 흐름에서 분리 */
+  top:0; left:0; right:0;
+ 
+  /* 
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  */
+  border-bottom:1px solid #ddd;
+  z-index:1000;       /* 내용보다 위에 올라오도록 */
+}
+
+.chat-sidebar {
+	width: 220px;
+	background: #fafafa;
 	border-right: 1px solid #ddd;
-	overflow-y: auto;
-	padding: 20px;
+	padding: 14px 12px 12px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto
 }
 
 .chat-area {
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	padding: 20px;
+	padding: 20px
 }
 
 .chat-header {
-	font-weight: bold;
-	margin-bottom: 10px;
+	font-weight: 700;
+	font-size: 17px;
+	margin-bottom: 10px
 }
 
+/* ── 방 목록 ─────────────────────────────────────────── */
+h3 {
+	margin: 0 0 12px 0;
+	font-size: 17px;
+	font-weight: 700
+}
+
+.badge {
+	display: inline-block;
+	padding: 2px 7px;
+	margin-left: 6px;
+	background: #ff5252;
+	color: #fff;
+	font-size: 12px;
+	border-radius: 12px;
+	vertical-align: middle
+}
+
+#roomSearch {
+	width: 100%;
+	padding: 7px 9px;
+	margin-bottom: 10px;
+	font-size: 13px;
+	border: 1px solid #bbb;
+	border-radius: 6px
+}
+
+#roomSearch:focus {
+	box-shadow: 0 0 0 2px rgba(0, 123, 255, .25)
+}
+
+.room-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 7px 10px;
+	margin-bottom: 9px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 12px;
+	cursor: pointer;
+	transition: background .15s, border .15s
+}
+
+.room-item:hover {
+	background: #f1f5ff
+}
+
+.room-item.selected-room {
+	background: #e2e3ff;
+	border-color: #9fa8ff
+}
+
+.room-info {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.room-unread {
+	min-width: 20px;
+	padding: 2px 6px;
+	text-align: center;
+	background: #ff5252;
+	color: #fff;
+	border-radius: 12px;
+	font-size: 11px;
+	font-weight: 700
+}
+
+.room-meta {
+	display: block;
+	font-size: 10px;
+	color: #666;
+	margin-top: 2px
+}
+
+/* ── 채팅 박스 & 입력 ───────────────────────────────── */
 #chatBox {
 	flex-grow: 1;
 	border: 1px solid #ddd;
+	border-radius: 6px;
 	background: #fff;
 	overflow-y: auto;
 	padding: 10px;
-	margin-bottom: 10px;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 8px;
+	font-size: 13px
 }
 
 .message {
-	display: inline-block;
-	padding: 8px 12px;
+	max-width: 78%;
+	padding: 7px 10px;
 	border-radius: 10px;
-	max-width: 70%;
-	word-break: break-word;
+	word-break: break-word
 }
 
 .user {
 	background: #d1e7dd;
 	align-self: flex-end;
-	margin-left: auto;
+	margin-left: auto
 }
 
 .admin {
 	background: #f8d7da;
 	align-self: flex-start;
-	margin-right: auto;
+	margin-right: auto
 }
 
 .input-area {
 	display: flex;
-	gap: 10px;
+	gap: 8px;
+	margin-top: 8px
 }
 
 .input-area input {
 	flex-grow: 1;
-	padding: 10px;
+	padding: 9px;
+	font-size: 13px;
 	border: 1px solid #ccc;
-	border-radius: 5px;
+	border-radius: 5px
 }
 
 .input-area button {
-	padding: 10px 15px;
+	padding: 9px 14px;
 	background: #007bff;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
-	cursor: pointer;
+	font-size: 13px;
+	cursor: pointer
 }
 
 .input-area button:hover {
-	background: #0056b3;
-}
-
-.room-item {
-	padding: 10px;
-	margin-bottom: 10px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	cursor: pointer;
-	transition: background 0.2s;
-}
-
-.room-item:hover {
-	background: #f1f1f1;
-}
-
-.room-item.selected-room {
-	background: #e2e3ff;
-	border-color: #9fa8ff;
-}
-
-.room-item .room-meta {
-	display: block;
-	font-size: 11px;
-	color: #666;
-	margin-top: 4px;
+	background: #0056b3
 }
 </style>
-</head>
-<body>
 
+<!-- 헤더용 JS (메뉴 강조 등) -->
+<script src="/js/adminHeader.js" defer></script>
+</head>
+
+<body>
+	<!-- 공통 헤더 -->
+	<jsp:include page="../fragments/header.jsp"></jsp:include>
+
+	<!-- 채팅 패널 -->
 	<div class="container">
-		<div class="sidebar">
-			<h3>방 목록</h3>
+		<div class="chat-sidebar">
+			<h3>
+				방 목록 <span id="totalUnread" class="badge">0</span>
+			</h3>
+			<input type="text" id="roomSearch" placeholder="검색">
 			<div id="roomList"></div>
 		</div>
+
 		<div class="chat-area" style="display: none;">
 			<div class="chat-header" id="roomTitle">채팅방</div>
 			<div id="chatBox"></div>
@@ -150,217 +250,117 @@ body {
 		</div>
 	</div>
 
+	<!-- 라이브러리 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
+	<!-- 채팅 패널 JS -->
 	<script>
-/* JSP에서 전달받은 관리자 번호 */
 const ADMIN_NO_SERVER = Number('<%= adminNoLong %>');
-console.log("🔐 서버세션 adminNo =", ADMIN_NO_SERVER);
+let stompClient=null,currentRoomId=null,allRooms=[];
 
-let stompClient = null;
-let currentRoomId = null;
-let roomsPollTimer = null;
-
-/* ===== 초기화 ===== */
-window.onload = function () {
-    console.log("✅ window.onload 시작");
-    loadRooms();
-    // 주기적 방 목록 새로고침 (5초마다)
-    roomsPollTimer = setInterval(loadRooms, 5000);
-    document.getElementById('sendAdminBtn').addEventListener('click', sendAdminMessage);
+/* 초기화 */
+window.onload=()=>{loadRooms();setInterval(loadRooms,5000);
+  document.getElementById('sendAdminBtn').onclick=sendAdminMessage;
+  document.getElementById('roomSearch').onkeyup=filterRooms;
 };
 
-/* ===== 방 목록 로드 ===== */
-function loadRooms() {
-    fetch('/api/admin/chat/rooms')
-        .then(response => response.json())
-        .then(data => {
-            console.log("📦 방 목록:", data);
-            renderRoomList(Array.isArray(data) ? data : []);
-        })
-        .catch(error => {
-            console.error("❌ 방 목록 오류:", error);
-        });
+/* ── REST: 방 목록 ───────────────────────────── */
+function loadRooms(){
+  fetch('/api/admin/chat/rooms')
+    .then(r=>r.json())
+    .then(d=>{ allRooms=Array.isArray(d)?d:[]; updateTotalUnread(allRooms); renderRoomList(allRooms); })
+    .catch(console.error);
+}
+function updateTotalUnread(rooms){
+  document.getElementById('totalUnread').textContent =
+      rooms.reduce((a,r)=>a+(r.unreadCount||0),0);
 }
 
-function renderRoomList(rooms) {
-    const roomList = document.getElementById("roomList");
-    roomList.innerHTML = "";
-
-    if (!rooms || rooms.length === 0) {
-        roomList.innerHTML = "<p>현재 등록된 방이 없습니다.</p>";
-        return;
-    }
-
-    rooms.forEach(room => {
-        if (!room || room.roomId == null) return;
-
-        // 표시용 시간
-        const lastTimeStr = formatTime(room.lastMessageAt || room.createdAt);
-
-        const div = document.createElement("div");
-        div.className = "room-item";
-        if (currentRoomId != null && Number(currentRoomId) === Number(room.roomId)) {
-            div.classList.add("selected-room");
-        }
-
-        // 메인 라인
-        div.textContent =
-            "방번호: " + room.roomId +
-            " | 회원번호: " + (room.memberNo ?? "-") +
-            " | 미확인: " + (room.unreadCount ?? "0");
-
-        // 추가 메타 (최근시간)
-        const meta = document.createElement("span");
-        meta.className = "room-meta";
-        meta.textContent = "최근: " + (lastTimeStr || "-");
-        div.appendChild(meta);
-
-        div.dataset.roomId = room.roomId;
-        div.addEventListener("click", function () {
-            const rid = Number(this.dataset.roomId);
-            console.log("📥 클릭된 roomId:", rid);
-            enterRoom(rid);
-        });
-
-        roomList.appendChild(div);
-    });
+/* ── 검색 필터 ────────────────────────────────── */
+function filterRooms(e){
+  const q=e.target.value.trim();
+  renderRoomList(q?allRooms.filter(r=>String(r.memberNo??'').includes(q)||String(r.roomId).includes(q)):allRooms);
 }
 
-/* ===== 방 입장 ===== */
-function enterRoom(roomId) {
-    if (!roomId || isNaN(roomId)) {
-        alert("유효하지 않은 방 번호입니다.");
-        return;
-    }
-    if (!ADMIN_NO_SERVER || isNaN(ADMIN_NO_SERVER)) {
-        alert("관리자 번호가 유효하지 않습니다. 다시 로그인하세요.");
-        return;
-    }
+/* ── 방 리스트 출력 ───────────────────────────── */
+function renderRoomList(rooms){
+  const list=document.getElementById('roomList'); list.innerHTML='';
+  rooms.sort((a,b)=>(b.unreadCount??0)-(a.unreadCount??0)||
+        new Date(b.lastMessageAt||b.createdAt)-new Date(a.lastMessageAt||a.createdAt));
 
-    currentRoomId = roomId;
-    console.log("➡️ enterRoom 호출:", roomId, "관리자:", ADMIN_NO_SERVER);
+  if(!rooms.length){
+     list.innerHTML="<p style='font-size:12px;color:#777'>방이 없습니다</p>";return;
+  }
+  rooms.forEach(r=>{
+    if(r.roomId==null) return;
+    const div=document.createElement('div'); div.className='room-item';
+    if(Number(currentRoomId)===Number(r.roomId))div.classList.add('selected-room');
 
-    const enterUrl = '/api/admin/chat/room/' + roomId + '/enter?adminNo=' + ADMIN_NO_SERVER;
-    console.log("🌐 Enter 요청 URL:", enterUrl);
+    const info=document.createElement('div'); info.className='room-info';
+    info.innerHTML="방&nbsp;"+r.roomId+" / 회원&nbsp;"+(r.memberNo!=null?r.memberNo:'-');
+    const meta=document.createElement('span'); meta.className='room-meta';
+    meta.textContent="최근: "+(formatTime(r.lastMessageAt||r.createdAt)||"-"); info.appendChild(meta);
 
-    fetch(enterUrl, { method: 'POST' })
-        .then(res => {
-            if (!res.ok) throw new Error("관리자 배정 실패:" + res.status);
+    const unread=document.createElement('span'); unread.className='room-unread';
+    unread.textContent=r.unreadCount??0;
 
-            document.querySelector(".chat-area").style.display = "flex";
-            document.getElementById("roomTitle").textContent = '채팅방 #' + roomId;
-
-            const msgUrl = '/api/admin/chat/room/' + roomId + '/messages';
-            console.log("🌐 메시지 로드 URL:", msgUrl);
-            return fetch(msgUrl);
-        })
-        .then(res => res.json())
-        .then(data => {
-            const chatBox = document.getElementById("chatBox");
-            chatBox.innerHTML = "";
-            if (Array.isArray(data)) {
-                data.forEach(showMessage);
-            } else {
-                console.warn("⚠️ 메시지 데이터가 배열이 아님:", data);
-            }
-            connect(roomId);
-            // 방 목록 갱신 (unread 초기화 반영용)
-            loadRooms();
-        })
-        .catch(err => {
-            console.error("🚨 방 입장 실패:", err);
-            alert("방 입장에 실패했습니다.");
-        });
+    div.appendChild(info); div.appendChild(unread);
+    div.dataset.roomId=r.roomId; div.onclick=()=>enterRoom(Number(r.roomId));
+    list.appendChild(div);
+  });
 }
 
-/* ===== WebSocket 연결 ===== */
-function connect(roomId) {
-    // 기존 연결 끊기
-    if (stompClient && stompClient.connected) {
-        stompClient.disconnect(() => console.log("🔌 이전 WS 연결 해제"));
-    }
+/* ── 방 입장 ───────────────────────────────────── */
+function enterRoom(roomId){
+  if(!roomId||isNaN(roomId)){alert('방 번호 오류');return;}
+  if(!ADMIN_NO_SERVER){alert('관리자 번호 오류');return;}
+  currentRoomId=roomId;
 
-    const socket = new SockJS('/ws/chat');
-    stompClient = Stomp.over(socket);
-
-    stompClient.connect({}, function (frame) {
-        console.log("✅ WebSocket 연결됨:", frame);
-        const topic = '/topic/room/' + roomId;
-        console.log("📡 구독:", topic);
-
-        stompClient.subscribe(topic, function (message) {
-            console.log("📩 WS 수신:", message.body);
-            try {
-                const data = JSON.parse(message.body);
-                showMessage(data);
-                // 새 메시지 왔으니 방 목록도 새로고침 (미확인 수 반영)
-                loadRooms();
-            } catch (err) {
-                console.error("❌ 메시지 파싱 실패:", err);
-            }
-        });
-    }, function (err) {
-        console.error("❌ WebSocket 연결 실패:", err);
-    });
+  fetch('/api/admin/chat/room/'+roomId+'/enter?adminNo='+ADMIN_NO_SERVER,{method:'POST'})
+    .then(res=>{if(!res.ok)throw res})
+    .then(()=>fetch('/api/admin/chat/room/'+roomId+'/messages'))
+    .then(r=>r.json())
+    .then(d=>{
+       document.querySelector('.chat-area').style.display='flex';
+       document.getElementById('roomTitle').textContent='채팅방 #'+roomId;
+       const box=document.getElementById('chatBox'); box.innerHTML='';
+       (Array.isArray(d)?d:[]).forEach(showMessage);
+       connect(roomId); loadRooms();
+    })
+    .catch(e=>{console.error(e);alert('방 입장 실패');});
 }
 
-/* ===== 관리자 메시지 전송 ===== */
-function sendAdminMessage() {
-    const msgEl = document.getElementById("adminMessageInput");
-    const msg = msgEl.value.trim();
-
-    if (!msg) {
-        alert("메시지를 입력하세요.");
-        return;
-    }
-    if (!currentRoomId) {
-        alert("먼저 채팅방에 입장하세요.");
-        return;
-    }
-
-    const payload = {
-        roomId: currentRoomId,
-        senderType: "ADMIN",
-        senderId: ADMIN_NO_SERVER,
-        message: msg
-    };
-
-    console.log("🚀 관리자 메시지 송신:", payload);
-    stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(payload));
-    msgEl.value = "";
+/* ── WebSocket 연결 ───────────────────────────── */
+function connect(roomId){
+  if(stompClient?.connected)stompClient.disconnect();
+  stompClient=Stomp.over(new SockJS('/ws/chat'));
+  stompClient.connect({},()=>
+     stompClient.subscribe('/topic/room/'+roomId,m=>{
+        try{showMessage(JSON.parse(m.body));loadRooms();}catch(e){console.error(e);}
+     }),console.error);
 }
 
-/* ===== 메시지 표시 ===== */
-function showMessage(message) {
-    const sender = message.senderType ?? "알 수 없음";
-    const text   = message.message ?? "(빈 메시지)";
-    const time   = message.sentAt ? formatTime(message.sentAt) : "";
-
-    const div = document.createElement("div");
-    div.classList.add("message", sender === "USER" ? "user" : "admin");
-    div.textContent = sender + ": " + text + (time ? " (" + time + ")" : "");
-
-    const chatBox = document.getElementById("chatBox");
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
+/* ── 메시지 전송 ──────────────────────────────── */
+function sendAdminMessage(){
+  const inp=document.getElementById('adminMessageInput'),msg=inp.value.trim();
+  if(!msg){alert('메시지를 입력하세요');return;}
+  if(!currentRoomId){alert('방을 선택하세요');return;}
+  stompClient.send('/app/chat.sendMessage',{},JSON.stringify({
+     roomId:currentRoomId,senderType:'ADMIN',senderId:ADMIN_NO_SERVER,message:msg
+  })); inp.value='';
 }
 
-/* ===== 시간 포맷 ===== */
-function formatTime(t) {
-    if (!t) return "";
-    try {
-        const d = new Date(t);
-        if (isNaN(d.getTime())) return "";
-        // 한국 시간 표시 (브라우저 로케일 사용)
-        return d.toLocaleString();
-    } catch(e) {
-        return "";
-    }
+/* ── 메시지 출력 ──────────────────────────────── */
+function showMessage(m){
+  const div=document.createElement('div');
+  div.className='message '+(m.senderType==='USER'?'user':'admin');
+  div.textContent=(m.senderType||'')+': '+(m.message||'')+(m.sentAt?' ('+formatTime(m.sentAt)+')':'');
+  const box=document.getElementById('chatBox'); box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
-</script>
+function formatTime(t){if(!t)return'';const d=new Date(t);return isNaN(d)?'':d.toLocaleString();}
+    </script>
 </body>
 </html>
