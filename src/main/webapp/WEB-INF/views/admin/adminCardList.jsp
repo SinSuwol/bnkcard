@@ -228,9 +228,22 @@ button[onclick="openModal()"]:hover {
 	flex: 1;
 	padding: 6px;
 	font-size: 13px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* ✅ body와 동일하게 */
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+	resize: vertical;
+}
+
+.form-group textarea {
+	flex: 1;
+	padding: 6px;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: vertical;
 }
 
 .modal-buttons {
@@ -350,16 +363,21 @@ button[onclick="openModal()"]:hover {
 						id="issuedTo" name="issuedTo" placeholder="발급 대상">
 				</div>
 				<div class="form-group">
-					<label for="service">주요 서비스</label> <input type="text" id="service"
-						name="service" placeholder="주요 서비스">
+					<label for="service">주요 서비스</label>
+					<textarea id="service" name="service" placeholder="주요 서비스" rows="6"></textarea>
 				</div>
 				<div class="form-group">
-					<label for="sService">부가 서비스</label> <input type="text"
-						id="sService" name="sService" placeholder="부가 서비스">
+					<label for="sService">부가 서비스</label>
+					<textarea id="sService" name="sService" placeholder="부가 서비스"
+						rows="6"></textarea>
 				</div>
 				<div class="form-group">
-					<label for="cardStatus">상태</label> <input type="text"
-						id="cardStatus" name="cardStatus" placeholder="상태">
+					<label>상태</label>
+					<div style="flex: 1;">
+						<label><input type="radio" name="cardStatus" value="게시중"
+							checked> 게시중</label> <label style="margin-left: 15px;"><input
+							type="radio" name="cardStatus" value="수정중"> 수정중</label>
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="cardUrl">카드 URL</label> <input type="text" id="cardUrl"
@@ -378,8 +396,9 @@ button[onclick="openModal()"]:hover {
 						id="cardSlogan" name="cardSlogan" placeholder="카드 슬로건">
 				</div>
 				<div class="form-group">
-					<label for="cardNotice">카드 공지사항</label> <input type="text"
-						id="cardNotice" name="cardNotice" placeholder="카드 공지사항">
+					<label for="cardNotice">카드 공지사항</label>
+					<textarea id="cardNotice" name="cardNotice" placeholder="카드 공지사항"
+						rows="6"></textarea>
 				</div>
 
 				<div class="modal-buttons">
@@ -459,16 +478,24 @@ button[onclick="openModal()"]:hover {
 			</div>
 
 			<div class="form-group">
-				<label>주요 서비스</label> <input type="text" id="editService">
+				<label>주요 서비스</label>
+				<textarea id="editService" rows="6"></textarea>
 			</div>
 
 			<div class="form-group">
-				<label>부가 서비스</label> <input type="text" id="editSService">
+				<label>부가 서비스</label>
+				<textarea id="editSService" rows="6"></textarea>
 			</div>
 
 			<div class="form-group">
-				<label>상태</label> <input type="text" id="editCardStatus">
+				<label>상태</label>
+				<div style="flex: 1;">
+					<label><input type="radio" name="editCardStatus"
+						value="게시중"> 게시중</label> <label style="margin-left: 15px;"><input
+						type="radio" name="editCardStatus" value="수정중"> 수정중</label>
+				</div>
 			</div>
+
 
 			<div class="form-group">
 				<label>카드 URL</label> <input type="text" id="editCardUrl">
@@ -487,7 +514,8 @@ button[onclick="openModal()"]:hover {
 			</div>
 
 			<div class="form-group">
-				<label>공지사항</label> <input type="text" id="editCardNotice">
+				<label>공지사항</label>
+				<textarea id="editCardNotice" rows="6"></textarea>
 			</div>
 
 			<div class="modal-buttons">
@@ -501,6 +529,9 @@ button[onclick="openModal()"]:hover {
 
 	<script src="/js/adminHeader.js"></script>
 	<script>
+	
+	
+	
     fetch('/admin/card/getCardList') // ← 실제 REST API 경로
         .then(res => res.json())
         .then(cards => {
@@ -536,6 +567,7 @@ button[onclick="openModal()"]:hover {
             const li = document.createElement('li');
             li.className = 'card';
             li.innerHTML = `
+            	<p style="color: red">\${card.cardStatus === '수정중' ? '수정중' : '&nbsp;'}</p>
             	<img src=\${card.cardUrl}>
                 <h3 class="hi">\${card.cardName}</h3>
                 <p>연회비: \${card.annualFee}원</p>
@@ -563,13 +595,19 @@ button[onclick="openModal()"]:hover {
         document.getElementById('editIssuedTo').value = card.issuedTo;
         document.getElementById('editService').value = card.service;
         document.getElementById('editSService').value = card.sService;
-        document.getElementById('editCardStatus').value = card.cardStatus;
+     
         document.getElementById('editCardUrl').value = card.cardUrl;
         document.getElementById('editCardIssueDate').value = card.cardIssueDate;
         document.getElementById('editCardDueDate').value = card.cardDueDate;
         document.getElementById('editCardSlogan').value = card.cardSlogan;
         document.getElementById('editCardNotice').value = card.cardNotice;
 
+        const radios = document.getElementsByName('editCardStatus');
+        radios.forEach(radio => {
+          radio.checked = (radio.value === card.cardStatus);
+        });
+
+        
         document.getElementById('editModal').style.display = 'block';
         document.getElementById('modalOverlay').style.display = 'block';
     }
@@ -591,7 +629,7 @@ button[onclick="openModal()"]:hover {
             issuedTo: document.getElementById('editIssuedTo').value,
             service: document.getElementById('editService').value,
             sService: document.getElementById('editSService').value,
-            cardStatus: document.getElementById('editCardStatus').value,
+            cardStatus: document.querySelector('input[name="editCardStatus"]:checked').value,
             cardUrl: document.getElementById('editCardUrl').value,
             cardIssueDate: document.getElementById('editCardIssueDate').value,
             cardDueDate: document.getElementById('editCardDueDate').value,
@@ -659,7 +697,7 @@ button[onclick="openModal()"]:hover {
      issuedTo: form.issuedTo.value,
      service: form.service.value,
      sService: form.sService.value,
-     cardStatus: form.cardStatus.value,
+     cardStatus: document.querySelector('input[name="cardStatus"]:checked').value,
      cardUrl: form.cardUrl.value,
      cardIssueDate: form.cardIssueDate.value,
      cardDueDate: form.cardDueDate.value,
