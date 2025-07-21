@@ -75,6 +75,28 @@
   ORDER BY CARD_NO
 </select>
 
+  <resultMap id="PopularCardMap" type="com.busanbank.card.card.dto.CardDto">
+    <result property="cardNo" column="CARD_NO"/>
+    <result property="cardName" column="CARD_NAME"/>
+    <result property="cardSlogan" column="CARD_SLOGAN"/>
+    <result property="cardUrl" column="CARD_URL"/>
+    <result property="popularImgUrl" column="POPULAR_IMG_URL"/> <!-- ✅ 필수 -->
+    <result property="viewCount" column="VIEW_COUNT"/>
+  </resultMap>
+
+<select id="selectPopularCards" resultMap="PopularCardMap">
+    SELECT
+      CARD_NO,
+      CARD_NAME,
+      CARD_SLOGAN,
+      CARD_URL,
+      POPULAR_IMG_URL,
+      VIEW_COUNT
+    FROM CARD
+    ORDER BY VIEW_COUNT DESC
+    FETCH FIRST 6 ROWS ONLY
+  </select>
+
 
 
 	

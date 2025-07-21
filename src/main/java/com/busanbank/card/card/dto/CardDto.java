@@ -30,4 +30,5 @@ public class CardDto {
     private String cardNotice;
     private LocalDate regDate;
     private LocalDate editDate;
+    private String popularImgUrl; 
 }

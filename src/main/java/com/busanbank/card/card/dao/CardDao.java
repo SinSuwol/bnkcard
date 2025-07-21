@@ -20,4 +20,6 @@ public interface CardDao {
     	    @Param("type") String type,
     	    @Param("tags") List<String> tags
     	); //카드 리스트 정렬(?)
+    
+    List<CardDto> selectPopularCards();
 }

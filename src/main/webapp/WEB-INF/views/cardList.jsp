@@ -13,7 +13,7 @@
 <style>
 
 .popular-slider.slick-slider {
-  background-color: #d6b8b8;
+  background-color: #fff;;
   padding: 50px 0 100px; 
 }
 
@@ -751,7 +751,7 @@
 <script src="/js/header2.js"></script>
 <script>
 //  인기 카드 슬라이더 데이터 불러오기
-fetch('/api/cards')
+fetch('/api/cards/popular')
   .then(r => r.json())
   .then(cards => {
     const sorted = [...cards]
@@ -766,17 +766,22 @@ fetch('/api/cards')
     }
 
     // 카드 DOM 삽입
-    slider.innerHTML = sorted.map(c => `
-	  <div>
-	    <div class="popular-card" style="background-image: url('${c.cardUrl}')" onclick="goDetail(${c.cardNo})">
-	      <div class="card-text-wrap">
-	        <div class="best-badge">Best</div>
-	        <div class="popular-title">${c.cardName}</div>
-	        <div class="popular-sub">${c.cardSlogan || ''}</div>
+    slider.innerHTML = sorted.map(c => {
+	  // popular 이미지가 있으면 우선 사용, 없으면 기존 cardUrl 사용
+	  const bgUrl = c.popularImgUrl?.trim() || c.cardUrl?.trim();
+	
+	  return `
+	    <div>
+	      <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
+	        <div class="card-text-wrap">
+	          <div class="best-badge">Best</div>
+	          <div class="popular-title">${c.cardName}</div>
+	          <div class="popular-sub">${c.cardSlogan || ''}</div>
+	        </div>
 	      </div>
 	    </div>
-	  </div>
-	`).join('');
+	  `;
+	}).join('');
 
 
     // 슬릭 슬라이더 재초기화

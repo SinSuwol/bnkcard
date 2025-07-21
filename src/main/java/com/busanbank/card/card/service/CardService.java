@@ -35,5 +35,10 @@ public class CardService {
         return cardDao.searchByKeyword(keyword, type, tags);
     }
     
+    //상단 유명카드 이미지 불러오기
+    public List<CardDto> getPopularCards() {
+        return cardDao.selectPopularCards();
+    }
+    
 
 }

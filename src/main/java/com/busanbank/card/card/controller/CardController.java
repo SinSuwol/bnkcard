@@ -92,4 +92,9 @@ public class CardController {
 	public List<ScrapCardDto> publicScrapCards() {
 	    return seleniumCardCrawler.getScrapList();
 	}
+	
+	@GetMapping("/cards/popular")
+	public List<CardDto> getPopularCards() {
+	    return cardService.getPopularCards();
+	}
 }
