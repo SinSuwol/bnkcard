@@ -488,3 +488,75 @@ body.main-body{
 #extend-btn:hover {
   background-color: #555;
 }
+
+
+/* ✅  메인 슬라이더  ✅*/
+
+/* 기본 슬라이더 스타일 */
+.slider-wrapper {
+  width: 100%;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* 모든 슬라이드 초기화 */
+.main-slider .slick-slide {
+  width: 1250px !important; /* 각 슬라이드 너비 고정 */
+  height: 700px !important;
+  flex: 0 0 auto;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  transform:  translateY(-80px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 가운데 슬라이드만 강조 */
+.main-slider .slick-center {
+  opacity: 1;
+  transform:  translateY(0); /* ← 원하는 만큼 아래로 */
+  z-index: 2;
+}
+
+.main-slider .cover{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color: rgba(0, 0, 0, 0.3); /* 어두운 반투명 배경 */
+	backdrop-filter: blur(5px);
+	transition: 0.2s;
+}
+
+.main-slider .slick-center .cover{
+	opacity:0;
+	backdrop-filter: blur(0px);
+}
+
+
+/* 이미지 공통 */
+.main-slider .slick-slide img {
+  width: 1250px;
+  height: 700px;
+  max-height: 100%;
+  transition: transform 0.3s ease;
+  
+}
+
+.main-slider .slick-center img{
+}
+
+.slick-arrow{
+	position:absolute;
+}
+
+
+
+
+
+
+
