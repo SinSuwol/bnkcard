@@ -651,6 +651,11 @@
   background-color: #e35a2f;
 }
 
+/* 인기 슬라이드 검정 글 */
+.sk-margin {
+  margin-left: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -805,15 +810,14 @@ fetch('/api/cards/popular')
 	  const isSKCard = c.cardName.includes("SK OIL&LPG");
 	
 	  return `
-	    <div>
-	      <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
-	        <div class="card-text-wrap ${isSKCard ? 'dark-text' : ''}">
-	        
-	          <div class="popular-title">${c.cardName}</div>
-	          <div class="popular-sub">${c.cardSlogan || ''}</div>
-	        </div>
+	  <div>
+	    <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
+	      <div class="card-text-wrap ${isSKCard ? 'dark-text sk-margin' : ''}">
+	        <div class="popular-title">${c.cardName}</div>
+	        <div class="popular-sub">${c.cardSlogan || ''}</div>
 	      </div>
 	    </div>
+	  </div>
 	  `;
 	}).join('');
 
