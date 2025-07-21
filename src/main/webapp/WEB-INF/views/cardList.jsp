@@ -166,7 +166,7 @@
   transform: translate(-50%, -50%);
   font-weight: bold;
   border-bottom: 2px solid #333;
-  font-size: 16px;
+  font-size: 15px;
   pointer-events: none; /* 이 텍스트는 클릭 안 되게 */
 }
 
