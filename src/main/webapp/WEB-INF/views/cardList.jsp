@@ -14,12 +14,12 @@
 
 .popular-slider.slick-slider {
   background-color: #fff;;
-  padding: 50px 0 100px; 
+  padding: 50px 0 50px;
 }
 
 .slick-prev {
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
    left: 46%;
   transform: translateX(-40%);
   z-index: 100;
@@ -34,7 +34,7 @@
 }
 .slick-next {
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
   right: 46%;
   transform: translateX(-40%);
   z-index: 100;
@@ -77,7 +77,7 @@
   border-radius: 16px;
   overflow: hidden;
   height: 200px; /* 필요시 조정 */
-  padding: 20px;
+  padding: 25px;
   display: flex;
   align-items: flex-end;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -92,14 +92,17 @@
   margin-bottom: 10px;
 }
 .popular-title {
-  font-weight: 550;
+  font-weight: 580;
   font-size: 16px;
   margin: 5px 0;
+  margin-bottom: 160px;
+  text-align: center;
 }
 .popular-sub {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
+  color: #fff;
+  margin-bottom: -15px;
+  font-weight: 450;
 }
 
 .popular-slider .slick-slide {
@@ -121,7 +124,17 @@
 }
 
 .popular-slider .slick-slide > div {
-  margin: 0 10px; /* ← 좌우 간격. 줄이면 좁아지고 늘리면 넓어짐 */
+  margin: 0 15px; /* ← 좌우 간격. 줄이면 좁아지고 늘리면 넓어짐 */
+}
+
+.dark-text {
+  color: #000;
+}
+
+.dark-text .popular-title,
+.dark-text .popular-sub,
+.dark-text .best-badge {
+  color: #000 !important;
 }
 
 /* ---------- 카드 그리드 ---------- */
@@ -788,14 +801,14 @@ fetch('/api/cards/popular')
 
     // 카드 DOM 삽입
     slider.innerHTML = sorted.map(c => {
-	  // popular 이미지가 있으면 우선 사용, 없으면 기존 cardUrl 사용
 	  const bgUrl = c.popularImgUrl?.trim() || c.cardUrl?.trim();
+	  const isSKCard = c.cardName.includes("SK OIL&LPG");
 	
 	  return `
 	    <div>
 	      <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
-	        <div class="card-text-wrap">
-	          <div class="best-badge">Best</div>
+	        <div class="card-text-wrap ${isSKCard ? 'dark-text' : ''}">
+	        
 	          <div class="popular-title">${c.cardName}</div>
 	          <div class="popular-sub">${c.cardSlogan || ''}</div>
 	        </div>
@@ -803,6 +816,7 @@ fetch('/api/cards/popular')
 	    </div>
 	  `;
 	}).join('');
+
 
 
     // 슬릭 슬라이더 재초기화

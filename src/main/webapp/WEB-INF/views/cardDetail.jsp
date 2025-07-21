@@ -101,7 +101,7 @@
     }
     .accordion h4 {
       margin: 0;
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 600;
       color: #002e5b;
       display: flex;
@@ -113,7 +113,7 @@
 	  margin-top: 12px;
 	  font-size: 15px;
 	  color: #444;
-	  line-height: 1.6;
+	  line-height: 2.5;
 	}
 	.accordion.active p {
 	  display: block;
@@ -141,8 +141,12 @@
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 15px;
       color: #555;
-      line-height: 1.7;
+      line-height: 2.5;
     }
+    
+    #sService {
+  		line-height: 2.0; /* 원하는 값으로 */
+	}
   </style>
 </head>
 <body>
