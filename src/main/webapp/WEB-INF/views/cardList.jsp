@@ -1280,7 +1280,7 @@ function openScrapModal() {
 
    function openChatbot() {
 	   window.open(
-	     '/user/card/chatbot',            // 챗봇 페이지 URL
+	     '/card/chatbot',            // 챗봇 페이지 URL
 	     'cardChatbotPopup',              // 창 이름 (중복 방지용)
 	     'width=520,height=780,resizable=yes,scrollbars=yes'
 	   );
