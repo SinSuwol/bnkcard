@@ -4,7 +4,6 @@
 <title>FAQ 등록</title>
 <link rel="stylesheet" href="/css/adminstyle.css">
 <style>
-
 body {
 	background-color: #f9f9f9;
 }
@@ -110,32 +109,27 @@ form {
 				name="admin">
 		</div>
 		<div class="form-group">
-
-			<label for="cattegory">카테고리</label>
-			<div style="display: flex; gap: 20px;">
-				<label><input type="radio" name="cattegory" value="카드"
-					required> 카드</label> <label><input type="radio"
-					name="cattegory" value="예적금"> 예적금</label>
-			</div>
+			<label for="cattegory">카테고리</label> <input type="text" id="cattegory"
+				name="cattegory">
 		</div>
-		<button type="submit">등록</button>
- suhyeon
+		<div class="button-group">
+			<button type="submit">등록</button>
+			<button type="button" onclick="history.back()">취소</button>
+		</div>
 	</form>
 
 	<script src="/js/adminHeader.js"></script>
 
 	<script>
-
-    function autoResize(textarea) {
-        textarea.style.height = "auto"; // 높이 초기화
-        textarea.style.height = textarea.scrollHeight + "px"; // 내용만큼 높이 조절
-    }
-    
-window.addEventListener("DOMContentLoaded", () => {
-    const textarea = document.getElementById("faqAnswer");
-    if (textarea) autoResize(textarea); // 초기값에도 적용
-});
-
+	    function autoResize(textarea) {
+	        textarea.style.height = "auto"; // 높이 초기화
+	        textarea.style.height = textarea.scrollHeight + "px"; // 내용만큼 높이 조절
+	    }
+	    
+		window.addEventListener("DOMContentLoaded", () => {
+		    const textarea = document.getElementById("faqAnswer");
+		    if (textarea) autoResize(textarea); // 초기값에도 적용
+		});
 </script>
 </body>
 </html>

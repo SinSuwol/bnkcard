@@ -138,49 +138,17 @@ form {
         </div>
 	</form>
 
-        <div class="form-group">
-            <label for="faqAnswer">답변</label>
-           <textarea id="faqAnswer" name="faqAnswer" oninput="autoResize(this)">${faq.faqAnswer}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="writer">작성자</label>
-            <input type="text" id="writer" name="writer" value="${faq.writer}">
-        </div>
-
-        <div class="form-group">
-            <label for="admin">관리자</label>
-            <input type="text" id="admin" name="admin" value="${faq.admin}">
-        </div>
-
-        <div class="form-group">
-            <label for="cattegory">카테고리</label>
-            <div style="display: flex; gap: 20px;">
-        <label>
-            <input type="radio" name="cattegory" value="카드"
-                   ${faq.cattegory == '카드' ? 'checked' : ''}> 카드
-        </label>
-        <label>
-            <input type="radio" name="cattegory" value="예적금"
-                   ${faq.cattegory == '예적금' ? 'checked' : ''}> 예적금
-        </label>
-    </div>
-        </div>
-
-        <button type="submit">수정</button>
-    </form>
-
-    <script src="/js/adminHeader.js"></script>
-    <script>
-    function autoResize(textarea) {
-        textarea.style.height = "auto"; // 높이 초기화
-        textarea.style.height = textarea.scrollHeight + "px"; // 내용만큼 높이 조절
-    }
-    
-window.addEventListener("DOMContentLoaded", () => {
-    const textarea = document.getElementById("faqAnswer");
-    if (textarea) autoResize(textarea); // 초기값에도 적용
-});
+	<script src="/js/adminHeader.js"></script>
+	<script>
+	    function autoResize(textarea) {
+	        textarea.style.height = "auto"; // 높이 초기화
+	        textarea.style.height = textarea.scrollHeight + "px"; // 내용만큼 높이 조절
+	    }
+	    
+		window.addEventListener("DOMContentLoaded", () => {
+		    const textarea = document.getElementById("faqAnswer");
+		    if (textarea) autoResize(textarea); // 초기값에도 적용
+		});
 
 </script>
 </body>
