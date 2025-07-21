@@ -9,33 +9,59 @@
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/carousel.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
 <script type="module" src="https://unpkg.com/@splinetool/viewer@latest/build/spline-viewer.js"></script>
-
+<script  src="https://code.jquery.com/jquery-3.7.1.min.js"  ></script>
 
 </head>
 <body class="main-body">
 <jsp:include page="/WEB-INF/views/fragments/mainheader.jsp" />
-<div class="video-wrapper">
+<!-- <div class="video-wrapper">
 	<div class="video-container">
-	    <!-- 흐릿한 배경용 영상 -->
+	    흐릿한 배경용 영상
 	    <video autoplay muted loop playsinline class="back-video">
 	        <source src="/video/bannerVideo.mp4" type="video/mp4">
 	    </video>
 	
-	    <!-- 선명한 전경 영상 -->
+	    선명한 전경 영상
 	    <video autoplay muted loop playsinline class="banner-video">
 	        <source src="/video/bannerVideo.mp4" type="video/mp4">
 	    </video>
-	
-	    <!-- 텍스트나 버튼 등 추가 가능 -->
+		
+	    텍스트나 버튼 등 추가 가능
 	    <div class="overlay-text">
 	        <h1 class="red">플러스, &nbsp</h1>
 	        <h1> 그 이상의 혜택</h1>
 	    </div>	
+	</div>
+</div> -->
+<div class="slider-wrapper">
+	<div class="main-slider">
+	  <div>
+	  	<div class="cover"></div>
+	  	<img src="/image/배너슬라이드1.jpg">
+	  </div>
+	  <div>
+	  	<div class="cover"></div>
+	  	<img src="/image/배너슬라이드1.jpg">
+	  </div>
+	  <div>
+	  	<div class="cover"></div>
+	  	<img src="/image/배너슬라이드1.jpg">
+	  </div>
+	  <div>
+	  	<div class="cover"></div>
+	  	<img src="/image/배너슬라이드1.jpg">
+	  </div>
+	  <div>
+	  	<div class="cover"></div>
+	  	<img src="/image/배너슬라이드1.jpg">
+	  </div>
+	  
 	</div>
 </div>
 <div class="main-wrap flex">
@@ -258,6 +284,8 @@
 	    <script>alert("${msg}");</script>
 	</c:if>
 <script src="/js/carousel.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 <script>
 
 	
@@ -412,6 +440,23 @@ setTimeout(() => {
 	    tooltip.style.top = `\${e.clientY + 10}px`;
 	  });
 	});
+	
+	
+	
+	//슬라이더
+	$('.main-slider').slick({
+	  centerMode: true,
+	  centerPadding: '0px',
+	  slidesToShow: 3,
+	  arrows: true,
+	  infinite: true,
+	  variableWidth: true
+	});
+	
+	
+	
+	
+	
 </script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
