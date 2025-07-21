@@ -26,10 +26,11 @@ h2 {
 }
 
 h3 {
-	margin-top: 48px;
-	margin-bottom: 12px;
+	font-size: 1.4rem;
+	margin: 30px 0 20px 0;
 	color: #2c3e50;
-	font-size: 20px;
+	border-left: 4px solid #3498db;
+	padding-left: 8px;
 	font-weight: 600;
 }
 
@@ -192,7 +193,9 @@ tbody tr:hover {
 			금칙어가 없습니다.</div>
 
 		<!-- 인기 검색어 -->
-		<h3>인기 검색어 TOP10</h3>
+		<div class="section-header">
+			<h3>인기 검색어 TOP10</h3>
+		</div>
 		<table id="top-table">
 			<thead>
 				<tr>
