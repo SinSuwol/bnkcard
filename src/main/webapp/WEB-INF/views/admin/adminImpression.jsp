@@ -3,6 +3,11 @@
 <head>
 <title>상품 인가 목록</title>
 <style>
+
+body {
+	background-color: #f9f9f9;
+}
+
 h2 {
 	text-align: center;
 	margin: 40px auto 30px auto;

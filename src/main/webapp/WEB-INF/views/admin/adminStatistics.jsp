@@ -11,6 +11,7 @@
   
     body {
       font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
     }
     h1 {
       text-align: center;
