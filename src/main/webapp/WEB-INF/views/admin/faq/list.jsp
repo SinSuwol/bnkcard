@@ -5,6 +5,10 @@
 <title>FAQ 목록</title>
 <link rel="stylesheet" href="/css/adminstyle.css">
 <style>
+body {
+	background-color: #f9f9f9;
+}
+
 h2 {
 	text-align: center;
 	margin: 40px auto 30px auto;
