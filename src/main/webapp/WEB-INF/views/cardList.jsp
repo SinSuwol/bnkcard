@@ -83,6 +83,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   color: #fff;
+  cursor: pointer;
 }
 
 .popular-card img {
@@ -315,6 +316,11 @@
    border-radius: 9999px;
    background: #fff;
    cursor: pointer;
+   transition: 0.2s;
+}
+
+.typeBtn:hover {
+	transform: scale(1.05);
 }
 
 .typeBtn.active {
@@ -347,6 +353,7 @@
 
 
 #searchInput {
+   cursor: pointer;
    width: 400px;
    padding: 10px 35px;
    font-size: 15px;
@@ -357,9 +364,9 @@
    
 }
 
-#searchInput 
 
 #filterBtn {
+   cursor: pointer;
    width: 40px;
    height: 40px;
    margin-left: 8px;
