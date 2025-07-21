@@ -124,7 +124,16 @@
 
         <div class="form-group">
             <label for="cattegory">카테고리</label>
-            <input type="text" id="cattegory" name="cattegory" value="${faq.cattegory}">
+            <div style="display: flex; gap: 20px;">
+        <label>
+            <input type="radio" name="cattegory" value="카드"
+                   ${faq.cattegory == '카드' ? 'checked' : ''}> 카드
+        </label>
+        <label>
+            <input type="radio" name="cattegory" value="예적금"
+                   ${faq.cattegory == '예적금' ? 'checked' : ''}> 예적금
+        </label>
+    </div>
         </div>
 
         <button type="submit">수정</button>
