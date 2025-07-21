@@ -96,8 +96,8 @@
   font-weight: 580;
   font-size: 16px;
   margin: 5px 0;
-  margin-bottom: 160px;
-  text-align: center;
+  margin-bottom: 10px;
+  text-align: left;
 }
 .popular-sub {
   font-size: 14px;
