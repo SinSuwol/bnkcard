@@ -69,17 +69,22 @@
   box-sizing: border-box;
    transition: filter 0.4s ease;
 }
+
 .popular-card {
-  margin-top: 30px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  height: 100%;
-  background: #fff;
+  height: 200px; /* 필요시 조정 */
   padding: 20px;
-  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  color: #fff;
 }
+
 .popular-card img {
   max-width: 100%;
   height: auto;
@@ -99,7 +104,7 @@
 
 .popular-slider .slick-slide {
   opacity: 1;
-  transition: filter 0.4s ease;
+  transition: filter 0.1s ease;
   filter: none;
 }
 
@@ -762,14 +767,17 @@ fetch('/api/cards')
 
     // 카드 DOM 삽입
     slider.innerHTML = sorted.map(c => `
-      <div>
-        <div class="popular-card" onclick="goDetail(${c.cardNo})">
-          <img src="${c.cardUrl}" alt="${c.cardName}">
-          <div class="best-badge">Best</div>
-          <div class="popular-title">${c.cardName}</div>
-        </div>
-      </div>
-    `).join('');
+	  <div>
+	    <div class="popular-card" style="background-image: url('${c.cardUrl}')" onclick="goDetail(${c.cardNo})">
+	      <div class="card-text-wrap">
+	        <div class="best-badge">Best</div>
+	        <div class="popular-title">${c.cardName}</div>
+	        <div class="popular-sub">${c.cardSlogan || ''}</div>
+	      </div>
+	    </div>
+	  </div>
+	`).join('');
+
 
     // 슬릭 슬라이더 재초기화
     $(slider).slick({
