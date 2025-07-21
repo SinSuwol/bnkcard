@@ -628,7 +628,7 @@
 }
 
 .chatbot-open-btn {
-  background-color: #FF7043;
+  background-color: #b91111;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -1001,7 +1001,7 @@ function drawCards() {
 
     div.innerHTML = `
          <img src="${c.cardUrl}" alt="${c.cardName}"
-              style="cursor:pointer"
+              style="cursor:pointer; width:300px;"
               onclick="goDetail(${c.cardNo})">
 
          <p style="cursor:pointer"
