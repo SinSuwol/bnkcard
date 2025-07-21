@@ -614,7 +614,29 @@
   line-height: 1.4;
 }
 
+.chatbot-open-btn {
+  background-color: #FF7043;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color 0.2s ease;
+}
 
+#chatbot-float {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  z-index: 5000;
+}
+
+.chatbot-open-btn:hover {
+  background-color: #e35a2f;
+}
 
 </style>
 </head>
@@ -698,7 +720,6 @@
   </div>
 </div>
 <div id="scrapOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2999;" onclick="closeScrapModal()"></div>
-
 
 
 
@@ -1230,11 +1251,25 @@ function openScrapModal() {
      closeScrapModal();
    }
 
+   function openChatbot() {
+	   window.open(
+	     '/user/card/chatbot',            // 챗봇 페이지 URL
+	     'cardChatbotPopup',              // 창 이름 (중복 방지용)
+	     'width=520,height=780,resizable=yes,scrollbars=yes'
+	   );
+	 }
+   
+   
 </script>
 
 <script>
    let remainingSeconds = <%= request.getAttribute("remainingSeconds") %>;
 </script>
+
+
+<div id="chatbot-float">
+  <button class="chatbot-open-btn" onclick="openChatbot()">💬 카드 챗봇</button>
+</div>
 
 <script src="/js/sessionTime.js"></script>
 </body>
