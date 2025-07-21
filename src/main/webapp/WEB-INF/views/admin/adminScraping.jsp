@@ -17,16 +17,18 @@ body {
 .inner {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 1.4rem;
+	margin: 30px 0 20px 0;
+	color: #2c3e50;
+	border-left: 4px solid #3498db;
+	padding-left: 8px;
 }
 
 button {
@@ -41,11 +43,15 @@ button {
     transition: background-color 0.2s ease;
     margin-bottom:20px;
 }
+
 #crawlBtn{
-background-color: #a2a2a2;}
+	background-color: #a2a2a2;
+}
+
 #deleteBtn{
     background-color: #eb2626;
 }
+
 button:hover {
     background-color: #0056b3;
 }
@@ -53,8 +59,8 @@ button:hover {
 #card-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+    gap: 24px;
+    margin-top: 20px;
     padding: 0;
     list-style: none;
 }
@@ -81,9 +87,10 @@ button:hover {
 }
 
 .card h3 {
-    font-size: 18px;
-    margin: 10px 0 5px;
-    color: #222;
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .card p {

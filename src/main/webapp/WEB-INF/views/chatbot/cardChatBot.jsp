@@ -33,6 +33,7 @@
             flex-direction: column;
             gap: 10px;
             border-radius: 10px;
+            align-items: flex-start;
         }
 
         .chat-entry {
@@ -143,15 +144,33 @@ function sendMessage() {
     });
 }
 
+function makeLinksClickable(text) {
+	  // a 태그 제거
+	  text = text.replace(/<a[^>]*>(.*?)<\/a>/gi, '$1');
+
+	  // URL → 링크  (★ ) 문자를 URL 끝으로 취급하지 않도록 제외)
+	  return text
+	    .replace(/(https?:\/\/[^\s<\)]+)/g,          // ← \) 추가
+	            '<a href="$1" target="_blank" rel="noopener noreferrer"' +
+	            ' style="color:#007BFF;text-decoration:underline;">카드 상세보기</a>')
+	    .replace(/\n/g, '<br>');
+	}
+
+
+/** 2) 채팅 말풍선에 메시지 삽입 */
 function appendMessage(message, type) {
-    const chatBox = document.getElementById("chatBox");
-    const div = document.createElement("div");
-    div.className = `chat-entry ${type}`;
-    div.innerText = message;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
+  const chatBox = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = `chat-entry ${type}`;
+
+  div.innerHTML = makeLinksClickable(message);
+  div.style.alignSelf = type === 'user' ? 'flex-end' : 'flex-start';
+
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 </script>
+
 
 </body>
 </html>
