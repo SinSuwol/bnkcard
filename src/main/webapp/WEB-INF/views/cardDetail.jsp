@@ -153,17 +153,18 @@
   <div class="top">
     <div>
       <img id="cardImg" src="" alt="카드이미지" class="card-img">
-      <div class="fee-box">
-        <p><strong>연회비:</strong></p>
-        <div class="fee-line"><img src="/image/overseas_pay_domestic.png" alt="국내"><span id="feeDomestic">-</span></div>
-        <div class="fee-line"><img src="/image/overseas_pay_visa.png" alt="VISA"><span id="feeVisa">-</span></div>
-        <div class="fee-line"><img src="/image/overseas_pay_master.png" alt="MASTER"><span id="feeMaster">-</span></div>
-      </div>
+      
     </div>
     <div class="info">
       <h2 id="cardName"></h2>
       <p id="cardSlogan"></p>
       <div class="summary-benefit" id="summaryBenefit"></div>
+      	<div class="fee-box">
+
+        <div class="fee-line"><img src="/image/overseas_pay_domestic.png" alt="국내"><span id="feeDomestic">-</span></div>
+        <div class="fee-line"><img src="/image/overseas_pay_visa.png" alt="VISA"><span id="feeVisa">-</span></div>
+        <div class="fee-line"><img src="/image/overseas_pay_master.png" alt="MASTER"><span id="feeMaster">-</span></div>
+      	</div>
     </div>
   </div>
 
