@@ -591,6 +591,7 @@
 /* 비교 버튼 */
 #compareBox > button,
 #compareBox > div > button {
+  width: 110px;	
   font-size: 13px;
   padding: 6px 10px;
   background: #eee;
