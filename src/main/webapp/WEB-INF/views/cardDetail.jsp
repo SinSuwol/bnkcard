@@ -89,12 +89,12 @@
     }
     
     .accordion {
-      background: #f8f9fb;
-      border: 1px solid #dcdfe6;
-      border-radius: 6px;
-      padding: 18px 22px;
-      margin-bottom: 14px;
-      cursor: pointer;
+        background: #f8f9fb;
+	    border: 1px solid #dcdfe6;
+	    border-radius: 6px;
+	    padding: 18px 22px;
+	    margin-bottom: 14px;
+	    cursor: pointer;
     }
     .accordion:hover {
       background: #edf0f6;

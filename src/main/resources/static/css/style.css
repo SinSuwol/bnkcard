@@ -174,9 +174,10 @@ body.main-body{
 }
 
 .mainTit1{
-	font-size: 23PX;
-    color: gray;
+	font-size: 40PX;
+    color: rgb(6, 7, 9);
     margin-bottom: 20px;
+    margin-top: 70px;
 }
 
 .mainTit2{

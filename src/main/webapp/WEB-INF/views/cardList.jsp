@@ -297,7 +297,7 @@
    display: inline-block;
    padding: 7px 20px;
    margin: 0 3px;
-   font-weight: 600;
+   font-weight: 550;
    border: 1px solid #aaa;
    border-radius: 9999px;
    background: #fff;
@@ -660,7 +660,7 @@
 
    <!-- 비교함 -->
    <div id="compareBox">
-      <h4>비교함</h4>
+      <h4 style="font-weight: 550;">비교함</h4>
       <ul id="compareList" style="list-style: none; padding: 0; margin: 0"></ul>
       <button onclick="openCompare()">비교하기</button>
       <div style="text-align:center; margin-top:10px;">
