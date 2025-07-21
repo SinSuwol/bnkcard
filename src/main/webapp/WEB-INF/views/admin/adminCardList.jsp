@@ -9,7 +9,7 @@
 /* 공통 */
 body {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: #f4f6f8;
+	background-color: #f9f9f9;
 	color: #333;
 	margin: 0;
 	padding: 0;

@@ -15,7 +15,8 @@ body {
 }
 
 .inner {
-    max-width: 1200px;
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 20px;
     background: white;
     border-radius: 12px;

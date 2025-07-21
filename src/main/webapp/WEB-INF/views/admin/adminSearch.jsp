@@ -6,6 +6,10 @@
 <title>검색어 관리 대시보드</title>
 <link rel="stylesheet" href="/css/adminstyle.css">
 <style>
+body {
+	background-color: #f9f9f9;
+}
+
 /* ===== 전체 구조 ===== */
 .container {
 	max-width: 1000px;

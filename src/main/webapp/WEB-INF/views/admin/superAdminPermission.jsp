@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f9f9f9;
   color: #2c3e50;
   line-height: 1.6;
 }
