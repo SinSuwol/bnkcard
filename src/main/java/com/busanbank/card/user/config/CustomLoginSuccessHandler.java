@@ -28,7 +28,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler  
 		//2025-07-15 suwol
 		session.setAttribute("loginMemberNo", userDetails.getMemberNo());
 		//왜 이게 없는거지?
-		//session.setAttribute("loginUser", userDetails); 
+		session.setAttribute("loginUser", userDetails); 
 		
 		response.sendRedirect("/user/mypage");
 	}
