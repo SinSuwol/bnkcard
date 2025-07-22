@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
     <h2>부산은행 챗봇</h2>
     <input type="text" id="question" placeholder="질문을 입력하세요" size="50"/>
     <button onclick="askBot()">질문하기</button>
@@ -34,5 +33,5 @@
     <h3>챗봇 답변:</h3>
     <div id="answer" style="white-space: pre-line; border:1px solid #ccc; padding:10px; min-height:50px;"></div>
 </body>
-<script src="/js/header2.js"></script>
+
 </html>

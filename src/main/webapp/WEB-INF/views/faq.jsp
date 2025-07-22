@@ -4,6 +4,7 @@
 <%@ page session="true"%>
 
 
+
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -300,6 +301,8 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 			<div id="modalAnswer" class="modal-answer"></div>
 		</div>
 	</div>
+	
+	
 	<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 	<!-- ───────── 페이지 전용 JS ───────── -->
 	<script>
@@ -371,7 +374,8 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	<script src="${ctx}/js/sessionTime.js"></script>
 
 	<!-- 공통 챗봇 모달 -->
-	<jsp:include page="/WEB-INF/views/fragments/chatbotModal.jsp" />
+	<jsp:include page="/WEB-INF/views/fragments/chatbotModal.jsp" /> 
+	
 </body>
 
 </html>
