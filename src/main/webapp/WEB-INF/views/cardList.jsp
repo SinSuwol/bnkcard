@@ -12,6 +12,46 @@
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 
+.chatbot-tooltip {
+  background: #fff;
+  color: #333;
+  padding: 10px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: 14px;
+  position: absolute;
+  right: 75px; /* 버튼보다 왼쪽으로 이동 */
+  bottom: 10px;
+  white-space: nowrap;
+  animation: fadeIn 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* 말풍선 꼬리 */
+.chatbot-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #fff;
+}
+
+/* 나타나는 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+#chatbot-float {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  z-index: 5000;
+}
+
 .chatbot-open-btn {
 	background: none;
 	border: none;
@@ -668,12 +708,7 @@
 }
 
 
-#chatbot-float {
-  position: fixed;
-  bottom: 40px;
-  right: 30px;
-  z-index: 5000;
-}
+
 
 /* 인기 슬라이드 검정 글 */
 .sk-margin {
@@ -1312,10 +1347,41 @@ function openScrapModal() {
 
 
 <div id="chatbot-float">
+ 
+ <div class="chatbot-tooltip" id="tooltipText">마음에 쏙 드는 카드를 찾아드릴게요!</div>
+
+  <!-- 챗봇 버튼 -->
   <button class="chatbot-open-btn" onclick="openChatbot()">
     <img src="/image/bnkchatbotchar.png" alt="카드 챗봇" class="chatbot-icon">
   </button>
 </div>
+
+<script>
+const phrases = [
+  "마음에 쏙 드는 카드를 찾아드릴게요!",
+  "혜택이나 카드명을 입력해보세요 😊",
+  "원하시는 카드 유형을 알려주세요!",
+  "생활에 딱 맞는 카드 추천 도와드릴게요!"
+];
+
+let index = 0;
+
+setInterval(() => {
+  const tooltip = document.getElementById("tooltipText");
+
+  // Fade-out
+  tooltip.style.opacity = 0;
+
+  setTimeout(() => {
+    index = (index + 1) % phrases.length;
+    tooltip.textContent = phrases[index];
+
+    // Fade-in
+    tooltip.style.opacity = 1;
+  }, 400); // fade out 시간과 맞추기
+
+}, 5000); // 5초마다 교체
+</script>
 
 
 <script src="/js/sessionTime.js"></script>
