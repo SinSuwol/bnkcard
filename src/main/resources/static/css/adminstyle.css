@@ -37,14 +37,14 @@ a,li,ul{
 .header-close-btn{
 	width:60px; height:60px;
 	background-color:white;
-	position:absolute;
+	position:fixed;
 	top:30px; left:15px;
 }
 .header-open-btn{
 	display:none;
 	width: 60px; height:60px;
 	background-color:black;
-	position:absolute;
+	position:fixed;
 	top:30px; left:15px;
 }
 .sidebar{

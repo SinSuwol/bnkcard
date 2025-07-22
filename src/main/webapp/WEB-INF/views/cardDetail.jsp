@@ -99,7 +99,7 @@
 	    cursor: pointer;
     }
     .accordion:hover {
-      background: #edf0f6;
+      background: #e7e7e7;
     }
     .accordion h4 {
       margin: 0;
@@ -392,7 +392,7 @@
 
 	  accordionDiv.innerHTML = `
 	    <div class="section">
-	      <h3>혜택 내용</h3>
+	      <h3>혜택 요약</h3>
 	      ${groupedHtml}
 	    </div>
 	  `;

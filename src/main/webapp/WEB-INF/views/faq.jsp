@@ -1,17 +1,19 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c"  uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
- <!-- ★ 추가 -->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page session="true"%>
+
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
-<c:set var="rs" value="${empty remainingSeconds ? 0 : remainingSeconds}" />
 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>고객센터 FAQ</title>
-<link rel="stylesheet" href="${ctx}/css/style.css">
-<!-- 공통 css -->
+
+<!-- 공통 CSS -->
+<link rel="stylesheet" href="${ctx}/css/style.css" />
 
 <style>
 /* ===== 기존 스타일 그대로 ===== */
@@ -236,18 +238,23 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	background: var(--bnk-red-dark) !important
 }
 </style>
+
 </head>
+
 <body>
+	<!-- ───────── 공통 헤더 (로그인 UI 포함) ───────── -->
 	<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
+
+	<!-- ───────── 본문 ───────── -->
 	<div class="main-content">
 		<h1>고객센터 (FAQ)</h1>
-		<hr>
+		<hr />
 
-		<!-- 검색 -->
+		<!-- 검색 폼 -->
 		<form class="faq-search-form" method="get" action="${ctx}/faq/list">
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요"
-				value="${keyword}">
+				value="${keyword}" />
 			<button type="submit">검색</button>
 		</form>
 
@@ -264,11 +271,11 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 				</thead>
 				<tbody>
 					<c:forEach var="faq" items="${faqList}">
-						<!-- ★ NEW : data-* 넣어두고 tr 클릭 시 모달 -->
 						<tr class="faq-row"
 							data-question="${fn:escapeXml(faq.faqQuestion)}"
 							data-answer="${fn:escapeXml(faq.faqAnswer)}"
 							data-category="${fn:escapeXml(faq.cattegory)}">
+
 							<td>${faq.faqNo}</td>
 							<td>${faq.faqQuestion}</td>
 							<td class="faq-answer">${faq.faqAnswer}</td>
@@ -276,101 +283,98 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 						</tr>
 					</c:forEach>
 				</tbody>
+
 			</table>
 		</div>
 
-		<!-- 페이지네이션 컨테이너 (JS로 채움) -->
+		<!-- 페이지네이션 -->
 		<div id="pagination" class="faq-paging"></div>
 	</div>
-	<!-- /.main-content -->
 
-	<!-- ===== 모달 구조 ===== -->
-	<!-- ★ NEW -->
+	<!-- ───────── FAQ 모달 ───────── -->
 	<div id="faqModal" class="modal-bg">
 		<div class="modal-content">
-			<span class="modal-close" id="modalClose">&times;</span>
-			<h2 class="modal-title" id="modalQuestion"></h2>
-			<div class="modal-category" id="modalCategory"></div>
-			<div class="modal-answer" id="modalAnswer"></div>
+			<span id="modalClose" class="modal-close">&times;</span>
+			<h2 id="modalQuestion" class="modal-title"></h2>
+			<div id="modalCategory" class="modal-category"></div>
+			<div id="modalAnswer" class="modal-answer"></div>
 		</div>
 	</div>
 
-	<script src="${ctx}/js/header2.js"></script>
+	<!-- ───────── 페이지 전용 JS ───────── -->
 	<script>
-    /* 남은 세션시간 (초) */
-    let remainingSeconds = ${rs};
+  /* ===== 모달 ===== */
+  const modalBg  = document.getElementById('faqModal');
+  const mClose   = document.getElementById('modalClose');
+  const mQ       = document.getElementById('modalQuestion');
+  const mCat     = document.getElementById('modalCategory');
+  const mAns     = document.getElementById('modalAnswer');
 
-    /* ===== 모달 로직 ===== */
-    const modalBg        = document.getElementById('faqModal');
-    const modalCloseBtn  = document.getElementById('modalClose');
-    const modalQ         = document.getElementById('modalQuestion');
-    const modalCat       = document.getElementById('modalCategory');
-    const modalA         = document.getElementById('modalAnswer');
-
-    document.querySelectorAll('.faq-row').forEach(tr=>{
-        tr.addEventListener('click',()=>{
-            modalQ.textContent  = tr.dataset.question;
-            modalCat.textContent= '카테고리 : ' + tr.dataset.category;
-            modalA.textContent  = tr.dataset.answer;
-            modalBg.style.display='flex';
-        });
+  document.querySelectorAll('.faq-row').forEach(tr => {
+    tr.addEventListener('click', () => {
+      mQ.textContent   = tr.dataset.question;
+      mCat.textContent = '카테고리 : ' + tr.dataset.category;
+      mAns.textContent = tr.dataset.answer;
+      modalBg.style.display = 'flex';
     });
-    modalCloseBtn.addEventListener('click',()=>modalBg.style.display='none');
-    modalBg.addEventListener('click',e=>{
-        if(e.target===modalBg) modalBg.style.display='none';
-    });
+  });
+  mClose.addEventListener('click', () => modalBg.style.display = 'none');
+  modalBg.addEventListener('click', e => {
+    if (e.target === modalBg) modalBg.style.display = 'none';
+  });
 
-    /* ===== 페이지네이션 (3개씩 보여주고 슬라이딩) ===== */
-    (function(){
+  /* ===== 페이지네이션 ===== */
+  (function () {
     const totalPage   = ${totalPage};
     const currentPage = ${currentPage};
     const ctx         = '${ctx}';
-    const keyword     = encodeURIComponent('${keyword}');
+    const keyword     = '${param.keyword}';
     const groupSize   = 3;
 
-    function buildPageLink(p){
-        return ctx + '/faq/list?keyword=' + keyword + '&page=' + p;
+    function link(p) {
+      return ctx + '/faq/list?keyword=' + encodeURIComponent(keyword) + '&page=' + p;
     }
 
-    const pagin = document.getElementById('pagination');
-    if(!pagin) return;
+    const pag = document.getElementById('pagination');
+    if (!pag) return;
 
-    let start = Math.max(1, currentPage - 1);
-    let end   = Math.min(totalPage, start + groupSize - 1);
-    if(end - start < groupSize - 1) start = Math.max(1, end - groupSize + 1);
+    let st = Math.max(1, currentPage - 1);
+    let ed = Math.min(totalPage, st + groupSize - 1);
+    if (ed - st < groupSize - 1) st = Math.max(1, ed - groupSize + 1);
 
-    /* « 처음 */
-    pagin.insertAdjacentHTML('beforeend',
-        '<a href="' + buildPageLink(1) + '">« 처음</a>');
+    pag.insertAdjacentHTML('beforeend',
+      '<a href="' + link(1) + '">« 처음</a>');
 
-    /* 가변 숫자 버튼 */
-    for(let i=start;i<=end;i++){
-        if(i === currentPage){
-            pagin.insertAdjacentHTML('beforeend',
-                '<strong>[' + i + ']</strong>');
-        }else{
-            pagin.insertAdjacentHTML('beforeend',
-                '<a href="' + buildPageLink(i) + '">[' + i + ']</a>');
-        }
+    for (let i = st; i <= ed; i++) {
+      if (i === currentPage) {
+        pag.insertAdjacentHTML('beforeend',
+          '<strong>[' + i + ']</strong>');
+      } else {
+        pag.insertAdjacentHTML('beforeend',
+          '<a href="' + link(i) + '">[' + i + ']</a>');
+      }
     }
 
-    /* 마지막 » */
-    pagin.insertAdjacentHTML('beforeend',
-        '<a href="' + buildPageLink(totalPage) + '">마지막 »</a>');
-})();
-    </script>
+    pag.insertAdjacentHTML('beforeend',
+      '<a href="' + link(totalPage) + '">마지막 »</a>');
+  })();  
+  </script>
 
+	<!-- ───────── 공통 JS (순서 중요) ───────── -->
+	<script src="${ctx}/js/header2.js"></script>
+
+
+
+	<script>
+   let remainingSeconds = <%=request.getAttribute("remainingSeconds")%>;
+</script>
 	<script src="${ctx}/js/sessionTime.js"></script>
+
 	<!-- 공통 챗봇 모달 -->
 	<jsp:include page="/WEB-INF/views/fragments/chatbotModal.jsp" />
-	<script src="/js/header2.js"></script>
-<script>
-	let remainingSeconds = ${remainingSeconds};
-</script>
-<script src="/js/sessionTime.js"></script>
 </body>
-</html>
 
+</html>
 
 
 <!--

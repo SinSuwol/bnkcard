@@ -228,9 +228,22 @@ button[onclick="openModal()"]:hover {
 	flex: 1;
 	padding: 6px;
 	font-size: 13px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* ✅ body와 동일하게 */
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+	resize: vertical;
+}
+
+.form-group textarea {
+	flex: 1;
+	padding: 6px;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: vertical;
 }
 
 .modal-buttons {
@@ -253,32 +266,65 @@ button[onclick="openModal()"]:hover {
 	background-color: #0056b3;
 }
 
+/* 진행률 모달 */
+.progress-modal {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, .45);
+	z-index: 2000;
+	align-items: center;
+	justify-content: center;
+}
+
+/* 게이지 컨테이너 */
 #progressContainer {
-  position: relative;
-  width: 100%;
-  height: 25px;
-  background: #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 10px;
+	width: 60%;
+	max-width: 480px;
+	padding: 24px 32px 40px; /* 위에 약간 여백 */
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+	text-align: center;
 }
 
+/* 게이지 트랙 */
+#progressTrack {
+	position: relative;
+	width: 100%;
+	height: 22px;
+	background: #e0f4ff;
+	border-radius: 11px;
+	overflow: hidden;
+	margin-top: 8px;
+}
+
+/* 진행 바 = 아래 레이어 */
 #progressBar {
-  height: 100%;
-  width: 0%;
-  background: #FFA726;
-  transition: width 0.2s ease;
+	position: absolute; /* ← absolute 로 겹치기 */
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0%;
+	background: #00aaff;
+	transition: width .2s ease;
+	z-index: 0; /* 텍스트보다 뒤 */
 }
 
+/* 퍼센트 텍스트 = 위 레이어 */
 #progressText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #333;
-  font-weight: bold;
+	position: absolute; /* 트랙 안에 겹치기 */
+	left: 50%;
+	top: 50%; /* 가운데 좌표 */
+	transform: translate(-50%, -50%); /* XY 모두 중앙 정렬 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	color: #333;
+	pointer-events: none;
+	z-index: 1;
 }
-
 </style>
 
 
@@ -317,16 +363,21 @@ button[onclick="openModal()"]:hover {
 						id="issuedTo" name="issuedTo" placeholder="발급 대상">
 				</div>
 				<div class="form-group">
-					<label for="service">주요 서비스</label> <input type="text" id="service"
-						name="service" placeholder="주요 서비스">
+					<label for="service">주요 서비스</label>
+					<textarea id="service" name="service" placeholder="주요 서비스" rows="6"></textarea>
 				</div>
 				<div class="form-group">
-					<label for="sService">부가 서비스</label> <input type="text"
-						id="sService" name="sService" placeholder="부가 서비스">
+					<label for="sService">부가 서비스</label>
+					<textarea id="sService" name="sService" placeholder="부가 서비스"
+						rows="6"></textarea>
 				</div>
 				<div class="form-group">
-					<label for="cardStatus">상태</label> <input type="text"
-						id="cardStatus" name="cardStatus" placeholder="상태">
+					<label>상태</label>
+					<div style="flex: 1;">
+						<label><input type="radio" name="cardStatus" value="게시중"
+							checked> 게시중</label> <label style="margin-left: 15px;"><input
+							type="radio" name="cardStatus" value="수정중"> 수정중</label>
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="cardUrl">카드 URL</label> <input type="text" id="cardUrl"
@@ -345,8 +396,9 @@ button[onclick="openModal()"]:hover {
 						id="cardSlogan" name="cardSlogan" placeholder="카드 슬로건">
 				</div>
 				<div class="form-group">
-					<label for="cardNotice">카드 공지사항</label> <input type="text"
-						id="cardNotice" name="cardNotice" placeholder="카드 공지사항">
+					<label for="cardNotice">카드 공지사항</label>
+					<textarea id="cardNotice" name="cardNotice" placeholder="카드 공지사항"
+						rows="6"></textarea>
 				</div>
 
 				<div class="modal-buttons">
@@ -370,11 +422,23 @@ button[onclick="openModal()"]:hover {
 		<!-- 학습 버튼 -->
 		<button id="trainBtn" class="btn btn-warning">AI 정보 업데이트 (학습)</button>
 
-		<!-- 프로그레스 바 -->
-		<div id="progressContainer">
-			<div id="progressBar"></div>
-			<span id="progressText">0%</span>
+		<!-- 1️⃣ 모달 래퍼를 다시 넣기 : display:none 으로 숨김 -->
+		<div id="progressModal" class="progress-modal" style="display: none">
+			<div id="progressContainer">
+
+				<!-- 2️⃣ 트랙 ------------------------->
+				<div id="progressTrack">
+					<div id="progressBar"></div>
+					<span id="progressText">0%</span>
+				</div>
+
+				<!-- 3️⃣ 취소 버튼 --------------------->
+				<button id="cancelTrain" style="margin-top: 16px">취소</button>
+
+			</div>
 		</div>
+
+
 		<!-- 학습 시간 -->
 		<span id="lastTrained" style="font-size: 13px; color: #555;">마지막
 			학습 시간: 불러오는 중...</span>
@@ -414,16 +478,24 @@ button[onclick="openModal()"]:hover {
 			</div>
 
 			<div class="form-group">
-				<label>주요 서비스</label> <input type="text" id="editService">
+				<label>주요 서비스</label>
+				<textarea id="editService" rows="6"></textarea>
 			</div>
 
 			<div class="form-group">
-				<label>부가 서비스</label> <input type="text" id="editSService">
+				<label>부가 서비스</label>
+				<textarea id="editSService" rows="6"></textarea>
 			</div>
 
 			<div class="form-group">
-				<label>상태</label> <input type="text" id="editCardStatus">
+				<label>상태</label>
+				<div style="flex: 1;">
+					<label><input type="radio" name="editCardStatus"
+						value="게시중"> 게시중</label> <label style="margin-left: 15px;"><input
+						type="radio" name="editCardStatus" value="수정중"> 수정중</label>
+				</div>
 			</div>
+
 
 			<div class="form-group">
 				<label>카드 URL</label> <input type="text" id="editCardUrl">
@@ -442,7 +514,8 @@ button[onclick="openModal()"]:hover {
 			</div>
 
 			<div class="form-group">
-				<label>공지사항</label> <input type="text" id="editCardNotice">
+				<label>공지사항</label>
+				<textarea id="editCardNotice" rows="6"></textarea>
 			</div>
 
 			<div class="modal-buttons">
@@ -456,6 +529,9 @@ button[onclick="openModal()"]:hover {
 
 	<script src="/js/adminHeader.js"></script>
 	<script>
+	
+	
+	
     fetch('/admin/card/getCardList') // ← 실제 REST API 경로
         .then(res => res.json())
         .then(cards => {
@@ -491,6 +567,7 @@ button[onclick="openModal()"]:hover {
             const li = document.createElement('li');
             li.className = 'card';
             li.innerHTML = `
+            	<p style="color: red">\${card.cardStatus === '수정중' ? '수정중' : '&nbsp;'}</p>
             	<img src=\${card.cardUrl}>
                 <h3 class="hi">\${card.cardName}</h3>
                 <p>연회비: \${card.annualFee}원</p>
@@ -518,13 +595,19 @@ button[onclick="openModal()"]:hover {
         document.getElementById('editIssuedTo').value = card.issuedTo;
         document.getElementById('editService').value = card.service;
         document.getElementById('editSService').value = card.sService;
-        document.getElementById('editCardStatus').value = card.cardStatus;
+     
         document.getElementById('editCardUrl').value = card.cardUrl;
         document.getElementById('editCardIssueDate').value = card.cardIssueDate;
         document.getElementById('editCardDueDate').value = card.cardDueDate;
         document.getElementById('editCardSlogan').value = card.cardSlogan;
         document.getElementById('editCardNotice').value = card.cardNotice;
 
+        const radios = document.getElementsByName('editCardStatus');
+        radios.forEach(radio => {
+          radio.checked = (radio.value === card.cardStatus);
+        });
+
+        
         document.getElementById('editModal').style.display = 'block';
         document.getElementById('modalOverlay').style.display = 'block';
     }
@@ -546,7 +629,7 @@ button[onclick="openModal()"]:hover {
             issuedTo: document.getElementById('editIssuedTo').value,
             service: document.getElementById('editService').value,
             sService: document.getElementById('editSService').value,
-            cardStatus: document.getElementById('editCardStatus').value,
+            cardStatus: document.querySelector('input[name="editCardStatus"]:checked').value,
             cardUrl: document.getElementById('editCardUrl').value,
             cardIssueDate: document.getElementById('editCardIssueDate').value,
             cardDueDate: document.getElementById('editCardDueDate').value,
@@ -614,7 +697,7 @@ button[onclick="openModal()"]:hover {
      issuedTo: form.issuedTo.value,
      service: form.service.value,
      sService: form.sService.value,
-     cardStatus: form.cardStatus.value,
+     cardStatus: document.querySelector('input[name="cardStatus"]:checked').value,
      cardUrl: form.cardUrl.value,
      cardIssueDate: form.cardIssueDate.value,
      cardDueDate: form.cardDueDate.value,
@@ -673,7 +756,6 @@ button[onclick="openModal()"]:hover {
 	    filterCards('card-list');
 	    filterCards('card-list2');
 	});
-
 	
 	
 	
@@ -681,82 +763,102 @@ button[onclick="openModal()"]:hover {
 	
 	
 	/*----------------------------------------------------------------------------------------  */
-	document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("trainBtn");
-    const timeLabel = document.getElementById("lastTrained");
+document.addEventListener("DOMContentLoaded", () => {
+	
+  const btn        = document.getElementById("trainBtn");
+  const timeLabel  = document.getElementById("lastTrained");
+  const modal      = document.getElementById("progressModal");
+  const bar        = document.getElementById("progressBar");
+  const text       = document.getElementById("progressText");
 
-    
-    function fakeProgress(callback) {
-    	  const bar = document.getElementById("progressBar");
-    	  const text = document.getElementById("progressText");
-    	  const container = document.getElementById("progressContainer");
-    	  container.style.display = "block";
+  function fakeProgress(onFinished){
+	  bar.style.width = "0%";
+	  bar.style.background = "#00aaff";   // 초기 하늘색
+	  text.textContent = "0%";
+	  modal.style.display = "flex";
 
-    	  let percent = 0;
+	  let pct = 0;
+	  const id = setInterval(()=>{
+	    pct += Math.random()*8;
+	    if(pct >= 100){
+	      pct = 100;
+	      clearInterval(id);
 
-    	  const interval = setInterval(() => {
-    	    percent += Math.random() * 8;
-    	    if (percent >= 100) {
-    	      percent = 100;
-    	      clearInterval(interval);
-    	      if (callback) callback(); // 학습 요청 보내기
-    	    }
+	      /* ─ 완료 시 UI 변환 ─ */
+	      bar.style.width = "100%";
+	      bar.style.background = "#2ecc71";   // 초록색
+	      text.textContent = "완료!";
 
-    	    bar.style.width = percent + "%";
-    	    text.textContent = Math.floor(percent) + "%";
-    	  }, 200);
-    	}
+	      /* 1.5초 뒤 콜백 실행(=서버 호출) */
+	      setTimeout(()=> onFinished && onFinished(), 1500);
+	      return;                             // 이후 코드 건너뜀
+	    }
+	    bar.style.width = pct + "%";
+	    text.textContent = Math.floor(pct) + "%";
+	  }, 200);
+	}
 
-    
-    // 마지막 학습 시간 로드
-    fetch("http://localhost:8000/train-card/time")
-        .then(res => res.json())
-        .then(data => {
-            timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
-        });
 
-    // 버튼 클릭 이벤트
-    btn.addEventListener("click", () => {
-        if (!confirm("정말 AI 정보를 업데이트 하시겠습니까?")) return;
+  /* ── 마지막 학습 시간 표시 ── */
+  fetch("http://localhost:8000/train-card/time")
+      .then(r=>r.json())
+      .then(d=> timeLabel.textContent = "마지막 학습 시간: "+d.last_trained);
 
-        btn.disabled = true;
-        btn.innerText = "학습 중입니다...";
+  /* ── 학습 버튼 클릭 ── */
+  btn.addEventListener("click", () => {
+    if(!confirm("정말 AI 정보를 업데이트 하시겠습니까?")) return;
 
-        //  프로그레스바 시작
-        fakeProgress(() => {
-            //  학습 요청 후 처리
-            fetch("http://localhost:8000/train-card", {
-                method: "POST"
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log("서버 응답:", data);
-                if (data.message) {
-                    alert("학습 완료: " + data.message);
-                } else if (data.error) {
-                    alert("오류: " + data.error);
-                } else {
-                    alert("응답 형식이 예상과 다릅니다.");
-                }
-                return fetch("http://localhost:8000/train-card/time");
-            })
-            .then(res => res.json())
-            .then(data => {
-                timeLabel.textContent = "마지막 학습 시간: " + data.last_trained;
-            })
-            .catch(err => {
-                alert("오류 발생: " + err);
-                console.error(err);
-            })
-            .finally(() => {
-                // ✅ 학습 완료 후 버튼 복구 & 진행률 숨김
-                btn.disabled = false;
-                btn.innerText = "AI 정보 업데이트 (학습)";
-                document.getElementById("progressContainer").style.display = "none";
-            });
+    btn.disabled = true;
+    btn.textContent = "학습 중입니다...";
+
+    fakeProgress(()=>{
+      fetch("http://localhost:8000/train-card", {method:"POST"})
+        .then(r=>r.json())
+        .then(data=>{
+          console.log(data);
+          /* ➊ 3 초 지연 후 완료 안내 */
+          setTimeout(()=>{
+            if(data.message){
+              alert("학습 완료: "+data.message);
+            }else if(data.error){
+              alert("오류: "+data.error);
+            }else{
+              alert("응답 형식이 예상과 다릅니다.");
+            }
+            /* ➋ 최신 학습 시간 재조회 */
+            return fetch("http://localhost:8000/train-card/time")
+                     .then(r=>r.json())
+                     .then(d=> timeLabel.textContent = "마지막 학습 시간: "+d.last_trained);
+          }, 1000);   
+        })
+        .catch(err=>{
+          alert("오류 발생: "+err);
+          console.error(err);
+        })
+        .finally(()=>{
+          modal.style.display = "none";    // 모달 닫기
+          btn.disabled = false;
+          btn.textContent = "AI 정보 업데이트 (학습)";
         });
     });
+  });
+
+  let progressTimer = null;
+  let fetchController = null;
+  
+  /* ─ 취소 버튼 ─ */
+  document.getElementById("cancelTrain").addEventListener("click", ()=>{
+    if(progressTimer){ clearInterval(progressTimer); progressTimer=null; }
+    if(fetchController){ fetchController.abort(); fetchController=null; }
+
+    modal.style.display="none";
+    btn.disabled=false;
+    btn.textContent="AI 정보 업데이트 (학습)";
+    bar.style.width="0%";
+    text.textContent="0%";
+  });
 });
+
 
 </script>
 </body>

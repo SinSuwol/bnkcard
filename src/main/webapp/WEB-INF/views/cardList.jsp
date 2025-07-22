@@ -83,6 +83,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   color: #fff;
+  cursor: pointer;
 }
 
 .popular-card img {
@@ -95,8 +96,8 @@
   font-weight: 580;
   font-size: 16px;
   margin: 5px 0;
-  margin-bottom: 160px;
-  text-align: center;
+  margin-bottom: 10px;
+  text-align: left;
 }
 .popular-sub {
   font-size: 14px;
@@ -167,6 +168,7 @@
 .item:hover img {
   opacity: 0.2;
   background-color: #ddd;
+  border-radius: 10px;
   /* pointer-events 제거 */
 }
 
@@ -315,6 +317,11 @@
    border-radius: 9999px;
    background: #fff;
    cursor: pointer;
+   transition: 0.2s;
+}
+
+.typeBtn:hover {
+	transform: scale(1.05);
 }
 
 .typeBtn.active {
@@ -347,6 +354,7 @@
 
 
 #searchInput {
+   cursor: pointer;
    width: 400px;
    padding: 10px 35px;
    font-size: 15px;
@@ -357,9 +365,9 @@
    
 }
 
-#searchInput 
 
 #filterBtn {
+   cursor: pointer;
    width: 40px;
    height: 40px;
    margin-left: 8px;
@@ -584,6 +592,7 @@
 /* 비교 버튼 */
 #compareBox > button,
 #compareBox > div > button {
+  width: 110px;	
   font-size: 13px;
   padding: 6px 10px;
   background: #eee;
@@ -628,7 +637,7 @@
 }
 
 .chatbot-open-btn {
-  background-color: #FF7043;
+  background-color: #b91111;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -1001,7 +1010,7 @@ function drawCards() {
 
     div.innerHTML = `
          <img src="${c.cardUrl}" alt="${c.cardName}"
-              style="cursor:pointer"
+              style="cursor:pointer; width:300px;"
               onclick="goDetail(${c.cardNo})">
 
          <p style="cursor:pointer"
@@ -1271,7 +1280,7 @@ function openScrapModal() {
 
    function openChatbot() {
 	   window.open(
-	     '/user/card/chatbot',            // 챗봇 페이지 URL
+	     '/card/chatbot',            // 챗봇 페이지 URL
 	     'cardChatbotPopup',              // 창 이름 (중복 방지용)
 	     'width=520,height=780,resizable=yes,scrollbars=yes'
 	   );
