@@ -317,7 +317,7 @@
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 900px;
-  height: 90vh;                  
+  height: 85vh;                  
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
@@ -550,7 +550,11 @@
   text-align: center;
   font-size: 13px;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
 .card-image-group img {
   rotate: 90deg;
   width: 60px;
@@ -562,19 +566,25 @@
   font-size: 15px;
   font-weight: bold;
   margin: 6px 0 3px;
+  min-height: 40px; /* 카드명 길이에 따라 위치 밀림 방지 */
 }
-.card-fee {
-  margin-top: 20px;
-  text-align: left;
-  color: #333;
-  font-size: 13px;
-  margin-bottom: 5px;
-}
+
+/* 해시태그 */
 .card-tags {
   text-align: left;
   color: #777;
   font-size: 15px;
   margin: 4px 0;
+  min-height: 40px; /* 해시태그가 1~2줄이더라도 고정 */
+}
+
+.card-fee {
+  margin-top: 10px;
+  text-align: left;
+  color: #333;
+  font-size: 13px;
+  margin-bottom: 5px;
+  min-height: 20px;
 }
 
 #modalContent .card-icons img {
@@ -582,10 +592,13 @@
   height: 30px;
   margin: 2px;
 }
+
 .card-summary {
   text-align: left;
   font-size: 12px;
   margin-top: 10px;
+  min-height: 120px; /* 카드별 요약 길이 다르더라도 균형 유지 */
+  overflow: hidden;
 }
 
 .card-summary b {
@@ -593,16 +606,16 @@
 }
 
 .card-icons {
-    display: flex;
-    gap: 10px 30px;
-    margin-top: 8px;
-    max-width: 200px;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    flex-wrap: wrap;
-    justify-content: center;
-
+  display: flex;
+  gap: 10px 30px;
+  margin-top: 8px;
+  max-width: 200px;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 60px; /* 아이콘 수에 따라 줄어드는 문제 방지 */
 }
 
 .scrap-compare-btn {
