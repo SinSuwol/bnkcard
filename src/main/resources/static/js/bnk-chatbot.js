@@ -25,11 +25,20 @@
   /* ----- Root Detection ----- */
   // 다수 페이지에서 fragment가 중복 include되더라도 하나만 사용
   const roots = document.querySelectorAll('#bnkChatbotRoot');
-  let root = roots.length ? roots[roots.length - 1] : null; // 마지막 것을 사용
+  let root = null;
+
   if (roots.length > 1) {
-    console.warn('[BNK Chatbot] Multiple roots detected, using last and removing older ones.');
-    roots.forEach((el,idx) => { if (idx < roots.length-1) el.remove(); });
+    console.warn('[BNK Chatbot] Multiple roots detected, using last and hiding older ones.');
+    roots.forEach((el, idx) => {
+      if (idx < roots.length - 1) {
+        el.style.display = 'none'; // 삭제 대신 숨김 처리
+      }
+    });
+    root = roots[roots.length - 1]; // 마지막 것 사용
+  } else if (roots.length === 1) {
+    root = roots[0];
   }
+
   if (!root) {
     // Graceful fallback: body 끝에 root 생성
     root = document.createElement('div');

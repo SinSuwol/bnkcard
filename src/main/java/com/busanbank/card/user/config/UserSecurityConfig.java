@@ -66,9 +66,10 @@ public class UserSecurityConfig {
                 if (session != null) {
                 	
                 	// 사용자 인증 정보만 제거
+                	session.removeAttribute("loginUser");
                 	session.removeAttribute("SPRING_SECURITY_CONTEXT");
                 	session.removeAttribute("loginUsername");
-                	session.removeAttribute("loginUsername");
+                	session.removeAttribute("loginMemberNo");
                 	session.removeAttribute("loginRole");
                 }
 

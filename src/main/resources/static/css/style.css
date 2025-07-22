@@ -72,7 +72,7 @@ header.scrolled a{
 }
 
 .nav{
-	gap:40px;
+	gap:10px;
 }
 header a.header-login-btn{
 	padding: 10px 20px;
@@ -87,8 +87,20 @@ header a.header-login-btn:hover{
     border: 1px solid #c10c0c;
     color:white;
 }
-
-header a.active {
+header .nav{
+	height:100%;
+}
+header li{
+	display: flex;
+    height: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 15px;
+}
+header li.active{
+	border-bottom: 3px solid #e10e0e;
+}
+header li.active a {
 	font-weight:bold;
 }
 /* ✅ 헤더2 ✅ */
