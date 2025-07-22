@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,417 +7,548 @@
 <style>
 /* ===== 글로벌 ===== */
 body {
-  margin: 0;
-  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
-  background-color: #f9f9f9;
-  color: #2c3e50;
-  line-height: 1.6;
+	margin: 0;
+	font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+	background-color: #f9f9f9;
+	color: #2c3e50;
+	line-height: 1.6;
 }
 
 h1 {
-  font-size: 22px;
-  margin-bottom: 24px;
-  font-weight: 600;
-  color: #34495e;
+	font-size: 22px;
+	margin-bottom: 24px;
+	font-weight: 600;
+	color: #34495e;
 }
 
 /* ===== 테이블 스타일 ===== */
 table {
-  width: 50%;
-  margin: 0 auto; 
-  border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+	width: 50%;
+	margin: 0 auto;
+	border-collapse: collapse;
+	background-color: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 thead {
-  background-color: #f1f3f5;
+	background-color: #f1f3f5;
 }
 
 thead th {
-  padding: 14px 12px;
-  font-size: 14px;
-  color: #495057;
-  border-bottom: 1px solid #dee2e6;
+	padding: 14px 12px;
+	font-size: 14px;
+	color: #495057;
+	border-bottom: 1px solid #dee2e6;
 }
 
 tbody td {
-  padding: 14px 12px;
-  font-size: 14px;
-  text-align: center;
-  border-bottom: 1px solid #f1f3f5;
+	padding: 14px 12px;
+	font-size: 14px;
+	text-align: center;
+	border-bottom: 1px solid #f1f3f5;
 }
 
 tbody tr:hover {
-  background-color: #f8f9fa;
+	background-color: #f8f9fa;
 }
 
 /* ===== 버튼 ===== */
 button {
-  color: black;
-  border: none;
-  padding: 8px 14px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+	color: black;
+	border: none;
+	padding: 8px 14px;
+	font-size: 14px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#closeBtn {
+	padding: 8px 14px; /* 다른 버튼과 동일하게 */
+	font-size: 14px; /* 다른 버튼과 동일하게 */
+	line-height: 1; /* 높이 균일하게 맞추기 */
+	height: 34px; /* 버튼 높이 고정 (다른 버튼 높이와 맞춰서 조정) */
+	display: inline-flex;
+	/* 버튼 안 텍스트 중앙 정렬 */
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	border: none;
+	background-color: #007bff;
+	/* 필요시 배경색 조정 */
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	line-height: 1; /* 높이 균일하게 맞추기 */
+	height: 34px; /* 버튼 높이 고정 (다른 버튼 높이와 맞춰서 조정) */
+	display: inline-flex; /* 버튼 안 텍스트 중앙 정렬 */
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	border: none;
+	background-color: #007bff; /* 필요시 배경색 조정 */
+	color: white;
+}
+
+#closeBtn:hover {
+	background-color: #0056b3;
 }
 
 button:hover {
-  background-color: #2980b9;
+	background-color: #2980b9;
 }
 
 button:active {
-  transform: scale(0.97);
+	transform: scale(0.97);
 }
 
 button:disabled {
-  background-color: #ced4da;
-  cursor: not-allowed;
+	background-color: #ced4da;
+	cursor: not-allowed;
 }
 
 /* ===== 페이지네이션 ===== */
 #pagination button {
-  background-color: #fff;
-  color: #495057;
-  border: 1px solid #ced4da;
-  padding: 6px 10px;
-  margin: 0 2px;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: background-color 0.2s;
+	background-color: #fff;
+	color: #495057;
+	border: 1px solid #ced4da;
+	padding: 6px 10px;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-size: 14px;
+	transition: background-color 0.2s;
 }
 
 #pagination button:hover {
-  background-color: #e9ecef;
+	background-color: #e9ecef;
 }
 
 #pagination button:disabled {
-  color: #adb5bd;
-  background-color: #f1f3f5;
+	color: #adb5bd;
+	background-color: #f1f3f5;
 }
 
-/* ===== 모달 오버레이 ===== */
+/* 모달 배경 오버레이 */
 #modalOverlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 999;
 }
 
-/* ===== 모달 박스 ===== */
+/* 모달 전체 wrapper */
+#modalContainer {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column; /* 수직 정렬 추가 */
+	gap: 20px;
+	z-index: 1000;
+}
+
+#modalTemp, #modalOriginal {
+	display: none;
+	background: #fff;
+	padding: 30px 40px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+	width: 520px;
+	max-height: 80vh;
+	overflow-y: auto;
+	font-size: 14px;
+	color: #333;
+	box-sizing: border-box;
+	position: relative;
+}
+
+/* 제목 스타일 */
+#modalTemp h2, #modalOriginal h2 {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 20px;
+	color: #2c3e50;
+}
+
+/* 인풋, 텍스트에어리어, 셀렉트 */
+#modalTemp input, #modalTemp textarea, #modalTemp select, #modalOriginal input,
+	#modalOriginal textarea, #modalOriginal select {
+	width: 100%;
+	padding: 8px 12px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+
+/* textarea 크기 */
+#modalTemp textarea, #modalOriginal textarea {
+	min-height: 80px;
+	resize: vertical;
+}
+
+/* 읽기 전용 필드 */
+#modalTemp input[readonly], #modalOriginal input[readonly], #modalTemp textarea[readonly],
+	#modalOriginal textarea[readonly] {
+	color: #555;
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+	cursor: default;
+}
+
+/* 버튼 */
+#modalTemp button, #modalOriginal button {
+	background-color: #007bff;
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 5px;
+	font-size: 14px;
+	margin-right: 8px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+#modalTemp button:hover, #modalOriginal button:hover {
+	background-color: #0056b3;
+}
+
+/* 각각 모달 박스는 고정 크기, position: relative 또는 static */
 .modalBox {
-  display: none;
-  position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 440ㅔㅌ;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  z-index: 1000;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  max-height: 85%;
+	position: relative;
+	background: #fff;
+	padding: 30px 40px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+	width: 520px;
+	max-height: 80vh;
+	overflow-y: auto;
+	box-sizing: border-box;
+	color: #333;
+	font-size: 14px;
 }
 
 .modalBox h2 {
-  font-size: 18px;
-  color: #2c3e50;
-  margin-bottom: 16px;
+	font-size: 18px;
+	color: #2c3e50;
+	margin-bottom: 16px;
 }
 
 /* ===== 모달 내용 ===== */
 .modalBox p {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #212529;
+	margin-bottom: 12px;
+	font-size: 14px;
+	color: #212529;
 }
 
-.modalBox input,
-.modalBox textarea,
-.modalBox select {
-  width: 100%;
-  padding: 8px 10px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  box-sizing: border-box;
+.modalBox input, .modalBox textarea, .modalBox select {
+	width: 100%;
+	padding: 8px 10px;
+	font-size: 14px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
 .modalBox textarea {
-  resize: vertical;
-  min-height: 80px;
+	resize: vertical;
+	min-height: 80px;
 }
 
-/* ===== 버튼 영역 ===== */
-#approveButtons,
-#updateButtons,
-#deleteButtons,
-#rejectSection {
-  margin-top: 20px;
+.modal-button-group {
+	display: flex;
+	justify-content: flex-start;
+	gap: 8px;
+	margin-top: 16px;
+	flex-wrap: wrap;
+}
+
+#allButtons {
+	display: flex;
+	gap: 8px;
+	margin-top: 20px;
+	flex-wrap: nowrap; /* 줄 바꿈 없이 한 줄로 */
+	justify-content: flex-start; /* 왼쪽 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 내부 approveButtons 등도 flex */
+#approveButtons, #updateButtons, #deleteButtons {
+	display: flex;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
 }
 
 #rejectSection h3 {
-  font-size: 16px;
-  color: #2c3e50;
-  margin-bottom: 10px;
+	font-size: 16px;
+	color: #2c3e50;
+	margin-bottom: 10px;
 }
 
 #rejectSection textarea {
-  margin-top: 8px;
+	margin-top: 8px;
 }
 
 /* ===== 반응형 개선 (선택 사항) ===== */
-@media (max-width: 600px) {
-  .modalBox {
-  width: 95%;
-    padding: 12px;
-  }
-
-  table thead {
-    display: none;
-  }
-
-  table, table tbody, table tr, table td {
-    display: block;
-    width: 100%;
-  }
-
-  table tr {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    background: #fff;
-    padding: 10px;
-  }
-
-  table td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-
-  table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-weight: bold;
-    color: #495057;
-    text-align: left;
-  }
+@media ( max-width : 600px) {
+	.modalBox {
+		width: 95%;
+		padding: 12px;
+	}
+	table thead {
+		display: none;
+	}
+	table, table tbody, table tr, table td {
+		display: block;
+		width: 100%;
+	}
+	table tr {
+		margin-bottom: 15px;
+		border-bottom: 1px solid #ddd;
+		background: #fff;
+		padding: 10px;
+	}
+	table td {
+		text-align: right;
+		padding-left: 50%;
+		position: relative;
+	}
+	table td::before {
+		content: attr(data-label);
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		font-weight: bold;
+		color: #495057;
+		text-align: left;
+	}
 }
 
-@media (max-width: 768px) {
-  body {
-    padding: 16px;
-  }
+@media ( max-width : 768px) {
+	body {
+		padding: 16px;
+	}
+	h1 {
+		font-size: 18px;
+		text-align: center;
+	}
+	table {
+		width: 100%;
+		box-shadow: none;
+	}
+	thead {
+		display: none;
+	}
+	table, tbody, tr, td {
+		display: block;
+		width: 100%;
+	}
+	tbody tr {
+		margin-bottom: 16px;
+		border-radius: 6px;
+		border: 1px solid #dee2e6;
+		background: #fff;
+		padding: 12px;
+	}
+	tbody td {
+		text-align: left;
+		padding: 8px 12px;
+		position: relative;
+	}
+	tbody td::before {
+		content: attr(data-label);
+		font-weight: bold;
+		color: #495057;
+		display: block;
+		margin-bottom: 4px;
+	}
+	#modalContainer {
+		flex-direction: column;
+		max-width: 95%;
+		width: 95%;
+	}
 
-  h1 {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  table {
-    width: 100%;
-    box-shadow: none;
-  }
-
-  thead {
-    display: none;
-  }
-
-  table, tbody, tr, td {
-    display: block;
-    width: 100%;
-  }
-
-  tbody tr {
-    margin-bottom: 16px;
-    border-radius: 6px;
-    border: 1px solid #dee2e6;
-    background: #fff;
-    padding: 12px;
-  }
-
-  tbody td {
-    text-align: left;
-    padding: 8px 12px;
-    position: relative;
-  }
-
-  tbody td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #495057;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  /* 모달 반응형 */
-  .modalBox {
-    width: 95%;
-    padding: 16px;
-    max-height: 90%;
-    top: 5%;
-  }
-
-  .modalBox h2 {
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-
-  .modalBox p {
-    margin-bottom: 10px;
-  }
-
-  .modalBox input,
-  .modalBox textarea,
-  .modalBox select {
-    font-size: 13px;
-    padding: 6px 8px;
-  }
-
-
-
-  #rejectSection h3 {
-    font-size: 14px;
-  }
-
-  #pagination button {
-    font-size: 13px;
-    padding: 4px 8px;
-  }
+	/* 모달 반응형 */
+	.modalBox {
+		width: 100%;
+		margin-bottom: 16px;
+	}
+	.modalBox h2 {
+		font-size: 16px;
+		margin-bottom: 12px;
+	}
+	.modalBox p {
+		margin-bottom: 10px;
+	}
+	.modalBox input, .modalBox textarea, .modalBox select {
+		font-size: 13px;
+		padding: 6px 8px;
+	}
+	#rejectSection h3 {
+		font-size: 14px;
+	}
+	#pagination button {
+		font-size: 13px;
+		padding: 4px 8px;
+	}
 }
-
-/* 기존 카드 정보 (왼쪽) */
-#modalOriginal {
-  display: none;
-  position: fixed;
-  top: 10%;
-  left: 5%;
-  transform: none;
-  width: 38%;
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  z-index: 1000;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  max-height: 85%;
-}
-
-/* 요청 카드 정보 (오른쪽) */
-#modalTemp {
-  display: none;
-  position: fixed;
-  top: 10%;
-  right: 5%;
-  transform: none;
-  width: 38%;
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  z-index: 1000;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  max-height: 85%;
-}
-
-
 </style>
 <link rel="stylesheet" href="/css/adminstyle.css">
 </head>
 <body>
-<jsp:include page="../fragments/header.jsp"></jsp:include>
-<h1>카드 승인 검토</h1>
+	<jsp:include page="../fragments/header.jsp"></jsp:include>
+	<h1>카드 승인 검토</h1>
 
-<table border="1" cellpadding="6" width="100%">
-<thead>
-<tr>
-  <th>승인 번호</th>
-  <th>카드 번호</th>
-  <th>상태</th>
-  <th>사유</th>
-  <th>요청 관리자</th>
-  <th>처리 관리자</th>
-  <th>요청일</th>
-  <th>처리일</th>
-  <th>요청 내용</th>
-  <th>작업</th>
-</tr>
-</thead>
-<tbody id="permissionTable"></tbody>
-</table>
-<div id="pagination" style="margin-top:10px; text-align:center;"></div>
+	<table border="1" cellpadding="6" width="100%">
+		<thead>
+			<tr>
+				<th>승인 번호</th>
+				<th>카드 번호</th>
+				<th>상태</th>
+				<th>사유</th>
+				<th>요청 관리자</th>
+				<th>처리 관리자</th>
+				<th>요청일</th>
+				<th>처리일</th>
+				<th>요청 내용</th>
+				<th>작업</th>
+			</tr>
+		</thead>
+		<tbody id="permissionTable"></tbody>
+	</table>
+	<div id="pagination" style="margin-top: 10px; text-align: center;"></div>
 
-<div id="modalOverlay"></div>
+	<div id="modalOverlay"></div>
 
-<!-- 기존 카드 모달 -->
-<div id="modalOriginal" class="modalBox">
-  <h2>기존 카드 정보</h2>
-  <p>카드명: <input id="originalCardName" readonly></p>
-  <p>카드 종류: <input id="originalCardType" readonly></p>
-  <p>브랜드: <input id="originalCardBrand" readonly></p>
-  <p>연회비: <input id="originalAnnualFee" readonly></p>
-  <p>발급 대상: <input id="originalIssuedTo" readonly></p>
-  <p>서비스: <input id="originalService" readonly></p>
-  <p>부가 서비스: <input id="originalSService" readonly></p>
-  <p>상태: <input id="originalCardStatus" readonly></p>
-  <p>카드 URL: <input id="originalCardUrl" readonly></p>
-  <p>슬로건: <input id="originalCardSlogan" readonly></p>
-  <p>주의사항: <textarea id="originalCardNotice" readonly></textarea></p>
-</div>
+	<div id="modalContainer">
+		<div id="modalBoxesWrapper" style="display: flex; gap: 20px;">
+			<!-- 기존 카드 모달 -->
+			<div id="modalOriginal" class="modalBox">
+				<h2>기존 카드 정보</h2>
+				<p>
+					카드명: <input id="originalCardName" readonly>
+				</p>
+				<p>
+					카드 종류: <input id="originalCardType" readonly>
+				</p>
+				<p>
+					브랜드: <input id="originalCardBrand" readonly>
+				</p>
+				<p>
+					연회비: <input id="originalAnnualFee" readonly>
+				</p>
+				<p>
+					발급 대상: <input id="originalIssuedTo" readonly>
+				</p>
+				<p>
+					서비스: <input id="originalService" readonly>
+				</p>
+				<p>
+					부가 서비스: <input id="originalSService" readonly>
+				</p>
+				<p>
+					상태: <input id="originalCardStatus" readonly>
+				</p>
+				<p>
+					카드 URL: <input id="originalCardUrl" readonly>
+				</p>
+				<p>
+					슬로건: <input id="originalCardSlogan" readonly>
+				</p>
+				<p>
+					주의사항:
+					<textarea id="originalCardNotice" readonly></textarea>
+				</p>
+			</div>
+	
+			<!-- TEMP 카드 모달 -->
+			<div id="modalTemp" class="modalBox">
+				<h2>요청 카드 정보</h2>
+				<input type="hidden" id="modalCardNo">
+				<p>
+					카드명: <input id="modalCardName" readonly>
+				</p>
+				<p>
+					카드 종류: <input id="modalCardType" readonly>
+				</p>
+				<p>
+					브랜드: <input id="modalCardBrand" readonly>
+				</p>
+				<p>
+					연회비: <input id="modalAnnualFee" readonly>
+				</p>
+				<p>
+					발급 대상: <input id="modalIssuedTo" readonly>
+				</p>
+				<p>
+					서비스: <input id="modalService" readonly>
+				</p>
+				<p>
+					부가 서비스: <input id="modalSService" readonly>
+				</p>
+				<p>
+					상태: <input id="modalCardStatus" readonly>
+				</p>
+				<p>
+					카드 URL: <input id="modalCardUrl" readonly>
+				</p>
+				<p>
+					슬로건: <input id="modalCardSlogan" readonly>
+				</p>
+				<p>
+					주의사항:
+					<textarea id="modalCardNotice" readonly></textarea>
+				</p>
+			</div>
+		</div>
 
-<!-- TEMP 카드 모달 -->
-<div id="modalTemp" class="modalBox">
-  <h2>요청 카드 정보</h2>
-  <input type="hidden" id="modalCardNo">
-  <p>카드명: <input id="modalCardName" readonly></p>
-  <p>카드 종류: <input id="modalCardType" readonly></p>
-  <p>브랜드: <input id="modalCardBrand" readonly></p>
-  <p>연회비: <input id="modalAnnualFee" readonly></p>
-  <p>발급 대상: <input id="modalIssuedTo" readonly></p>
-  <p>서비스: <input id="modalService" readonly></p>
-  <p>부가 서비스: <input id="modalSService" readonly></p>
-  <p>상태: <input id="modalCardStatus" readonly></p>
-  <p>카드 URL: <input id="modalCardUrl" readonly></p>
-  <p>슬로건: <input id="modalCardSlogan" readonly></p>
-  <p>주의사항: <textarea id="modalCardNotice" readonly></textarea></p>
-
-  <div id="approveButtons" style="margin-top:10px; display:none;">
-      <button onclick="approve()">등록</button>
-      <button onclick="showReject()">보류/불허</button>
-  </div>
-  <div id="updateButtons" style="margin-top:10px; display:none;">
-      <button onclick="update()">수정</button>
-      <button onclick="showReject()">보류/불허</button>
-  </div>
-  <div id="deleteButtons" style="margin-top:10px; display:none;">
-      <button onclick="remove()">삭제</button>
-      <button onclick="showReject()">보류/불허</button>
-  </div>
-  <button onclick="closeModal()">닫기</button>
-
-  <div id="rejectSection" style="display:none; margin-top:10px;">
-      <h3>보류/불허 처리</h3>
-      <select id="rejectStatus">
-          <option value="보류">보류</option>
-          <option value="불허">불허</option>
-      </select>
-      <textarea id="rejectReason" placeholder="사유를 입력하세요"></textarea>
-      <button onclick="submitReject()">처리하기</button>
-  </div>
-</div>
+		<div id="buttonsContainer"
+			style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+			<div id="allButtons"
+				style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+				<div id="approveButtons"
+					style="display: none; display: flex; gap: 8px;">
+					<button onclick="approve()">등록</button>
+					<button onclick="showReject()">보류/불허</button>
+				</div>
+				<div id="updateButtons"
+					style="display: none; display: flex; gap: 8px;">
+					<button onclick="update()">수정</button>
+					<button onclick="showReject()">보류/불허</button>
+				</div>
+				<div id="deleteButtons"
+					style="display: none; display: flex; gap: 8px;">
+					<button onclick="remove()">삭제</button>
+					<button onclick="showReject()">보류/불허</button>
+				</div>
+				<button id="closeBtn" onclick="closeModal()">닫기</button>
+			</div>
+		</div>
+	</div>
 
 
-<script src="/js/adminHeader.js"></script>
-<script>
+	<div id="rejectSection" style="display: none; margin-top: 10px;">
+		<h3>보류/불허 처리</h3>
+		<select id="rejectStatus">
+			<option value="보류">보류</option>
+			<option value="불허">불허</option>
+		</select>
+		<textarea id="rejectReason" placeholder="사유를 입력하세요"></textarea>
+		<button onclick="submitReject()">처리하기</button>
+	</div>
+
+	<script src="/js/adminHeader.js"></script>
+	<script>
 let currentPage = 1;
 
 function loadPermissions(page) {
@@ -501,12 +632,17 @@ function openModal(cardNo, perContent) {
     document.getElementById('approveButtons').style.display = 'none';
     document.getElementById('updateButtons').style.display = 'none';
     document.getElementById('deleteButtons').style.display = 'none';
-    document.getElementById('rejectSection').style.display = 'none';
 
-    // 모달 초기화
-    document.getElementById('modalOriginal').style.display = 'none';
+ 	// 모달 오버레이 보이기
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalContainer').style.display = 'flex';
 
-    // 버튼 표시
+    const modalOriginal = document.getElementById('modalOriginal');
+    const modalTemp = document.getElementById('modalTemp');
+
+    modalOriginal.style.display = 'none';
+    modalTemp.style.display = 'none';
+
     if (perContent === '등록') {
         document.getElementById('approveButtons').style.display = 'block';
     } else if (perContent === '수정') {
@@ -514,6 +650,8 @@ function openModal(cardNo, perContent) {
     } else if (perContent === '삭제') {
         document.getElementById('deleteButtons').style.display = 'block';
     }
+    
+    modalTemp.style.display = 'block';
 
     // 데이터 로드
     fetch('/superadmin/permission/temp/' + cardNo)
@@ -558,9 +696,8 @@ function openModal(cardNo, perContent) {
 }
 
 function closeModal() {
-    document.getElementById('modalOverlay').style.display = 'none';
-    document.getElementById('modalOriginal').style.display = 'none';
-    document.getElementById('modalTemp').style.display = 'none';
+	document.getElementById('modalOverlay').style.display = 'none';
+    document.getElementById('modalContainer').style.display = 'none';
 }
 
 // 승인 처리
