@@ -600,7 +600,96 @@ body.main-body{
 	right:200px;
 }
 
+/* 무한 가로 스크롤 */
+.infinite-carousel {
+  overflow: hidden;
+  width: 100%;
+  background-color: white;
+}
+.infinite-carousel h1{
+	font-size:4rem;
+}
+.infinite-carousel .t1{
+	margin-top:120px;
+}
+.infinite-carousel .t3{
+	color:gray;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.carousel-track {
+  display: flex;
+  width: max-content;
+  animation: scrollLeft 40s linear infinite;
+}
 
+.carousel-item {
+  width: 150px;
+  padding: 20px;
+  font-size: 40px;
+  text-align: center;
+  white-space: nowrap;
+  display:flex;
+  flex-direction:column;
+  border-radius:35px;
+  background-color:orange;
+  margin-right:30px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top:100px;
+}
+.carousel-item img{
+	width:120px;
+	border-radius:15px;
+}
+.carousel-item p{
+    font-size: 13px;
+}
+
+.carousel-item.c1{
+    background-color: #f7d0ab;
+}
+.carousel-item.c2{
+	background-color: #ffcaca;
+}
+.carousel-item.c3{
+	background-color: #e3aeff;
+}
+.carousel-item.c4{
+	background-color: #ffeac6;
+}
+.carousel-item.c5{
+	background-color: #e11818;
+}
+.carousel-item.c6{
+	background-color: #e8f7b3;
+}
+.carousel-item.c7{
+	background-color: #dbe78c;
+}
+.carousel-item.c8{
+    background-color: #ffb45b;
+}
+.carousel-item.c9{
+	background-color: #6938c0;
+}
+.carousel-item.c10{
+	background-color: #4115b2;
+}
+.carousel-item.c11{
+    background-color: #e8f2f9;
+}
+.carousel-item.c12{
+    background-color: #9dbeea;
+}
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
 
 
