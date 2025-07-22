@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page session="true"%>
 
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
@@ -13,7 +14,7 @@
 
 <!-- 공통 CSS -->
 <link rel="stylesheet" href="${ctx}/css/style.css" />
-<link rel="stylesheet" href="/css/style.css" />
+
 <style>
 /* ===== 기존 스타일 그대로 ===== */
 :root {
@@ -244,16 +245,6 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	<!-- ───────── 공통 헤더 (로그인 UI 포함) ───────── -->
 	<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
-	<!-- ★ 로그인 사용자 정보 & 세션 연장 버튼 (옵션) -->
-	<c:if test="${not empty sessionScope.loginUser}">
-		<div class="user-info flex"
-			style="max-width: var(--bnk-max-width); margin: 0 auto; padding: 4px 30px;">
-			<a class="user-name" href="${ctx}/user/mypage">
-				${sessionScope.loginUser.name} </a> <span id="session-timer"
-				class="session-timer-box"></span>
-			<button id="extend-btn" onclick="extend()">연장</button>
-		</div>
-	</c:if>
 
 	<!-- ───────── 본문 ───────── -->
 	<div class="main-content">
@@ -289,7 +280,6 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 							<td>${faq.faqQuestion}</td>
 							<td class="faq-answer">${faq.faqAnswer}</td>
 							<td><span class="faq-cat">${faq.cattegory}</span></td>
-							<!-- ✅ 정리됨 -->
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -374,11 +364,10 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	<script src="${ctx}/js/header2.js"></script>
 
 
-<c:if test="${not empty sessionScope.remainingSeconds}">
-  <script>
-    let remainingSeconds = ${sessionScope.remainingSeconds};
-  </script>
-</c:if>
+
+	<script>
+   let remainingSeconds = <%=request.getAttribute("remainingSeconds")%>;
+</script>
 	<script src="${ctx}/js/sessionTime.js"></script>
 
 	<!-- 공통 챗봇 모달 -->
