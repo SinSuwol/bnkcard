@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -236,13 +237,7 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	background: var(--bnk-red-dark) !important
 }
 </style>
-<!-- ★ 세션 남은 시간 전역 변수 – 한 번만 선언 -->
-<!-- 세션 타이머 전역 상수 (남은 시간 있을 때만) -->
-<c:if test="${not empty sessionScope.remainingSeconds}">
-	<script>
-      const remainingSeconds = ${sessionScope.remainingSeconds};
-    </script>
-</c:if>
+
 </head>
 
 <body>
@@ -379,9 +374,11 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 	<script src="${ctx}/js/header2.js"></script>
 
 
-<script>
-   let remainingSeconds = <%= request.getAttribute("remainingSeconds") %>;
-</script>
+<c:if test="${not empty sessionScope.remainingSeconds}">
+  <script>
+    let remainingSeconds = ${sessionScope.remainingSeconds};
+  </script>
+</c:if>
 	<script src="${ctx}/js/sessionTime.js"></script>
 
 	<!-- 공통 챗봇 모달 -->
