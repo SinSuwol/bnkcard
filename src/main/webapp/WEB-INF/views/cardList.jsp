@@ -241,10 +241,10 @@
   top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   border-bottom: 1px solid #333333;
-  color: #000;
+  color: #333333;
   padding: 6px 10px;
   display: none;
   pointer-events: none;
