@@ -27,7 +27,7 @@ body {
 .chat-container {
 	width: 100%;
 	max-width: 520px;
-	height: 750px;
+	height: 660px;
 	background: #fff;
 	border-radius: 16px;
 	box-shadow: 0 4px 18px rgba(0, 0, 0, .12);
@@ -39,6 +39,7 @@ body {
 .chat-container h2 {
 	margin: 0 0 16px;
 	font-size: 22px;
+	font-weight: 500;
 	text-align: center;
 	color: var(--bnk-red);
 }

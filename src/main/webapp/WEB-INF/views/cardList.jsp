@@ -12,6 +12,23 @@
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 
+.chatbot-open-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.chatbot-open-btn:hover{
+	transform: scale(1.2);
+}
+
+.chatbot-icon {
+  height: 60px;         /* 🔺 아이콘 크기 키우기 */
+  width: auto;          /* 비율 유지 */
+  display: inline-block;
+}
+
 .popular-slider.slick-slider {
   background-color: #fff;;
   padding: 50px 0 50px;
@@ -650,28 +667,12 @@
   line-height: 1.4;
 }
 
-.chatbot-open-btn {
-  background-color: #b91111;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: background-color 0.2s ease;
-}
 
 #chatbot-float {
   position: fixed;
   bottom: 40px;
   right: 30px;
   z-index: 5000;
-}
-
-.chatbot-open-btn:hover {
-  background-color: #e35a2f;
 }
 
 /* 인기 슬라이드 검정 글 */
@@ -1311,8 +1312,11 @@ function openScrapModal() {
 
 
 <div id="chatbot-float">
-  <button class="chatbot-open-btn" onclick="openChatbot()">💬 카드 챗봇</button>
+  <button class="chatbot-open-btn" onclick="openChatbot()">
+    <img src="/image/bnkchatbotchar.png" alt="카드 챗봇" class="chatbot-icon">
+  </button>
 </div>
+
 
 <script src="/js/sessionTime.js"></script>
 </body>
