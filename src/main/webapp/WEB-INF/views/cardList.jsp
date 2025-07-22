@@ -564,7 +564,7 @@
 
 .card-name {
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 500;
   margin: 6px 0 3px;
   min-height: 40px; /* 카드명 길이에 따라 위치 밀림 방지 */
 }
