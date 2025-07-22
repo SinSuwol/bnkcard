@@ -300,7 +300,7 @@ table.faq-table th:first-child, table.faq-table td:first-child {
 			<div id="modalAnswer" class="modal-answer"></div>
 		</div>
 	</div>
-
+	<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 	<!-- ───────── 페이지 전용 JS ───────── -->
 	<script>
   /* ===== 모달 ===== */

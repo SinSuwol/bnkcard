@@ -19,6 +19,7 @@
 	<h1>은행소개</h1>
 	<hr>
 </div>
+<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 <script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
