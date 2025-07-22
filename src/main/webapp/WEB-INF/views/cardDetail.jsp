@@ -35,8 +35,8 @@
       margin-bottom: 50px;
       margin-top: 50px;
       width: 260px;
-      min-width: 260px;
-      max-width: 260px;
+      min-width: 350px;
+      max-width: 270px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
@@ -45,7 +45,7 @@
       min-width: 0;
     }
     .info h2 {
-      font-size: 32px;
+      font-size: 40px;
       font-weight: 500;
       color: #111;
       margin: 0;
@@ -66,7 +66,7 @@
       gap: 6px;
     }
     .fee-line img {
-      width: 24px;
+      width: 40px;
     }
     .fee-line span {
       font-size: 16px;
@@ -87,7 +87,7 @@
 	  color: #d44;
 	  font-weight: 500;
 	  margin-bottom: 10px;
-	  font-size: 14px;
+	  font-size: 16px;
 	}
     
     .accordion {

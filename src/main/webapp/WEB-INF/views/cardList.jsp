@@ -142,7 +142,7 @@
 #cardGrid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
-   gap: 130px 0px;
+   gap: 130px 20px;
    justify-items: center;
    max-width: 1060px;
    margin: 125px auto;
@@ -165,24 +165,38 @@
   transition: opacity 0.3s ease;
 }
 
-.item:hover img {
+.card-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/*  이미지에 hover 시 흐리게 */
+.card-img-wrapper:hover img {
   opacity: 0.2;
   background-color: #ddd;
   border-radius: 10px;
-  /* pointer-events 제거 */
+  transition: opacity 0.3s ease;
 }
 
-/* 텍스트 오버레이 */
-.item:hover::before {
-  content: '상세보기';
+/*  상세보기 텍스트 */
+.overlay-text {
   position: absolute;
-  top: 25%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: bold;
-  border-bottom: 2px solid #333;
+  font-weight: 500;
   font-size: 15px;
-  pointer-events: none; /* 이 텍스트는 클릭 안 되게 */
+  border-bottom: 1px solid #333333;
+  color: #000;
+  padding: 6px 10px;
+  display: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/*  hover 시 텍스트 보이게 */
+.card-img-wrapper:hover .overlay-text {
+  display: block;
 }
 
 
@@ -1001,36 +1015,38 @@ window.addEventListener('DOMContentLoaded',()=>{
 /* 카드 출력 */
 function drawCards() {
   const grid = document.getElementById('cardGrid');
-  const end  = Math.min(currentIndex + 9, fullCardList.length);
+  const end = Math.min(currentIndex + 9, fullCardList.length);
 
   for (let i = currentIndex; i < end; i++) {
-    const c   = fullCardList[i];
+    const c = fullCardList[i];
     const div = document.createElement('div');
-    div.className = 'item';              // ← 부모 div는 클릭 이벤트 없음!
+    div.className = 'item';
 
     div.innerHTML = `
-         <img src="${c.cardUrl}" alt="${c.cardName}"
-              style="cursor:pointer; width:300px;"
-              onclick="goDetail(${c.cardNo})">
+      <div class="card-img-wrapper" onclick="goDetail(${c.cardNo})">
+        <img src="${c.cardUrl}" alt="${c.cardName}" class="card-img" style="width:300px;">
+        <div class="overlay-text">상세보기</div>
+      </div>
 
-         <p style="cursor:pointer"
-                 onclick="goDetail(${c.cardNo})">${c.cardName}</p>
+      <p style="cursor:pointer" onclick="goDetail(${c.cardNo})">${c.cardName}</p>
 
-         <p style="font-size:12px;">${c.cardSlogan || ''}</p>
+      <p style="font-size:12px;">${c.cardSlogan || ''}</p>
 
-         <label class="compare-label" onclick="event.stopPropagation();">
-           <input type="checkbox"
-                  value="${c.cardNo}"
-                  onclick="event.stopPropagation(); toggleCompare(this)">
-           비교함 담기
-         </label>
-       `;
-       grid.appendChild(div);
-}
+      <label class="compare-label" onclick="event.stopPropagation();">
+        <input type="checkbox"
+               value="${c.cardNo}"
+               onclick="event.stopPropagation(); toggleCompare(this)">
+        비교함 담기
+      </label>
+    `;
+    grid.appendChild(div);
+  }
+
   currentIndex = end;
   if (currentIndex >= fullCardList.length)
     document.getElementById('loadMoreWrap').style.display = 'none';
 }
+
 function loadMore(){drawCards();}
 
 /* 비교함 */
