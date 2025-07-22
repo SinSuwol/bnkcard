@@ -808,7 +808,7 @@
             style="width: 100%; padding: 10px 0; background: #b91111; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer">검색</button>
       </div>
    </div>
-
+<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 
 <script src="/js/header2.js"></script>
 <script>
