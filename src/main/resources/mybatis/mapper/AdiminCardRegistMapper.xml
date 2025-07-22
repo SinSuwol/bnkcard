@@ -61,9 +61,9 @@
 		PER_SEQ.NEXTVAL,
 		#{cardNo, jdbcType=NUMERIC},
 		'대기중',
-		NULL,
+		'-',
 		#{admin},
-		NULL,
+		'-',
 		SYSDATE,
 		NULL,
 		#{perContent}
