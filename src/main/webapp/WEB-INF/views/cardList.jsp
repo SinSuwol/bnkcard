@@ -12,6 +12,17 @@
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 
+.white-text,
+.white-text .popular-title,
+.white-text .popular-sub {
+  color: white !important;
+}
+
+/* 슬라이더 예외 글 색깔처리 */
+.white-text {
+  color: #fff;
+}
+
 .chatbot-tooltip {
   background: #fff;
   color: #333;
@@ -158,7 +169,7 @@
 }
 .popular-sub {
   font-size: 14px;
-  color: #fff;
+  color: #555;
   margin-bottom: -15px;
   font-weight: 450;
 }
@@ -865,19 +876,19 @@ fetch('/api/cards/popular')
 
     // 카드 DOM 삽입
     slider.innerHTML = sorted.map(c => {
-	  const bgUrl = c.popularImgUrl?.trim() || c.cardUrl?.trim();
-	  const isSKCard = c.cardName.includes("SK OIL&LPG");
-	
-	  return `
-	  <div>
-	    <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
-	      <div class="card-text-wrap ${isSKCard ? 'dark-text sk-margin' : ''}">
-	        <div class="popular-title">${c.cardName}</div>
-	        <div class="popular-sub">${c.cardSlogan || ''}</div>
-	      </div>
-	    </div>
-	  </div>
-	  `;
+      const bgUrl = c.popularImgUrl?.trim() || c.cardUrl?.trim();
+      const isWhiteText = c.cardName.trim().includes("부산체육사랑카드");
+
+      return `
+        <div>
+          <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
+            <div class="card-text-wrap ${isWhiteText ? 'white-text' : ''}">
+              <div class="popular-title">${c.cardName}</div>
+              <div class="popular-sub">${c.cardSlogan || ''}</div>
+            </div>
+          </div>
+        </div>
+      `;
 	}).join('');
 
 
