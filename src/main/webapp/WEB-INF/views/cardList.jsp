@@ -691,7 +691,7 @@
   width: 100px;           
   height: 135px;         
   background: #f5f5f5;
-  border: 2px solid #aaa;
+  border: 1px solid #aaa;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
