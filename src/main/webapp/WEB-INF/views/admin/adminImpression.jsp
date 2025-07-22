@@ -119,6 +119,12 @@ h2 {
 	padding: 0 200px; /* ← 사이드바 여백과 같은 좌우 여백 */
 	box-sizing: border-box;
 }
+
+#permissionTable,
+#permissionTable thead {
+	display: none;
+}
+
 </style>
 
 <link rel="stylesheet" href="/css/adminstyle.css">

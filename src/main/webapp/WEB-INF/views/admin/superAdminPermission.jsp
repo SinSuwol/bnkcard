@@ -190,6 +190,7 @@ button:disabled {
 	border-radius: 4px;
 	font-size: 14px;
 	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* textarea 크기 */
@@ -410,7 +411,7 @@ button:disabled {
 	<jsp:include page="../fragments/header.jsp"></jsp:include>
 	<h1>카드 승인 검토</h1>
 
-	<table border="1" cellpadding="6" width="100%">
+	<table cellpadding="6" width="100%">
 		<thead>
 			<tr>
 				<th>승인 번호</th>
@@ -438,38 +439,37 @@ button:disabled {
 				<h2>기존 카드 정보</h2>
 				<img id="modalCardImgOriginal" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<p>
-					카드명: <input id="originalCardName" readonly>
+					카드명 <input id="originalCardName" readonly>
 				</p>
 				<p>
-					카드 종류: <input id="originalCardType" readonly>
+					카드 종류 <input id="originalCardType" readonly>
 				</p>
 				<p>
-					브랜드: <input id="originalCardBrand" readonly>
+					브랜드 <input id="originalCardBrand" readonly>
 				</p>
 				<p>
-					연회비: <input id="originalAnnualFee" readonly>
+					연회비 <input id="originalAnnualFee" readonly>
 				</p>
 				<p>
-					발급 대상: <input id="originalIssuedTo" readonly>
+					발급 대상 <input id="originalIssuedTo" readonly>
 				</p>
 				<p>
-					서비스: <input id="originalService" readonly>
+					서비스 <textarea id="originalService" readonly></textarea>
 				</p>
 				<p>
-					부가 서비스: <input id="originalSService" readonly>
+					부가 서비스 <textarea id="originalSService" readonly></textarea>
 				</p>
 				<p>
-					상태: <input id="originalCardStatus" readonly>
+					상태 <input id="originalCardStatus" readonly>
 				</p>
 				<p>
-					카드 URL: <input id="originalCardUrl" readonly>
+					카드 URL <input id="originalCardUrl" readonly>
 				</p>
 				<p>
-					슬로건: <input id="originalCardSlogan" readonly>
+					슬로건 <input id="originalCardSlogan" readonly>
 				</p>
 				<p>
-					주의사항:
-					<textarea id="originalCardNotice" readonly></textarea>
+					주의사항 <textarea id="originalCardNotice" readonly></textarea>
 				</p>
 			</div>
 	
@@ -480,38 +480,37 @@ button:disabled {
 				<input type="hidden" id="modalCardNo">
 				
 				<p>
-					카드명: <input id="modalCardName" readonly>
+					카드명 <input id="modalCardName" readonly>
 				</p>
 				<p>
-					카드 종류: <input id="modalCardType" readonly>
+					카드 종류 <input id="modalCardType" readonly>
 				</p>
 				<p>
-					브랜드: <input id="modalCardBrand" readonly>
+					브랜드 <input id="modalCardBrand" readonly>
 				</p>
 				<p>
-					연회비: <input id="modalAnnualFee" readonly>
+					연회비 <input id="modalAnnualFee" readonly>
 				</p>
 				<p>
-					발급 대상: <input id="modalIssuedTo" readonly>
+					발급 대상 <input id="modalIssuedTo" readonly>
 				</p>
 				<p>
-					서비스: <input id="modalService" readonly>
+					서비스 <textarea id="modalService" readonly></textarea>
 				</p>
 				<p>
-					부가 서비스: <input id="modalSService" readonly>
+					부가 서비스 <textarea id="modalSService" readonly></textarea>
 				</p>
 				<p>
-					상태: <input id="modalCardStatus" readonly>
+					상태 <input id="modalCardStatus" readonly>
 				</p>
 				<p>
-					카드 URL: <input id="modalCardUrl" readonly>
+					카드 URL <input id="modalCardUrl" readonly>
 				</p>
 				<p>
-					슬로건: <input id="modalCardSlogan" readonly>
+					슬로건 <input id="modalCardSlogan" readonly>
 				</p>
 				<p>
-					주의사항:
-					<textarea id="modalCardNotice" readonly></textarea>
+					주의사항 <textarea id="modalCardNotice" readonly></textarea>
 				</p>
 			</div>
 		</div>
