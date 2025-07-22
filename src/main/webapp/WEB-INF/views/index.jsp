@@ -393,9 +393,13 @@ setTimeout(() => {
 	  centerMode: true,
 	  centerPadding: '0px',
 	  slidesToShow: 3,
+	  autoplay:true,
+	  autoplaySpeed:5000,
 	  arrows: true,
 	  infinite: true,
-	  variableWidth: true
+	  variableWidth: true,
+	  prevArrow: '<button class="slick-prev custom-prev custom-arrow"><i class="fas fa-chevron-left"></button>',
+	  nextArrow: '<button class="slick-next custom-next custom-arrow"><i class="fas fa-chevron-right"></button>',
 	});
 	
 	

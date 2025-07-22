@@ -44,8 +44,12 @@ header a{
 	color: white;
     font-size: 1.1rem;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.7);  /* ✅ 그림자 */
+    transition:0.2s;
 }
 
+header a:hover{
+	font-weight:bold;
+}
 
 header.scrolled {
     background-color: white; /* 스크롤 시 배경 흰색 */
@@ -63,9 +67,12 @@ header.scrolled a{
     width:100%;
     align-items: center;
 }
+.main-logo{
+	height:21px;
+}
 
 .nav{
-	gap:60px;
+	gap:40px;
 }
 header a.header-login-btn{
 	padding: 10px 20px;
@@ -79,6 +86,10 @@ header a.header-login-btn:hover{
     background-color:#c10c0c;
     border: 1px solid #c10c0c;
     color:white;
+}
+
+header a.active {
+	font-weight:bold;
 }
 /* ✅ 헤더2 ✅ */
 /* 헤더의 기본 상태 */
@@ -343,13 +354,15 @@ body.main-body{
 	background-color:white;
 	width:100%; height:100%;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-	cusor:pointer;
+	cursor:pointer;
 	display:flex;
   	align-items: center;
     justify-content: center;
     flex-direction: column;
     transform:scale(1);
   	transition:0.2s;
+  	gap: 10px;
+  	font-weight:bold;
 }
 .hover-target img{
 	width:80px;
@@ -551,18 +564,28 @@ body.main-body{
 .main-slider .slick-center img{
 }
 
-.slick-arrow{
-	position:absolute;
-	z-index:3;
-	
+.custom-arrow{
+	position: absolute;
+    z-index: 3;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 12px 18px;
+    color: #ffffff;
+    font-size: 44px;
+    background: none;
+    border: none;
+    transition:0.2s;
 }
-.slick-prev{
-	top:50%;
-	left:100px;
+.scustom-arrow:hover{
+	font-size:55px;
 }
-.slick-next{
+.custom-prev{
 	top:50%;
-	right:100px;
+	left:200px;
+}
+.custom-next{
+	top:50%;
+	right:200px;
 }
 
 
