@@ -502,7 +502,7 @@
    width: 100%;
    padding: 8px 12px;
    margin-top: 20px;
-   margin-bottom: 15px;
+   margin-bottom: 5px;
    box-sizing: border-box;
    border: 1px solid #ccc;
    border-radius: 8px;
@@ -739,6 +739,45 @@
   margin-left: 15px;
 }
 
+
+/*추천어*/
+
+/* 스크롤 전체 영역 */
+#recommendedKeywords {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.scroll-track {
+  margin-bottom: 25px;
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollLeft 60s linear infinite; /* ← 속도 조절 가능 */
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.recommend {
+  display: inline-block;
+  margin-right: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0f0f0f;
+  font-size: 12px;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -830,6 +869,11 @@
       <span class="adv-close" onclick="closeAdv()">✕</span>
       <h3>상세 검색</h3>
       <input id="advKeyword" type="text" placeholder="카드 이름 또는 키워드 입력">
+      
+     <div id="recommendedKeywords">
+  		<div class="scroll-track" id="scrollContent"></div>
+	</div>
+      
       <p style="margin: 0 0 6px; font-weight: 600">주요혜택 (최대 5개)</p>
       
       <div id="hotArea">
@@ -872,6 +916,33 @@
 
 <script src="/js/header2.js"></script>
 <script>
+//추천 검색어 불러오기
+fetch('/api/recommend/keywords')
+  .then(res => res.json())
+  .then(keywords => {
+    const container = document.getElementById('scrollContent');
+
+    // 키워드를 두 번 반복해서 무한루프 효과
+    const tags = keywords.map(k =>
+      `<span class="recommend" data-keyword="${k}">${k}</span>`
+    ).join('');
+    
+    container.innerHTML = tags + tags;
+
+    // 클릭 이벤트
+    container.querySelectorAll('.recommend').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const keyword = tag.dataset.keyword;
+        document.getElementById('advKeyword').value = keyword;
+        performSearch(keyword);
+        closeAdv();
+      });
+    });
+  });
+
+
+
+
 //  인기 카드 슬라이더 데이터 불러오기
 fetch('/api/cards/popular')
   .then(r => r.json())

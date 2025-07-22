@@ -2,8 +2,10 @@ package com.busanbank.card.card.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +33,10 @@ public class CardController {
 	private final SeleniumCardCrawler seleniumCardCrawler;  // ✅ 추가
 	private final ScrapCardMapper scrapCardMapper;  // ✅ 추가
 
+	@Autowired
+    private JdbcTemplate jdbcTemplate;
+
+	
 	@GetMapping("/cards")
 	public List<CardDto> findAll() {
 		return cardService.getCardList();
@@ -97,4 +103,13 @@ public class CardController {
 	public List<CardDto> getPopularCards() {
 	    return cardService.getPopularCards();
 	}
+	
+	
+	// 추천어
+	@GetMapping("/recommend/keywords")
+    public List<String> getRecommendedKeywords() {
+        String sql = "SELECT KEYWORD FROM RECOMMENDED_WORD ORDER BY REG_DATE DESC";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("KEYWORD"));
+    }
+
 }
