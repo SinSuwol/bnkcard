@@ -42,6 +42,7 @@ body {
 
 .main-content {
 	padding-top: 70px;
+	padding-bottom: 70px;
 	margin: 0 auto;
 	width: 100%;
 	max-width: var(--bnk-max-width);
