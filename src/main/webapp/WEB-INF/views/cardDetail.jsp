@@ -39,7 +39,11 @@
       max-width: 270px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
     }
+    .card-img:hover {
+  transform: scale(1.04) rotate(2deg);
+}
     .info {
       flex: 1 1 0;
       min-width: 0;
@@ -167,6 +171,7 @@
 	  flex: 1 1 calc(50% - 10px);
 	  background: #f9f9f9;
 	  border: 1px solid #ddd;
+	  border-radius: 12px;
 	  padding: 20px;
 	  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 	}
@@ -217,8 +222,6 @@
 
   <div class="accordion-container" id="accordionContainer"></div>
 
-	
-
   <div class="section">
     <h3>혜택 부문</h3>
     <pre id="sService"></pre>
@@ -233,6 +236,8 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
+
+
 <script src="/js/header2.js"></script>
 <script>
   const CATEGORY_KEYWORDS = {

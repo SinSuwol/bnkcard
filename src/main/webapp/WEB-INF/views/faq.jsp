@@ -27,7 +27,7 @@
 	--bnk-gray-text-light: #777;
 	--bnk-radius: 6px;
 	--bnk-transition: 0.15s;
-	--bnk-max-width: 1000px;
+	--bnk-max-width: 1100px;
 	--bnk-cat-bg: #e9ecef;
 	--bnk-cat-text: #444;
 	--bnk-cat-radius: 10px;
@@ -109,6 +109,13 @@ table.faq-table {
 	font-size: 15px
 }
 
+table.faq-table, 
+table.faq-table th, 
+table.faq-table td {
+  border: 1px solid var(--bnk-gray-border);
+  border-collapse: collapse; /* 이미 있음 - 유지 */
+}
+
 table.faq-table thead th {
 	background: var(--bnk-red);
 	color: #fff;
@@ -116,7 +123,8 @@ table.faq-table thead th {
 	text-align: left;
 	font-weight: 700;
 	border-bottom: 1px solid var(--bnk-red-dark);
-	white-space: nowrap
+	white-space: nowrap;
+	 border: none;
 }
 
 table.faq-table tbody td {

@@ -4,235 +4,287 @@
 <head>
 <meta charset="UTF-8">
 <title>부산은행 1:1 상담</title>
-<link rel="stylesheet" href="/css/style.css"><!-- 프로젝트 공통 스타일 존재 시 유지 -->
+<link rel="stylesheet" href="/css/style.css">
+<!-- 프로젝트 공통 스타일 존재 시 유지 -->
 
 <style>
 /* =============================
    브랜드 변수 (필요 시 수정)
    ============================= */
 :root {
-  --bnk-red: #d6001c;             /* BNK 계열 레드 */
-  --bnk-red-light: #ffe5e8;       /* 레드 라이트 버블 */
-  --bnk-blue: #004c97;            /* 신뢰감 블루 */
-  --bnk-blue-light: #e6f0ff;      /* 블루 라이트 버블 */
-  --bnk-gray-bg: #f5f6f8;
-  --bnk-gray-border: #d5d7db;
-  --bnk-gray-text: #555;
-  --bnk-radius: 8px;
-  --bnk-gap: 12px;
-  --bnk-font-main: 'Noto Sans KR', '맑은 고딕', sans-serif;
-  --bnk-font-size: 15px;
-  --bnk-font-size-small: 12px;
+	--bnk-red: #d6001c; /* BNK 계열 레드 */
+	--bnk-red-light: #ffe5e8; /* 레드 라이트 버블 */
+	--bnk-blue: #004c97; /* 신뢰감 블루 */
+	--bnk-blue-light: #e6f0ff; /* 블루 라이트 버블 */
+	--bnk-gray-bg: #f5f6f8;
+	--bnk-gray-border: #d5d7db;
+	--bnk-gray-text: #555;
+	--bnk-radius: 8px;
+	--bnk-gap: 12px;
+	--bnk-font-main: 'Noto Sans KR', '맑은 고딕', sans-serif;
+	--bnk-font-size: 15px;
+	--bnk-font-size-small: 12px;
 }
 
 /* 전체 페이지 베이스 */
 body {
-  margin: 0;
-  background: var(--bnk-gray-bg);
-  font-family: var(--bnk-font-main);
-  font-size: var(--bnk-font-size);
-  color: #000;
+	margin: 0;
+	background: var(--bnk-gray-bg);
+	font-family: var(--bnk-font-main);
+	font-size: var(--bnk-font-size);
+	color: #000;
 }
 
 /* 페이지 중앙 정렬 */
 .userchat-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 80px 16px 120px;
-  box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	padding: 80px 16px 120px;
+	box-sizing: border-box;
 }
 
 /* 카드 컨테이너 */
 .userchat-card {
-  width: 100%;
-  max-width: 480px;
-  background: #fff;
-  border: 1px solid var(--bnk-gray-border);
-  border-radius: var(--bnk-radius);
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+	width: 100%;
+	max-width: 480px;
+	background: #fff;
+	height: 680px; /* ← 고정 높이 */ max-height : 680px; /* 모바일에서도 동일 높이 유지 */
+	border: 1px solid var(--bnk-gray-border);
+	border-radius: var(--bnk-radius);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	max-height: 680px;
 }
 
 /* 헤더 */
 .uc-header {
-  background: var(--bnk-red);
-  color: #fff;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1;
+	background: var(--bnk-red);
+	color: #fff;
+	padding: 16px 20px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 1;
 }
 
 .uc-header-status {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background:#00e676; /* 연결됨 */
-  flex-shrink:0;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #00e676; /* 연결됨 */
+	flex-shrink: 0;
 }
+
 .uc-header-status.offline {
-  background:#ff6b6b;
+	background: #ff6b6b;
 }
 
 /* 채팅 영역 */
 .uc-chat-scroll {
-  flex-grow: 1;
-  padding: 20px;
-  background:#fff;
-  border-bottom:1px solid var(--bnk-gray-border);
-  display:flex;
-  flex-direction:column;
-  gap: var(--bnk-gap);
-  overflow-y:auto;
-  max-height: 400px; /* 필요 시 조정 */
+	flex:1 1 auto;  
+	padding: 20px;
+	background: #fff;
+	border-bottom: 1px solid var(--bnk-gray-border);
+	display: flex;
+	flex-direction: column;
+	gap: var(--bnk-gap);
+	overflow-y: auto;
+	max-height: 400px; /* 필요 시 조정 */
 }
 
 /* 메시지 행 */
 .message-row {
-  max-width: 80%;
-  display: flex;
-  flex-direction: column;
-  word-break: break-word;
-  line-height: 1.35;
+	max-width: 80%;
+	display: flex;
+	flex-direction: column;
+	word-break: break-word;
+	line-height: 1.35;
 }
 
 .message-row.user {
-  align-self: flex-end;
-  text-align: right;
+	align-self: flex-end;
+	text-align: right;
 }
 
 .message-row.admin {
-  align-self: flex-start;
-  text-align: left;
+	align-self: flex-start;
+	text-align: left;
 }
 
 /* 말풍선 */
 .message-bubble {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 16px;
-  font-size: var(--bnk-font-size);
-  box-sizing:border-box;
-  white-space: pre-wrap;
+	display: inline-block;
+	padding: 8px 12px;
+	border-radius: 16px;
+	font-size: var(--bnk-font-size);
+	box-sizing: border-box;
+	white-space: pre-wrap;
 }
 
 .message-row.user .message-bubble {
-  background: var(--bnk-blue-light);
-  border:1px solid rgba(0,0,0,.05);
-  color:#000;
+	background: var(--bnk-blue-light);
+	border: 1px solid rgba(0, 0, 0, .05);
+	color: #000;
 }
 
 .message-row.admin .message-bubble {
-  background: var(--bnk-red-light);
-  border:1px solid rgba(0,0,0,.05);
-  color:#000;
+	background: var(--bnk-red-light);
+	border: 1px solid rgba(0, 0, 0, .05);
+	color: #000;
 }
 
 /* 이름 태그 (선택적으로 표시) */
 .message-name {
-  font-size: var(--bnk-font-size-small);
-  color: var(--bnk-gray-text);
-  margin-bottom: 2px;
+	font-size: var(--bnk-font-size-small);
+	color: var(--bnk-gray-text);
+	margin-bottom: 2px;
 }
 
 /* 시간 */
 .message-time {
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--bnk-gray-text);
+	margin-top: 2px;
+	font-size: 11px;
+	color: var(--bnk-gray-text);
 }
 
 /* 입력 영역 */
 .uc-input-area {
-  display:flex;
-  align-items:flex-end;
-  gap: 8px;
-  padding: 16px;
-  background:#fff;
-  box-sizing:border-box;
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+	padding: 16px;
+	background: #fff;
+	box-sizing: border-box;
 }
 
 .uc-input-area textarea {
-  flex-grow:1;
-  min-height:40px;
-  max-height:120px;
-  padding:8px 10px;
-  border:1px solid var(--bnk-gray-border);
-  border-radius: var(--bnk-radius);
-  resize: vertical;
-  font-family: var(--bnk-font-main);
-  font-size: var(--bnk-font-size);
-  line-height:1.35;
-  box-sizing:border-box;
+	flex-grow: 1;
+	min-height: 40px;
+	max-height: 120px;
+	padding: 8px 10px;
+	border: 1px solid var(--bnk-gray-border);
+	border-radius: var(--bnk-radius);
+	resize: vertical;
+	font-family: var(--bnk-font-main);
+	font-size: var(--bnk-font-size);
+	line-height: 1.35;
+	box-sizing: border-box;
 }
 
 .uc-input-area button {
-  padding: 10px 18px;
-  font-size: var(--bnk-font-size);
-  font-weight:600;
-  color:#fff;
-  background: var(--bnk-blue);
-  border:none;
-  border-radius:var(--bnk-radius);
-  cursor:pointer;
-  white-space:nowrap;
+	padding: 10px 18px;
+	font-size: var(--bnk-font-size);
+	font-weight: 600;
+	color: #fff;
+	background: var(--bnk-blue);
+	border: none;
+	border-radius: var(--bnk-radius);
+	cursor: pointer;
+	white-space: nowrap;
 }
+
 .uc-input-area button:hover:not(:disabled) {
-  background:#003e7b;
+	background: #003e7b;
 }
+
 .uc-input-area button:disabled {
-  opacity:.6;
-  cursor:not-allowed;
+	opacity: .6;
+	cursor: not-allowed;
 }
 
 /* 숨겨진 기존 요소들 보존용 (필수 ID만 남기고 display none) */
 #chatBox {
-  display:none !important;
+	display: none !important;
 }
 
 /* 반응형 */
-@media (max-width:480px) {
-  .userchat-card { max-width:100%; }
-  .uc-header { font-size:16px; padding:14px 16px; }
-  .uc-chat-scroll { padding:16px; max-height:60vh; }
-  .uc-input-area { padding:12px; }
+@media ( max-width :480px) {
+	.userchat-card {
+		max-width: 100%;
+	}
+	.uc-header {
+		font-size: 16px;
+		padding: 14px 16px;
+	}
+	.uc-chat-scroll {
+		padding: 16px;
+		max-height: 60vh;
+	}
+	.uc-input-area {
+		padding: 12px;
+	}
+}
+
+/* 업무시간 배너 */
+.uc-banner {
+	display: none; /* 기본은 숨김 → JS에서 조건부 노출 */
+	background: #fff5f5;
+	color: #c00;
+	font-size: var(--bnk-font-size-small);
+	text-align: center;
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--bnk-gray-border);
+}
+
+/* 고지 문구 (반투명) */
+.uc-notice {
+	font-size: var(--bnk-font-size-small);
+	color: var(--bnk-gray-text);
+	opacity: .6; /* 60 % 투명도 */
+	text-align: center;
+	padding: 8px 20px 4px;
 }
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
+	<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
 
-<div class="userchat-wrapper">
-  <div class="userchat-card">
+	<div class="userchat-wrapper">
+		<div class="userchat-card">
 
-    <!-- 헤더 -->
-    <div class="uc-header">
-      <span class="uc-header-status offline" id="ucStatusDot"></span>
-      BNK 부산은행 1:1 상담
-    </div>
+			<!-- 헤더 -->
+			<div class="uc-header">
+				<span class="uc-header-status offline" id="ucStatusDot"></span> BNK
+				부산은행 1:1 상담
+			</div>
 
-    <!-- 채팅 스크롤 영역 (실제 메시지는 여기 렌더링) -->
-    <div class="uc-chat-scroll" id="ucChatScroll"></div>
+			<!-- 헤더 바로 아래 : 업무시간 안내 배너 -->
+			<div class="uc-banner" id="ucBusinessBanner">9시부터 16시 업무시간 외에는
+				상담이 어려울 수도 있습니다.</div>
 
-    <!-- 입력 영역 -->
-    <div class="uc-input-area">
-      <!-- 기존 input 대신 textarea. ID는 기존 send 로직 변경 위해 새 id지만 아래 JS에서 매핑 -->
-      <textarea id="messageInput" placeholder="메시지를 입력하세요 (Enter 전송, Shift+Enter 줄바꿈)"></textarea>
-      <button id="sendBtn">보내기</button>
-    </div>
-  </div>
-</div>
+			<!-- 채팅 스크롤 영역 (실제 메시지는 여기 렌더링) -->
+			<div class="uc-chat-scroll" id="ucChatScroll"></div>
 
-<script src="/js/header2.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
-<script>
+			<!-- …(중략) … -->
+
+			<!-- 채팅 스크롤 영역 아래, 입력창 위쪽에 고지 문구 -->
+			<div class="uc-notice">
+				상담원은 누군가의 가족일 수 있습니다.<br> 대화 내역은 모두 기록됩니다.
+			</div>
+
+
+			<!-- 입력 영역 -->
+			<div class="uc-input-area">
+				<!-- 기존 input 대신 textarea. ID는 기존 send 로직 변경 위해 새 id지만 아래 JS에서 매핑 -->
+				<textarea id="messageInput"
+					placeholder="메시지를 입력하세요 (Enter 전송, Shift+Enter 줄바꿈)"></textarea>
+				<button id="sendBtn">보내기</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/header2.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+	<script>
 /* =========================================================
    기존 변수 / 플로우 유지
    ========================================================= */
@@ -251,19 +303,26 @@ function setStatus(online) {
   }
 }
 
-window.onload = function() {
-    initChatFlow();
-    // Enter 키 처리
-    const msgEl = document.getElementById('messageInput');
-    msgEl.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
-    });
-    document.getElementById('sendBtn').addEventListener('click', sendMessage);
-};
-
+window.onload = function () {
+	  showBusinessHourBanner();     // ① 업무시간 체크
+	  initChatFlow();               // ② 기존 로직
+	  /* ③ 엔터/버튼 이벤트 바인딩 */
+	  const msgEl=document.getElementById('messageInput');
+	  msgEl.addEventListener('keydown',function(e){
+	    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+	  });
+	  document.getElementById('sendBtn').addEventListener('click',sendMessage);
+	};
+	
+	/* 09~16시 여부 판단 후 배너 노출 */
+	function showBusinessHourBanner(){
+	  const now=new Date();
+	  const hour=now.getHours();        // 사용자의 브라우저 시간을 그대로 사용
+	  const banner=document.getElementById('ucBusinessBanner');
+	  if(hour<9||hour>=16){             // 9 ≤ hour < 16 이외이면 노출
+	    banner.style.display='block';
+	  }
+	}
 function initChatFlow() {
     console.log("▶ initChatFlow()");
     // --- 1. 로그인 사용자 정보 ---
@@ -469,6 +528,8 @@ function formatTime(t) {
         return "";
     }
 }
+
+
 </script>
 </body>
 </html>

@@ -440,8 +440,10 @@ button[onclick="openModal()"]:hover {
 
 
 		<!-- 학습 시간 -->
-		<span id="lastTrained" style="font-size: 13px; color: #555;">마지막
-			학습 시간: 불러오는 중...</span>
+		<div style="text-align: right;">
+			<span id="lastTrained" style="font-size: 13px; color: #555;">
+				마지막 학습 시간: 불러오는 중... </span>
+		</div>
 
 
 		<h1 class="tit1">게시중인 카드 상품</h1>
