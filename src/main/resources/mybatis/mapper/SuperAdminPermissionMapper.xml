@@ -81,7 +81,7 @@
         UPDATE PERMISSION
         SET
             STATUS = '허가',
-            REASON = '허가',
+            REASON = '-',
             S_ADMIN = #{sAdmin},
             PER_DATE = SYSDATE
         WHERE CARD_NO = #{cardNo}
@@ -103,7 +103,7 @@
         UPDATE PERMISSION
         SET
             STATUS = '삭제',
-            REASON = '삭제 처리',
+            REASON = '-',
             S_ADMIN = #{sAdmin},
             PER_DATE = SYSDATE
         WHERE CARD_NO = #{cardNo}

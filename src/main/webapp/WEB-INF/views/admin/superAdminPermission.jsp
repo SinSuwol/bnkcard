@@ -16,9 +16,10 @@ body {
 
 h1 {
 	font-size: 22px;
-	margin-bottom: 24px;
+	text-align: center;
 	font-weight: 600;
 	color: #34495e;
+	padding: 40px;
 }
 
 /* ===== 테이블 스타일 ===== */
@@ -415,7 +416,7 @@ button:disabled {
 				<th>승인 번호</th>
 				<th>카드 번호</th>
 				<th>상태</th>
-				<th>사유</th>
+				<th>반려 이유</th>
 				<th>요청 관리자</th>
 				<th>처리 관리자</th>
 				<th>요청일</th>
@@ -435,6 +436,7 @@ button:disabled {
 			<!-- 기존 카드 모달 -->
 			<div id="modalOriginal" class="modalBox">
 				<h2>기존 카드 정보</h2>
+				<img id="modalCardImgOriginal" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<p>
 					카드명: <input id="originalCardName" readonly>
 				</p>
@@ -474,7 +476,9 @@ button:disabled {
 			<!-- TEMP 카드 모달 -->
 			<div id="modalTemp" class="modalBox">
 				<h2>요청 카드 정보</h2>
+				<img id="modalCardImgTemp" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<input type="hidden" id="modalCardNo">
+				
 				<p>
 					카드명: <input id="modalCardName" readonly>
 				</p>
@@ -659,6 +663,8 @@ function openModal(cardNo, perContent) {
     .then(data => {
         const temp = data.temp || {};
 
+        document.getElementById('modalCardImgTemp').src = temp.cardUrl || '';
+        
         // TEMP 카드 정보
         document.getElementById('modalCardNo').value = temp.cardNo;
         document.getElementById('modalCardName').value = temp.cardName || '';
@@ -675,6 +681,7 @@ function openModal(cardNo, perContent) {
 
         if (perContent === '수정') {
             const orig = data.original || {};
+            document.getElementById('modalCardImgOriginal').src = orig.cardUrl || '';
             document.getElementById('originalCardName').value = orig.cardName || '(없음)';
             document.getElementById('originalCardType').value = orig.cardType || '(없음)';
             document.getElementById('originalCardBrand').value = orig.cardBrand || '(없음)';

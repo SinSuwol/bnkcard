@@ -69,11 +69,11 @@
 	    PER_SEQ.NEXTVAL,
 	    #{cardNo},
 	    '대기중',
-	    NULL,
+	    '-',
 	    #{admin},
-	    NULL,
+	    '-',
 	    SYSDATE,
-	    NULL,
+	    null,
 	    #{perContent}
 	  )
     </insert>
