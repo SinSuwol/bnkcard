@@ -49,6 +49,7 @@ a,li,ul{
 }
 .sidebar{
 	position:relative;
+    z-index: 1;
 }
 .sidebar.closed .admin-header {
   width: 0px;
