@@ -222,7 +222,119 @@
 			</div>
 		</div>
 	</div>
+	<div class="section infinite-carousel">
+	  <h1 class="t1">쪼매	쓴다면</h1>
+	  <h1 class="t2">그마이 특별해야죠</h1>
+	  <p class="t3">당신의 생활에 꼭 맞는 혜택, 지금 경험해보세요</p>
+	  
+	  <div class="carousel-track">
+	    <div class="carousel-item c1">
+	    	<img src="/image/brands/커피.png">
+	    	<p>스타벅스/이디야/카페베네</p>
+	    </div>
+	    <div class="carousel-item c2">
+	    	<img src="/image/brands/다이소.jpg">
+	    	<p>다이소</p>
+	    </div>
+	    <div class="carousel-item c3">
+	    	<img src="/image/brands/마켓컬리.png">
+	    	<p>마켓컬리</p>
+	    </div>
+	    <div class="carousel-item c4">
+	    	<img src="/image/brands/쿠팡.png">
+	    	<p>쿠팡</p>
+	    </div>
+	    <div class="carousel-item c5">
+	    	<img src="/image/brands/맥도날드.png">
+	    	<p>맥도날드</p>
+	    </div>
+	    <div class="carousel-item c6">
+	    	<img src="/image/brands/대중교통.png">
+	    	<p>대중교통</p>
+	    </div>
+	    <div class="carousel-item c7">
+	    	<img src="/image/brands/세븐일레븐.png">
+	    	<p>세븐일레븐</p>
+	    </div>
+	    <div class="carousel-item c8">
+	    	<img src="/image/brands/던킨.jpg">
+	    	<p>던킨도너츠</p>
+	    </div>
+	    <div class="carousel-item c9">
+	    	<img src="/image/brands/씨유.jpg">
+	    	<p>CU</p>
+	    </div>
+	    <div class="carousel-item c10">
+	    	<img src="/image/brands/파리바게트.jpg">
+	    	<p>파리바게트</p>
+	    </div>
+	    <div class="carousel-item c11">
+	    	<img src="/image/brands/지에스.png">
+	    	<p>GS</p>
+	    </div>
+	    <div class="carousel-item c12">
+	    	<img src="/image/brands/휴대전화.png">
+	    	<p>휴대전화</p>
+	    </div>
+	    
+	    <!-- 복사본 -->
+	    
+	    <div class="carousel-item c1">
+	    	<img src="/image/brands/커피.png">
+	    	<p>스타벅스/이디야/카페베네</p>
+	    </div>
+	    <div class="carousel-item c2">
+	    	<img src="/image/brands/다이소.jpg">
+	    	<p>다이소</p>
+	    </div>
+	    <div class="carousel-item c3">
+	    	<img src="/image/brands/마켓컬리.png">
+	    	<p>마켓컬리</p>
+	    </div>
+	    <div class="carousel-item c4">
+	    	<img src="/image/brands/쿠팡.png">
+	    	<p>쿠팡</p>
+	    </div>
+	    <div class="carousel-item c5">
+	    	<img src="/image/brands/맥도날드.png">
+	    	<p>맥도날드</p>
+	    </div>
+	    <div class="carousel-item c6">
+	    	<img src="/image/brands/대중교통.png">
+	    	<p>대중교통</p>
+	    </div>
+	    <div class="carousel-item c7">
+	    	<img src="/image/brands/세븐일레븐.png">
+	    	<p>세븐일레븐</p>
+	    </div>
+	    <div class="carousel-item c8">
+	    	<img src="/image/brands/던킨.jpg">
+	    	<p>던킨도너츠</p>
+	    </div>
+	    <div class="carousel-item c9">
+	    	<img src="/image/brands/씨유.jpg">
+	    	<p>CU</p>
+	    </div>
+	    <div class="carousel-item c10">
+	    	<img src="/image/brands/파리바게트.jpg">
+	    	<p>파리바게트</p>
+	    </div>
+	    <div class="carousel-item c11">
+	    	<img src="/image/brands/지에스.png">
+	    	<p>GS</p>
+	    </div>
+	    <div class="carousel-item c12">
+	    	<img src="/image/brands/휴대전화.png">
+	    	<p>휴대전화</p>
+	    </div>
+	    
+	    
+	    
+	    
 	
+	    
+	  </div>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 <c:if test="${not empty msg}">

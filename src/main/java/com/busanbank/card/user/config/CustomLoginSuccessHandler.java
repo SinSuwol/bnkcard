@@ -30,7 +30,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler  
 		//왜 이게 없는거지?
 		session.setAttribute("loginUser", userDetails); 
 		
-		response.sendRedirect("/user/mypage");
+		response.sendRedirect("/");
 	}
 
 }

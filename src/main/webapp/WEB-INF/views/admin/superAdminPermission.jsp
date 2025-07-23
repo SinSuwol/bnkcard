@@ -190,6 +190,7 @@ button:disabled {
 	border-radius: 4px;
 	font-size: 14px;
 	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* textarea 크기 */
@@ -336,9 +337,6 @@ button:disabled {
 }
 
 @media ( max-width : 768px) {
-	body {
-		padding: 16px;
-	}
 	h1 {
 		font-size: 18px;
 		text-align: center;
@@ -410,7 +408,7 @@ button:disabled {
 	<jsp:include page="../fragments/header.jsp"></jsp:include>
 	<h1>카드 승인 검토</h1>
 
-	<table border="1" cellpadding="6" width="100%">
+	<table cellpadding="6" width="100%">
 		<thead>
 			<tr>
 				<th>승인 번호</th>
@@ -438,38 +436,37 @@ button:disabled {
 				<h2>기존 카드 정보</h2>
 				<img id="modalCardImgOriginal" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<p>
-					카드명: <input id="originalCardName" readonly>
+					카드명 <input id="originalCardName" readonly>
 				</p>
 				<p>
-					카드 종류: <input id="originalCardType" readonly>
+					카드 종류 <input id="originalCardType" readonly>
 				</p>
 				<p>
-					브랜드: <input id="originalCardBrand" readonly>
+					브랜드 <input id="originalCardBrand" readonly>
 				</p>
 				<p>
-					연회비: <input id="originalAnnualFee" readonly>
+					연회비 <input id="originalAnnualFee" readonly>
 				</p>
 				<p>
-					발급 대상: <input id="originalIssuedTo" readonly>
+					발급 대상 <input id="originalIssuedTo" readonly>
 				</p>
 				<p>
-					서비스: <input id="originalService" readonly>
+					서비스 <textarea id="originalService" readonly></textarea>
 				</p>
 				<p>
-					부가 서비스: <input id="originalSService" readonly>
+					부가 서비스 <textarea id="originalSService" readonly></textarea>
 				</p>
 				<p>
-					상태: <input id="originalCardStatus" readonly>
+					상태 <input id="originalCardStatus" readonly>
 				</p>
 				<p>
-					카드 URL: <input id="originalCardUrl" readonly>
+					카드 URL <input id="originalCardUrl" readonly>
 				</p>
 				<p>
-					슬로건: <input id="originalCardSlogan" readonly>
+					슬로건 <input id="originalCardSlogan" readonly>
 				</p>
 				<p>
-					주의사항:
-					<textarea id="originalCardNotice" readonly></textarea>
+					주의사항 <textarea id="originalCardNotice" readonly></textarea>
 				</p>
 			</div>
 	
@@ -480,41 +477,61 @@ button:disabled {
 				<input type="hidden" id="modalCardNo">
 				
 				<p>
-					카드명: <input id="modalCardName" readonly>
+					카드명 <input id="modalCardName" readonly>
 				</p>
 				<p>
-					카드 종류: <input id="modalCardType" readonly>
+					카드 종류 <input id="modalCardType" readonly>
 				</p>
 				<p>
-					브랜드: <input id="modalCardBrand" readonly>
+					브랜드 <input id="modalCardBrand" readonly>
 				</p>
 				<p>
-					연회비: <input id="modalAnnualFee" readonly>
+					연회비 <input id="modalAnnualFee" readonly>
 				</p>
 				<p>
-					발급 대상: <input id="modalIssuedTo" readonly>
+					발급 대상 <input id="modalIssuedTo" readonly>
 				</p>
 				<p>
-					서비스: <input id="modalService" readonly>
+					서비스 <textarea id="modalService" readonly></textarea>
 				</p>
 				<p>
-					부가 서비스: <input id="modalSService" readonly>
+					부가 서비스 <textarea id="modalSService" readonly></textarea>
 				</p>
 				<p>
-					상태: <input id="modalCardStatus" readonly>
+					상태 <input id="modalCardStatus" readonly>
 				</p>
 				<p>
-					카드 URL: <input id="modalCardUrl" readonly>
+					카드 URL <input id="modalCardUrl" readonly>
 				</p>
 				<p>
-					슬로건: <input id="modalCardSlogan" readonly>
+					슬로건 <input id="modalCardSlogan" readonly>
 				</p>
 				<p>
-					주의사항:
-					<textarea id="modalCardNotice" readonly></textarea>
+					주의사항 <textarea id="modalCardNotice" readonly></textarea>
 				</p>
 			</div>
+			
 		</div>
+		<!-- 검토 모달 위에 뜨는 보류/불허 모달 -->
+<div id="rejectOverlay" style="display: none; position: fixed; z-index: 1100;
+     top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); 
+     justify-content: center; align-items: center;">
+  <div id="rejectModal" style="background: white; padding: 20px; border-radius: 8px;
+       width: 400px; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+    <h3>보류/불허 처리</h3>
+    <select id="rejectStatus" style="width: 100%; margin-bottom: 10px;">
+      <option value="보류">보류</option>
+      <option value="불허">불허</option>
+    </select>
+    <textarea id="rejectReason" placeholder="사유를 입력하세요"
+              style="width: 100%; height: 80px; margin-bottom: 10px;"></textarea>
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+      <button onclick="submitReject()">처리</button>
+      <button onclick="closeReject()">취소</button>
+    </div>
+  </div>
+</div>
+		
 
 		<div id="buttonsContainer"
 			style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
@@ -523,17 +540,17 @@ button:disabled {
 				<div id="approveButtons"
 					style="display: none; display: flex; gap: 8px;">
 					<button onclick="approve()">등록</button>
-					<button onclick="showReject()">보류/불허</button>
+					<button onclick="openRejectModal()">보류/불허</button>
 				</div>
 				<div id="updateButtons"
 					style="display: none; display: flex; gap: 8px;">
 					<button onclick="update()">수정</button>
-					<button onclick="showReject()">보류/불허</button>
+					<button onclick="openRejectModal()">보류/불허</button>
 				</div>
 				<div id="deleteButtons"
 					style="display: none; display: flex; gap: 8px;">
 					<button onclick="remove()">삭제</button>
-					<button onclick="showReject()">보류/불허</button>
+					<button onclick="openRejectModal()">보류/불허</button>
 				</div>
 				<button id="closeBtn" onclick="closeModal()">닫기</button>
 			</div>
@@ -541,19 +558,51 @@ button:disabled {
 	</div>
 
 
-	<div id="rejectSection" style="display: none; margin-top: 10px;">
-		<h3>보류/불허 처리</h3>
-		<select id="rejectStatus">
-			<option value="보류">보류</option>
-			<option value="불허">불허</option>
-		</select>
-		<textarea id="rejectReason" placeholder="사유를 입력하세요"></textarea>
-		<button onclick="submitReject()">처리하기</button>
-	</div>
+	
 
 	<script src="/js/adminHeader.js"></script>
 	<script>
 let currentPage = 1;
+
+
+function highlightDifferences(temp, orig) {
+    const fields = [
+        'cardName', 'cardType', 'cardBrand', 'annualFee', 'issuedTo',
+        'service', 'sService', 'cardStatus', 'cardUrl', 'cardSlogan', 'cardNotice'
+    ];
+
+    fields.forEach(field => {
+        const tempId = 'modal' + capitalize(field);
+        const origId = 'original' + capitalize(field);
+
+        const tempEl = document.getElementById(tempId);
+        const origEl = document.getElementById(origId);
+
+        if (!tempEl || !origEl) {
+            console.warn('❌ 요소 없음:', tempId, origId);
+            return;
+        }
+
+        const tempVal = normalizeValue(temp[field]);
+        const origVal = normalizeValue(orig[field]);
+
+        if (tempVal !== origVal) {
+            tempEl.style.backgroundColor = '#fff3cd'; // 연노랑 색
+        } else {
+            tempEl.style.backgroundColor = '';
+        }
+    });
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function normalizeValue(value) {
+    if (typeof value === 'string') return value.trim();
+    if (value === null || value === undefined) return '';
+    return String(value).trim();
+}
 
 function loadPermissions(page) {
 	 if (!page) page = 1;
@@ -585,11 +634,16 @@ function loadPermissions(page) {
                     actionHtml = `<span style="color:gray;">처리 완료</span>`;
                 }
 
+                const statusColor = row.status === '허가' ? 'green'
+                        : row.status === '불허' ? 'red'
+                        : row.status === '보류' ? 'orange'
+                        : 'black';
+                
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>\${row.perNo}</td>
                     <td>\${row.cardNo}</td>
-                    <td>\${row.status}</td>
+                    <td style="color: \${statusColor};">\${row.status}</td>
                     <td>\${row.reason}</td>
                     <td>\${row.admin}</td>
                     <td>\${row.sadmin}</td>
@@ -694,6 +748,8 @@ function openModal(cardNo, perContent) {
             document.getElementById('originalCardSlogan').value = orig.cardSlogan || '';
             document.getElementById('originalCardNotice').value = orig.cardNotice || '';
             document.getElementById('modalOriginal').style.display = 'block';
+            
+            highlightDifferences(temp, orig);
         }
 
         document.getElementById('modalOverlay').style.display = 'block';
@@ -747,9 +803,15 @@ function remove() {
 }
 
 // 보류/불허 처리
-function showReject() {
-    document.getElementById('rejectSection').style.display = 'block';
+function openRejectModal() {
+    document.getElementById('rejectOverlay').style.display = 'flex';
 }
+
+// 🔹 보류/불허 모달 닫기
+function closeReject() {
+    document.getElementById('rejectOverlay').style.display = 'none';
+}
+
 function submitReject() {
     const cardNo = document.getElementById('modalCardNo').value;
     const status = document.getElementById('rejectStatus').value;
@@ -764,8 +826,9 @@ function submitReject() {
     .then(res=>res.json())
     .then(data=>{
         alert(data.message);
-        closeModal();
-        loadPermissions(currentPage); // 현재 페이지 다시 로드
+        closeReject(); // 위 모달 닫기
+        closeModal();  // 전체 검토 모달 닫기
+        loadPermissions(currentPage); // 테이블 다시 로드
     });
 }
 

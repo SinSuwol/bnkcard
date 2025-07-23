@@ -34,7 +34,7 @@
 }
 
 body {
-	background: var(--bnk-gray-bg);
+	/*background: var(--bnk-gray-bg);*/
 	margin: 0;
 	font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
 	color: #000

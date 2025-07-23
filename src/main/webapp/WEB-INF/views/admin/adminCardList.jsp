@@ -240,6 +240,7 @@ button[onclick="openModal()"]:hover {
 	flex: 1;
 	padding: 6px;
 	font-size: 13px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;

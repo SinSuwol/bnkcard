@@ -144,6 +144,16 @@ tbody tr:hover {
 	color: white;
 	border-color: #3498db;
 }
+
+#recommended-table,
+#recommended-table thead,
+#prohibited-table,
+#prohibited-table thead,
+#top-table,
+#top-table thead {
+	display: none;
+}
+
 </style>
 </head>
 <body>
