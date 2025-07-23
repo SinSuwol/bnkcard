@@ -135,12 +135,12 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
             // 로그인 성공 시 관리자 메인 페이지로 이동
             window.location.href = "/admin/CardList";
         } else {
-            alert(result.message);
+          
         }
     })
     .catch(error => {
-        alert("로그인 오류: " + (error.message || "서버 오류"));
-        console.error(error);
+       
+        
     });
 });
 </script>

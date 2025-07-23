@@ -37,10 +37,9 @@ public class AdminLoginController {
             return ResponseEntity.ok(result);
 
         } catch (RuntimeException e) {
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+            
+            
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 

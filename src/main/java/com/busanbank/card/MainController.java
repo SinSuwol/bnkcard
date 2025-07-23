@@ -44,7 +44,7 @@ public class MainController {
             return "redirect:/admin/adminLoginForm";
         }
 		
-		return "admin/admin";
+		return "redirect:/admin/adminLoginForm";
 	}
 
 	@GetMapping("/cardList")
