@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>카드 상세</title>
+  <title>상품 상세</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     html, body {

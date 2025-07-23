@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>부뱅이 챗봇</title>
+<title>부산은행 챗봇</title>
 
 <style>
 :root {
