@@ -221,8 +221,36 @@ button:disabled {
 	transition: background-color 0.2s ease;
 }
 
-#modalTemp button:hover, #modalOriginal button:hover {
-	background-color: #0056b3;
+#modalTemp p {
+	display: flex;
+	align-items: center;
+	gap: 6px; /* input과 span 사이 간격 */
+}
+
+#modalTemp p label {
+	min-width: 72px;
+	margin-right: 8px;
+}
+
+.input-with-label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: nowrap; /* 👉 줄바꿈 방지 */
+}
+
+.input-with-label input, .input-with-label textarea {
+	flex: none;
+	margin-right: 4px;
+	min-width: 0; /* 👉 넘침 방지 */
+}
+
+.edit-label {
+	color: red;
+	font-weight: bold;
+	font-size: 13px;
+	white-space: nowrap;
+	margin-left: 6px; /* 👉 input과 간격 */
 }
 
 /* 각각 모달 박스는 고정 크기, position: relative 또는 static */
@@ -434,7 +462,8 @@ button:disabled {
 			<!-- 기존 카드 모달 -->
 			<div id="modalOriginal" class="modalBox">
 				<h2>기존 카드 정보</h2>
-				<img id="modalCardImgOriginal" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+				<img id="modalCardImgOriginal" src="" alt="카드 이미지"
+					style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<p>
 					카드명 <input id="originalCardName" readonly>
 				</p>
@@ -451,14 +480,15 @@ button:disabled {
 					발급 대상 <input id="originalIssuedTo" readonly>
 				</p>
 				<p>
-					서비스 <textarea id="originalService" readonly></textarea>
+					서비스
+					<textarea id="originalService" readonly></textarea>
 				</p>
 				<p>
-					부가 서비스 <textarea id="originalSService" readonly></textarea>
+					부가 서비스
+					<textarea id="originalSService" readonly></textarea>
 				</p>
-				<p>
-					상태 <input id="originalCardStatus" readonly>
-				</p>
+				<span> 상태 <input id="originalCardStatus" readonly>
+				</span>
 				<p>
 					카드 URL <input id="originalCardUrl" readonly>
 				</p>
@@ -466,72 +496,115 @@ button:disabled {
 					슬로건 <input id="originalCardSlogan" readonly>
 				</p>
 				<p>
-					주의사항 <textarea id="originalCardNotice" readonly></textarea>
+					주의사항
+					<textarea id="originalCardNotice" readonly></textarea>
 				</p>
 			</div>
-	
+
 			<!-- TEMP 카드 모달 -->
 			<div id="modalTemp" class="modalBox">
 				<h2>요청 카드 정보</h2>
-				<img id="modalCardImgTemp" src="" alt="카드 이미지" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+				<img id="modalCardImgTemp" src="" alt="카드 이미지"
+					style="max-width: 100%; height: auto; margin-bottom: 15px;">
 				<input type="hidden" id="modalCardNo">
-				
-				<p>
-					카드명 <input id="modalCardName" readonly>
-				</p>
-				<p>
-					카드 종류 <input id="modalCardType" readonly>
-				</p>
-				<p>
-					브랜드 <input id="modalCardBrand" readonly>
-				</p>
-				<p>
-					연회비 <input id="modalAnnualFee" readonly>
-				</p>
-				<p>
-					발급 대상 <input id="modalIssuedTo" readonly>
-				</p>
-				<p>
-					서비스 <textarea id="modalService" readonly></textarea>
-				</p>
-				<p>
-					부가 서비스 <textarea id="modalSService" readonly></textarea>
-				</p>
-				<p>
-					상태 <input id="modalCardStatus" readonly>
-				</p>
-				<p>
-					카드 URL <input id="modalCardUrl" readonly>
-				</p>
-				<p>
-					슬로건 <input id="modalCardSlogan" readonly>
-				</p>
-				<p>
-					주의사항 <textarea id="modalCardNotice" readonly></textarea>
-				</p>
+
+				<div class="field-row">
+					<label>카드명</label> <span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardName" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>카드 종류</label> <span class="edit-label"
+						style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardType" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>브랜드</label> <span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardBrand" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>연회비</label> <span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalAnnualFee" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>발급 대상</label> <span class="edit-label"
+						style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+
+						<input id="modalIssuedTo" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>서비스</label> <span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+
+						<textarea id="modalService" readonly></textarea>
+
+					</div>
+				</div>
+				<div class="field-row">
+					<label>부가 서비스</label> <span class="edit-label"
+						style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<textarea id="modalSService" readonly></textarea>
+
+					</div>
+				</div>
+				<div class="field-row">
+					<label>상태</label> <span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardStatus" readonly>
+
+					</div>
+				</div>
+				<div class="field-row">
+					<label>카드 URL</label> <span class="edit-label"
+						style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardUrl" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>슬로건</label><span class="edit-label" style="display: none;">(변경됨)</span>
+					<div class="input-with-label">
+						<input id="modalCardSlogan" readonly>
+					</div>
+				</div>
+				<div class="field-row">
+					<label>주의사항</label> <span class="edit-label" style="display: none">(변경됨)</span>
+					<div class="input-with-label">
+						<textarea id="modalCardNotice" readonly></textarea>
+
+					</div>
+				</div>
 			</div>
-			
+
+			<!-- 검토 모달 위에 뜨는 보류/불허 모달 -->
+			<div id="rejectOverlay"
+				style="display: none; position: fixed; z-index: 1100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+				<div id="rejectModal"
+					style="background: white; padding: 20px; border-radius: 8px; width: 400px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);">
+					<h3>보류/불허 처리</h3>
+					<select id="rejectStatus" style="width: 100%; margin-bottom: 10px;">
+						<option value="보류">보류</option>
+						<option value="불허">불허</option>
+					</select>
+					<textarea id="rejectReason" placeholder="사유를 입력하세요"
+						style="width: 100%; height: 80px; margin-bottom: 10px;"></textarea>
+					<div style="display: flex; justify-content: flex-end; gap: 8px;">
+						<button onclick="submitReject()">처리</button>
+						<button onclick="closeReject()">취소</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		<!-- 검토 모달 위에 뜨는 보류/불허 모달 -->
-<div id="rejectOverlay" style="display: none; position: fixed; z-index: 1100;
-     top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); 
-     justify-content: center; align-items: center;">
-  <div id="rejectModal" style="background: white; padding: 20px; border-radius: 8px;
-       width: 400px; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-    <h3>보류/불허 처리</h3>
-    <select id="rejectStatus" style="width: 100%; margin-bottom: 10px;">
-      <option value="보류">보류</option>
-      <option value="불허">불허</option>
-    </select>
-    <textarea id="rejectReason" placeholder="사유를 입력하세요"
-              style="width: 100%; height: 80px; margin-bottom: 10px;"></textarea>
-    <div style="display: flex; justify-content: flex-end; gap: 8px;">
-      <button onclick="submitReject()">처리</button>
-      <button onclick="closeReject()">취소</button>
-    </div>
-  </div>
-</div>
-		
 
 		<div id="buttonsContainer"
 			style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
@@ -558,7 +631,8 @@ button:disabled {
 	</div>
 
 
-	
+
+
 
 	<script src="/js/adminHeader.js"></script>
 	<script>
@@ -566,33 +640,47 @@ let currentPage = 1;
 
 
 function highlightDifferences(temp, orig) {
-    const fields = [
-        'cardName', 'cardType', 'cardBrand', 'annualFee', 'issuedTo',
-        'service', 'sService', 'cardStatus', 'cardUrl', 'cardSlogan', 'cardNotice'
-    ];
+	  const fields = [
+	    'cardName', 'cardType', 'cardBrand', 'annualFee', 'issuedTo',
+	    'service', 'sService', 'cardStatus', 'cardUrl', 'cardSlogan', 'cardNotice'
+	  ];
 
-    fields.forEach(field => {
-        const tempId = 'modal' + capitalize(field);
-        const origId = 'original' + capitalize(field);
+	  fields.forEach(field => {
+	    const tempId = 'modal' + capitalize(field);
+	    const origId = 'original' + capitalize(field);
 
-        const tempEl = document.getElementById(tempId);
-        const origEl = document.getElementById(origId);
+	    const tempEl = document.getElementById(tempId);
+	    const origEl = document.getElementById(origId);
 
-        if (!tempEl || !origEl) {
-            console.warn('❌ 요소 없음:', tempId, origId);
-            return;
-        }
+	    if (!tempEl || !origEl) return;
 
-        const tempVal = normalizeValue(temp[field]);
-        const origVal = normalizeValue(orig[field]);
+	 // TEMP 모달에 실제 값을 세팅
+	    const tempVal = normalizeValue(temp[field]);
+	    const origVal = normalizeValue(orig[field]);
 
-        if (tempVal !== origVal) {
-            tempEl.style.backgroundColor = '#fff3cd'; // 연노랑 색
-        } else {
-            tempEl.style.backgroundColor = '';
-        }
-    });
-}
+	    console.log(`[${field}] TEMP:`, tempVal, 'ORIG:', origVal);
+	    
+	    // TEMP 모달 요소에 값 반영 (input/textarea 모두 대응)
+	    if (tempEl.tagName === 'INPUT' || tempEl.tagName === 'TEXTAREA') {
+	      tempEl.value = tempVal;
+	    }
+
+	    // '변경됨' 라벨 span을 찾아서 비교 결과에 따라 표시 제어
+	const label = tempEl.closest('.field-row')?.querySelector('.edit-label');
+
+	    
+	    if (tempVal !== origVal) {
+	    	  if (label && label.classList.contains('edit-label')) {
+	    	    label.style.display = 'inline';
+	    	  }
+	    	} else {
+	    	  if (label && label.classList.contains('edit-label')) {
+	    	    label.style.display = 'none';
+	    	  }
+	    	}
+	  });
+	}
+
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -839,6 +927,5 @@ if (currentPage === 1) {
     loadPermissions(1);
 }
 </script>
-
 </body>
 </html>
