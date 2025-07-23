@@ -512,7 +512,7 @@ setTimeout(() => {
 	  centerMode: true,
 	  centerPadding: '0px',
 	  slidesToShow: 3,
-	  autoplay:false,
+	  autoplay:true,
 	  autoplaySpeed:5000,
 	  arrows: true,
 	  infinite: true,
