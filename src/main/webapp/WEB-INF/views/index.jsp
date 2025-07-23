@@ -234,7 +234,7 @@
 		</div>
 	</div>
 	<div class="section infinite-carousel">
-	  <h1 class="t1">다양하다면</h1>
+	  <h1 class="t1">부산은행이라면</h1>
 	  <h1 class="t2">그만큼 특별하죠	</h1>
 	  <p class="t3">당신의 생활에 꼭 맞는 혜택, 지금 경험해보세요</p>
 	  
@@ -512,7 +512,7 @@ setTimeout(() => {
 	  centerMode: true,
 	  centerPadding: '0px',
 	  slidesToShow: 3,
-	  autoplay:false,
+	  autoplay:true,
 	  autoplaySpeed:5000,
 	  arrows: true,
 	  infinite: true,
