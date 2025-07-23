@@ -187,48 +187,28 @@
 						<img src="/image/웃는얼굴.png">
 						<p>연회비 무료</p>
 					</div>
-					<div class="tooltip">
-						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
-						<div class="toolip-txt-box">
-							<p>동백+ 체크카드는 연회비 무료!</p>
-						</div>
-					</div>
+					
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b2">
 						<img src="/image/버스.png">
 						<p>후불 교통카드</p>
 					</div>
-					<div class="tooltip">
-						<img class="tooltip-img" src="/image/툴팁2.png" alt="툴팁 이미지">
-						<div class="toolip-txt-box">
-							<p>후불교통카드 기능은 그대로!</p>
-						</div>
-					</div>
+					
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b3">
 						<img src="/image/atm.png">
 						<p>수수료 무료</p>
 					</div>
-					<div class="tooltip">
-						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
-						<div class="toolip-txt-box">
-							<p>동백+ 체크카드는 연회비 무료!</p>
-						</div>
-					</div>
+					
 				</div>
 				<div class="hover-target-wrapper">
 					<div class="hover-target b4">
 						<img src="/image/번개.png">
 						<p>즉시 캐쉬백</p>
 					</div>
-					<div class="tooltip">
-						<img class="tooltip-img" src="/image/툴팁1.png" alt="툴팁 이미지">
-						<div class="toolip-txt-box">
-							<p>동백+ 체크카드는 연회비 무료!</p>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -483,27 +463,6 @@ setTimeout(() => {
 	
 	
 		
-	
-	//버블
-	const wrappers = document.querySelectorAll('.hover-target-wrapper');
-
-	wrappers.forEach(wrapper => {
-	  const target = wrapper.querySelector('.hover-target');
-	  const tooltip = wrapper.querySelector('.tooltip');
-
-	  target.addEventListener('mouseenter', () => {
-	    tooltip.style.opacity = 1;
-	  });
-
-	  target.addEventListener('mouseleave', () => {
-	    tooltip.style.opacity = 0;
-	  });
-
-	  target.addEventListener('mousemove', (e) => {
-	    tooltip.style.left = `\${e.clientX + 10}px`;
-	    tooltip.style.top = `\${e.clientY + 10}px`;
-	  });
-	});
 	
 	
 	

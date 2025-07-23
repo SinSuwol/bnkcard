@@ -386,22 +386,7 @@ body.main-body{
 .hover-target img{
 	width:80px;
 }
-.tooltip {
-  position: fixed;
-  width:300px; height:400px;
-  background-color: white;
-  color: #fff;
-  border-radius: 6px;
-  font-size: 14px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.1s, transform 0.3s ease;
-  z-index: 9999;
-  transform:scale(0);
-  transform-origin: top left;
-  border: 2px solid #dbdbdb;
-  overflow: hidden;
-}
+
 .hover-target-wrapper:hover .tooltip {
   transform:  scale(1); /* ← 호버 시 팡! */
 }
@@ -410,13 +395,7 @@ body.main-body{
 	transform: scale(1.1);
 }
 
-.tooltip-img{
-	width:100%;
-}
-.tooltip-txt-box{
-	width:100%;
-	padding:0px 20px;
-}
+
 
 
 /* ✅  푸터  ✅*/
