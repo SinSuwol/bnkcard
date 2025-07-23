@@ -119,11 +119,11 @@ h2 {
 	padding: 0 200px; /* ← 사이드바 여백과 같은 좌우 여백 */
 	box-sizing: border-box;
 }
-
+/*
 #permissionTable,
 #permissionTable thead {
 	display: none;
-}
+}*/
 
 </style>
 
@@ -211,8 +211,8 @@ h2 {
             }
              	
             // 데이터가 있으면 테이블과 thead 보이게, 메시지 숨기기
-            thead.style.display = 'block';
-            document.getElementById('permissionTable').style.display = 'block';
+            thead.style.display = '';
+            document.getElementById('permissionTable').style.display = '';
             noDataMessage.style.display = 'none';
 
             // 테이블 행 모두 생성
