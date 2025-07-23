@@ -169,7 +169,7 @@
 }
 .popular-sub {
   font-size: 14px;
-  color: #555;
+  color: white;
   margin-bottom: -15px;
   font-weight: 450;
 }
@@ -178,6 +178,7 @@
   opacity: 1;
   transition: filter 0.1s ease;
   filter: none;
+  transition:0.2s;
 }
 
 /* 가운데(active) 슬라이드 확대 */
@@ -775,8 +776,22 @@
   color: #0f0f0f;
   font-size: 12px;
 }
-
-
+.effect{
+	position:absolute;
+	height:100%;
+	width:150px;
+	z-index:2;
+}
+.effect-left{
+	left:0;
+	background:	linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+	
+}
+.effect-right{
+	right:0;
+	background:	linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+	
+}
 
 </style>
 </head>
@@ -787,6 +802,8 @@
    
    <!-- 🔥 인기 카드 슬라이더 -->
 <div class="slider-container">
+	<div class="effect-left effect"></div>
+	<div class="effect-right effect"></div>
   <div class="popular-slider autoplay">
     <!-- 인기 카드가 JS로 자동 채워짐 -->
   </div>
@@ -802,11 +819,10 @@
 
    <!-- 검색바 + 세부 조정 아이콘 -->
       <div class="icon_img">
-      <div>
-      <input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요" autocomplete="off" readonly>
-         <img src="/image/benifits/search.png" alt="icon">
-      </div>
-         <button id="filterBtn" title="상세 검색">🎚️</button>   
+	     <div>
+	     	 <input id="searchInput" type="text" placeholder="원하는 카드를 찾아보세요" autocomplete="off" readonly>
+	         <img src="/image/benifits/search.png" alt="icon">
+	     </div>
       </div>
       
 
@@ -965,7 +981,7 @@ fetch('/api/cards/popular')
 
       return `
         <div>
-          <div class="popular-card" style="background-image: url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
+          <div class="popular-card" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 20%, rgba(0, 0, 0, 0) 40%),url('${bgUrl}')" onclick="goDetail(${c.cardNo})">
             <div class="card-text-wrap ${isWhiteText ? 'white-text' : ''}">
               <div class="popular-title">${c.cardName}</div>
               <div class="popular-sub">${c.cardSlogan || ''}</div>
@@ -984,7 +1000,7 @@ fetch('/api/cards/popular')
       slidesToShow: 3,
       slidesToScroll: 1,
       autoplay: true,
-      autoplaySpeed: 2000,
+      autoplaySpeed: 3000,
       arrows: true,
       dots: false,
       infinite: true,
@@ -992,29 +1008,7 @@ fetch('/api/cards/popular')
       nextArrow: '<button class="slick-next">&#10095;</button>',
     });
 
-    // blur 처리 함수 정의
-    function applyEdgeBlur() {
-	  $('.popular-slider .slick-slide').css('filter', 'none'); // 초기화
-	
-	  const $slides = $('.popular-slider .slick-slide');
-	  const currentIndex = $('.popular-slider').slick('slickCurrentSlide');
-	
-	  // blur 대상 index: 현재 인덱스 기준 왼쪽 2개, 오른쪽 2개 중 가장 바깥쪽
-	  const leftEdgeIndex = currentIndex - 2;
-	  const rightEdgeIndex = currentIndex + 2;
-	
-	  $slides.each(function () {
-	    const index = $(this).data('slick-index');
-	    if (index === leftEdgeIndex || index === rightEdgeIndex) {
-	      $(this).css('filter', 'blur(4px)');
-	    }
-	  });
-	}
-
-    // 초기 blur 적용
-    $(slider).on('init reInit afterChange', function () {
-      applyEdgeBlur();
-    });
+    
 
     // 강제 초기화 이벤트 트리거
     $(slider).slick('setPosition'); // layout 계산
@@ -1053,7 +1047,6 @@ function closeAdv(){
 }
 
 /* 검색창 진입 */
-document.getElementById('filterBtn').addEventListener('mousedown',openAdv);
 document.getElementById('searchInput').addEventListener('mousedown',openAdv);
 document.getElementById('searchInput').addEventListener('keydown',e=>{
   if(e.key==='Enter' && !e.isComposing){e.preventDefault();openAdv();}
