@@ -211,8 +211,8 @@ h2 {
             }
              	
             // 데이터가 있으면 테이블과 thead 보이게, 메시지 숨기기
-            thead.style.display = '';
-            document.getElementById('permissionTable').style.display = '';
+            thead.style.display = 'block';
+            document.getElementById('permissionTable').style.display = 'block';
             noDataMessage.style.display = 'none';
 
             // 테이블 행 모두 생성
