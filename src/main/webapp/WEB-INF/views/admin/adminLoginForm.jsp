@@ -56,7 +56,7 @@ justify-content: center; /* 수평 가운데 */
 
 /* 입력창 */
 .login-container input {
-    width: 90%;
+    width: 85%;
     padding: 14px 18px;
     border: 1px solid #ddd;
     border-radius: 6px;
