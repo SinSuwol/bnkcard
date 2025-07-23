@@ -43,24 +43,35 @@
 	<div class="main-slider">
 	  <div>
 	  	<div class="cover"></div>
-	  	<img src="/image/배너슬라이드1.jpg">
+	  	<div class="img img1">
+	  		<span class="bold">정성</span><span>으로 보답합니다.</span>
+	  	</div>
 	  </div>
 	  <div>
 	  	<div class="cover"></div>
-	  	<img src="/image/배너슬라이드1.jpg">
+	  	<div class="img img2">
+	  		<span>세계와 &nbsp</span><span class="bold">함께</span><span>성장합니다.</span>
+	  	</div>
 	  </div>
 	  <div>
 	  	<div class="cover"></div>
-	  	<img src="/image/배너슬라이드1.jpg">
+	  	<div class="img img3">
+		  		<span>금융을 &nbsp</span><span class="bold">따뜻</span><span>하게</span>
+	  	</div>
 	  </div>
 	  <div>
 	  	<div class="cover"></div>
-	  	<img src="/image/배너슬라이드1.jpg">
+	  	<div class="img img4">
+	  		<span>금융을 &nbsp</span><span class="bold">안전</span><span>하게</span>
+	  	</div>
 	  </div>
 	  <div>
 	  	<div class="cover"></div>
-	  	<img src="/image/배너슬라이드1.jpg">
+	  	<div class="img img5">
+	  		<span>늘 &nbsp</span><span class="bold">새로운</span><span>&nbsp 마음으로</span>
+	  	</div>
 	  </div>
+	  
 	  
 	</div>
 </div>
@@ -501,7 +512,7 @@ setTimeout(() => {
 	  centerMode: true,
 	  centerPadding: '0px',
 	  slidesToShow: 3,
-	  autoplay:true,
+	  autoplay:false,
 	  autoplaySpeed:5000,
 	  arrows: true,
 	  infinite: true,

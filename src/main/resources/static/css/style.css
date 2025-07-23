@@ -573,15 +573,45 @@ body.main-body{
 
 
 /* 이미지 공통 */
-.main-slider .slick-slide img {
+.main-slider .slick-slide .img {
   width: 1250px;
   height: 700px;
   max-height: 100%;
   transition: transform 0.3s ease;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;         /* 필요 시 추가 */
+  background-position: center;    /* 필요 시 추가 */
+  background-repeat: no-repeat;   /* 반복 방지 */
   
 }
-
-.main-slider .slick-center img{
+.main-slider .slick-slide .img span{
+	font-size: 3.5rem;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	color:white;
+	padding-top: 70px;
+	font-weight: 500;
+}
+.main-slider .slick-slide .img span.bold{
+	font-weight: 600;
+	font-size:3.8rem;
+	color:red;
+}
+.main-slider .slick-slide .img1{
+  background-image:url("/image/배너슬라이드1.png");
+}
+.main-slider .slick-slide .img2{
+  background-image:url("/image/배너슬라이드2.png");
+}
+.main-slider .slick-slide .img3{
+  background-image:url("/image/배너슬라이드3.png");
+}
+.main-slider .slick-slide .img4{
+  background-image:url("/image/배너슬라이드4.png");
+}
+.main-slider .slick-slide .img5{
+  background-image:url("/image/배너슬라이드5.png");
 }
 
 .custom-arrow{
