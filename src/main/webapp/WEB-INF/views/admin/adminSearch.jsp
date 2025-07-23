@@ -145,6 +145,7 @@ tbody tr:hover {
 	border-color: #3498db;
 }
 
+/*
 #recommended-table,
 #recommended-table thead,
 #prohibited-table,
@@ -152,7 +153,7 @@ tbody tr:hover {
 #top-table,
 #top-table thead {
 	display: none;
-}
+}*/
 
 </style>
 </head>
