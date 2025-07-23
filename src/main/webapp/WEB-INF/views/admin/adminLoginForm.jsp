@@ -102,8 +102,8 @@ justify-content: center; /* 수평 가운데 */
      
       <form id="loginForm">
        <h2>관리자 로그인</h2>
-          <input type="text" id="username" placeholder="아이디" required>
-          <input type="password" id="password" placeholder="비밀번호" required>
+         <input type="text" id="username" placeholder="아이디" required autocomplete="off">
+<input type="password" id="password" placeholder="비밀번호" required autocomplete="off">
           <button type="submit">로그인</button>
       </form>
   </div>
