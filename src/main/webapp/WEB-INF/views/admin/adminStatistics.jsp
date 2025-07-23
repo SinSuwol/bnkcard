@@ -71,6 +71,7 @@
       margin: 10px auto;
       width: 80%;
       max-width: 300px;
+      max-height: 300px;
       border: 1px solid #ddd;
       border-radius: 8px;
       background: #fcfcfc;
@@ -133,7 +134,21 @@
   white-space: nowrap;
 }
 
+  #userTypeChart {
+    max-width: 400px;
+    max-height: 400px;
+  }
     
+      #genderChart {
+    max-width: 400px;
+    max-height: 400px;
+  }
+  
+  canvas {
+  display: block;
+  margin: 0 auto 40px auto; /* 가운데 정렬 + 아래 여백 */
+  width: 100% !important;
+}
   </style>
 </head>
 <body>
@@ -201,13 +216,13 @@
 <h2 onclick="toggleSection('searchByHourSection')">7. 시간대별 검색 건수</h2>
 <div id="searchByHourSection" class="chart-container">
   <div class="button-group" style="text-align:center;">
-    <button class="btn" onclick="loadHourlyStats('day')">하루</button>
-    <button class="btn" onclick="loadHourlyStats('week')">일주일</button>
-    <button class="btn" onclick="loadHourlyStats('month')">한달</button>
-    <button class="btn" onclick="loadHourlyStats('6months')">6개월</button>
-    <button class="btn" onclick="loadHourlyStats('year')">1년</button>
-    <button class="btn" onclick="loadHourlyStats('5years')">5년</button>
-    <button class="btn" onclick="loadHourlyStats('all')">전체</button>
+    <button class="btn" onclick="loadHourlyStats('하루')">하루</button>
+    <button class="btn" onclick="loadHourlyStats('일주일')">일주일</button>
+    <button class="btn" onclick="loadHourlyStats('한달')">한달</button>
+    <button class="btn" onclick="loadHourlyStats('6개월')">6개월</button>
+    <button class="btn" onclick="loadHourlyStats('1년')">1년</button>
+    <button class="btn" onclick="loadHourlyStats('5년')">5년</button>
+    <button class="btn" onclick="loadHourlyStats('전체')">전체</button>
   </div>
   <div class="hour-content">
     <canvas id="hourChart"></canvas>
@@ -307,7 +322,7 @@ function loadGenderChart() {
           datasets: [{
             label: '성별 조회',
             data: values,
-            backgroundColor: ['#3498db', '#f39c12']
+            backgroundColor: ['#ffc0cb', '#3498db']
           }]
         }
       });
