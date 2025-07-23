@@ -6,15 +6,13 @@
 <meta charset="UTF-8">
 <title>부뱅이 챗봇</title>
 
-<!-- ───── BNK 스타일 ───── -->
 <style>
-:root { /* 브랜드 컬러 팔레트 */
+:root {
 	--bnk-red: #D6001C;
 	--bnk-gray: #F5F6F8;
 	--text-dark: #333;
 }
 
-/* 배경 */
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 	background: var(--bnk-gray);
@@ -23,7 +21,6 @@ body {
 	padding: 24px;
 }
 
-/* 팝업(520×750) */
 .chat-container {
 	width: 100%;
 	max-width: 520px;
@@ -44,7 +41,6 @@ body {
 	color: var(--bnk-red);
 }
 
-/* 대화 영역 */
 .chat-box {
 	flex: 1;
 	overflow-y: auto;
@@ -57,9 +53,7 @@ body {
 	gap: 12px;
 }
 
-/* 말풍선 공통 */
 .chat-entry {
-
 	max-width: 78%;
 	padding: 12px 16px;
 	border-radius: 20px;
@@ -68,14 +62,12 @@ body {
 	position: relative;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .08);
 }
-/* 사용자(오른쪽) */
 .chat-entry.user {
 	align-self: flex-end;
 	background: var(--bnk-red);
 	color: #fff;
 	border-bottom-right-radius: 6px;
 }
-
 .chat-entry.user::after {
 	content: '';
 	position: absolute;
@@ -84,14 +76,12 @@ body {
 	border: 6px solid transparent;
 	border-left-color: var(--bnk-red);
 }
-/* 챗봇/로딩(왼쪽) */
 .chat-entry.bot {
 	align-self: flex-start;
 	background: #E9E9E9;
 	color: var(--text-dark);
 	border-bottom-left-radius: 6px;
 }
-
 .chat-entry.bot::after {
 	content: '';
 	position: absolute;
@@ -101,7 +91,6 @@ body {
 	border-right-color: #E9E9E9;
 }
 
-/* 입력 영역 */
 #inputArea {
 	margin-top: 18px;
 	display: flex;
@@ -119,39 +108,74 @@ body {
 button {
 	padding: 0 20px;
 	background: var(--bnk-red);
-	color: #fff;
+	color: #333;
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
 }
 
-/* 링크 색상 */
 a.card-link {
 	color: var(--bnk-red);
 	text-decoration: underline;
+}
+
+/* 👇 말풍선 내부 버튼 스타일 */
+.inline-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.inline-buttons button {
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.inline-buttons button:hover {
+  background: #f5f5f5;
+}
+
+.send-btn {
+  color: #fff !important;
 }
 </style>
 </head>
 <body>
 
-	<div class="chat-container">
-		<h2>카드 추천 챗봇</h2>
+<div class="chat-container">
+	<h2>부산은행 챗봇 부뱅이</h2>
 
-		<div class="chat-box" id="chatBox"></div>
+	<div class="chat-box" id="chatBox"></div>
 
-		<div id="inputArea">
-			<input type="text" id="userInput" placeholder="질문을 입력하세요"
-				onkeydown="if(event.key==='Enter') sendMessage()">
-			<button onclick="sendMessage()">보내기</button>
-		</div>
+	<div id="inputArea">
+		<input type="text" id="userInput" placeholder="질문을 입력하세요"
+			onkeydown="if(event.key==='Enter') sendMessage()">
+		<button class="send-btn" onclick="sendMessage()">보내기</button>
 	</div>
+</div>
 
-	<script>
-/* 첫 인삿말 */
-window.onload = () =>
-    appendMessage("안녕하세요! 고객님의 생활에 도움이 되는 카드를 추천해드릴게요 😊","bot");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const welcomeHTML = `
+    <p>안녕하세요! 부산은행 챗봇 <strong>부뱅이</strong>에요 😊<br>
+    카드 관련 궁금한 점이 있다면 아래 버튼을 눌러보세요!<br>
+    혹은 궁금하신 부분에 대해서 물어봐주세요</p>
+    <div class="inline-buttons">
+      <button onclick="handleQuickAction('배달앱 할인되는 카드 알려줘')">배달앱 할인</button>
+      <button onclick="handleQuickAction('연회비 저렴한 카드 추천해줘')">연회비 저렴</button>
+      <button onclick="handleQuickAction('커피 할인되는 카드 알려줘')">커피 할인</button>
+      <button onclick="handleQuickAction('MZ세대 인기카드 뭐야?')">인기 카드</button>
+    </div>
+  `;
+  appendMessage(welcomeHTML, "bot");
+});
 
-/* URL → 링크 + 줄바꿈 */
 function makeLinksClickable(txt){
     return txt.replace(/<a[^>]*>(.*?)<\/a>/gi,"$1")
               .replace(/(https?:\/\/[^\s<]+)/g,
@@ -159,7 +183,6 @@ function makeLinksClickable(txt){
               .replace(/\n/g,"<br>");
 }
 
-/* 말풍선 생성 (isTemp: 로딩용 여부) */
 function appendMessage(msg,type,isTemp=false){
     const box=document.getElementById("chatBox");
     const div=document.createElement("div");
@@ -169,7 +192,6 @@ function appendMessage(msg,type,isTemp=false){
     return isTemp?div:null;
 }
 
-/* 로딩 말풍선 애니메이션 */
 function createTypingBubble(){
     let dots=1;
     const bubble=appendMessage("작성중.","bot",true);
@@ -180,13 +202,11 @@ function createTypingBubble(){
     return {bubble,timer};
 }
 
-/* 메시지 전송 */
 function sendMessage(){
     const input=document.getElementById("userInput");
     const q=input.value.trim(); if(!q) return;
     appendMessage(q,"user"); input.value="";
 
-    /* 로딩 말풍선 */
     const {bubble,timer}=createTypingBubble();
 
     fetch("/user/card/chatbot",{
@@ -202,6 +222,27 @@ function sendMessage(){
     .catch(()=>{
         clearInterval(timer); bubble.remove();
         appendMessage("서버 오류가 발생했습니다.","bot");
+    });
+}
+
+function handleQuickAction(message) {
+    appendMessage(message, "user");
+    
+    const {bubble, timer} = createTypingBubble();
+
+    fetch("/user/card/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({question: message})
+    })
+    .then(res => res.text())
+    .then(ans => {
+        clearInterval(timer); bubble.remove();
+        appendMessage(ans, "bot");
+    })
+    .catch(() => {
+        clearInterval(timer); bubble.remove();
+        appendMessage("서버 오류가 발생했습니다.", "bot");
     });
 }
 </script>
