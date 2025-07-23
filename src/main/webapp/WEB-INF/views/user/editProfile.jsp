@@ -165,7 +165,7 @@ input::placeholder {
 
 <div class="content-wrapper">
 	<h2 class="page-title">회원정보 수정</h2>
-    <p class="sub-title">수정할 정보를 입력해주세요.</p>
+    <p class="sub-title">수정할 정보를 입력해 주세요</p>
     
     <div class="divider-section">
 		<form id="updateForm" action="/user/update" method="post">
@@ -323,8 +323,9 @@ input::placeholder {
 	
 	//취소버튼
 	function cancelEdit(){
-		alert("정보 수정을 취소하겠습니까?");
-		location.href = "/user/mypage";
+		if (confirm("정보 수정을 취소하겠습니까?")) {
+	        location.href = "/user/mypage";
+	    }
 	}
 </script>
 

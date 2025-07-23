@@ -202,7 +202,7 @@ input::placeholder {
 					<td><div id="pwErrorMsg"></div></td>
 				</tr>
 				<tr>
-					<th>주민번호</th>
+					<th>주민등록번호</th>
 					<td><input type="text" name="rrnFront" id="rrnFront" maxlength="6">
 					 - <input type="password" name="rrnBack" id="rrnBack" maxlength="7"></td>
 				</tr>
@@ -473,8 +473,9 @@ input::placeholder {
 	}
 	
 	function cancelRegist(){
-		alert("회원가입 신청을 취소하시겠습니까?");
-		location.href = "/regist/selectMemberType";
+		if (confirm("회원가입 신청을 취소하시겠습니까?")) {
+	        location.href = "/regist/selectMemberType";
+	    }
 	}
 	
 </script>

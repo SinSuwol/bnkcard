@@ -8,16 +8,29 @@
 <title>마이페이지</title>
 <link rel="stylesheet" href="/css/style.css">
 <style>
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
   background-color: #ffffff;
   color: #333;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;   /* 화면 높이 채우기 */
 }
 
 .main-content {
-  padding-top: 130px; /* header 고려 */
+  flex: 1;             /* 남은 공간을 차지해서 푸터 밀어내기 */
+  padding-top: 130px;
   margin: 0 auto;
   max-width: 1000px;
   padding-left: 20px;
@@ -110,32 +123,35 @@ body {
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
-<div class="main-content">
-	<div>
-		<div class="section-header">
-			<div class="title">내 카드</div>
-			<a href="/user/editProfile">개인 정보 수정</a>
-		</div>
-		<div class="card-box highlight">
-			<div class="card-container">
-				<c:forEach var="card" items="${cards}">
-					<div class="card-list">
-						<img class="card-image" src="${card.cardUrl}">
-						<p class="card-name">${card.cardName}</p>
+	<div class="wrapper">
+		<jsp:include page="/WEB-INF/views/fragments/mainheader2.jsp" />
+		<div class="main-content">
+			<div>
+				<div class="section-header">
+					<div class="title">내 카드</div>
+					<a href="/user/editProfile">개인 정보 수정</a>
+				</div>
+				<div class="card-box highlight">
+					<div class="card-container">
+						<c:forEach var="card" items="${cards}">
+							<div class="card-list">
+								<img class="card-image" src="${card.cardUrl}">
+								<p class="card-name">${card.cardName}</p>
+							</div>
+						</c:forEach>
 					</div>
-				</c:forEach>
+				</div>
+			</div>
+			<div>
+				<div class="section-header">
+					<div class="title">
+						<a href="#">문의 내역</a>
+					</div>
+				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 	</div>
-	<div>
-		<div class="section-header">
-			<div class="title">
-				<a href="#">내 문의</a>
-			</div>
-		</div>
-	</div>
-</div>
 <script src="/js/header2.js"></script>
 <script>
 	let remainingSeconds = ${remainingSeconds};
