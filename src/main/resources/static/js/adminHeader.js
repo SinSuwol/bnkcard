@@ -1,8 +1,10 @@
 document.querySelector(".header-close-btn").addEventListener("click",function(){
 	document.querySelector(".sidebar").classList.add("closed");
+	document.querySelector(".header-close-btn").classList.add("off")
 })
 document.querySelector(".header-open-btn").addEventListener("click",function(){
 	document.querySelector(".sidebar").classList.remove("closed");
+	document.querySelector(".header-close-btn").classList.remove("off")
 })
 
 document.getElementById("logoutBtn").addEventListener("click", function() {

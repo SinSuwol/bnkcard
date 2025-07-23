@@ -12,8 +12,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		<a href="/admin/Mainpage">사용자 메인페이지로</a>
 		<button id="logoutBtn">로그아웃</button>
 	</div>
-		<div class="header-close-btn"></div>
-		<div class="header-open-btn"></div>
+		<div class="header-close-btn">
+			<img src="/image/닫기.png">
+		</div>
+		<div class="header-open-btn">
+			<img src="/image/삼단메뉴.png">
+		</div>
 </header>
 
 <script>

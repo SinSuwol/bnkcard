@@ -36,14 +36,15 @@ a,li,ul{
 }
 .header-close-btn{
 	width:60px; height:60px;
-	background-color:white;
 	position:fixed;
 	top:30px; left:15px;
+}
+.header-close-btn.off{
+	display:none;
 }
 .header-open-btn{
 	display:none;
 	width: 60px; height:60px;
-	background-color:black;
 	position:fixed;
 	top:30px; left:15px;
 }
@@ -80,4 +81,11 @@ button {
 button:hover {
 	background-color: black;
 	 color: white;
+}
+
+.header-close-btn img{
+	width:100%;
+}
+.header-open-btn img{
+	width:100%;
 }

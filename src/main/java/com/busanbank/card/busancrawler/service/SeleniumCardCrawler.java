@@ -26,12 +26,11 @@ public class SeleniumCardCrawler {
     public String crawlShinhanCards() {
         
         List<ScrapCardDto> cardList = new ArrayList<>();
-        
+        //크롬 드라이버
         System.setProperty("webdriver.chrome.driver", "C:/Users/GGG/Desktop/chromedriver-win64/chromedriver.exe");
-        //System.setProperty("webdriver.chrome.driver", "C:/Users/chboy/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         
-        try {
+        try { //크롤링할 페이지 URL
             String url = "https://www.shinhancard.com/pconts/html/card/check/MOBFM282R11.html?crustMenuId=ms527";
             driver.get(url);
             
@@ -44,7 +43,7 @@ public class SeleniumCardCrawler {
             int limit = Math.min(9, cardItems.size());
             for (int i = 0; i < limit; i++) {
                 try {
-                    // 카드 목록 다시 조회
+                    
                     cardItems = driver.findElements(By.cssSelector(".card_thumb_list_wrap li"));
                     WebElement card = cardItems.get(i);
                     
@@ -55,7 +54,7 @@ public class SeleniumCardCrawler {
                     
                     // 상세 페이지 이동
                     driver.navigate().to(detailUrl);
-                    Thread.sleep(2000);  // 또는 wait 사용
+                    Thread.sleep(2000);
                     
                     // ✅ 슬로건 크롤링
                     String slogan = "-";
