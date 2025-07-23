@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>카드 리스트</title>
+<title>카드상품</title>
 <link rel="stylesheet" href="/css/style.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
