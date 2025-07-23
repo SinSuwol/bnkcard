@@ -70,7 +70,7 @@
 		<h2 class="mainTit2">'가성비'와 '가심비'를 모두 만족하는 프리미엄 경험</h2>
 		<p class="mainTit3">매일 쓰는 소비에, 매달 받는 보상</p>
 		<div class="spline-wrapper">
-			
+			<div class="spline-cover"></div>
 			<div class="confetti-wrapper c1">
 			  <ul class="particles "></ul>
 			</div>
@@ -223,14 +223,14 @@
 		</div>
 	</div>
 	<div class="section infinite-carousel">
-	  <h1 class="t1">쪼매	쓴다면</h1>
-	  <h1 class="t2">그마이 특별해야죠</h1>
+	  <h1 class="t1">다양하다면</h1>
+	  <h1 class="t2">그만큼 특별하죠	</h1>
 	  <p class="t3">당신의 생활에 꼭 맞는 혜택, 지금 경험해보세요</p>
 	  
 	  <div class="carousel-track">
 	    <div class="carousel-item c1">
 	    	<img src="/image/brands/커피.png">
-	    	<p>스타벅스/이디야/카페베네</p>
+	    	<p >스타벅스/이디야/카페베네</p>
 	    </div>
 	    <div class="carousel-item c2">
 	    	<img src="/image/brands/다이소.jpg">
@@ -327,14 +327,10 @@
 	    	<img src="/image/brands/휴대전화.png">
 	    	<p>휴대전화</p>
 	    </div>
-	    
-	    
-	    
-	    
-	
-	    
 	  </div>
 	</div>
+	
+	<button id="scrollTopBtn" title="맨 위로 이동"><i class="fas fa-chevron-up"></i></button>
 </div>
 <jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 <c:if test="${not empty msg}">
@@ -475,7 +471,7 @@ setTimeout(() => {
 	}, 3000); // 첫 실행을 3초 뒤에 시작
 	
 	
-	
+		
 	
 	//버블
 	const wrappers = document.querySelectorAll('.hover-target-wrapper');
@@ -514,13 +510,75 @@ setTimeout(() => {
 	  nextArrow: '<button class="slick-next custom-next custom-arrow"><i class="fas fa-chevron-right"></button>',
 	});
 	
+	//가로 무한스크롤
+		
+	const track = document.querySelector('.carousel-track');
+	const duplicatedItems = Array.from(track.children); // 이름 변경
+	const trackWidth = track.scrollWidth;
+	
+	track.innerHTML += track.innerHTML; // 복사본 추가
+	
+	let currentX = 0;
+	
+	function animate() {
+	  currentX -= 1; // 속도 조절
+	  if (Math.abs(currentX) >= trackWidth) {
+	    currentX = 0; // 원래 위치로 리셋
+	  }
+	  track.style.transform = `translateX(\${currentX}px)`;
+	  requestAnimationFrame(animate);
+	}
+	
+	animate();
+	
+	
+	//스크롤 탑 버튼
+	const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+	window.addEventListener('scroll', () => {
+	  if (window.pageYOffset > 300) {  // 스크롤 300px 이상 내려가면 버튼 보임
+	    scrollTopBtn.style.display = 'flex';
+	  } else {
+	    scrollTopBtn.style.display = 'none';
+	  }
+	});
+	
+	scrollTopBtn.addEventListener('click', () => {
+		  smoothScrollToTop(600);  // 600ms 동안 부드럽게 스크롤
+		});
+	
+	function smoothScrollToTop(duration = 500) {
+		  const start = window.pageYOffset;
+		  const startTime = performance.now();
+
+		  function scroll() {
+		    const now = performance.now();
+		    const time = Math.min(1, (now - startTime) / duration);
+		    const timeFunction = time * (2 - time); // easeOutQuad 효과
+		    window.scrollTo(0, start * (1 - timeFunction));
+
+		    if (time < 1) {
+		      requestAnimationFrame(scroll);
+		    }
+		  }
+
+		  requestAnimationFrame(scroll);
+		}
 	
 	
 	
 	
-</script>
-<script>
-	let remainingSeconds = ${remainingSeconds};
+	
+	
+	//로그인 남은시간	
+	let remainingSeconds = "${remainingSeconds}";
+
+	if (remainingSeconds === "null" || remainingSeconds === "" || isNaN(Number(remainingSeconds))) {
+	  remainingSeconds = 0;
+	} else {
+	  remainingSeconds = Number(remainingSeconds);
+	}
+	
 </script>
 <script src="/js/sessionTime.js"></script>
 </body>

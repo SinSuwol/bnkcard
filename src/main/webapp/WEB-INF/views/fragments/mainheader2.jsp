@@ -13,9 +13,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<li><a href="/#">대출</a></li>
 			<li><a href="/#">예금</a></li>
 			<li class="${pageContext.request.requestURI == '/WEB-INF/views/cardList.jsp' ? 'active' : ''}"><a href="/cardList" >카드</a></li>
-			<li class="${pageContext.request.requestURI == '/WEB-INF/views/introduce.jsp' ? 'active' : ''}"><a href="/introduce" >은행소개</a></li>
 			<li class="${pageContext.request.requestURI == '/WEB-INF/views/faq.jsp' ? 'active' : ''}"><a href="/faq/list" >고객센터</a></li>
-			<li><a href="/admin/adminLoginForm" >관리자</a></li>
+			<!-- <li><a href="/admin/adminLoginForm" >관리자</a></li> -->
 		</ul>
 		
 		<div class="user-bar flex">

@@ -43,16 +43,7 @@
 	      
 	      
 	    </div>
-	    <div class="footer-dropdowns">
-	      <select>
-	        <option>BNK금융네트워크</option>
-	        <!-- 추가 옵션 -->
-	      </select>
-	      <select>
-	        <option>FAMILY SITE</option>
-	        <!-- 추가 옵션 -->
-	      </select>
-	    </div>
+	    
 	  </div>
 	</div>
 </footer>
