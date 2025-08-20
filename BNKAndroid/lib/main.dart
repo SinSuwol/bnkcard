@@ -8,7 +8,6 @@ Future<void> main() async {
 
   try {
     await API.initBaseUrl();
-  } catch (e, _) {
     debugPrint('[API] initBaseUrl 실패: $e');
   }
 
@@ -18,15 +17,6 @@ Future<void> main() async {
   } catch (e, _) {
     debugPrint('[AuthState] 초기화 실패: $e');
   }
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BNK Card',
       debugShowCheckedModeBanner: false,
