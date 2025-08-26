@@ -27,9 +27,9 @@ class _PreCustomizeLandingPageState extends State<PreCustomizeLandingPage> {
 
   // 금지 예시 텍스트
   final List<String> _banTexts = [
-    '타인의 얼굴이 식별되는 사진',
-    '상표/로고/저작권 있는 이미지',
-    '폭력/혐오/음란 등 부적절한 콘텐츠',
+    '과격하거나 폭력적인 컨텐츠',
+    '과도한 노출, 음란한 이미지',
+    '혐오, 불쾌감을 줄 수 있는 컨텐츠',
   ];
 
   int _selectedIndex = 0; // 현재 선택된 썸네일
