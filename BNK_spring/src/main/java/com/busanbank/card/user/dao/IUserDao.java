@@ -86,6 +86,7 @@ public interface IUserDao {
     		+ "c.card_url, "
     		+ "ca.application_no, "
     		+ "ca.status, "
+    		+ "ca.is_credit_card, "
     		+ "a.account_number "
     		+ "FROM card_application ca "
     		+ "JOIN card c ON ca.card_no = c.card_no "

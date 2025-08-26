@@ -8,6 +8,7 @@ public class UserCardDto {
 	private Long cardNo;
 	private String cardName;
     private String cardUrl;
+    private char isCreditCard;
     private String accountNumber;
     private String status;
 }

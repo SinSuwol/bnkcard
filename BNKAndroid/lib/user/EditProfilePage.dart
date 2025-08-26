@@ -55,7 +55,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final fullAddress = data['address1'] ?? '';
+      final user = data['user'] ?? {};
+
+      final fullAddress = user['address1'] ?? '';
       String address1 = fullAddress;
       String extraAddress = '';
 
@@ -67,15 +69,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
 
       setState(() {
-        memberNo = data['memberNo'];
-        nameController.text = data['name'] ?? '';
-        usernameController.text = data['username'] ?? '';
-        zipCodeController.text = data['zipCode'] ?? '';
+        memberNo = user['memberNo'];
+        nameController.text = user['name'] ?? '';
+        usernameController.text = user['username'] ?? '';
+        zipCodeController.text = user['zipCode'] ?? '';
         address1Controller.text = address1;
         extraAddressController.text = extraAddress;
-        address2Controller.text = data['address2'] ?? '';
+        address2Controller.text = user['address2'] ?? '';
       });
     }
+
   }
 
   void _validatePassword(String password) {

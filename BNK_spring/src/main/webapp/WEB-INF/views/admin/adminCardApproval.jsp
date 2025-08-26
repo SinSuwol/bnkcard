@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const sourceText = personData.fundSource || '확인 불가 -';
     
     // 중복 가입 여부 데이터가 없으므로 임시로 '확인 불가 -' 처리
-    const dupCheck = '확인 불가 -'; 
+    //const dupCheck = '확인 불가 -'; 
 
  	// 자동 판정
     const autoResult = getAutoDecision(personData);
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
       '<div class="section">' +
         '<h4 class="section-title">심사 자동 판정</h4>' +
         '<ul class="kv">' +
-          '<li><span>중복 가입 여부</span><span>' + dupCheck + '</span></li>' +
+          //'<li><span>중복 가입 여부</span><span>' + dupCheck + '</span></li>' +
           '<li><span>직업</span><span>' + jobText + '</span></li>' +
           '<li><span>거래 목적</span><span>' + purposeText + '</span></li>' +
           '<li><span>자금 출처</span><span>' + sourceText + '</span></li>' +

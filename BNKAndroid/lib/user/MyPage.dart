@@ -25,6 +25,7 @@ class CardApplication {
   final String cardUrl;
   final String? accountNumber;
   final String status;
+  final bool isCheckCard;
 
   CardApplication({
     required this.cardNo,
@@ -32,10 +33,12 @@ class CardApplication {
     required this.cardUrl,
     this.accountNumber,
     required this.status,
+    this.isCheckCard = false,
   });
 }
 
-String cardStatusText(String status) {
+String cardStatusText(String status, {bool isCheckCard = false}) {
+  if (isCheckCard && status == 'SIGNED') return '발급완료'; // 체크카드 처리
   switch (status) {
     case 'SIGNED':   return '승인중';
     case 'APPROVED': return '발급완료';
@@ -43,10 +46,11 @@ String cardStatusText(String status) {
   }
 }
 
-Color cardStatusColor(String status) {
+Color cardStatusColor(String status, {bool isCheckCard = false}) {
+  if (isCheckCard && status == 'SIGNED') return Colors.green; // 체크카드 발급완료
   switch (status) {
-    case 'SIGNED':   return Colors.orange;
-    case 'APPROVED': return Colors.green;
+    case 'SIGNED':   return Colors.orange; // 승인중
+    case 'APPROVED': return Colors.green;  // 일반 발급완료
     default:         return Colors.black38;
   }
 }
@@ -462,10 +466,12 @@ class _MyPageState extends State<MyPage> {
 
         final list = pick.values.map((e) => CardApplication(
           cardNo: e['cardNo'],
-          cardName: e['cardName'],
-          cardUrl: e['cardUrl'],
+          cardName: e['cardName'] ?? '',
+          cardUrl: e['cardUrl'] ?? '',
           accountNumber: e['accountNumber'],
-          status: e['status'],
+          status: e['status'] ?? '',
+          // 체크카드 여부 판단 (isCreditCard == 'N'이면 체크카드)
+          isCheckCard: (e['isCreditCard']?.toString().toUpperCase() ?? 'Y') == 'N',
         )).toList();
 
         setState(() {
@@ -868,8 +874,11 @@ class MyCardListPage extends StatelessWidget {
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 4),
               Text(
-                cardStatusText(card.status),
-                style: TextStyle(fontSize: 14, color: cardStatusColor(card.status)),
+                cardStatusText(card.status, isCheckCard: card.isCheckCard),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: cardStatusColor(card.status, isCheckCard: card.isCheckCard),
+                ),
               ),
               const SizedBox(height: 4),
               Text('연동 계좌번호: ${card.accountNumber ?? '계좌 없음'}',
@@ -993,8 +1002,11 @@ class _CardHistorySection extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  cardStatusText(card.status),
-                  style: TextStyle(fontSize: 13, color: cardStatusColor(card.status)),
+                  cardStatusText(card.status, isCheckCard: card.isCheckCard),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: cardStatusColor(card.status, isCheckCard: card.isCheckCard),
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
