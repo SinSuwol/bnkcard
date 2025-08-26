@@ -260,7 +260,12 @@
      #{memberNo, jdbcType=NUMERIC},
      #{cardNo, jdbcType=NUMERIC},
      #{type},
-     TO_DATE(#{isoTime}, 'YYYY-MM-DD"T"HH24:MI:SS'),
+     CAST(
+       TO_TIMESTAMP_TZ(
+         REPLACE(#{isoTime}, 'Z', '+00:00'),                 -- Z(UTC)도 +00:00으로 치환
+         'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'                  -- 소수초 + 타임존
+       )
+     AS DATE),
      #{device},
      #{ua},
      #{ip})
