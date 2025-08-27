@@ -27,6 +27,7 @@ class _CustomCardEditorPageState extends State<CustomCardEditorPage> {
   bool get _hasSelection => _selectedId != null && _selected?.id != -1;
   bool _bgEditMode = true; // 배경 편집 모드 토글
 
+
   String _activeBottom = '배경'; // 기본은 배경 선택 상태
 
   Future<Uint8List> _captureCardPngBytes() async {
@@ -250,45 +251,70 @@ class _CustomCardEditorPageState extends State<CustomCardEditorPage> {
     if (sel == null || sel.id == -1) return;
 
     Color temp = sel.color;
-     showDialog(
+
+    final picked = await showDialog<Color>(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('글자 색상'),
         content: SingleChildScrollView(
-          child: BlockPicker(
+          child: ColorPicker(
             pickerColor: temp,
-            onColorChanged: (c) => temp = c,
+            onColorChanged: (c) => temp = c, // 선택한 색 임시저장
+            enableAlpha: false,              // 🔸투명도 제거 (불필요하면 true 가능)
+            displayThumbColor: true,         // 선택 색상 미리보기 썸네일
+            paletteType: PaletteType.hsv,    // 🔸HSV 팔레트(전체 스펙트럼)
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('취소')),
-          ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('적용')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, temp),
+            child: const Text('적용'),
+          ),
         ],
       ),
     );
 
-    setState(() => sel.color = temp);
+    if (picked != null) {
+      setState(() => sel.color = picked);
+    }
   }
 
   void _setBgColor() async {
     Color temp = _cardBgColor;
-    await showDialog(
+
+    final picked = await showDialog<Color>(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('배경 색상'),
         content: SingleChildScrollView(
-          child: BlockPicker(
+          child: ColorPicker(
             pickerColor: temp,
-            onColorChanged: (c) => temp = c,
+            onColorChanged: (c) => temp = c, // 선택한 색 임시 저장
+            enableAlpha: false,              // 🔸투명도 슬라이더 제거 (원하면 true로 변경 가능)
+            displayThumbColor: true,         // 선택 색상 썸네일 표시
+            paletteType: PaletteType.hsv,    // 🔸전체 스펙트럼 지원
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('취소')),
-          ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('적용')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, temp),
+            child: const Text('적용'),
+          ),
         ],
       ),
     );
-    setState(() => _cardBgColor = temp);
+
+    if (picked != null) {
+      setState(() => _cardBgColor = picked);
+    }
   }
 
   void _applyFontIndexToSelected(int idx) {
