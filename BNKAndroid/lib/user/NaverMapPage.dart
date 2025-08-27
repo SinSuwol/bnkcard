@@ -67,6 +67,9 @@ class _NaverMapPageState extends State<NaverMapPage>
   bool _mapReady = false;
   bool _firstMarkersSent = false;
 
+  // ✅ GPS 버튼 활성화 상태
+  bool _gpsActive = false;
+
   // 검색
   final _searchCtrl = TextEditingController();
   Timer? _debounce;
@@ -529,7 +532,7 @@ class _NaverMapPageState extends State<NaverMapPage>
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12), // ⬅️ top=0
+          padding: const EdgeInsets.only(top: 17, left: 12, right: 12), // 👈 위 공간 12px
           child: Row(
             children: [
               // ⬇️ 뒤로가기 버튼 (동그란 카드 스타일)
@@ -565,7 +568,7 @@ class _NaverMapPageState extends State<NaverMapPage>
                         return TextField(
                           controller: _searchCtrl,
                           decoration: InputDecoration(
-                            hintText: '지역이나 장소를 입력하세요',
+                            hintText: '검색어를 입력하세요',
                             border: InputBorder.none,
                             prefixIcon: const Icon(Icons.search),
                             suffixIcon: hasText
@@ -578,6 +581,7 @@ class _NaverMapPageState extends State<NaverMapPage>
                               },
                             )
                                 : null,
+                            contentPadding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           onChanged: _onSearchChanged,
                           textInputAction: TextInputAction.search,
@@ -594,7 +598,10 @@ class _NaverMapPageState extends State<NaverMapPage>
                 shape: const CircleBorder(),
                 elevation: 6,
                 child: IconButton(
-                  icon: const Icon(Icons.my_location),
+                  icon: Icon(
+                    Icons.my_location,
+                    color: _gpsActive ? Colors.red : Colors.black54, // ✅ 활성화 시 빨간색
+                  ),
                   onPressed: _onPressMyLocation,
                 ),
               ),
@@ -633,6 +640,9 @@ class _NaverMapPageState extends State<NaverMapPage>
       'zoom': 17.5,
       'animate': true,
     });
+
+    // ✅ GPS 버튼 색상 활성화
+    setState(() => _gpsActive = true);
 
     // 4) 근처 리스트 계산 & UI 열기
     _updateNearbyFrom(lat, lng);
