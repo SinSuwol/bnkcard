@@ -95,9 +95,8 @@ public class CardFeedbackService {
         double avg = Optional.ofNullable(repo.avgRatingAll()).orElse(0.0);
 
         // 최근 20개 + 이상치
-        var recent = repo.findAllByOrderByCreatedAtDesc(PageRequest.of(0, 20)).getContent();
-        var anomalies = repo.findInconsistencies();
-
+        var recent = repo.findRecent(PageRequest.of(0, 20)).getContent();
+        var anomalies = repo.findInconsistencies(); // 이건 이미 ORDER BY createdAt DESC 포함
         return new DashboardSummary(positiveRatio, negativeRatio, avg, top, recent, anomalies);
     }
 

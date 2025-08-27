@@ -75,4 +75,10 @@ public interface CardFeedbackRepository extends JpaRepository<CardFeedback, Long
 
     /** 분석 완료만 조회(Insights 집계용) */
     List<CardFeedback> findByAnalyzedAtIsNotNull();
+    
+    @Query("""
+    		  SELECT cf FROM CardFeedback cf
+    		  ORDER BY cf.createdAt DESC, cf.feedbackNo DESC
+    		""")
+    		Page<CardFeedback> findRecent(Pageable pageable);
 }
