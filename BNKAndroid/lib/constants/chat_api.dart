@@ -6,7 +6,7 @@ class ChatAPI {
 
   // 생성자 역할처럼 앱 시작 시 자동으로 FastAPI 모드 세팅
   static void _init() {
-    useFastAPI(ip: "192.168.0.5", port: 8000);  // ✅ 기본을 FastAPI로
+    useFastAPI(ip: "192.168.0.3", port: 8000);  // ✅ 기본을 FastAPI로
   }
 
   /// FastAPI 서버 직접 연결

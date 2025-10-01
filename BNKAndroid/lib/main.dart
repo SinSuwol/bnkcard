@@ -15,9 +15,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await API.initBaseUrl();
-    FAQApi.useLan(ip: '192.168.0.5', port: 8090);
+    FAQApi.useLan(ip: '192.168.0.3', port: 8090);
     FAQApi.setPathPrefix('/api');
-    ChatAPI.useFastAPI(ip: '192.168.0.5', port: 8000);
+    ChatAPI.useFastAPI(ip: '192.168.0.3', port: 8000);
   } catch (e, _) {
     debugPrint('[API] init 실패: $e');
   }

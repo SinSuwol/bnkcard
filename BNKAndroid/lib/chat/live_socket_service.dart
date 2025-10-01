@@ -24,7 +24,7 @@ class LiveSocketService {
     required int roomId,
     required OnLiveMessage onMessage,
     // 표준 WS 엔드포인트 (SockJS 아님)
-    String url = 'ws://192.168.0.5:8090/ws/chat',
+    String url = 'ws://192.168.0.3:8090/ws/chat',
   }) async {
     if (connected) return;
     await _loadAuth();

@@ -7,7 +7,7 @@ class AdminApiService {
   static String? _sessionId;
   final String baseUrl;
 
-  AdminApiService({this.baseUrl = "http://192.168.0.222:8090"});
+  AdminApiService({this.baseUrl = "http://192.168.0.3:8090"});
 
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();

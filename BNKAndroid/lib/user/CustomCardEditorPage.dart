@@ -12,8 +12,8 @@ import 'package:flutter/rendering.dart' show RenderRepaintBoundary;
 import 'package:http_parser/http_parser.dart';
 import 'package:bnkandroid/user/custom_benefit_page.dart';
 
-const String apiPublicBase = 'http://192.168.0.5:8090/api/custom-cards';
-const String aiModerateUrl = 'http://192.168.0.5:8001/moderate';
+const String apiPublicBase = 'http://192.168.0.3:8090/api/custom-cards';
+const String aiModerateUrl = 'http://192.168.0.3:8001/moderate';
 
 class CustomCardEditorPage extends StatefulWidget {
   final int memberNo;
