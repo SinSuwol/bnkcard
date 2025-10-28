@@ -42,14 +42,14 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 
 ## 3. 아키텍처 구성
 
-[Flutter App] ↔ [Spring Boot Server] ↔ [Oracle DB]
-↘
-↘ (HTTP/REST)
-[Python AI Server]
-├── OCR 및 얼굴 인식 검증
-├── 이미지 검열 (YOLO)
-└── 피드백 감정 분석
-
+[Flutter App] ↔ [Spring Boot Server] ↔ [Oracle DB]  /n
+↘/n
+↘ (HTTP/REST)/n
+[Python AI Server]/n
+├── OCR 및 얼굴 인식 검증/n
+├── 이미지 검열 (YOLO)/n
+└── 피드백 감정 분석/n
+/n
 ---
 
 ## 4. 주요 기능
@@ -140,7 +140,7 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 
 | 항목 | 설정 |
 |------|------|
-| **Spring Server** | http://localhost:8080 |
+| **Spring Server** | http://localhost:8090 |
 | **AI Server (Chatbot)** | http://localhost:8000 |
 | **AI Server (YOLO)** | http://localhost:8001 |
 | **DB 연결** | Oracle XE (로컬/도커) |
@@ -150,17 +150,17 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 
 ## 12. 디렉토리 구조
 
-/server
-├── src/main/java/com/bnkcard
-├── src/main/resources
-└── build.gradle
-/app
-├── lib/
-└── pubspec.yaml
-/ai
-├── face_service.py
-├── verify_service.py
-└── yolo_detect_train.py
+/server/n
+├── src/main/java/com/bnkcard/n
+├── src/main/resources/n
+└── build.gradle/n
+/app/n
+├── lib//n
+└── pubspec.yaml/n
+/ai/n
+├── face_service.py/n
+├── verify_service.py/n
+└── yolo_detect_train.py/n
 
 
 ---
