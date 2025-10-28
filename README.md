@@ -147,18 +147,8 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 ---
 
 ## 12. 디렉토리 구조
-
-/server   <br>
-├── src/main/java/com/bnkcard   <br>
-├── src/main/resources   <br>
-└── build.gradle   <br>
-/app   <br>
-├── lib/    <br>
-└── pubspec.yaml    <br>
-/ai/n
-├── face_service.py   <br>
-├── verify_service.py   <br>
-└── yolo_detect_train.py  <br>
+Spring <br>
+<img width="223" height="397" alt="image" src="https://github.com/user-attachments/assets/16e5b93e-841c-4bd8-9c93-e2694a9b0d6c" />
 
 
 ---
