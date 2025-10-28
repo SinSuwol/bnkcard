@@ -25,6 +25,10 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 - AI 기술을 활용한 자동화 및 고도화  
 - 관리자/사용자 통합 운영 시스템 구축  
 
+
+**웹 메인페이지** 
+<img width="4000" height="2250" alt="image" src="https://github.com/user-attachments/assets/27108bd7-75bb-4f02-9012-e643b9b6cb0f" />
+
 ---
 
 ## 2. 기술 스택
