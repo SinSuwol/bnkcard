@@ -42,15 +42,13 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 
 ## 3. 아키텍처 구성
 
-[Flutter App] ↔ [Spring Boot Server] ↔ [Oracle DB]  /n
-↘/n
-↘ (HTTP/REST)/n
-[Python AI Server]/n
-├── OCR 및 얼굴 인식 검증/n
-├── 이미지 검열 (YOLO)/n
-└── 피드백 감정 분석/n
-/n
----
+[Flutter App] ↔ [Spring Boot Server] ↔ [Oracle DB]<br>
+↘<br>
+↘ (HTTP/REST)<br>
+[Python AI Server]<br>
+├── OCR 및 얼굴 인식 검증<br>
+├── 이미지 검열 (YOLO)<br>
+└── 피드백 감정 분석
 
 ## 4. 주요 기능
 
@@ -150,17 +148,17 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 
 ## 12. 디렉토리 구조
 
-/server/n
-├── src/main/java/com/bnkcard/n
-├── src/main/resources/n
-└── build.gradle/n
-/app/n
-├── lib//n
-└── pubspec.yaml/n
+/server   <br>
+├── src/main/java/com/bnkcard   <br>
+├── src/main/resources   <br>
+└── build.gradle   <br>
+/app   <br>
+├── lib/    <br>
+└── pubspec.yaml    <br>
 /ai/n
-├── face_service.py/n
-├── verify_service.py/n
-└── yolo_detect_train.py/n
+├── face_service.py   <br>
+├── verify_service.py   <br>
+└── yolo_detect_train.py  <br>
 
 
 ---
