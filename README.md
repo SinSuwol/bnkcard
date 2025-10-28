@@ -50,9 +50,6 @@ AI 기술을 활용해 신분증 인증, 이미지 검열, 피드백 감정 분�
 ├── 이미지 검열 (YOLO)
 └── 피드백 감정 분석
 
-yaml
-코드 복사
-
 ---
 
 ## 4. 주요 기능
@@ -165,8 +162,6 @@ yaml
 ├── verify_service.py
 └── yolo_detect_train.py
 
-yaml
-코드 복사
 
 ---
 
